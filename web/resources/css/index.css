@@ -1,0 +1,92 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.wrapperForFooter {
+    height: 100%;
+    flex: 1 0 auto;
+}
+
+.headers {
+    padding: 10px 17%;
+}
+
+.headers > div {
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+.firstHeader {
+    font-size: 12px;
+}
+
+.firstHeader img {
+    width: 120px;
+}
+
+#logoDiv {
+    float: left;
+}
+
+#busketDiv {
+    float: right;
+}
+
+#logo {
+    width: 250px;
+    cursor: pointer;
+}
+
+#busket {
+    width: 80px;
+    cursor: pointer;
+}
+
+.thirdHeader {
+    height: 30px !important;
+}
+
+.loginBlock img {
+    width: 100%;
+}
+
+.loginBlock button {
+    background: black;
+    width: 120px;
+    height: 40px;
+    border-radius: 8px;
+    margin: 12px auto;
+}
+
+.loginBlock p {
+    font-size: 20px;
+}
+
+.content {
+    flex: 1 0 auto;
+    margin: 50px auto;
+    padding: 10px;
+    min-height: 700px;
+}
+
+.textBack {
+    font-size: 20px;
+    color: white;
+    text-shadow: blue 1px 0px 4px;
+}
+
+.footer {
+    height: 40px;
+    border-block-start: 1px solid black;
+    flex: 1 0 auto;
+}
+
+.categoryText {
+    font-weight: bold;
+}
+
+hr {
+    margin: 0 -25%;
+}

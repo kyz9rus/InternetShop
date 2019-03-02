@@ -6,7 +6,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <title>Avon Shop</title>
+  <title>Client profile</title>
   <link rel="icon" href='<c:url value="/resources/images/favicon.ico" />' type="image/x-icon">
 
   <link rel="stylesheet" href='<c:url value="/resources/css/bootstrap.min.css" />'>
@@ -66,8 +66,22 @@
 
       </div>
 
-      <div class="content row" align="center">
-
+      <div class="content" align="center">
+        <spring:form action="change-password" method="post">
+          <div class="form-group">
+            <label>Текущий пароль:</label>
+            <spring:input path="password"/>
+          </div>
+          <div class="form-group">
+            <label>Новый пароль:</label>
+            <spring:input path="newPassword"/>
+          </div>
+          <div class="form-group">
+            <label>Повторите новый пароль:</label>
+            <spring:input path="repeatNewPassword"/>
+          </div>
+          <spring:button>Сменить пароль</spring:button>
+        </spring:form>
       </div>
 
       <div class="footer">
