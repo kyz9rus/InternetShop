@@ -21,4 +21,15 @@ public class ClientDto {
     private String email;
     @NotNull
     private String password;
+
+    public ClientDto() {
+    }
+
+    public ClientDto(String firstName, String lastName, LocalDate birthday, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.email = email;
+        this.password = password;
+    }
 }

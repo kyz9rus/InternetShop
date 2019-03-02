@@ -4,6 +4,6 @@
     <title>Second Page</title>
 </head>
 <body>
-    <p>${clientDtoJSP.firstName}, ${clientDtoJSP.lastName}, ${clientDtoJSP.birthday}, ${clientDtoJSP.email}, ${clientDtoJSP.password}</p>>
+    <p>${clientDto.firstName}, ${clientDto.lastName}, ${clientDto.birthday}, ${clientDto.email}, ${clientDto.password}</p>>
 </body>
 </html>

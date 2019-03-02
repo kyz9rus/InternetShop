@@ -45,7 +45,7 @@ ul.submenu > li > a, .categoryText {
     text-decoration: none;
 }
 ul.submenu > li > a:hover {
-    text-decoration: underline;
+    color: rgb(215, 69, 144);
 }
 ul.menu > li:hover > ul.submenu {
     display: block;
