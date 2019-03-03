@@ -15,6 +15,14 @@
   <link rel="stylesheet" href='<c:url value="/resources/css/submenu.css" />'>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script>
+      $(function(){
+          $(".footer").load("<c:url value="/resources/jsp/footer.jsp"/>");
+          $(".firstHeader").load("<c:url value="/resources/jsp/firstHeader.jsp"/>");
+          $(".secondHeader").load("<c:url value="/resources/jsp/secondHeader.jsp"/>");
+      });
+  </script>
+
 </head>
 
 <body>
@@ -22,27 +30,9 @@
     <div class="wrapperForFooter">
 
       <div class="headers">
-        <div class="firstHeader row">
-          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <a href="http://smartavon.ru/Registration.html">СТАТЬ ПРЕДСТАВИТЕЛЕМ</a>
-          </div>
-          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
-          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-            <a href="login">
-              <img src="resources/images/login.png"/>
-            </a>
-          </div>
-        </div>
+        <div class="firstHeader row"></div>
 
-        <div class="secondHeader">
-          <div id="logoDiv">
-            <img id="logo" alt="AVON" src="resources/images/logo.png">
-          </div>
-
-          <div id="busketDiv">
-            <img id="busket" src="resources/images/busket.png" alt="AVON">
-          </div>
-        </div>
+        <div class="secondHeader"></div>
 
         <hr>
         <div class="thirdHeader row">
@@ -77,13 +67,9 @@
         <%--</j:forEach>--%>
       </div>
 
-      <div class="footer">
-        <p class="footerText">2019</p>
-      </div>
+      <div class="footer"></div>
     </div>
   </div>
-
-  <script type="text/javascript" src="<c:url value="resources/js/routingFromImages.js"/>"></script>
 </body>
 
 </html>

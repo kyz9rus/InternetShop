@@ -37,9 +37,7 @@
         </spring:form>--%>
       </div>
 
-      <div class="footer">
-        <p class="footerText">2019</p>
-      </div>
+      <div class="footer"></div>
 
     </div>
   </div>

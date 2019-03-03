@@ -90,3 +90,16 @@
 hr {
     margin: 0 -25%;
 }
+
+.footer {
+    padding: 0 10;
+}
+
+.footerData {
+    float: left;
+}
+
+.footerText {
+    float: left;
+    margin-left: 20px;
+}
