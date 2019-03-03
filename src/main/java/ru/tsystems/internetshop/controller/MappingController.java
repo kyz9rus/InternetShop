@@ -37,9 +37,10 @@ public class MappingController {
 //        return "showUsers";
 //    }
 
-    @GetMapping(value = "login")
-    public String toLoginPage() {
-        return "login";
+    @GetMapping(value = "registration")
+    public String toLoginPage(Model model) {
+        model.addAttribute("client", new ClientDto());
+        return "registration";
     }
 
     @GetMapping(value = "clientProfile")

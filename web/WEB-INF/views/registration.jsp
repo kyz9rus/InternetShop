@@ -1,20 +1,20 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
-<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="j"%>--%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 
 <html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <title>Avon shop</title>
+  <title>Registration page</title>
   <link rel="icon" href='<c:url value="/resources/images/favicon.ico" />' type="image/x-icon">
 
   <link rel="stylesheet" href='<c:url value="/resources/css/bootstrap.min.css" />'>
   <link rel="stylesheet" href='<c:url value="/resources/css/index.css" />'>
   <link rel="stylesheet" href='<c:url value="/resources/css/submenu.css" />'>
+  <link rel="stylesheet" href='<c:url value="/resources/css/registration.css" />'>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
   <script>
       $(function(){
           $(".footer").load("<c:url value="/resources/jsp/footer.jsp"/>");
@@ -29,7 +29,7 @@
     <div class="wrapperForFooter">
 
       <div class="headers">
-        <div class="firstHeader"></div>
+        <div class="firstHeader row"></div>
 
         <div class="secondHeader"></div>
 
@@ -56,17 +56,48 @@
 
       </div>
 
-      <div class="content row" align="center">
-        <%--<j:forEach items="${Clients.clients}" var="client" varStatus="tagStatus">--%>
-          <%--<tr>--%>
-            <%--<td>${client.firstName}</td>--%>
-            <%--<td>${client.lastName}</td>--%>
-            <%--<td>${client.email}</td>--%>
-          <%--</tr>--%>
-        <%--</j:forEach>--%>
+      <div class="content" align="center">
+        <div class="registrationBlock" align="left">
+          <spring:form method="post" modelAttribute="client" action="create-client">
+            <div class="form-group">
+              <label>Фамилия</label>
+              <spring:input path="lastName"/>
+            </div>
+            <div class="form-group">
+              <label>Имя</label>
+              <spring:input path="firstName"/>
+            </div>
+            <div class="form-group">
+              <label>Дата рождения</label>
+              <spring:input path="birthday"/>
+            </div>
+            <div class="form-group">
+              <label>Адрес электронной почты</label>
+              <spring:input path="email"/>
+            </div>
+            <div class="form-group">
+              <label>Пароль</label>
+              <spring:input type="password" path="password"/>
+            </div>
+            <div class="form-group">
+              <label>Повторите пароль</label>
+              <input type="password" name="repeatPassword"/>
+              <%--<spring:input type="password" path="repeatPassword"/>--%>
+            </div>
+            <spring:button class="btn btn-primary">REGISTER</spring:button>
+          </spring:form>
+
+          <label class="formMessage"></label>
+        </div>
       </div>
 
       <div class="footer"></div>
+
+      <script src="/resources/js/checkRegistrationForm.js"></script>
+      <script>
+          // Маска для полей
+          $('.registrationBlock input[name="birthday"]').mask('99-99-9999');
+      </script>
     </div>
   </div>
 </body>

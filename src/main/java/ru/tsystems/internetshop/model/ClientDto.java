@@ -10,11 +10,12 @@ import java.time.LocalDate;
 @Data
 public class ClientDto {
     @NotNull
+    private int id;
+    @NotNull
     private String firstName;
     @NotNull
     private String lastName;
-    @NotNull
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthday;
     @Email
     @NotNull

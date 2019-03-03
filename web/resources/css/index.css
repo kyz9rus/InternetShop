@@ -30,8 +30,9 @@
     float: left;
 }
 
-#busketDiv {
+#basketDiv {
     float: right;
+    margin-right: 7%;
 }
 
 #logo {
@@ -39,7 +40,7 @@
     cursor: pointer;
 }
 
-#busket {
+#basket {
     width: 80px;
     cursor: pointer;
 }
@@ -48,33 +49,11 @@
     height: 30px !important;
 }
 
-.loginBlock img {
-    width: 100%;
-}
-
-.loginBlock button {
-    background: black;
-    width: 120px;
-    height: 40px;
-    border-radius: 8px;
-    margin: 12px auto;
-}
-
-.loginBlock p {
-    font-size: 20px;
-}
-
 .content {
     flex: 1 0 auto;
     margin: 50px auto;
     padding: 10px;
     min-height: 700px;
-}
-
-.textBack {
-    font-size: 20px;
-    color: white;
-    text-shadow: blue 1px 0px 4px;
 }
 
 .footer {
@@ -102,4 +81,46 @@ hr {
 .footerText {
     float: left;
     margin-left: 20px;
+}
+
+#basketInfo {
+    position: absolute;
+    float: right;
+    top: 150px;
+    right: 18%;
+    border: 1px solid #d7d7d7;
+    width: 170px;
+    text-align: center;
+    border-block-start: 2px solid rgb(215, 69, 144);
+    display: none;
+}
+
+#basketDiv:hover > #basketInfo{
+    display: block;
+}
+
+@media (max-width: 540px) {
+    .largeHeader, .secondHeader, .thirdHeader {
+        display: none;
+    }
+    #logo {
+        width: 120px;
+    }
+    .headers{
+        padding: 0 0;
+        margin: 10 20;
+    }
+    #basket{
+        width: 50px;
+        margin-top: -10px;
+    }
+    #login{
+        width: 100px;
+    }
+    #pull {
+        display: unset;
+    }
+    .clearfix > li{
+        display: none;
+    }
 }

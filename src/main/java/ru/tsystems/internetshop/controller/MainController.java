@@ -12,12 +12,14 @@ import ru.tsystems.internetshop.model.ClientDto;
 public class MainController {
 
     @PostMapping(value = "create-client")
-    public ModelAndView createClient(@Validated @ModelAttribute("clientDto") ClientDto clientDto) {
+    public ModelAndView createClient(@Validated @ModelAttribute("client") ClientDto clientDto) {
         ModelAndView modelAndView = new ModelAndView();
 
-        modelAndView.addObject("clientDto", clientDto);
+        modelAndView.addObject("client", clientDto);
 
-        modelAndView.setViewName("secondPage");
+        modelAndView.setViewName("registration");
+
+        System.out.println(clientDto);
 
         return modelAndView;
     }
