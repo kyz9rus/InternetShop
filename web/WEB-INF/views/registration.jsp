@@ -29,25 +29,25 @@
     <div class="wrapperForFooter">
 
       <div class="headers">
-        <div class="firstHeader row"></div>
+        <div class="firstHeader"></div>
 
         <div class="secondHeader"></div>
 
         <hr>
         <div class="thirdHeader row">
           <ul class="menu">
-            <li><a href=#>АРОМАТЫ</a>
+            <li><a href=#>FRAGRANCES</a>
               <ul class="submenu">
-                <li><h5 class="categoryText">КАТЕГОРИИ</h5></li>
-                <li><a href=#>Мужские ароматы</a></li>
-                <li><a href=#>Женские ароматы</a></li>
+                <li><h5 class="categoryText">CATEGORIES</h5></li>
+                <li><a href=#>Men's fragrances</a></li>
+                <li><a href=#>Women's fragrances</a></li>
               </ul>
             </li>
-            <li><a href=#>ДЛЯ ЛИЦА</a>
+            <li><a href=#>FOR FACE</a>
               <ul class="submenu">
-                <li><h5 class="categoryText">КАТЕГОРИИ</h5></li>
-                <li><a href=#>Маски</a></li>
-                <li><a href=#>Сыворотки</a></li>
+                <li><h5 class="categoryText">CATEGORIES</h5></li>
+                <li><a href=#>Masks</a></li>
+                <li><a href=#>Sera</a></li>
               </ul>
             </li>
           </ul>
@@ -60,31 +60,31 @@
         <div class="registrationBlock" align="left">
           <spring:form method="post" modelAttribute="client" action="create-client">
             <div class="form-group">
-              <label>Фамилия</label>
+              <label>Last name</label>
               <spring:input path="lastName"/>
             </div>
             <div class="form-group">
-              <label>Имя</label>
+              <label>First name</label>
               <spring:input path="firstName"/>
             </div>
             <div class="form-group">
-              <label>Дата рождения</label>
+              <label>Birthday</label>
               <spring:input path="birthday"/>
             </div>
             <div class="form-group">
-              <label>Адрес электронной почты</label>
+              <label>Email</label>
               <spring:input path="email"/>
             </div>
             <div class="form-group">
-              <label>Пароль</label>
+              <label>Password</label>
               <spring:input type="password" path="password"/>
             </div>
             <div class="form-group">
-              <label>Повторите пароль</label>
+              <label>Repeat password</label>
               <input type="password" name="repeatPassword"/>
               <%--<spring:input type="password" path="repeatPassword"/>--%>
             </div>
-            <spring:button class="btn btn-primary">REGISTER</spring:button>
+            <spring:button class="btn btn-primary formButton">REGISTER</spring:button>
           </spring:form>
 
           <label class="formMessage"></label>
@@ -100,6 +100,7 @@
       </script>
     </div>
   </div>
+  <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
 </body>
 
 </html>

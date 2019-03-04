@@ -16,48 +16,48 @@
     </div>
 </div>
 
-<div class="mobileHeader row">
-    <div class="col-xs-2">
-        <nav class="mobileMenu clearfix">
-            <a href="#" id="pull">Menu</a>
-            <ul class="clearfix">
-                <li><a href=#>АРОМАТЫ</a>
+<div class="mobileHeader">
+    <div class="menuButtonBlock">
+        <button class="menuButton">
+            <ion-icon class="ion-navicon" name="menu"></ion-icon>
+        </button>
+        <nav class="mobileMenu">
+            <ul>
+                <li><a href=#>Fragrances</a>
                     <ul class="submenu">
-                        <li><h5 class="categoryText">КАТЕГОРИИ</h5></li>
-                        <li><a href=#>Мужские ароматы</a></li>
-                        <li><a href=#>Женские ароматы</a></li>
+                        <li><h5 class="categoryText">CATEGORIES</h5></li>
+                        <li><a href=#>Men's fragrances</a></li>
+                        <li><a href=#>Women's fragrances</a></li>
                     </ul>
                 </li>
-                <li><a href=#>ДЛЯ ЛИЦА</a>
+                <li><a href=#>For face</a>
                     <ul class="submenu">
-                        <li><h5 class="categoryText">КАТЕГОРИИ</h5></li>
-                        <li><a href=#>Маски</a></li>
-                        <li><a href=#>Сыворотки</a></li>
+                        <li><h5 class="categoryText">CATEGORIES</h5></li>
+                        <li><a href=#>Masks</a></li>
+                        <li><a href=#>Sera</a></li>
                     </ul>
                 </li>
                 <li class="divider"></li>
                 <hr>
-                <li><a href="/registration">Зарегистрироваться</a></li>
-                <li><a href="http://smartavon.ru/Registration.html">Стать представителем</a></li>
+                <li><a href="/registration">REGISTER</a></li>
+                <li><a href="http://smartavon.ru/Registration.html">BECOME A REPRESENTATIVE</a></li>
             </ul>
         </nav>
     </div>
-    <div class="col-xs-1"></div>
-    <div class="col-xs-3">
+    <div class="logoBlock">
         <img id="logo" alt="AVON" src="resources/images/logo.png">
     </div>
-    <div class="col-xs-1"></div>
-    <div class="col-xs-2">
-        <a href="login">
-            <img id="login" src="resources/images/login.png"/>
-        </a>
-    </div>
-    <div class="col-xs-1"></div>
-    <div class="col-xs-2">
-        <img id="basket" src="resources/images/basket.png" alt="AVON"><br/>
-        <div id="basketInfo">
-            <p class="emptyBasket">Your bag is empty</p>
+    <div class="lastBlock">
+        <div>
+            <img id="basket" src="resources/images/basket.png" alt="AVON"><br/>
+            <div id="basketInfo">
+                <p class="emptyBasket">Your bag is empty</p>
+            </div>
+        </div>
+        <div>
+            <a href="login">
+                <img id="login" src="resources/images/login.png"/>
+            </a>
         </div>
     </div>
-
 </div>

@@ -50,3 +50,9 @@ li > h5 {
     width: 306px;
     margin-left: -14px;
 }
+
+@media (max-width: 576px) {
+    .leftPanel {
+        width: 87%;
+    }
+}

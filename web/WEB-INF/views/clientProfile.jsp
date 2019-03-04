@@ -30,27 +30,25 @@
     <div class="wrapperForFooter">
 
       <div class="headers">
-        <div class="firstHeader row"></div>
+        <div class="firstHeader"></div>
 
         <div class="secondHeader"></div>
 
         <hr>
         <div class="thirdHeader row">
           <ul class="menu">
-            <li><a href=#>АРОМАТЫ</a>
+            <li><a href=#>FRAGRANCES</a>
               <ul class="submenu">
-                <li><h5 class="categoryText">КАТЕГОРИИ</h5></li>
-                <li><a href=#>Мужские ароматы</a></li>
-                <li><a href=#>Женские ароматы</a></li>
-                <li></li>
+                <li><h5 class="categoryText">CATEGORIES</h5></li>
+                <li><a href=#>Men's fragrances</a></li>
+                <li><a href=#>Women's fragrances</a></li>
               </ul>
             </li>
-            <li><a href=#>ДЛЯ ЛИЦА</a>
+            <li><a href=#>FOR FACE</a>
               <ul class="submenu">
-                <li><h5 class="categoryText">КАТЕГОРИИ</h5></li>
-                <li><a href=#>Маски</a></li>
-                <li><a href=#>Сыворотки</a></li>
-                <li></li>
+                <li><h5 class="categoryText">CATEGORIES</h5></li>
+                <li><a href=#>Masks</a></li>
+                <li><a href=#>Sera</a></li>
               </ul>
             </li>
           </ul>
@@ -63,73 +61,77 @@
         <div class="row">
           <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel">
             <ul>
-              <li><h5>Профиль</h5></li>
-              <li class="operation"><label>Посмотреть профиль</label></li>
-              <li class="operation"><label>Изменить данные профиля</label></li>
-              <li class="operation"><label>Сменить пароль</label></li>
+              <li><h5>Profile</h5></li>
+              <%--<li class="clientOperation"><label>View profile</label></li>--%>
+              <li class="clientOperation"><label>Edit profile data</label></li>
+              <li class="clientOperation"><label>Change password</label></li>
               <li class="divider"></li>
-              <hr>
-              <li><h5>Заказы</h5></li>
-              <li class="operation"><label>Оформление заказа</label></li>
-              <li class="operation"><label>Просмотр истории заказов</label></li>
-              <li class="operation"><label>Повторить заказ</label></li>
+              <li><h5>Orders</h5></li>
+              <li class="clientOperation"><label>Issue order</label></li>
+              <li class="clientOperation"><label>View order history</label></li>
+              <li class="clientOperation"><label>Repeat order</label></li>
             </ul>
           </div>
 
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mainPanel">
-            <div class="variant showProfile">
+            <%--<div class="variant showProfile">--%>
 
-              <div class="mainPanelBlock">
-                <p class="headerText">Основное</p>
-                <div class="subBlock">
-                  <ul>
-                    <li><label>Фамилия:</label> <label>${clientDto.lastName}</label></li>
-                    <li><label>Имя:</label> <label>${clientDto.firstName}</label></li>
-                  </ul>
-                </div>
-              </div>
+              <%--<div class="mainPanelBlock">--%>
+                <%--<p class="headerText">Main</p>--%>
+                <%--<div class="subBlock">--%>
+                  <%--<ul>--%>
+                    <%--<li><label>Last name:</label> <label>${clientDto.lastName}</label></li>--%>
+                    <%--<li><label>First name:</label> <label>${clientDto.firstName}</label></li>--%>
+                  <%--</ul>--%>
+                <%--</div>--%>
+              <%--</div>--%>
 
-              <div class="mainPanelBlock">
-                <p class="headerText">Дополнительно</p>
-                <div class="subBlock">
-                  <ul>
-                    <li><label>Дата рождения:</label> <label>${clientDto.birthday}</label></li>
-                    <li><label>Адрес электронной почты:</label> <label>${clientDto.email}</label></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+              <%--<div class="mainPanelBlock">--%>
+                <%--<p class="headerText">Additionally</p>--%>
+                <%--<div class="subBlock">--%>
+                  <%--<ul>--%>
+                    <%--<li><label>Birthday:</label> <label>${clientDto.birthday}</label></li>--%>
+                    <%--<li><label>Email:</label> <label>${clientDto.email}</label></li>--%>
+                  <%--</ul>--%>
+                <%--</div>--%>
+              <%--</div>--%>
+            <%--</div>--%>
 
             <div class="variant editProfile">
               <spring:form action="change-client" method="post" modelAttribute="clientDto">
                 <div class="mainPanelBlock">
-                  <p class="headerText">Основное</p>
+                  <p class="headerText">Main</p>
                   <div class="subBlock">
                     <div class="form-group">
-                      <label>Фамилия</label>
+                      <label>Last name</label>
                       <spring:input path="lastName"/>
                     </div>
 
                     <div class="form-group">
-                      <label>Имя</label>
+                      <label>First name</label>
                       <spring:input path="firstName"/>
                     </div>
                   </div>
                 </div>
 
                 <div class="mainPanelBlock">
-                  <p class="headerText">Дополнительно</p>
+                  <p class="headerText">Additionally</p>
                   <div class="subBlock">
                     <div class="form-group">
-                      <label>Дата рождения</label>
+                      <label>Birthday</label>
                       <spring:input path="birthday"/>
                     </div>
 
                     <div class="form-group">
-                      <label>Адрес электронной почты</label>
+                      <label>Email</label>
                       <spring:input type="email" path="email"/>
                     </div>
                   </div>
+                </div>
+
+                <div class="mainPanelBlock">
+                  <spring:button class="btn btn-primary formButton">CHANGE</spring:button>
                 </div>
               </spring:form>
             </div>
@@ -153,8 +155,7 @@
             <%--</spring:form>--%>
           </div>
 
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>
-
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
         </div>
 
 
@@ -166,6 +167,7 @@
 
   <script type="text/javascript" src="<c:url value="resources/js/routingFromImages.js"/>"></script>
   <script type="text/javascript" src="<c:url value="resources/js/displayBlocks.js"/>"></script>
+  <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
 </body>
 
 </html>
