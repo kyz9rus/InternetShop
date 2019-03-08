@@ -1,0 +1,30 @@
+.menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 25%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    transition: 0.5s;
+    transform: translateX(-100%);
+}
+.menu_active {
+    transform: translateX(0%);
+}
+.mobileMenu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50%;
+    flex-direction: column;
+}
+.mobileMenu li {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 900;
+    color: #9b59b6;
+}

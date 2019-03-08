@@ -1,16 +1,15 @@
 package ru.tsystems.internetshop.controller;
 
+import ru.tsystems.internetshop.model.ClientDto;
+import ru.tsystems.internetshop.model.ClientListContainer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.internetshop.model.ClientDto;
-import ru.tsystems.internetshop.model.ClientListContainer;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Controller
 public class MappingController {
@@ -27,15 +26,6 @@ public class MappingController {
         model.addAttribute("Clients", clientListContainer);
         return "index";
     }
-
-//     @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
-//    public String getUsers(Model model) throws Exception{
-//        List<User> users = getListOfUsers();
-//        UserListContainer userList = new UserListContainer();
-//        userList.setUsers(users);
-//        model.addAttribute("Users", userList);
-//        return "showUsers";
-//    }
 
     @GetMapping(value = "registration")
     public String toLoginPage(Model model) {

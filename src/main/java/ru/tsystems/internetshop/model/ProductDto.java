@@ -14,4 +14,14 @@ public class ProductDto {
     private double weight;
     private String volume;
     private long quantityInStock;
+
+    public ProductDto(String name, int price, Category category, List<Parameter> parameters, double weight, String volume, long quantityInStock) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.parameters = parameters;
+        this.weight = weight;
+        this.volume = volume;
+        this.quantityInStock = quantityInStock;
+    }
 }

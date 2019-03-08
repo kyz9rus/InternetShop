@@ -1,0 +1,17 @@
+.registrationBlock {
+    border: 1px solid whitesmoke;
+    width: 450px;
+}
+
+label {
+    margin: 0px 5px;
+}
+
+input {
+    width: 98%;
+    margin: 0px 5px;
+}
+
+.formMessage {
+    display: none;
+}

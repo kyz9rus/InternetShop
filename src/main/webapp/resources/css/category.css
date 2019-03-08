@@ -1,0 +1,59 @@
+.categoryName {
+    float: left;
+    margin-left: 16%;
+}
+
+.productList {
+    margin-top: 100px;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.product {
+    border: 1px solid rgb(229,229,229);
+    margin-top: 121px;
+}
+
+.productInfo {
+    float: left;
+    font-size: 13px;
+}
+
+.productInfo2 {
+    float: right;
+    display: inline-block;
+}
+
+.productName {
+    font-size: 18px;
+}
+
+.productPrice {
+    font-size: 14px;
+}
+
+.quantityInStock {
+    color: grey;
+    font-size: 12px;
+}
+
+.productPrice {
+    font-size: 17px;
+}
+
+.buyButton {
+    width: 100%;
+    background: rgb(235, 110, 153);
+    border: rgb(235, 110, 153);
+    border-radius: 8px;
+    color: white;
+}
+
+.buyButton:hover {
+    background-color: rgb(215, 69, 144);
+}
+
+.buyButton:active {
+    background: red !important;
+}
