@@ -3,36 +3,32 @@ package ru.tsystems.internetshop.model;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-//import javax.validation.constraints.Email;
-//import javax.validation.constraints.NotEmpty;
-
-@Entity
+@Entity(name = "client")
 @Data
 public class ClientDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotNull
-//    @NotEmpty
+
+    @NotNull(message = "Please enter first name")
     private String firstName;
-    @NotNull
-//    @NotEmpty
+
+    @NotNull(message = "Please enter last name")
     private String lastName;
+
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthday;
-//    @Email
-    @NotNull
-//    @NotEmpty
+
+    @Email(message = "Email should be valid")
+    @Column(unique = true)
     private String email;
-    @NotNull
-//    @NotEmpty
+
+    @NotNull(message = "Please enter password")
     private String password;
 
     public ClientDto() {

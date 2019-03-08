@@ -24,25 +24,25 @@ public class PublicController {
 
     @PostMapping(value = "create-client")
     public ModelAndView createClient(@Validated @ModelAttribute("client") ClientDto clientDto, @RequestParam("repeatPassword") String repeatPassword) {
+        System.out.println(clientDto);
+
         ModelAndView modelAndView = new ModelAndView();
 
-        // если пользователь не найден, то
-        if (clientDto.getPassword().equals(repeatPassword)) {
-            clientService.saveClient(clientDto);
+        if (clientService.findClientByEmail(clientDto.getEmail()) != null)
+            modelAndView.addObject("errorMessage", "A user with this email address already exists.");
+        else {
+            if (clientDto.getPassword().equals(repeatPassword)) {
+                clientService.saveClient(clientDto);
 
-            modelAndView.addObject("successMessage", "You have been successfully registered. Sign in!");
-
-//                modelAndView.addObject("errorMessage", "Something wrong...");
-        } else {
-            modelAndView.addObject("errorMessage", "Entered passwords do not match");
+                modelAndView.addObject("successMessage", "You have been successfully registered. Sign in!");
+            } else {
+                modelAndView.addObject("errorMessage", "Entered passwords do not match.");
+            }
         }
-        // иначе modelAndView.addObject("formMessage", "A user with this email address already exists.");
 
         modelAndView.addObject("client", clientDto);
 
         modelAndView.setViewName("registration");
-
-        System.out.println(clientDto);
 
         return modelAndView;
     }

@@ -36,7 +36,7 @@ public class ClientService {
 //        return clientDAO.findAllClients();
 //    }
 //
-//    public ClientDto findEmployeeByEmail(String email) {
-//        return clientDAO.findByEmail(email);
-//    }
+    public ClientDto findClientByEmail(String email) {
+        return clientDAO.findByEmail(email);
+    }
 }

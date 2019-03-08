@@ -1,4 +1,4 @@
-package ru.tsystems.internetshop.dao;//package ru.tsystems.internetshop.dao;
+//package ru.tsystems.internetshop.dao;
 //
 //import org.hibernate.Criteria;
 //import org.hibernate.Session;

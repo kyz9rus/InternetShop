@@ -1,10 +1,19 @@
 package ru.tsystems.internetshop.dao;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import ru.tsystems.internetshop.model.ClientDto;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.TypedQuery;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @Transactional
@@ -14,6 +23,21 @@ public class ClientDAOImpl implements ClientDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    @Override
+    public ClientDto findByEmail(String email) {
+//        Session currentSession = sessionFactory.getCurrentSession();
+//        ClientDto client = currentSession.get(ClientDto.class, email);
+
+        @SuppressWarnings("unchecked")
+        TypedQuery<ClientDto> query = sessionFactory.getCurrentSession().createQuery("from client");
+
+        List<ClientDto> clients = query.getResultList();
+
+        Optional<ClientDto> clientDto = clients.stream().filter(client -> client.getEmail().equals(email)).findAny();
+
+        return clientDto.orElse(null);
+    }
 
     @Override
     public void saveClient(ClientDto client) {

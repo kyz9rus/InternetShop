@@ -36,20 +36,8 @@
         <hr>
         <div id="thirdHeader" class="row">
           <ul class="menu">
-            <li><a href=#>FRAGRANCES</a>
-              <ul class="submenu">
-                <li><h5 class="categoryText">CATEGORIES</h5></li>
-                <li><a href=#>Men's fragrances</a></li>
-                <li><a href=#>Women's fragrances</a></li>
-              </ul>
-            </li>
-            <li><a href=#>FOR FACE</a>
-              <ul class="submenu">
-                <li><h5 class="categoryText">CATEGORIES</h5></li>
-                <li><a href=#>Masks</a></li>
-                <li><a href=#>Sera</a></li>
-              </ul>
-            </li>
+            <li><a href="category/fragrances">FRAGRANCES</a></li>
+            <li><a href="category/forFace">FOR FACE</a></li>
           </ul>
         </div>
         <hr>
@@ -73,7 +61,7 @@
             </div>
             <div class="form-group">
               <label>Email</label>
-              <input name="email" required/>
+              <input name="email" type="email" required/>
             </div>
             <div class="form-group">
               <label>Password</label>

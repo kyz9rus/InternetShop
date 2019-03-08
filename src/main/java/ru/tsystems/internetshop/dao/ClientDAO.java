@@ -5,7 +5,7 @@ import ru.tsystems.internetshop.model.ClientDto;
 public interface ClientDAO {
 //    ClientDto findById(int id);
 
-//    ClientDto findByEmail(String email);
+    ClientDto findByEmail(String email);
 
     void saveClient(ClientDto client);
 
