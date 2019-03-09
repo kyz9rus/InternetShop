@@ -1,6 +1,8 @@
 .leftPanel {
     border: 1px solid grey;
     margin-left: 20px;
+    /*     height: 340px; */
+
 }
 
 .leftPanel li {
@@ -53,6 +55,10 @@ li > h5 {
 
 .changePassword input {
     width: 100%;
+}
+
+.messageBlock {
+    margin: 0px 20px;
 }
 
 @media (max-width: 576px) {

@@ -61,9 +61,14 @@
             </ul>
           </div>
 
+          <div class="messageBlock">
+            <label class="successMessage">${successMessage}</label>
+            <label class="errorMessage">${errorMessage}</label>
+          </div>
+
           <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mainPanel">
-            <%--<div class="variant showProfile">--%>
+            <%--<div class="variant profileBlock">--%>
 
               <%--<div class="mainPanelBlock">--%>
                 <%--<p class="headerText">Main</p>--%>
@@ -86,8 +91,8 @@
               <%--</div>--%>
             <%--</div>--%>
 
-            <div class="variant editProfile">
-              <spring:form action="change-client" method="post" modelAttribute="clientDto">
+            <div class="variant editProfileBlock">
+              <spring:form action="update-client" method="post" modelAttribute="clientDto">
                 <div class="mainPanelBlock">
                   <p class="headerText">Main</p>
                   <div class="subBlock">
@@ -124,7 +129,7 @@
               </spring:form>
             </div>
 
-            <div class="variant changePassword">
+            <div class="variant changePasswordBlock">
               <form action="change-password" method="post">
                 <div class="form-group">
                   <label>Current password:</label>

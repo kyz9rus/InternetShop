@@ -1,6 +1,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("UTF-8");%>
 
 <html>
 
@@ -16,6 +18,7 @@
   <link rel="stylesheet" href='<c:url value="/resources/css/profile.css" />'>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
   <script>
       $(function(){
           $("#footer").load("<c:url value="/resources/jsp/footer.jsp"/>");
@@ -64,23 +67,67 @@
             </ul>
           </div>
 
+          <div class="messageBlock">
+            <label class="successMessage">${successMessage}</label>
+            <label class="errorMessage">${errorMessage}</label>
+          </div>
+
           <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mainPanel">
-            <div class=""></div>
+            <div class="variant addProductBlock">
+              <form action="create-product" method="post">
+                <div class="form-group">
+                  <label>Product name:</label>
+                  <input name="name" required/>
+                </div>
+                <div class="form-group">
+                  <label>Price:</label>
+                  <input name="price" required/>
+                </div>
+                <div class="form-group">
+                  <label>Category:</label>
+                  <select name="category" required>
+                    <j:forEach items="${categories}" var="category" varStatus="tagStatus">
+                      <option value="${category.name}">
+                          ${category.name}
+                      </option>
+                    </j:forEach>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Weight:</label>
+                  <input name="weight"/>
+                </div>
+                <div class="form-group">
+                  <label>Volume:</label>
+                  <input name="volume"/>
+                </div>
+                <div class="form-group">
+                  <label>Quantity in stock:</label>
+                  <input name="quantityInStock" required/>
+                </div>
+                <button class="btn btn-primary formButton">Add product</button>
+              </form>
+            </div>
+          </div>
+
           </div>
 
           <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
         </div>
 
+        <div id="footer"></div>
       </div>
-
-      <div id="footer"></div>
     </div>
   </div>
 
   <script type="text/javascript" src="<c:url value="resources/js/routingFromImages.js"/>"></script>
   <script type="text/javascript" src="<c:url value="resources/js/displayBlocks.js"/>"></script>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
+  <script>
+      // Маска для полей
+      $('.addProductBlock input[name="volume"]').mask('999x999x999');
+  </script>
 </body>
 
 </html>

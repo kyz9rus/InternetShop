@@ -4,11 +4,14 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.orm.hibernate5.HibernateTemplate;
 import ru.tsystems.internetshop.model.ClientDto;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.tsystems.internetshop.model.ProductDto;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -26,17 +29,23 @@ public class ClientDAOImpl implements ClientDAO {
 
     @Override
     public ClientDto findByEmail(String email) {
-//        Session currentSession = sessionFactory.getCurrentSession();
-//        ClientDto client = currentSession.get(ClientDto.class, email);
+//        String queryString = "SELECT c FROM client c WHERE c.email = :email";
+//        String queryString = "SELECT c FROM ClientDto c";
 
-        @SuppressWarnings("unchecked")
-        TypedQuery<ClientDto> query = sessionFactory.getCurrentSession().createQuery("from client");
+//        TypedQuery<ClientDto> query = sessionFactory.getCurrentSession().createQuery(queryString, ClientDto.class);
+//        query.setParameter("email", email);
+
+        String queryString = "SELECT p FROM client p WHERE p.email = :email";
+
+        TypedQuery<ClientDto> query = sessionFactory.getCurrentSession().createQuery(queryString, ClientDto.class);
+        query.setParameter("email", email);
 
         List<ClientDto> clients = query.getResultList();
 
-        Optional<ClientDto> clientDto = clients.stream().filter(client -> client.getEmail().equals(email)).findAny();
-
-        return clientDto.orElse(null);
+        if (!clients.isEmpty())
+            return clients.get(0);
+        else
+            return null;
     }
 
     @Override

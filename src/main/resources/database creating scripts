@@ -1,0 +1,59 @@
+create table client (
+  id int primary key,
+  firstName text not null,
+  lastName text not null,
+  birthday timestamp,
+  email text not null,
+  password text not null
+);
+
+create table category (
+  name varchar(50) primary key
+);
+
+create table clientAddress (
+  id int primary key,
+  country text not null,
+  city text not null,
+  postalCode int not null,
+  street text not null,
+  house text not null,
+  room int not null
+);
+
+create table ord (
+  id int primary key,
+  client_id int references client(id),
+  clientAddress int references clientAddress(id),
+  paymentMethod text not null,
+  deliveryMethod text not null,
+  paymentStatus text not null,
+  orderStatus text not null
+);
+
+create table product (
+  id int primary key,
+  name text not null,
+  price int not null,
+  category text references category(name),
+  weight real(3, 2),
+  valume text,
+  quantityInStock long not null
+);
+
+create table parameter (
+  name varchar(50) primary key
+);
+
+create table productToParameter (
+  product_id int references product(id),
+  parameter varchar(50) references parameter(name),
+  primary key (product_id, parameter)
+);
+
+create table orderToProduct (
+  order_id int references ord(id),
+  product_id int references product(id)
+);
+
+select * from client;

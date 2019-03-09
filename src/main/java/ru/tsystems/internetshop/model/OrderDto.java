@@ -6,17 +6,32 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Table(name="ord")
-@Entity
+@Entity(name = "ord")
+@Table(name = "ord")
 public class OrderDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private ClientDto client;
-    private ClientAddressDto clientAddress;
+
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "client_id")
+//    private ClientDto client;
+
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "client_address")
+//    private ClientAddressDto clientAddress;
+
+    @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
-    private DeliveryMethod deliveryMethod;
-    private List<ProductDto> products; // many_to_many
+
+
+//    private DeliveryMethod deliveryMethod;
+
+//    private List<ProductDto> products; // many_to_many
+
+    @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
+
+    @Column(name = "order_status")
     private OrderStatus orderStatus;
 }

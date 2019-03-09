@@ -7,12 +7,16 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity(name = "client")
 @Data
+@Entity(name = "client")
+@Table(name = "client")
 public class ClientDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private int id;
 
     @NotNull(message = "Please enter first name")
@@ -31,6 +35,9 @@ public class ClientDto {
     @NotNull(message = "Please enter password")
     private String password;
 
+//    @OneToMany(mappedBy = "client")
+//    private Set<OrderDto> orders = new HashSet<>();
+
     public ClientDto() {
     }
 
@@ -42,3 +49,5 @@ public class ClientDto {
         this.password = password;
     }
 }
+
+

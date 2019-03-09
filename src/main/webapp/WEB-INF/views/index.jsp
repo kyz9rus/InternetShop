@@ -1,6 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="j"%>
+<%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8"%>
 
 <html>
@@ -66,13 +66,13 @@
 
         </div>
 
-        <j:forEach items="${Clients.clients}" var="client" varStatus="tagStatus">
-          <tr>
-            <td>${client.firstName}</td>
-            <td>${client.lastName}</td>
-            <td>${client.email}</td>
-          </tr>
-        </j:forEach>
+        <%--<j:forEach items="${clients}" var="client" varStatus="tagStatus">--%>
+          <%--<tr>--%>
+            <%--<td>${client.firstName}</td>--%>
+            <%--<td>${client.lastName}</td>--%>
+            <%--<td>${client.email}</td>--%>
+          <%--</tr>--%>
+        <%--</j:forEach>--%>
       </div>
 
       <div id="footer"></div>

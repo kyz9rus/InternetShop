@@ -1,6 +1,8 @@
 package ru.tsystems.internetshop.spring.web.config;
 
-import ru.tsystems.internetshop.model.ClientDto;
+import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+import ru.tsystems.internetshop.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -11,10 +13,8 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
 @Configuration
 @EnableTransactionManagement
-//@ComponentScans(value = {@ComponentScan("ru.tsystems.internetshop")})
 @ComponentScans(value = {@ComponentScan("ru.tsystems.internetshop")})
 public class HibernateConfig {
 
@@ -26,6 +26,12 @@ public class HibernateConfig {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
         factoryBean.setAnnotatedClasses(ClientDto.class);
+        factoryBean.setAnnotatedClasses(OrderDto.class);
+        factoryBean.setAnnotatedClasses(ClientAddressDto.class);
+        factoryBean.setAnnotatedClasses(Category.class);
+        factoryBean.setAnnotatedClasses(ProductDto.class);
+        factoryBean.setAnnotatedClasses(Color.class);
+//        factoryBean.setAnnotatedClasses(User.class);
         return factoryBean;
     }
 

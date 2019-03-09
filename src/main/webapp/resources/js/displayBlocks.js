@@ -1,37 +1,45 @@
 $('.clientOperation').click(function () {
+    $('.messageBlock').hide();
+
     var operationName = $(this).find("label").text();
 
     $('.variant').hide();
 
     if (operationName === 'View profile')
-        $('.showProfile').show();
+        $('.profileBlock').show();
     else if (operationName === 'Edit profile data')
-        $('.editProfile').show();
+        $('.editProfileBlock').show();
     else if (operationName === 'Change password')
-        $('.changePassword').show();
+        $('.changePasswordBlock').show();
     else if (operationName === 'Issue order')
-        $('.orderRegistration').show();
+        $('.issueOrderBlock').show();
     else if (operationName === 'View order history')
-        $('.showOrdersHistory').show();
+        $('.orderHistoryBlock').show();
     else if (operationName === 'Repeat order')
-        $('.repeatOrder').show();
+        $('.repeatOrderBlock').show();
 });
 
 $('.employeeOperation').click(function () {
+    $('.messageBlock').hide();
+
     var operationName = $(this).find("label").text();
 
     $('.variant').hide();
 
     if (operationName === 'View orders')
-        $('.showProfile').show();
+        $('.ordersBlock').show();
     else if (operationName === 'Change order status')
-        $('.editProfile').show();
+        $('.changeOrderStatusBlock').show();
     else if (operationName === 'Sales statistics')
-        $('.changePassword').show();
+        $('.salesStatisticsBlock').show();
     else if (operationName === 'Add product')
-        $('.orderRegistration').show();
+        $('.addProductBlock').show();
     else if (operationName === 'Creating and managing categories of the directory')
-        $('.showOrdersHistory').show();
+        $('.categoriesManagingBlock').show();
     else if (operationName === 'Import from file')
-        $('.repeatOrder').show();
+        $('.importFromFileBlock').show();
+});
+
+$('.formButton').click( function () {
+   $('.messageBlock').show();
 });
