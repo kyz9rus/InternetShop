@@ -43,4 +43,11 @@ public class ProductDto {
     public ProductDto() {
     }
 
+    public ProductDto(@NotNull String name, @NotNull int price, double weight, String volume, @NotNull long quantityInStock) {
+        this.name = name;
+        this.price = price;
+        this.weight = weight;
+        this.volume = volume;
+        this.quantityInStock = quantityInStock;
+    }
 }

@@ -53,6 +53,11 @@ public class ClientDAOImpl implements ClientDAO {
         sessionFactory.getCurrentSession().save(client);
     }
 
+    @Override
+    public void updateClient(ClientDto client) {
+        sessionFactory.getCurrentSession().update(client);
+    }
+
 
 ////    @Override
 ////    public List<User> list() {

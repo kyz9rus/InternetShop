@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.controller;
 
+import org.springframework.ui.Model;
 import ru.tsystems.internetshop.model.Category;
 import ru.tsystems.internetshop.model.ClientDto;
 import ru.tsystems.internetshop.model.ProductDto;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.tsystems.internetshop.service.ProductService;
 
 
 import java.util.ArrayList;
@@ -21,6 +23,9 @@ public class PublicController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private ProductService productService;
 
     @PostMapping(value = "create-client")
     public ModelAndView createClient(@Validated @ModelAttribute("client") ClientDto clientDto, @RequestParam("repeatPassword") String repeatPassword) {
@@ -40,8 +45,6 @@ public class PublicController {
             }
         }
 
-        modelAndView.addObject("client", clientDto);
-
         modelAndView.setViewName("registration");
 
         return modelAndView;
@@ -53,7 +56,8 @@ public class PublicController {
 
         ModelAndView modelAndView = new ModelAndView();
 
-//        if (clientService.findClientByEmail(clientDto.getEmail()) != null)
+        // add SPRING SESSION
+//        if (clientService.getClientByEmail(clientDto.getEmail()) != null)
 //            modelAndView.addObject("errorMessage", "A user with this email address already exists.");
 //        else {
 //            if (clientDto.getPassword().equals(repeatPassword)) {
@@ -65,30 +69,28 @@ public class PublicController {
 //            }
 //        }
 
-        modelAndView.addObject("client", clientDto);
-
         modelAndView.setViewName("clientProfile");
 
         return modelAndView;
     }
 
     @GetMapping(value = "category/{categoryName}")
-    public ModelAndView getCategory(@PathVariable("categoryName") String categoryName) {
-        ModelAndView modelAndView = new ModelAndView();
+    public String getCategory(@PathVariable("categoryName") String categoryName, Model model) {
+        List<ProductDto> products = productService.getProductsByCategory(new Category(categoryName));
 
-        List<ProductDto> products = new ArrayList<>();
+        products.add(new ProductDto("Fragrances №1", 345, 40, "40x20x10", 100L));
+        products.add(new ProductDto("Fragrances №2", 345, 40, "40x20x10", 200L));
+        products.add(new ProductDto("Fragrances №3", 345, 2340, "999x999x999", 100L));
 
-//        products.add(new ProductDto("Fragrances №1", 345, new Category(categoryName), null, 40, "40x20x10", 100L));
-//        products.add(new ProductDto("Fragrances №2", 345, new Category(categoryName), null, 40, "40x20x10", 100L));
-//        products.add(new ProductDto("Fragrances №3", 345, new Category(categoryName), null, 40, "40x20x10", 100L));
-//        List<ProductDto> products = productService.findByCategory();
+        if (!products.isEmpty())
+            model.addAttribute("products", products);
+        else
+            model.addAttribute("emptyListMessage", "Product list is empty.");
 
-        modelAndView.addObject("categoryName", categoryName.toUpperCase());
+        model.addAttribute("categoryName", categoryName.replaceAll("_", " ").toUpperCase());
 
-        modelAndView.addObject("products", products);
+        model.addAttribute("products", products);
 
-        modelAndView.setViewName("category");
-
-        return modelAndView;
+        return "category";
     }
 }

@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class MappingController {
@@ -23,11 +24,12 @@ public class MappingController {
 
     @GetMapping(value = "/")
     public String main(Model model) {
-        List<ClientDto> clients = new ArrayList<>();
-        clients.add(new ClientDto("Daniil", "Kuzchutkomov", LocalDate.of(1998, 4, 23), "kyz9rus@yandex.ru", "null"));
-        clients.add(new ClientDto("Daniil2", "Kuzchutkomov", LocalDate.of(1998, 4, 23), "kyz9rus@yandex.ru", "null"));
+//        List<Category> categories = categoryService.getAllCategories();
+        List<Category> categories = new ArrayList<>(Arrays.asList(new Category("frangrances"), new Category("for_face")));
 
-        model.addAttribute("clients", clients);
+        categories.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
+
+        model.addAttribute("categories", categories);
         return "index";
     }
 
@@ -46,16 +48,18 @@ public class MappingController {
     }
 
     @GetMapping(value = "employeeProfile")
-    public ModelAndView toEmployeeProfile() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("employeeProfile");
+    public String toEmployeeProfile(Model model) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("employeeProfile");
 
 //        modelAndView.addObject("categories", categoryService.getAllCategories());
 
         List<Category> categories = new ArrayList<>();
         categories.addAll(Arrays.asList(new Category("fragrances"), new Category("for face")));
 
-        modelAndView.addObject("categories", categories);
-        return modelAndView;
+//        modelAndView.addObject("categories", categories);
+        model.addAttribute("categories", categories);
+//        return modelAndView;
+        return "employeeProfile";
     }
 }

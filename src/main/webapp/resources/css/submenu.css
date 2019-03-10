@@ -10,6 +10,9 @@ ul:after {
     clear: both;
     float: none;
 }
+.menu {
+    margin-left: -2%;
+}
 ul.menu > li {
     float: left;
     position: relative;
@@ -25,31 +28,7 @@ ul.menu > li > a:hover {
     background-color: rgb(215, 69, 144);
     color: white;
 }
-ul.submenu {
-    display: none;
-    position: absolute;
-    width: 193px;
-    top: 40px;
-    left: 0;
-    background-color: white;
-    border-block-start: 2px solid rgb(215, 69, 144);
-}
-ul.submenu > li {
-    /*     display: block; */
-}
-ul.submenu > li > a, .categoryText {
-    /*     display: block; */
-    padding: 2 10;
-    font-size: 12px;
-    color: black;
-    text-decoration: none;
-}
-ul.submenu > li > a:hover {
-    color: rgb(215, 69, 144);
-}
-ul.menu > li:hover > ul.submenu {
-    display: block;
-}
+
 
 .categoryText {
     font-size: 15px;

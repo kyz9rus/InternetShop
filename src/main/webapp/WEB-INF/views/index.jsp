@@ -36,8 +36,9 @@
         <hr>
         <div id="thirdHeader" class="row">
           <ul class="menu">
-            <li><a href="category/fragrances">FRAGRANCES</a></li>
-            <li><a href="category/forFace">FOR FACE</a></li>
+            <j:forEach items="${categories}" var="category" varStatus="tagStatus">
+              <li><a href="/category/${category.name}">${category.name}</a></li>
+            </j:forEach>
             </li>
           </ul>
         </div>
@@ -58,21 +59,12 @@
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 buttonBlock">
               <a href="http://smartavon.ru/Registration.html">
-                <button class="btn btn-primary formButton">More details</button>
+                <button class="btn formButton">More details</button>
               </a>
             </div>
           </div>
 
-
         </div>
-
-        <%--<j:forEach items="${clients}" var="client" varStatus="tagStatus">--%>
-          <%--<tr>--%>
-            <%--<td>${client.firstName}</td>--%>
-            <%--<td>${client.lastName}</td>--%>
-            <%--<td>${client.email}</td>--%>
-          <%--</tr>--%>
-        <%--</j:forEach>--%>
       </div>
 
       <div id="footer"></div>

@@ -34,4 +34,14 @@ public class OrderDto {
 
     @Column(name = "order_status")
     private OrderStatus orderStatus;
+
+    public OrderDto() {
+    }
+
+    public OrderDto(int id, PaymentMethod paymentMethod, PaymentStatus paymentStatus, OrderStatus orderStatus) {
+        this.id = id;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
+        this.orderStatus = orderStatus;
+    }
 }

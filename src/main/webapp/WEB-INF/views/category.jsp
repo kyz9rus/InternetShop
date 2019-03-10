@@ -1,6 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
-<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="j"%>--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="j"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 
 <html>
@@ -35,10 +35,10 @@
         <div id="secondHeader"></div>
 
         <hr>
-        <div id="thirdHeader" class="row">
+        <div id="thirdHeader">
           <ul class="menu">
-            <li><a href="category/fragrances">FRAGRANCES</a></li>
-            <li><a href="category/forFace">FOR FACE</a></li>
+            <li><a href="/category/fragrances">FRAGRANCES</a></li>
+            <li><a href="/category/for_face">FOR FACE</a></li>
           </ul>
         </div>
         <hr>
@@ -49,45 +49,28 @@
 
         <p class="categoryName">${categoryName}</p>
 
-        <%--"Fragrances №1", 345, new Category(categoryName), null, 40, "40x20x10", 100L--%>
+        <div class="productsBlock">
+          <p>${emptyListMessage}</p>
 
-        <ul class="productList">
-          <li>
-            <div class="product">
-              <div class="productInfo">
-                <p class="productName">Fragrances №1</p>
-                <p class="productWeight">Вес: 40г.</p>
-                <p class="productSize">Размеры: 40x20x10</p>
-              </div>
-              <div class="productInfo2">
-                <p class="productPrice">Цена: 345 руб.</p>
-                <p class="quantityInStock">Количество на складе: 100</p>
-                <button class="btn buyButton">КУПИТЬ</button>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="product">
-              <div class="productInfo">
-                <p class="productName">Fragrances №2</p>
-                <p class="productWeight">Вес: 40г.</p>
-                <p class="productSize">Размеры: 40x20x10</p>
-              </div>
-              <div class="productInfo2">
-                <p class="productPrice">Цена: 345 руб.</p>
-                <p class="quantityInStock">Количество на складе: 100</p>
-                <button class="btn buyButton">КУПИТЬ</button>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <%--<j:forEach items="${Clients.clients}" var="client" varStatus="tagStatus">--%>
-          <%--<tr>--%>
-            <%--<td>${client.firstName}</td>--%>
-            <%--<td>${client.lastName}</td>--%>
-            <%--<td>${client.email}</td>--%>
-          <%--</tr>--%>
-        <%--</j:forEach>--%>
+          <ul class="productList">
+            <j:forEach items="${products}" var="product" varStatus="tagStatus">
+              <li>
+                <div class="product">
+                  <div class="productInfo">
+                    <p class="productName">${product.name}</p>
+                    <p class="productWeight">Weight: ${product.weight}г.</p>
+                    <p class="productSize">Volume: ${product.volume}</p>
+                  </div>
+                  <div class="productInfo2">
+                    <p class="productPrice">Price: ${product.price} руб.</p>
+                    <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
+                    <button class="btn buyButton">BUY</button>
+                  </div>
+                </div>
+              </li>
+            </j:forEach>
+          </ul>
+        </div>
       </div>
 
       <div id="footer"></div>

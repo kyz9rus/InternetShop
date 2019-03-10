@@ -9,6 +9,8 @@ public interface ClientDAO {
 
     void saveClient(ClientDto client);
 
+    void updateClient(ClientDto client);
+
 //    void updateClient(ClientDto client);
 
 //    void deleteClientById(int id);

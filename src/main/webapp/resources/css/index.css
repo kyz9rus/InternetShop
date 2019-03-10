@@ -100,10 +100,15 @@ hr {
     background: rgb(215, 69, 144);
     border: rgb(215, 69, 144);
     font-size: 13px;
+    color: white;
 }
 
 .formButton:hover {
     background: rgb(235, 112, 151);
+}
+
+.formButton:active {
+    background: red;
 }
 
 #mobileHeader .submenu {

@@ -3,16 +3,20 @@
     margin-left: 16%;
 }
 
+.productsBlock {
+    margin: 70px 16%;
+}
+
 .productList {
-    margin-top: 100px;
-    width: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
+    width: 100%;
+}
+
+.productList li:not(:nth-child(1)) {
+    margin-top: 121px;
 }
 
 .product {
     border: 1px solid rgb(229,229,229);
-    margin-top: 121px;
 }
 
 .productInfo {
@@ -57,3 +61,4 @@
 .buyButton:active {
     background: red !important;
 }
+

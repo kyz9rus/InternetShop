@@ -25,6 +25,14 @@
           $("#firstHeader").load("<c:url value="/resources/jsp/firstHeader.jsp"/>");
           $("#secondHeader").load("<c:url value="/resources/jsp/secondHeader.jsp"/>");
       });
+
+      // $(document).ready(function() {
+      //     $("#getOrders").click(function(){
+      //         $.get("/getOrders",function(data,status){
+      //             console.log("Data: " + data + "\nStatus: " + status);
+      //         });
+      //     });
+      // });
   </script>
 </head>
 
@@ -53,7 +61,11 @@
           <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel">
             <ul>
               <li><h5>Orders</h5></li>
-              <li class="employeeOperation"><label>View orders</label></li>
+              <li class="employeeOperation">
+                <%--<a href="getOrders">--%>
+                  <label>View orders</label>
+                <%--</a>--%>
+              </li>
               <li class="employeeOperation"><label>Change order status</label></li>
               <li class="divider"></li>
 
@@ -70,12 +82,25 @@
           <div class="messageBlock">
             <label class="successMessage">${successMessage}</label>
             <label class="errorMessage">${errorMessage}</label>
+            <label>${emptyListMessage}</label>
           </div>
 
           <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mainPanel">
+            <div class="variant ordersBlock">
+              <form action="/employeeProfile/getOrders" method="get">
+                <input class="btn formButton" type="submit" value="Show order list"/>
+              </form>
+                <%--<button id="getOrders">Show order list</button>--%>
+              <ul class="orderList">
+                <j:forEach items="${orders}" var="order" varStatus="tagStatus">
+                  <li>${order.id}, ${order.paymentMethod}, ${order.paymentStatus}, ${order.orderStatus}</li>
+                </j:forEach>
+              </ul>
+            </div>
+
             <div class="variant addProductBlock">
-              <form action="create-product" method="post">
+              <form action="employeeProfile/create-product" method="post">
                 <div class="form-group">
                   <label>Product name:</label>
                   <input name="name" required/>
@@ -106,7 +131,26 @@
                   <label>Quantity in stock:</label>
                   <input name="quantityInStock" required/>
                 </div>
-                <button class="btn btn-primary formButton">Add product</button>
+                <button class="btn formButton">Add product</button>
+              </form>
+            </div>
+
+            <div class="variant changeOrderStatusBlock">
+              <form action="employeeProfile/change-order-status" method="post">
+                <div class="form-group">
+                  <label>Order id (you can find on the "View orders page"):</label>
+                  <input name="id" required/>
+                </div>
+                <div class="form-group">
+                  <label>Category:</label>
+                  <select name="orderStatus" required>
+                    <option value="waitingForPayment">Waiting for payment</option>
+                      <option value="waitingForShipment">Waiting for shipment</option>
+                      <option value="shipped">Shipped</option>
+                      <option value="delivered">Delivered</option>
+                  </select>
+                </div>
+                <button class="btn formButton">Change order status</button>
               </form>
             </div>
           </div>

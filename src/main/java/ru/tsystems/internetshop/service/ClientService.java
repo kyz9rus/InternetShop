@@ -19,6 +19,8 @@ public class ClientService {
         clientDAO.saveClient(client);
     }
 
+    public void updateClient(ClientDto client) {clientDAO.updateClient(client);}
+
 //    public void updateClient(ClientDto client) {
 //        // TODO Auto-generated method stub
 //        ClientDto entity = clientDAO.findById(client.getId());

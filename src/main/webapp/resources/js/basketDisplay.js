@@ -1,10 +1,6 @@
 var displayBasket = false;
 
-$('#basket').click(function (e){
-    // e.preventDefault();
-    //
-    // $('.mobileMenu').toggleClass('menu_active');
-    //
+$('#basket').click(function (){
     displayBasket = !displayBasket;
 
     if (displayBasket)
