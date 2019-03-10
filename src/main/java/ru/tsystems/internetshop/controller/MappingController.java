@@ -10,8 +10,6 @@ import ru.tsystems.internetshop.service.CategoryService;
 import ru.tsystems.internetshop.util.CategoryInfo;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -25,8 +23,7 @@ public class MappingController {
 
     @GetMapping(value = "/")
     public String main(Model model) {
-//        List<Category> categories = categoryService.getAllCategories();
-        List<Category> categories = new ArrayList<>(Arrays.asList(new Category("frangrances"), new Category("for_face")));
+        List<Category> categories = categoryService.getAllCategories();
 
         categories.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
 

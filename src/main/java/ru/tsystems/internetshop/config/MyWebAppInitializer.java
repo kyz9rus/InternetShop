@@ -10,7 +10,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
-//public class ServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 public class MyWebAppInitializer implements WebApplicationInitializer {
 
     @Override
