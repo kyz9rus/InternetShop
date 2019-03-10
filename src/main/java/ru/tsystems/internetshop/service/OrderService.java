@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.tsystems.internetshop.dao.OrderDAO;
 import ru.tsystems.internetshop.model.OrderDto;
-import ru.tsystems.internetshop.model.OrderStatus;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class OrderService {
         orderDAO.updateOrder(order);
     }
 
-    public OrderDto getOrder(int id) {
+    public OrderDto getOrder(Long id) {
         return orderDAO.findById(id);
     }
 }

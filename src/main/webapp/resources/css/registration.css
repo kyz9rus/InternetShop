@@ -1,6 +1,6 @@
 .registrationBlock {
     border: 1px solid whitesmoke;
-    width: 450px;
+    width: 40%;
 }
 
 label {
@@ -14,4 +14,10 @@ input {
 
 .formMessage {
     display: none;
+}
+
+@media(max-width: 577px) {
+    .registrationBlock {
+        width: 90%;
+    }
 }

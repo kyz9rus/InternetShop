@@ -1,9 +1,10 @@
-package ru.tsystems.internetshop.dao;
+package ru.tsystems.internetshop.dao.impl;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.tsystems.internetshop.dao.OrderDAO;
 import ru.tsystems.internetshop.model.OrderDto;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class OrderDAOImpl implements OrderDAO {
     private SessionFactory sessionFactory;
 
     @Override
-    public OrderDto findById(int id) {
+    public OrderDto findById(Long id) {
         return sessionFactory.getCurrentSession().find(OrderDto.class, id);
     }
 

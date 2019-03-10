@@ -5,7 +5,7 @@ import ru.tsystems.internetshop.model.OrderDto;
 import java.util.List;
 
 public interface OrderDAO {
-    OrderDto findById(int id);
+    OrderDto findById(Long id);
 
     void saveOrder(OrderDto order);
 

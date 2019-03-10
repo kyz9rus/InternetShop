@@ -1,4 +1,4 @@
-package ru.tsystems.internetshop.dao;
+package ru.tsystems.internetshop.dao.impl;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -6,6 +6,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+import ru.tsystems.internetshop.dao.ClientDAO;
 import ru.tsystems.internetshop.model.ClientDto;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

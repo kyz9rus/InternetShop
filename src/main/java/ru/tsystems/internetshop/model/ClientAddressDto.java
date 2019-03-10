@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity(name = "clientAddress")
@@ -32,6 +34,6 @@ public class ClientAddressDto {
     @NotNull
     private int room;
 
-//    @OneToMany(mappedBy = "clientAddress")
-//    private Set<OrderDto> orders = new HashSet<>();
+    @OneToMany(mappedBy = "clientAddress")
+    private Set<OrderDto> orders = new HashSet<>();
 }

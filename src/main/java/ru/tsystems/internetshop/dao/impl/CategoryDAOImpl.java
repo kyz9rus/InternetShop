@@ -1,9 +1,10 @@
-package ru.tsystems.internetshop.dao;
+package ru.tsystems.internetshop.dao.impl;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.tsystems.internetshop.dao.CategoryDAO;
 import ru.tsystems.internetshop.model.Category;
 import ru.tsystems.internetshop.model.ClientDto;
 

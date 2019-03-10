@@ -22,7 +22,7 @@
   <script>
       $(function(){
           $("#footer").load("<c:url value="/resources/jsp/footer.jsp"/>");
-          $("#firstHeader").load("<c:url value="/resources/jsp/firstHeader.jsp"/>");
+          $("#largeHeader").load("<c:url value="/resources/jsp/largeHeader.jsp"/>");
           $("#secondHeader").load("<c:url value="/resources/jsp/secondHeader.jsp"/>");
       });
 
@@ -41,15 +41,55 @@
     <div class="wrapperForFooter">
 
       <div class="headers">
-        <div id="firstHeader"></div>
+          <div id="firstHeader">
+              <div id="largeHeader"></div>
+
+              <div class="mobileHeader">
+                  <div class="menuButtonBlock">
+                      <button class="menuButton">
+                          <ion-icon class="ion-navicon" name="menu"></ion-icon>
+                      </button>
+                      <nav class="mobileMenu">
+                          <ul>
+                              <j:forEach items="${categories}" var="category" varStatus="tagStatus">
+                                  <li><a href="/category/${category.name}">${category.name}</a></li>
+                              </j:forEach>
+                              <li class="divider"></li>
+                              <hr>
+                              <li><a href="/registration">REGISTER</a></li>
+                              <li><a href="http://smartavon.ru/Registration.html">BECOME A REPRESENTATIVE</a></li>
+                          </ul>
+                      </nav>
+                  </div>
+                  <div class="logoBlock">
+                      <a href="#">
+                          <img class="logo" alt="AVON" src="/resources/images/logo.png" width="500px">
+                      </a>
+                  </div>
+                  <div class="lastBlock">
+                      <div>
+                          <img id="basket" src="/resources/images/basket.png" alt="AVON"><br/>
+                          <div id="basketInfo">
+                              <p class="emptyBasket">Your bag is empty</p>
+                          </div>
+                      </div>
+                      <div>
+                          <a href="login">
+                              <img id="login" src="/resources/images/login.png"/>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
 
         <div id="secondHeader"></div>
 
         <hr>
-        <div id="thirdHeader" class="row">
+        <div id="thirdHeader">
           <ul class="menu">
-            <li><a href="category/fragrances">FRAGRANCES</a></li>
-            <li><a href="category/forFace">FOR FACE</a></li>
+            <j:forEach items="${categories}" var="category" varStatus="tagStatus">
+              <li><a href="/category/${category.name}">${category.name}</a></li>
+            </j:forEach>
           </ul>
         </div>
         <hr>
@@ -125,7 +165,7 @@
                 </div>
                 <div class="form-group">
                   <label>Volume:</label>
-                  <input name="volume"/>
+                  <input name="volume" placeholder="999x999x999"/>
                 </div>
                 <div class="form-group">
                   <label>Quantity in stock:</label>

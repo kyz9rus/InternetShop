@@ -1,26 +1,27 @@
 package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.tsystems.internetshop.model.Category;
-import ru.tsystems.internetshop.model.ClientDto;
-import ru.tsystems.internetshop.model.ClientListContainer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
+import ru.tsystems.internetshop.model.Category;
+import ru.tsystems.internetshop.model.ClientDto;
 import ru.tsystems.internetshop.service.CategoryService;
+import ru.tsystems.internetshop.util.CategoryInfo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class MappingController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private CategoryInfo categoryInfo;
 
     @GetMapping(value = "/")
     public String main(Model model) {
@@ -29,37 +30,30 @@ public class MappingController {
 
         categories.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
 
-        model.addAttribute("categories", categories);
+        categoryInfo.getInstance().clear();
+        categoryInfo.getInstance().addAll(categories);
+
+        model.addAttribute("categories", categoryInfo.getInstance());
         return "index";
     }
 
     @GetMapping(value = "registration")
-    public String toLoginPage(Model model) {
+    public String toRegistrationPage(Model model) {
         model.addAttribute("client", new ClientDto());
+        model.addAttribute("categories", categoryInfo.getInstance());
         return "registration";
     }
 
     @GetMapping(value = "clientProfile")
-    public ModelAndView toClientProfile() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("clientDto", new ClientDto("Daniil", "Kuzchutkomov", LocalDate.of(1998, 4, 23), "kyz9rus@yandex.ru", "null"));
-        modelAndView.setViewName("clientProfile");
-        return modelAndView;
+    public String toClientProfile(Model model) {
+        model.addAttribute("clientDto", new ClientDto("Daniil", "Kuzchutkomov", LocalDate.of(1998, 4, 23), "kyz9rus@yandex.ru", "null"));
+        model.addAttribute("categories", categoryInfo.getInstance());
+        return "clientProfile";
     }
 
     @GetMapping(value = "employeeProfile")
     public String toEmployeeProfile(Model model) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("employeeProfile");
-
-//        modelAndView.addObject("categories", categoryService.getAllCategories());
-
-        List<Category> categories = new ArrayList<>();
-        categories.addAll(Arrays.asList(new Category("fragrances"), new Category("for face")));
-
-//        modelAndView.addObject("categories", categories);
-        model.addAttribute("categories", categories);
-//        return modelAndView;
+        model.addAttribute("categories", categoryInfo.getInstance());
         return "employeeProfile";
     }
 }

@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 
 <html>
@@ -19,7 +20,7 @@
   <script>
       $(function(){
           $("#footer").load("<c:url value="/resources/jsp/footer.jsp"/>");
-          $("#firstHeader").load("<c:url value="/resources/jsp/firstHeader.jsp"/>");
+          $("#largeHeader").load("<c:url value="/resources/jsp/largeHeader.jsp"/>");
           $("#secondHeader").load("<c:url value="/resources/jsp/secondHeader.jsp"/>");
       });
   </script>
@@ -30,15 +31,55 @@
     <div class="wrapperForFooter">
 
       <div class="headers">
-        <div id="firstHeader"></div>
+        <div id="firstHeader">
+          <div id="largeHeader"></div>
+
+          <div class="mobileHeader">
+            <div class="menuButtonBlock">
+              <button class="menuButton">
+                <ion-icon class="ion-navicon" name="menu"></ion-icon>
+              </button>
+              <nav class="mobileMenu">
+                <ul>
+                  <j:forEach items="${categories}" var="category" varStatus="tagStatus">
+                    <li><a href="/category/${category.name}">${category.name}</a></li>
+                  </j:forEach>
+                  <li class="divider"></li>
+                  <hr>
+                  <li><a href="/registration">REGISTER</a></li>
+                  <li><a href="http://smartavon.ru/Registration.html">BECOME A REPRESENTATIVE</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="logoBlock">
+              <a href="#">
+                <img class="logo" alt="AVON" src="/resources/images/logo.png" width="500px">
+              </a>
+            </div>
+            <div class="lastBlock">
+              <div>
+                <img id="basket" src="/resources/images/basket.png" alt="AVON"><br/>
+                <div id="basketInfo">
+                  <p class="emptyBasket">Your bag is empty</p>
+                </div>
+              </div>
+              <div>
+                <a href="login">
+                  <img id="login" src="/resources/images/login.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div id="secondHeader"></div>
 
         <hr>
-        <div id="thirdHeader" class="row">
+        <div id="thirdHeader">
           <ul class="menu">
-            <li><a href="category/fragrances">FRAGRANCES</a></li>
-            <li><a href="category/forFace">FOR FACE</a></li>
+            <j:forEach items="${categories}" var="category" varStatus="tagStatus">
+              <li><a href="/category/${category.name}">${category.name}</a></li>
+            </j:forEach>
           </ul>
         </div>
         <hr>
@@ -92,18 +133,18 @@
             <%--</div>--%>
 
             <div class="variant editProfileBlock">
-              <spring:form action="update-client" method="post" modelAttribute="clientDto">
+              <form action="update-client" method="post" modelAttribute="clientDto">
                 <div class="mainPanelBlock">
                   <p class="headerText">Main</p>
                   <div class="subBlock">
                     <div class="form-group">
                       <label>Last name</label>
-                      <spring:input path="lastName"/>
+                      <input name="lastName"/>
                     </div>
 
                     <div class="form-group">
                       <label>First name</label>
-                      <spring:input path="firstName"/>
+                      <input name="firstName"/>
                     </div>
                   </div>
                 </div>
@@ -113,20 +154,20 @@
                   <div class="subBlock">
                     <div class="form-group">
                       <label>Birthday</label>
-                      <spring:input path="birthday"/>
+                      <input name="birthday"/>
                     </div>
 
                     <div class="form-group">
                       <label>Email</label>
-                      <spring:input type="email" path="email"/>
+                      <input type="email" name="email"/>
                     </div>
                   </div>
                 </div>
 
                 <div class="mainPanelBlock">
-                  <spring:button class="btn btn-primary formButton">CHANGE</spring:button>
+                  <button class="btn formButton">CHANGE</button>
                 </div>
-              </spring:form>
+              </form>
             </div>
 
             <div class="variant changePasswordBlock">
@@ -143,7 +184,7 @@
                   <label>Repeat new password:</label>
                   <input name="repeatNewPassword" type="password" required/>
                 </div>
-                <button class="btn btn-primary formButton">Change password</button>
+                <button class="btn formButton">Change password</button>
               </form>
             </div>
           </div>

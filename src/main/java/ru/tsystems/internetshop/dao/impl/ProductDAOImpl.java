@@ -1,14 +1,14 @@
-package ru.tsystems.internetshop.dao;
+package ru.tsystems.internetshop.dao.impl;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.tsystems.internetshop.dao.ProductDAO;
 import ru.tsystems.internetshop.model.Category;
 import ru.tsystems.internetshop.model.ProductDto;
 
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,12 +41,11 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public List<ProductDto> findProductsByCategory(Category category) {
-//        String queryString = "SELECT p FROM product p WHERE p.category_name = :category_name";
+        String queryString = "SELECT p FROM product p WHERE p.category.name = :category_name";
 
-//        TypedQuery<ProductDto> query = sessionFactory.getCurrentSession().createQuery(queryString, ProductDto.class);
-//        query.setParameter("category_name", category.getName());
+        TypedQuery<ProductDto> query = sessionFactory.getCurrentSession().createQuery(queryString, ProductDto.class);
+        query.setParameter("category_name", category.getName().toLowerCase());
 
-//        return query.getResultList();
-        return new ArrayList<>();
+        return query.getResultList();
     }
 }

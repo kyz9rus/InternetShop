@@ -29,14 +29,14 @@ public class ClientDto {
     private LocalDate birthday;
 
     @Email(message = "Email should be valid")
-    @Column(unique = true)
+    @Column(unique = true, length = 70)
     private String email;
 
     @NotNull(message = "Please enter password")
     private String password;
 
-//    @OneToMany(mappedBy = "client")
-//    private Set<OrderDto> orders = new HashSet<>();
+    @OneToMany(mappedBy = "client")
+    private Set<OrderDto> orders = new HashSet<>();
 
     public ClientDto() {
     }

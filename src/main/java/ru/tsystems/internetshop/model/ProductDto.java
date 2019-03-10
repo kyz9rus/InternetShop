@@ -4,16 +4,18 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity(name = "product")
-//@Entity
 @Table(name = "product")
 public class ProductDto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private int id;
+//    @Column(columnDefinition = "serial")
+    private Long id;
 
     @NotNull
     @Column(unique = true, length = 70)
@@ -22,20 +24,28 @@ public class ProductDto {
     @NotNull
     private int price;
 
-//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Category.class)
-//    @JoinColumn(name = "category_name")
-//    private Category category;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_name")
+    private Category category;
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(
-//            name = "product_color",
-//            joinColumns =  @JoinColumn(name = "product_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "color", referencedColumnName = "name")
-//    )
-//    private Set<Color> colors = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "product_color",
+            joinColumns =  @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "color", referencedColumnName = "name")
+    )
+    private Set<Color> colors = new HashSet<>();
 
     private double weight;
     private String volume;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "order_product",
+            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns  =  @JoinColumn(name = "order_id", referencedColumnName = "id")
+    )
+    private Set<OrderDto> orders = new HashSet<>();
 
     @NotNull
     private long quantityInStock;

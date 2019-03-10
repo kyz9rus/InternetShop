@@ -15,11 +15,11 @@ public class Color {
     @Column(length = 70, name = "name")
     private String name;
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(
-//        name = "product_color",
-//        joinColumns = @JoinColumn(name = "color"),
-//        inverseJoinColumns =  @JoinColumn(name = "product_id")
-//    )
-//    private Set<ProductDto> products = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "product_color",
+        joinColumns = @JoinColumn(name = "color", referencedColumnName = "name"),
+        inverseJoinColumns =  @JoinColumn(name = "product_id", referencedColumnName = "id")
+    )
+    private Set<ProductDto> products = new HashSet<>();
 }
