@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.tsystems.internetshop.model.Category;
-import ru.tsystems.internetshop.model.ClientDto;
+import ru.tsystems.internetshop.model.Client;
 import ru.tsystems.internetshop.service.CategoryService;
 import ru.tsystems.internetshop.util.CategoryInfo;
 
@@ -36,14 +36,14 @@ public class MappingController {
 
     @GetMapping(value = "registration")
     public String toRegistrationPage(Model model) {
-        model.addAttribute("client", new ClientDto());
+        model.addAttribute("client", new Client());
         model.addAttribute("categories", categoryInfo.getInstance());
         return "registration";
     }
 
     @GetMapping(value = "clientProfile")
     public String toClientProfile(Model model) {
-        model.addAttribute("clientDto", new ClientDto("Daniil", "Kuzchutkomov", LocalDate.of(1998, 4, 23), "kyz9rus@yandex.ru", "null"));
+        model.addAttribute("clientDto", new Client("Daniil", "Kuzchutkomov", LocalDate.of(1998, 4, 23), "kyz9rus@yandex.ru", "null"));
         model.addAttribute("categories", categoryInfo.getInstance());
         return "clientProfile";
     }

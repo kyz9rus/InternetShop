@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @Entity(name = "clientAddress")
 @Table(name = "clientAddress")
-public class ClientAddressDto {
+public class ClientAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -35,5 +35,5 @@ public class ClientAddressDto {
     private int room;
 
     @OneToMany(mappedBy = "clientAddress")
-    private Set<OrderDto> orders = new HashSet<>();
+    private Set<Order> orders = new HashSet<>();
 }

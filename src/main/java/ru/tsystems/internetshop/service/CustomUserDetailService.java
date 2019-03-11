@@ -5,10 +5,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.UserDAO;
 import ru.tsystems.internetshop.model.CustomUserDetail;
 import ru.tsystems.internetshop.model.User;
 
+import javax.persistence.Table;
 import java.util.Optional;
 
 @Service

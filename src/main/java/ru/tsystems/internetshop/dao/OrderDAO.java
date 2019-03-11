@@ -1,15 +1,15 @@
 package ru.tsystems.internetshop.dao;
 
-import ru.tsystems.internetshop.model.OrderDto;
+import ru.tsystems.internetshop.model.Order;
 
 import java.util.List;
 
 public interface OrderDAO {
-    OrderDto findById(Long id);
+    Order findById(Long id);
 
-    void saveOrder(OrderDto order);
+    void saveOrder(Order order);
 
-    void updateOrder(OrderDto order);
+    void updateOrder(Order order);
 
-    List<OrderDto> findAllOrders();
+    List findAllOrders();
 }

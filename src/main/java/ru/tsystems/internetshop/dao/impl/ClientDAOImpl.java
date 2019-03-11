@@ -1,47 +1,29 @@
 package ru.tsystems.internetshop.dao.impl;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.query.Query;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.orm.hibernate5.HibernateTemplate;
-import ru.tsystems.internetshop.dao.ClientDAO;
-import ru.tsystems.internetshop.model.ClientDto;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import ru.tsystems.internetshop.model.ProductDto;
+import ru.tsystems.internetshop.dao.AbstractDAO;
+import ru.tsystems.internetshop.dao.ClientDAO;
+import ru.tsystems.internetshop.model.Client;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
-
-@Transactional
 @Repository
-////public class ClientDAOImpl extends AbstractDAO<ClientDto, Integer> implements ClientDAO {
-public class ClientDAOImpl implements ClientDAO {
+public class ClientDAOImpl extends AbstractDAO<Client, Integer> implements ClientDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public ClientDto findByEmail(String email) {
-//        String queryString = "SELECT c FROM client c WHERE c.email = :email";
-//        String queryString = "SELECT c FROM ClientDto c";
-
-//        TypedQuery<ClientDto> query = sessionFactory.getCurrentSession().createQuery(queryString, ClientDto.class);
-//        query.setParameter("email", email);
-
+    public Client findByEmail(String email) {
         String queryString = "SELECT p FROM client p WHERE p.email = :email";
 
-        TypedQuery<ClientDto> query = sessionFactory.getCurrentSession().createQuery(queryString, ClientDto.class);
+        TypedQuery<Client> query = sessionFactory.getCurrentSession().createQuery(queryString, Client.class);
         query.setParameter("email", email);
 
-        List<ClientDto> clients = query.getResultList();
+        List<Client> clients = query.getResultList();
 
         if (!clients.isEmpty())
             return clients.get(0);
@@ -50,54 +32,12 @@ public class ClientDAOImpl implements ClientDAO {
     }
 
     @Override
-    public void saveClient(ClientDto client) {
-        sessionFactory.getCurrentSession().save(client);
+    public void saveClient(Client client) {
+        create(client);
     }
 
     @Override
-    public void updateClient(ClientDto client) {
-        sessionFactory.getCurrentSession().update(client);
+    public void updateClient(Client client) {
+        update(client);
     }
-
-
-////    @Override
-////    public List<User> list() {
-////        @SuppressWarnings("unchecked")
-////        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
-////        return query.getResultList();
-////    }
-////
-////    @Override
-////    public ClientDto findById(int id) {
-////        return getByKey(id);
-////    }
-////
-////    @Override
-////    public ClientDto findByEmail(String email) {
-////        Criteria criteria = createEntityCriteria();
-////        criteria.add(Restrictions.eq("email", email));
-////        return (ClientDto) criteria.uniqueResult();
-////    }
-////
-//    @Override
-//    public void saveClient(ClientDto client) {
-//        persist(client);
-//    }
-////
-////    @Override
-////    public void updateClient(ClientDto client) {
-////
-////    }
-////
-////    @Override
-////    public void deleteClientById(int id) {
-//////        Query query = getSession().createSQLQuery("delete from Client where id = :id");
-//////        query.setString("id", id);
-//////        query.executeUpdate();
-////    }
-////
-////    @Override
-////    public List<ClientDto> findAllClients() {
-////        return null;
-////    }
 }

@@ -3,26 +3,33 @@ package ru.tsystems.internetshop.dao.impl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import ru.tsystems.internetshop.dao.AbstractDAO;
 import ru.tsystems.internetshop.dao.CategoryDAO;
 import ru.tsystems.internetshop.model.Category;
-import ru.tsystems.internetshop.model.ClientDto;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
-
-@Transactional
 @Repository
-public class CategoryDAOImpl implements CategoryDAO {
+public class CategoryDAOImpl extends AbstractDAO<Category, String> implements CategoryDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
     public void saveCategory(Category category) {
-        sessionFactory.getCurrentSession().save(category);
+        create(category);
+    }
+
+    @Override
+    public void updateCategory(Category category) {
+        update(category);
+    }
+
+    @Override
+    public void deleteCategory(Category category) {
+        delete(category);
     }
 
     @Override

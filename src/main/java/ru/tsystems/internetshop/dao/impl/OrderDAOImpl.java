@@ -3,37 +3,36 @@ package ru.tsystems.internetshop.dao.impl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import ru.tsystems.internetshop.dao.AbstractDAO;
 import ru.tsystems.internetshop.dao.OrderDAO;
-import ru.tsystems.internetshop.model.OrderDto;
+import ru.tsystems.internetshop.model.Order;
 
 import java.util.List;
 
-
-@Transactional
 @Repository
-public class OrderDAOImpl implements OrderDAO {
+public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public OrderDto findById(Long id) {
-        return sessionFactory.getCurrentSession().find(OrderDto.class, id);
+    public Order findById(Long id) {
+        return findByKey(id);
+//        return sessionFactory.getCurrentSession().find(Order.class, id);
     }
 
     @Override
-    public void saveOrder(OrderDto order) {
-        sessionFactory.getCurrentSession().save(order);
+    public void saveOrder(Order order) {
+        create(order);
     }
 
     @Override
-    public void updateOrder(OrderDto order) {
-        sessionFactory.getCurrentSession().update(order);
+    public void updateOrder(Order order) {
+        update(order);
     }
 
     @Override
-    public List<OrderDto> findAllOrders() {
+    public List<Order> findAllOrders() {
         return sessionFactory.getCurrentSession().createQuery("from ord").getResultList();
     }
 }

@@ -1,31 +1,15 @@
 package ru.tsystems.internetshop.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import ru.tsystems.internetshop.dao.OrderDAO;
-import ru.tsystems.internetshop.model.OrderDto;
+import ru.tsystems.internetshop.model.Order;
 
 import java.util.List;
 
-@Service
-public class OrderService {
+public interface OrderService {
+    void saveOrder(Order order);
 
-    @Autowired
-    private OrderDAO orderDAO;
+    void updateOrder(Order order);
 
-    public void saveOrder(OrderDto order) {
-        orderDAO.saveOrder(order);
-    }
+    Order getOrder(Long id);
 
-    public List<OrderDto> getOrders() {
-        return orderDAO.findAllOrders();
-    }
-
-    public void updateOrder(OrderDto order) {
-        orderDAO.updateOrder(order);
-    }
-
-    public OrderDto getOrder(Long id) {
-        return orderDAO.findById(id);
-    }
+    List<Order> getOrders();
 }

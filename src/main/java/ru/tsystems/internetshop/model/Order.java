@@ -4,13 +4,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
 @Entity(name = "ord")
 @Table(name = "ord")
-public class OrderDto {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "serial")
@@ -18,11 +17,11 @@ public class OrderDto {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
-    private ClientDto client;
+    private Client client;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_address")
-    private ClientAddressDto clientAddress;
+    private ClientAddress clientAddress;
 
     @Column(name = "payment_method")
     @Enumerated (EnumType.STRING)
@@ -38,7 +37,7 @@ public class OrderDto {
             joinColumns =  @JoinColumn(name = "order_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
     )
-    private Set<ProductDto> products = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 
     @Column(name = "payment_status")
     @Enumerated (EnumType.STRING)
@@ -48,10 +47,10 @@ public class OrderDto {
     @Enumerated (EnumType.STRING)
     private OrderStatus orderStatus;
 
-    public OrderDto() {
+    public Order() {
     }
 
-    public OrderDto(ClientDto client, ClientAddressDto clientAddress, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, Set<ProductDto> products, PaymentStatus paymentStatus, OrderStatus orderStatus) {
+    public Order(Client client, ClientAddress clientAddress, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, Set<Product> products, PaymentStatus paymentStatus, OrderStatus orderStatus) {
         this.client = client;
         this.clientAddress = clientAddress;
         this.paymentMethod = paymentMethod;

@@ -10,4 +10,8 @@ public interface CategoryDAO {
     Category findByName(String name);
 
     void saveCategory(Category category);
+
+    void updateCategory(Category category);
+
+    void deleteCategory(Category category);
 }

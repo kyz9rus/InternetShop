@@ -1,44 +1,11 @@
 package ru.tsystems.internetshop.service;
 
-import ru.tsystems.internetshop.dao.ClientDAO;
-import ru.tsystems.internetshop.model.ClientDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import ru.tsystems.internetshop.model.Client;
 
-@Service
-public class ClientService {
+public interface ClientService {
+    void saveClient(Client client);
 
-    @Autowired
-    private ClientDAO clientDAO;
+    void updateClient(Client client);
 
-//    public ClientDto findById(int id) {
-//        return clientDAO.findById(id);
-//    }
-
-    public void saveClient(ClientDto client) {
-        clientDAO.saveClient(client);
-    }
-
-    public void updateClient(ClientDto client) {clientDAO.updateClient(client);}
-
-//    public void updateClient(ClientDto client) {
-//        // TODO Auto-generated method stub
-//        ClientDto entity = clientDAO.findById(client.getId());
-//        if (entity != null) {
-//            entity.setFirstName(client.getFirstName());
-//            entity.setLastName(client.getLastName());
-//            entity.setBirthday(client.getBirthday());
-//            entity.setEmail(client.getEmail());
-//            entity.setPassword(client.getPassword());
-//        }
-//
-//    }
-
-//    public List<ClientDto> findAllClients() {
-//        return clientDAO.findAllClients();
-//    }
-//
-    public ClientDto getClientByEmail(String email) {
-        return clientDAO.findByEmail(email);
-    }
+    Client getClientByEmail(String email);
 }

@@ -1,20 +1,18 @@
 package ru.tsystems.internetshop.controller;
 
-import org.springframework.ui.Model;
-import ru.tsystems.internetshop.model.Category;
-import ru.tsystems.internetshop.model.ClientDto;
-import ru.tsystems.internetshop.model.ProductDto;
-import ru.tsystems.internetshop.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import ru.tsystems.internetshop.model.Category;
+import ru.tsystems.internetshop.model.Client;
+import ru.tsystems.internetshop.model.Product;
+import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.service.ProductService;
 import ru.tsystems.internetshop.util.CategoryInfo;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,12 +28,13 @@ public class PublicController {
     private CategoryInfo categoryInfo;
 
     @PostMapping(value = "create-client")
-    public String createClient(@Validated @ModelAttribute("client") ClientDto clientDto, @RequestParam("repeatPassword") String repeatPassword, Model model) {
-        if (clientService.getClientByEmail(clientDto.getEmail()) != null)
+    public String createClient(@Validated @ModelAttribute("client") Client client, @RequestParam("repeatPassword") String repeatPassword, Model model) {
+        if (clientService.getClientByEmail(client.getEmail()) != null)
             model.addAttribute("errorMessage", "A user with this email address already exists.");
         else {
-            if (clientDto.getPassword().equals(repeatPassword)) {
-                clientService.saveClient(clientDto);
+            if (client.getPassword().equals(repeatPassword)) {
+                client.setPassword(new BCryptPasswordEncoder().encode(client.getPassword()));
+                clientService.saveClient(client);
 
                 model.addAttribute("successMessage", "You have been successfully registered. Sign in!");
             } else {
@@ -49,8 +48,8 @@ public class PublicController {
     }
 
     @PostMapping(value = "update-client")
-    public String updateClient(@Validated @ModelAttribute("client") ClientDto clientDto, Model model) {
-        System.out.println(clientDto);
+    public String updateClient(@Validated @ModelAttribute("client") Client client, Model model) {
+        System.out.println(client);
 
         // add SPRING SESSION
 //        if (clientService.getClientByEmail(clientDto.getEmail()) != null)
@@ -72,7 +71,7 @@ public class PublicController {
 
     @GetMapping(value = "category/{categoryName}")
     public String getCategory(@PathVariable("categoryName") String categoryName, Model model) {
-        List<ProductDto> products = productService.getProductsByCategory(new Category(categoryName));
+        List<Product> products = productService.getProductsByCategory(new Category(categoryName));
 
         if (!products.isEmpty())
             model.addAttribute("products", products);

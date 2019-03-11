@@ -1,20 +1,17 @@
 package ru.tsystems.internetshop.model;
 
 import lombok.Data;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.tsystems.internetshop.model.ProductDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 import java.util.Set;
 
 @Data
-@Entity(name = "user")
-@Table(name = "application_user")
-public class User {
+@Entity
+@Table(name = "USER")
+public class User implements Serializable {
 
     @Id
     @Column(length = 100, name = "email")

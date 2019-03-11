@@ -102,7 +102,10 @@
               </a>
             </div>
           </div>
+        </div>
 
+        <div>
+          <%-- product top --%>
         </div>
       </div>
 

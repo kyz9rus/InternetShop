@@ -5,13 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.tsystems.internetshop.model.*;
+import ru.tsystems.internetshop.model.Order;
+import ru.tsystems.internetshop.model.OrderStatus;
+import ru.tsystems.internetshop.model.Product;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.service.ProductService;
 import ru.tsystems.internetshop.util.CategoryInfo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -28,7 +28,7 @@ public class EmployeeController {
     private CategoryInfo categoryInfo;
 
     @PostMapping("create-product")
-    public String createProduct(@Validated @ModelAttribute("product") ProductDto product, Model model) {
+    public String createProduct(@Validated @ModelAttribute("product") Product product, Model model) {
         System.out.println(product);
 
         if (productService.getProductByName(product.getName()) == null) {
@@ -45,7 +45,7 @@ public class EmployeeController {
 
     @GetMapping("getOrders")
     public String getOrders(Model model) {
-        List<OrderDto> orders = orderService.getOrders();
+        List<Order> orders = orderService.getOrders();
 
         if (orders.isEmpty())
             model.addAttribute("emptyListMessage", "Order list is empty.");
@@ -60,7 +60,7 @@ public class EmployeeController {
     @PostMapping("change-order-status")
     public String changeOrderStatus(@RequestParam("id") Long id, @RequestParam("orderStatus") OrderStatus orderStatus, Model model) {
 
-        OrderDto order = orderService.getOrder(id);
+        Order order = orderService.getOrder(id);
         if (order != null) {
             order.setOrderStatus(orderStatus);
             orderService.updateOrder(order);

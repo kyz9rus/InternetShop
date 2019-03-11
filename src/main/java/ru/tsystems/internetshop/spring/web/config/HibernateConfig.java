@@ -1,7 +1,5 @@
 package ru.tsystems.internetshop.spring.web.config;
 
-import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate5.HibernateTemplate;
 import ru.tsystems.internetshop.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -25,8 +23,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean getSessionFactory(){
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
-        factoryBean.setAnnotatedClasses(ClientDto.class, OrderDto.class, ClientAddressDto.class, Color.class, ProductDto.class, Category.class, User.class, Role.class);
-//        factoryBean.setAnnotatedClasses(User.class);
+        factoryBean.setAnnotatedClasses(Client.class, Order.class, ClientAddress.class, Color.class, Product.class, Category.class, User.class, Role.class);
         return factoryBean;
     }
 

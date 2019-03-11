@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @Entity(name = "client")
 @Table(name = "client")
-public class ClientDto {
+public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -36,12 +36,12 @@ public class ClientDto {
     private String password;
 
     @OneToMany(mappedBy = "client")
-    private Set<OrderDto> orders = new HashSet<>();
+    private Set<Order> orders = new HashSet<>();
 
-    public ClientDto() {
+    public Client() {
     }
 
-    public ClientDto(String firstName, String lastName, LocalDate birthday, String email, String password) {
+    public Client(String firstName, String lastName, LocalDate birthday, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;

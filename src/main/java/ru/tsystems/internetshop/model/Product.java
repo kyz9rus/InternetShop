@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @Entity(name = "product")
 @Table(name = "product")
-public class ProductDto {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,15 +45,15 @@ public class ProductDto {
             joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
             inverseJoinColumns  =  @JoinColumn(name = "order_id", referencedColumnName = "id")
     )
-    private Set<OrderDto> orders = new HashSet<>();
+    private Set<Order> orders = new HashSet<>();
 
     @NotNull
     private long quantityInStock;
 
-    public ProductDto() {
+    public Product() {
     }
 
-    public ProductDto(@NotNull String name, @NotNull int price, double weight, String volume, @NotNull long quantityInStock) {
+    public Product(@NotNull String name, @NotNull int price, double weight, String volume, @NotNull long quantityInStock) {
         this.name = name;
         this.price = price;
         this.weight = weight;

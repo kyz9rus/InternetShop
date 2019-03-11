@@ -21,5 +21,5 @@ public class Color {
         joinColumns = @JoinColumn(name = "color", referencedColumnName = "name"),
         inverseJoinColumns =  @JoinColumn(name = "product_id", referencedColumnName = "id")
     )
-    private Set<ProductDto> products = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 }

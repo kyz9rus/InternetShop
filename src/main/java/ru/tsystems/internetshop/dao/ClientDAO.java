@@ -1,19 +1,11 @@
 package ru.tsystems.internetshop.dao;
 
-import ru.tsystems.internetshop.model.ClientDto;
+import ru.tsystems.internetshop.model.Client;
 
 public interface ClientDAO {
-//    ClientDto findById(int id);
+    void saveClient(Client client);
 
-    ClientDto findByEmail(String email);
+    void updateClient(Client client);
 
-    void saveClient(ClientDto client);
-
-    void updateClient(ClientDto client);
-
-//    void updateClient(ClientDto client);
-
-//    void deleteClientById(int id);
-
-//    List<ClientDto> findAllClients();
+    Client findByEmail(String email);
 }
