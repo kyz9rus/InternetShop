@@ -10,12 +10,12 @@ import java.util.Set;
 @Data
 @Entity(name = "product")
 @Table(name = "product")
-public class Product {
+public class Product extends AbstractEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
 //    @Column(columnDefinition = "serial")
-    private Long id;
+//    private Long id;
 
     @NotNull
     @Column(unique = true, length = 70)

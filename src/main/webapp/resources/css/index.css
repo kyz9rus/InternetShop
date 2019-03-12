@@ -26,6 +26,24 @@
     width: 120px;
 }
 
+.becomeRepresentativeHeaderBlock {
+    float: left;
+}
+
+.signInBlock{
+    float: right;
+}
+
+.registrationHeaderBlock {
+    float: left;
+}
+
+.loginHeaderBlock {
+    float: right;
+    margin-left: 20px;
+}
+
+
 #logoDiv {
     float: left;
 }
