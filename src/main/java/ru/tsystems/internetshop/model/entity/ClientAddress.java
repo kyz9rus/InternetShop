@@ -1,4 +1,4 @@
-package ru.tsystems.internetshop.model;
+package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
 
@@ -13,7 +13,7 @@ import java.util.Set;
 public class ClientAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @NotNull
     private String country;

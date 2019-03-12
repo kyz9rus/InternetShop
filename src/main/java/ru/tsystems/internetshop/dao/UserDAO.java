@@ -1,7 +1,6 @@
 package ru.tsystems.internetshop.dao;
 
-import ru.tsystems.internetshop.model.User;
+import ru.tsystems.internetshop.model.entity.User;
 
-public interface UserDAO {
-    User findByEmail(String email);
+public interface UserDAO extends DAO<User, String>{
 }

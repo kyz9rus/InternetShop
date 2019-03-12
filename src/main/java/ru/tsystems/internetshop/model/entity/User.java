@@ -1,4 +1,4 @@
-package ru.tsystems.internetshop.model;
+package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Data
-@Entity
+@Entity(name = "user")
 @Table(name = "USER")
 public class User implements Serializable {
 

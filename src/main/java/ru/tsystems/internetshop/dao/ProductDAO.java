@@ -1,14 +1,11 @@
 package ru.tsystems.internetshop.dao;
 
-import ru.tsystems.internetshop.model.Category;
-import ru.tsystems.internetshop.model.Product;
+import ru.tsystems.internetshop.model.entity.Category;
+import ru.tsystems.internetshop.model.entity.Product;
 
 import java.util.List;
 
-public interface ProductDAO {
-    Product findByName(String name);
-
-    void saveProduct(Product product);
-
+public interface ProductDAO extends DAO<Product, Long>{
     List<Product> findProductsByCategory(Category category);
+    Product findProductByName(String name);
 }

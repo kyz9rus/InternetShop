@@ -5,12 +5,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.UserDAO;
-import ru.tsystems.internetshop.model.CustomUserDetail;
-import ru.tsystems.internetshop.model.User;
+import ru.tsystems.internetshop.model.entity.CustomUserDetail;
+import ru.tsystems.internetshop.model.entity.User;
 
-import javax.persistence.Table;
 import java.util.Optional;
 
 @Service
@@ -21,7 +19,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> user = Optional.ofNullable(userDAO.findByEmail(email));
+        Optional<User> user = Optional.ofNullable(userDAO.findByKey(email));
 
         user.orElseThrow(() -> new UsernameNotFoundException("Email not found"));
         return user.map(CustomUserDetail::new).get();

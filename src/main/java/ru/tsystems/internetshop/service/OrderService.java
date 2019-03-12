@@ -1,6 +1,6 @@
 package ru.tsystems.internetshop.service;
 
-import ru.tsystems.internetshop.model.Order;
+import ru.tsystems.internetshop.model.entity.Order;
 
 import java.util.List;
 

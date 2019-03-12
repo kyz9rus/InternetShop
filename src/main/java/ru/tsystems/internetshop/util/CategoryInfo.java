@@ -1,7 +1,7 @@
 package ru.tsystems.internetshop.util;
 
 import org.springframework.stereotype.Component;
-import ru.tsystems.internetshop.model.Category;
+import ru.tsystems.internetshop.model.entity.Category;
 
 import java.util.ArrayList;
 import java.util.List;

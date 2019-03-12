@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.tsystems.internetshop.model.Category;
-import ru.tsystems.internetshop.model.Client;
+import ru.tsystems.internetshop.model.entity.Category;
+import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.service.CategoryService;
 import ru.tsystems.internetshop.util.CategoryInfo;
 

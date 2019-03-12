@@ -1,4 +1,4 @@
-package ru.tsystems.internetshop.model;
+package ru.tsystems.internetshop.model.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

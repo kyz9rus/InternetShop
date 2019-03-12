@@ -1,20 +1,15 @@
 package ru.tsystems.internetshop.dao.impl;
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.tsystems.internetshop.dao.AbstractDAO;
 import ru.tsystems.internetshop.dao.ClientDAO;
-import ru.tsystems.internetshop.model.Client;
+import ru.tsystems.internetshop.model.entity.Client;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class ClientDAOImpl extends AbstractDAO<Client, Integer> implements ClientDAO {
-
-    @Autowired
-    private SessionFactory sessionFactory;
+public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDAO {
 
     @Override
     public Client findByEmail(String email) {
@@ -29,15 +24,5 @@ public class ClientDAOImpl extends AbstractDAO<Client, Integer> implements Clien
             return clients.get(0);
         else
             return null;
-    }
-
-    @Override
-    public void saveClient(Client client) {
-        create(client);
-    }
-
-    @Override
-    public void updateClient(Client client) {
-        update(client);
     }
 }

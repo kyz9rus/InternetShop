@@ -1,7 +1,7 @@
 package ru.tsystems.internetshop.service;
 
-import ru.tsystems.internetshop.model.Category;
-import ru.tsystems.internetshop.model.Product;
+import ru.tsystems.internetshop.model.entity.Category;
+import ru.tsystems.internetshop.model.entity.Product;
 
 import java.util.List;
 

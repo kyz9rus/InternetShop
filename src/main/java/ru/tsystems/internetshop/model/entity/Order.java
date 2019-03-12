@@ -1,6 +1,10 @@
-package ru.tsystems.internetshop.model;
+package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
+import ru.tsystems.internetshop.model.DeliveryMethod;
+import ru.tsystems.internetshop.model.OrderStatus;
+import ru.tsystems.internetshop.model.PaymentMethod;
+import ru.tsystems.internetshop.model.PaymentStatus;
 
 import javax.persistence.*;
 import java.util.HashSet;

@@ -1,6 +1,5 @@
 package ru.tsystems.internetshop.spring.web.config;
 
-import ru.tsystems.internetshop.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import ru.tsystems.internetshop.model.entity.*;
 
 @Configuration
 @EnableTransactionManagement

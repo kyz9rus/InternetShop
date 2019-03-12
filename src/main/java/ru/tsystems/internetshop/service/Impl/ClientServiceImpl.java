@@ -2,7 +2,7 @@ package ru.tsystems.internetshop.service.Impl;
 
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.ClientDAO;
-import ru.tsystems.internetshop.model.Client;
+import ru.tsystems.internetshop.model.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.tsystems.internetshop.service.ClientService;
@@ -15,10 +15,10 @@ public class ClientServiceImpl implements ClientService {
     private ClientDAO clientDAO;
 
     public void saveClient(Client client) {
-        clientDAO.saveClient(client);
+        clientDAO.create(client);
     }
 
-    public void updateClient(Client client) {clientDAO.updateClient(client);}
+    public void updateClient(Client client) {clientDAO.update(client);}
 
     public Client getClientByEmail(String email) {
         return clientDAO.findByEmail(email);

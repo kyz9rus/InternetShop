@@ -1,6 +1,6 @@
 package ru.tsystems.internetshop.service;
 
-import ru.tsystems.internetshop.model.Client;
+import ru.tsystems.internetshop.model.entity.Client;
 
 public interface ClientService {
     void saveClient(Client client);

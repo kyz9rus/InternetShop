@@ -1,4 +1,4 @@
-package ru.tsystems.internetshop.model;
+package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
 
@@ -8,7 +8,6 @@ import java.util.Set;
 
 @Data
 @Entity(name = "category")
-//@Entity
 @Table(name = "category")
 public class Category {
 

@@ -55,5 +55,3 @@ create table orderToProduct (
   order_id int references ord(id),
   product_id int references product(id)
 );
-
-select * from client;
