@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.model.entity.Category;
 import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.model.entity.Product;
@@ -25,6 +26,9 @@ public class PublicController {
     private ProductService productService;
 
     @Autowired
+    private UserClientFacade userClientFacade;
+
+    @Autowired
     private CategoryInfo categoryInfo;
 
     @PostMapping(value = "create-client")
@@ -34,7 +38,9 @@ public class PublicController {
         else {
             if (client.getPassword().equals(repeatPassword)) {
                 client.setPassword(new BCryptPasswordEncoder().encode(client.getPassword()));
-                clientService.saveClient(client);
+                userClientFacade.registerUser(client);
+//                clientService.saveClient(client);
+
 
                 model.addAttribute("successMessage", "You have been successfully registered. Sign in!");
             } else {

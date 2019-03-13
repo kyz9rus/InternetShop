@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.UserDAO;
 import ru.tsystems.internetshop.model.entity.User;
 
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Transactional
@@ -32,12 +33,27 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User findByKey(String email) {
-        return sessionFactory.getCurrentSession().get(User.class, email);
+    public User findByKey(Long id) {
+        return sessionFactory.getCurrentSession().get(User.class, id);
     }
 
     @Override
     public List<User> findAll() {
         return sessionFactory.getCurrentSession().createQuery("from user").list();
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        String queryString = "SELECT u FROM user u WHERE u.email= :email";
+
+        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(queryString, User.class);
+        query.setParameter("email", email);
+
+        List<User> users = query.getResultList();
+
+        if (!users.isEmpty())
+            return users.get(0);
+        else
+            return null;
     }
 }

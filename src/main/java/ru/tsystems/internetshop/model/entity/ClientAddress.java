@@ -12,7 +12,8 @@ import java.util.Set;
 @Table(name = "clientAddress")
 public class ClientAddress {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientAddress_seq")
+    @SequenceGenerator(name = "clientAddress_seq", sequenceName = "SEQ_CLIENTADDRESS", allocationSize = 1)
     private Long id;
 
     @NotNull

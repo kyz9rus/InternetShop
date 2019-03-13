@@ -15,7 +15,7 @@ public class Category {
     @Column(length = 70, name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "category", targetEntity = Product.class, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category", targetEntity = Product.class)
     private Set<Product> products = new HashSet<>();
 
     public Category() {

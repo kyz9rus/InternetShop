@@ -4,18 +4,19 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @Entity(name = "product")
 @Table(name = "product")
-public class Product extends AbstractEntity{
+public class Product {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Column(columnDefinition = "serial")
-//    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
+    @SequenceGenerator(name = "product_seq", sequenceName = "SEQ_PRODUCT", allocationSize = 1)
+    private Long id;
 
     @NotNull
     @Column(unique = true, length = 70)
@@ -24,7 +25,7 @@ public class Product extends AbstractEntity{
     @NotNull
     private int price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "category_name")
     private Category category;
 
@@ -37,6 +38,8 @@ public class Product extends AbstractEntity{
     private Set<Color> colors = new HashSet<>();
 
     private double weight;
+
+    @Size(min = 12, max = 12)
     private String volume;
 
     @ManyToMany(cascade = CascadeType.ALL)
