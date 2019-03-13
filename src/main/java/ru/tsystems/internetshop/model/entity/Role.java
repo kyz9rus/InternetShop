@@ -3,6 +3,8 @@ package ru.tsystems.internetshop.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity(name = "role")
@@ -16,4 +18,11 @@ public class Role {
 
     @Column(length = 100, name = "name")
     private String name;
+
+    public Role() {
+    }
+
+    public Role(String name) {
+        this.name = name;
+    }
 }
