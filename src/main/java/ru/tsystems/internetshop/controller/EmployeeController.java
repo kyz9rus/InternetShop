@@ -27,23 +27,7 @@ public class EmployeeController {
     @Autowired
     private CategoryInfo categoryInfo;
 
-    @PostMapping("create-product")
-    public String createProduct(@Validated @ModelAttribute("product") Product product, Model model) {
-        System.out.println(product);
-
-        if (productService.getProductByName(product.getName()) == null) {
-            productService.saveProduct(product);
-
-            model.addAttribute("successMessage", "Product saved successfully!");
-        } else
-            model.addAttribute("errorMessage", "Product with this name already exists.");
-
-        model.addAttribute("categories", categoryInfo.getInstance());
-
-        return "employeeProfile";
-    }
-
-    @GetMapping("getOrders")
+    @GetMapping("get-orders")
     public String getOrders(Model model) {
         List<Order> orders = orderService.getOrders();
 
@@ -54,7 +38,46 @@ public class EmployeeController {
 
         model.addAttribute("categories", categoryInfo.getInstance());
 
-        return "employeeProfile";
+        return "employeeProfile/orders";
+    }
+
+    @GetMapping("changeOrderStatus")
+    public String changeOrderStatusPage(Model model) {
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+        return "employeeProfile/changeOrderStatus";
+    }
+
+    @GetMapping("saleStatistic")
+    public String saleStatisticPage(Model model) {
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+        return "employeeProfile/saleStatistic";
+    }
+
+    @GetMapping("addProduct")
+    public String addProductPage(Model model) {
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+        return "employeeProfile/addProduct";
+    }
+
+    @GetMapping("manageCategories")
+    public String manageCategoriesPage(Model model) {
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+        return "employeeProfile/manageCategories";
+    }
+
+    @GetMapping("import-products-from-file")
+    public String importFromFile(Model model) {
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+//        ...
+
+        model.addAttribute("successMessage", "import of products successfully completed");
+
+        return "employeeProfile/importProductsFromFile";
     }
 
     @PostMapping("change-order-status")
@@ -71,6 +94,22 @@ public class EmployeeController {
 
         model.addAttribute("categories", categoryInfo.getInstance());
 
-        return "employeeProfile";
+        return "employeeProfile/changeOrderStatus";
+    }
+
+    @PostMapping("create-product")
+    public String createProduct(@Validated @ModelAttribute("product") Product product, Model model) {
+        System.out.println(product);
+
+        if (productService.getProductByName(product.getName()) == null) {
+            productService.saveProduct(product);
+
+            model.addAttribute("successMessage", "Product saved successfully!");
+        } else
+            model.addAttribute("errorMessage", "Product with this name already exists.");
+
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+        return "employeeProfile/addProduct";
     }
 }

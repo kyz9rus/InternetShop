@@ -41,7 +41,6 @@ public class PublicController {
                 userClientFacade.registerUser(client);
 //                clientService.saveClient(client);
 
-
                 model.addAttribute("successMessage", "You have been successfully registered. Sign in!");
             } else {
                 model.addAttribute("errorMessage", "Entered passwords do not match.");
@@ -51,28 +50,6 @@ public class PublicController {
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "registration";
-    }
-
-    @PostMapping(value = "update-client")
-    public String updateClient(@Validated @ModelAttribute("client") Client client, Model model) {
-        System.out.println(client);
-
-        // add SPRING SESSION
-//        if (clientService.getClientByEmail(clientDto.getEmail()) != null)
-//            modelAndView.addObject("errorMessage", "A user with this email address already exists.");
-//        else {
-//            if (clientDto.getPassword().equals(repeatPassword)) {
-//                clientService.saveClient(clientDto);
-//
-//                modelAndView.addObject("successMessage", "You have been successfully registered. Sign in!");
-//            } else {
-//                modelAndView.addObject("errorMessage", "Entered passwords do not match.");
-//            }
-//        }
-
-        model.addAttribute("categories", categoryInfo.getInstance());
-
-        return "clientProfile";
     }
 
     @GetMapping(value = "category/{categoryName}")

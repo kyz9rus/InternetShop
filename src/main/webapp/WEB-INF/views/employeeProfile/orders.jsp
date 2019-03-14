@@ -91,64 +91,72 @@
       <div class="content">
         <div class="row">
           <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel">
-            <ul>
-                <li><h5>Orders</h5></li>
-                <li class="employeeOperation">
-                    <a href="/employeeProfile/get-orders">
-                        <label>View orders</label>
-                    </a>
-                </li>
-                <li class="employeeOperation">
-                    <a href="/employeeProfile/changeOrderStatus">
-                        <label>Change order status</label>
-                    </a>
-                </li>
-                <li class="divider"></li>
+              <ul>
+                  <li><h5>Orders</h5></li>
+                  <li class="employeeOperation">
+                      <a href="/employeeProfile/get-orders">
+                          <label>View orders</label>
+                      </a>
+                  </li>
+                  <li class="employeeOperation">
+                      <a href="/employeeProfile/changeOrderStatus">
+                          <label>Change order status</label>
+                      </a>
+                  </li>
+                  <li class="divider"></li>
 
-                <li class="employeeOperation">
-                    <a href="/employeeProfile/saleStatistic">
-                        <label>Sales statistics</label>
-                    </a>
-                </li>
-                <li class="divider"></li>
+                  <li class="employeeOperation">
+                      <a href="/employeeProfile/saleStatistic">
+                          <label>Sales statistics</label>
+                      </a>
+                  </li>
+                  <li class="divider"></li>
 
-                <li><h5>Products</h5></li>
-                <li class="employeeOperation">
-                    <a href="/employeeProfile/addProduct">
-                        <label>Add product</label>
-                    </a>
-                </li>
-                <li class="employeeOperation">
-                    <a href="/employeeProfile/manageCategories">
-                        <label>Creating and managing categories of the directory</label>
-                    </a>
-                </li>
-                <li class="employeeOperation">
-                    <a href="/employeeProfile/import-from-file">
-                        <label>Import from file</label>
-                    </a>
-                </li>
-            </ul>
+                  <li><h5>Products</h5></li>
+                  <li class="employeeOperation">
+                      <a href="/employeeProfile/addProduct">
+                          <label>Add product</label>
+                      </a>
+                  </li>
+                  <li class="employeeOperation">
+                      <a href="/employeeProfile/manageCategories">
+                          <label>Creating and managing categories of the directory</label>
+                      </a>
+                  </li>
+                  <li class="employeeOperation">
+                      <a href="/employeeProfile/import-from-file">
+                          <label>Import from file</label>
+                      </a>
+                  </li>
+              </ul>
           </div>
 
           <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mainPanel">
-              <div class="messageBlock">
-                  <label class="successMessage">${successMessage}</label>
-                  <label class="errorMessage">${errorMessage}</label>
+            <div class="messageBlock">
+                <label class="successMessage">${successMessage}</label>
+                <label class="errorMessage">${errorMessage}</label>
+                <label>${emptyListMessage}</label>
+            </div>
+
+              <div class="variant ordersBlock">
+                  <ul class="orderList">
+                      <j:forEach items="${orders}" var="order" varStatus="tagStatus">
+                          <li>${order.id}, ${order.paymentMethod}, ${order.paymentStatus}, ${order.orderStatus}</li>
+                      </j:forEach>
+                  </ul>
               </div>
-
-            <p>Choose action in left panel</p>
           </div>
 
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
-          </div>
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
         </div>
+       </div>
 
-        <div id="footer"></div>
-    </div>
+       <div id="footer"></div>
+     </div>
   </div>
 
+  <script type="text/javascript" src="<c:url value="/resources/js/routingFromImages.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
   <script>

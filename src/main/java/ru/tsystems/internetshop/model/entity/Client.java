@@ -4,8 +4,6 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,20 +18,19 @@ public class Client {
     @Column(name = "id")
     private Long id;
 
-    @NotNull(message = "Please enter first name")
+    @Column(nullable = false)
     private String firstName;
 
-    @NotNull(message = "Please enter last name")
+    @Column(nullable = false)
     private String lastName;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthday;
 
-    @Email(message = "Email should be valid")
     @Column(unique = true, length = 70)
     private String email;
 
-    @NotNull(message = "Please enter password")
+    @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "client")

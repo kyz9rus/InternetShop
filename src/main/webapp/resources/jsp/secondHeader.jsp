@@ -11,6 +11,5 @@
     </div>
 </div>
 
-<script type="text/javascript" src="<c:url value="resources/js/routingFromImages.js"/>"></script>
-<script type="text/javascript" src="<c:url value="resources/js/basketDisplay.js"/>"></script>
-<script type="text/javascript" src="<c:url value="resources/js/displayMobileMenu.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/routingFromImages.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/displayMobileMenu.js"/>"></script>

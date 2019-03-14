@@ -129,12 +129,48 @@
               <label class="errorMessage">${errorMessage}</label>
             </div>
 
-            <p>Choose action in left panel</p>
+            <div class="variant editProfileBlock">
+              <form action="update-client" method="post" >
+                <div class="mainPanelBlock">
+                  <p class="headerText">Main</p>
+                  <div class="subBlock">
+                    <div class="form-group">
+                      <label>Last name</label>
+                      <input name="lastName"/>
+                    </div>
+
+                    <div class="form-group">
+                      <label>First name</label>
+                      <input name="firstName"/>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mainPanelBlock">
+                  <p class="headerText">Additionally</p>
+                  <div class="subBlock">
+                    <div class="form-group">
+                      <label>Birthday</label>
+                      <input name="birthday"/>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" name="email"/>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mainPanelBlock">
+                  <button class="btn formButton">CHANGE</button>
+                </div>
+              </form>
+            </div>
+
           </div>
 
           <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
         </div>
-
 
       </div>
 
@@ -144,6 +180,10 @@
 
   <script type="text/javascript" src="<c:url value="/resources/js/routingFromImages.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
+  <script>
+      // Маска для полей
+      $('.editProfileBlock input[name="birthday"]').mask('99-99-9999');
+  </script>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
 </body>
 

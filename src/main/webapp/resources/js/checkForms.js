@@ -57,3 +57,36 @@ $('.changePassword .formButton').click(function (e) {
         $('.changePassword .errorMessage').text('');
 
 });
+
+$('.addProductBlock button').click(function (e) {
+    var volume = $('.addProductBlock input[name="volume"]').val();
+    if (volume.length !== 11) {
+        $('.errorMessage').text('Enter volume following the pattern (999x999x999)');
+        e.preventDefault()
+    }
+});
+
+$('.editProfileBlock button').click(function (e) {
+    var formMessage = $('.formMessage');
+    formMessage.text('');
+
+    if ($('.editProfileBlock input[name="lastName"]').val().length === 0) {
+        formMessage.text('Enter your last name');
+        formMessage.addClass('text-danger');
+        e.preventDefault()
+    } else if ($('.editProfileBlock input[name="firstName"]').val().length === 0) {
+        formMessage.text('Enter your first name');
+        formMessage.addClass('text-danger');
+        e.preventDefault()
+    } else if ($('.editProfileBlock input[name="birthday"]').val().length === 0) {
+        formMessage.text('Enter your date of birth');
+        formMessage.addClass('text-danger');
+        e.preventDefault()
+    } else if ($('.editProfileBlock input[name="email"]').val().length === 0) {
+        formMessage.text('Enter your email address');
+        formMessage.addClass('text-danger');
+        e.preventDefault()
+    }
+
+    formMessage.show();
+});

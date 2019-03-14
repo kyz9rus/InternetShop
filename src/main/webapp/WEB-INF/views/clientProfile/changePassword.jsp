@@ -129,12 +129,28 @@
               <label class="errorMessage">${errorMessage}</label>
             </div>
 
-            <p>Choose action in left panel</p>
+            <div class="variant changePasswordBlock">
+              <form action="change-password" method="post">
+                <div class="form-group">
+                  <label>Current password:</label>
+                  <input name="password" type="password" required/>
+                </div>
+                <div class="form-group">
+                  <label>New password:</label>
+                  <input name="newPassword" type="password" required/>
+                </div>
+                <div class="form-group">
+                  <label>Repeat new password:</label>
+                  <input name="repeatNewPassword" type="password" required/>
+                </div>
+                <button class="btn formButton">Change password</button>
+              </form>
+            </div>
+
           </div>
 
           <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
         </div>
-
 
       </div>
 

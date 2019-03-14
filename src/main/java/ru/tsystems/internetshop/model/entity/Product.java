@@ -39,7 +39,7 @@ public class Product {
 
     private double weight;
 
-    @Size(min = 12, max = 12)
+    @Size(min = 11, max = 11)
     private String volume;
 
     @ManyToMany(cascade = CascadeType.ALL)

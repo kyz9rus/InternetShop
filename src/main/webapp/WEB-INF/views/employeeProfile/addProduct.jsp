@@ -91,62 +91,96 @@
       <div class="content">
         <div class="row">
           <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel">
-            <ul>
-                <li><h5>Orders</h5></li>
-                <li class="employeeOperation">
-                    <a href="/employeeProfile/get-orders">
-                        <label>View orders</label>
-                    </a>
-                </li>
-                <li class="employeeOperation">
-                    <a href="/employeeProfile/changeOrderStatus">
-                        <label>Change order status</label>
-                    </a>
-                </li>
-                <li class="divider"></li>
+              <ul>
+                  <li><h5>Orders</h5></li>
+                  <li class="employeeOperation">
+                      <a href="/employeeProfile/get-orders">
+                          <label>View orders</label>
+                      </a>
+                  </li>
+                  <li class="employeeOperation">
+                      <a href="/employeeProfile/changeOrderStatus">
+                          <label>Change order status</label>
+                      </a>
+                  </li>
+                  <li class="divider"></li>
 
-                <li class="employeeOperation">
-                    <a href="/employeeProfile/saleStatistic">
-                        <label>Sales statistics</label>
-                    </a>
-                </li>
-                <li class="divider"></li>
+                  <li class="employeeOperation">
+                      <a href="/employeeProfile/saleStatistic">
+                          <label>Sales statistics</label>
+                      </a>
+                  </li>
+                  <li class="divider"></li>
 
-                <li><h5>Products</h5></li>
-                <li class="employeeOperation">
-                    <a href="/employeeProfile/addProduct">
-                        <label>Add product</label>
-                    </a>
-                </li>
-                <li class="employeeOperation">
-                    <a href="/employeeProfile/manageCategories">
-                        <label>Creating and managing categories of the directory</label>
-                    </a>
-                </li>
-                <li class="employeeOperation">
-                    <a href="/employeeProfile/import-from-file">
-                        <label>Import from file</label>
-                    </a>
-                </li>
-            </ul>
+                  <li><h5>Products</h5></li>
+                  <li class="employeeOperation">
+                      <a href="/employeeProfile/addProduct">
+                          <label>Add product</label>
+                      </a>
+                  </li>
+                  <li class="employeeOperation">
+                      <a href="/employeeProfile/manageCategories">
+                          <label>Creating and managing categories of the directory</label>
+                      </a>
+                  </li>
+                  <li class="employeeOperation">
+                      <a href="/employeeProfile/import-from-file">
+                          <label>Import from file</label>
+                      </a>
+                  </li>
+              </ul>
           </div>
 
           <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mainPanel">
-              <div class="messageBlock">
-                  <label class="successMessage">${successMessage}</label>
-                  <label class="errorMessage">${errorMessage}</label>
+            <div class="messageBlock">
+                <label class="successMessage">${successMessage}</label>
+                <label class="errorMessage">${errorMessage}</label>
+            </div>
+
+              <div class="variant addProductBlock">
+                  <form action="create-product" method="post">
+                      <div class="form-group">
+                          <label>Product name:</label>
+                          <input name="name" required/>
+                      </div>
+                      <div class="form-group">
+                          <label>Price:</label>
+                          <input name="price" required/>
+                      </div>
+                      <div class="form-group">
+                          <label>Category:</label>
+                          <select name="category" required>
+                              <j:forEach items="${categories}" var="category" varStatus="tagStatus">
+                                  <option value="${category.name}">
+                                          ${category.name}
+                                  </option>
+                              </j:forEach>
+                          </select>
+                      </div>
+                      <div class="form-group">
+                          <label>Weight:</label>
+                          <input name="weight"/>
+                      </div>
+                      <div class="form-group">
+                          <label>Volume:</label>
+                          <input name="volume" placeholder="999x999x999"/>
+                      </div>
+                      <div class="form-group">
+                          <label>Quantity in stock:</label>
+                          <input name="quantityInStock" required/>
+                      </div>
+                      <button class="btn formButton">Add product</button>
+                  </form>
               </div>
-
-            <p>Choose action in left panel</p>
           </div>
 
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
-          </div>
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
         </div>
+       </div>
 
-        <div id="footer"></div>
-    </div>
+       <div id="footer"></div>
+     </div>
   </div>
 
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
