@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Data
 @Entity(name = "user")
-@Table(name = "USER")
+@Table(name = "application_user")
 public class User implements Serializable, Cloneable {
 
     @Id

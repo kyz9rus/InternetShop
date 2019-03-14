@@ -26,6 +26,7 @@
         <hibernate-validator.version>6.0.15.Final</hibernate-validator.version>
         <c3p0.version>0.9.5.3</c3p0.version>
         <mysql.version>5.1.47</mysql.version>
+        <postgres.version>42.2.5</postgres.version>
 
         <servlets.version>4.0.1</servlets.version>
         <jstl.version>1.2</jstl.version>
@@ -77,12 +78,19 @@
             <version>${sonar.version}</version>
         </dependency>
 
-        <!-- MySQL-Driver -->
+        <!-- PostgreSQL-Driver -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgres.version}</version>
         </dependency>
+
+        <!-- MySQL-Driver -->
+        <!--<dependency>-->
+            <!--<groupId>mysql</groupId>-->
+            <!--<artifactId>mysql-connector-java</artifactId>-->
+            <!--<version>${mysql.version}</version>-->
+        <!--</dependency>-->
 
         <!--Hibernate ORM-->
         <dependency>

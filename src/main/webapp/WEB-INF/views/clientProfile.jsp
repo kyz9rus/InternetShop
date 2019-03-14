@@ -98,7 +98,7 @@
                 </a>
               </li>
               <li class="clientOperation">
-                <a href="/clientProfile/changePassoword">
+                <a href="/clientProfile/changePassword">
                   <label>Change password</label>
                 </a>
               </li>
