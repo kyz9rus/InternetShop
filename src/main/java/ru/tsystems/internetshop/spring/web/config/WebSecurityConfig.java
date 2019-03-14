@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import ru.tsystems.internetshop.facade.CustomUserDetailFacade;
 import ru.tsystems.internetshop.service.CustomUserDetailService;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -25,6 +26,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomUserDetailService userDetailsService;
+//
+//    @Autowired
+//    private CustomUserDetailFacade customUserDetailFacade;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

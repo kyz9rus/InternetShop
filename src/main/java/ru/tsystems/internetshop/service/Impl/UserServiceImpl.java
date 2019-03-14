@@ -22,6 +22,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(User user) {
-        userDAO.SaveOrUPdateUser(user);
+        userDAO.SaveOrUpdateUser(user);
     }
 }

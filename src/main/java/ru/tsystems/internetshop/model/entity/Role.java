@@ -25,4 +25,9 @@ public class Role {
     public Role(String name) {
         this.name = name;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

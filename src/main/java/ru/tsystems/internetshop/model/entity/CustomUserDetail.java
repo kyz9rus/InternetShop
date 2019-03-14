@@ -3,13 +3,14 @@ package ru.tsystems.internetshop.model.entity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.tsystems.internetshop.model.DTO.UserDTO;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class CustomUserDetail extends User implements UserDetails {
+public class CustomUserDetail extends UserDTO implements UserDetails {
 
-    public CustomUserDetail(final User user) {
+    public CustomUserDetail(final UserDTO user) {
         super(user);
     }
 

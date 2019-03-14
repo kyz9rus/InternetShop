@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.UserDAO;
+import ru.tsystems.internetshop.model.DTO.UserDTO;
 import ru.tsystems.internetshop.model.entity.User;
 
 import javax.persistence.TypedQuery;
@@ -43,7 +44,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User findByEmail(String email) {
+//    public User findByEmail(String email) {
+    public UserDTO findByEmail(String email) {
         String queryString = "SELECT u FROM user u WHERE u.email= :email";
 
         TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(queryString, User.class);
@@ -51,14 +53,22 @@ public class UserDAOImpl implements UserDAO {
 
         List<User> users = query.getResultList();
 
-        if (!users.isEmpty())
-            return users.get(0);
+        if (!users.isEmpty()) {
+            User user = users.get(0);
+            UserDTO userDTO = null;
+            try {
+                userDTO = user.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+            return userDTO;
+        }
         else
             return null;
     }
 
     @Override
-    public void SaveOrUPdateUser(User user) {
+    public void SaveOrUpdateUser(User user) {
         sessionFactory.getCurrentSession().saveOrUpdate(user);
     }
 }
