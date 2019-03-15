@@ -1,6 +1,9 @@
 package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
+import ru.tsystems.internetshop.dao.CategoryDAO;
+import ru.tsystems.internetshop.model.DTO.CategoryDTO;
+import ru.tsystems.internetshop.model.DTO.ProductDTO;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -24,4 +27,17 @@ public class Category {
     public Category(String name) {
         this.name = name;
     }
+
+//    @Override
+//    public CategoryDTO clone() throws CloneNotSupportedException {
+//        CategoryDTO categoryDTO = new CategoryDTO();
+//        categoryDTO.setName(name);
+//
+//        Set<ProductDTO> productDTOS = new HashSet<>();
+//        for (Product product : products)
+//            productDTOS.add(product.clone());
+//        categoryDTO.setProducts(productDTOS);
+//
+//        return categoryDTO;
+//    }
 }

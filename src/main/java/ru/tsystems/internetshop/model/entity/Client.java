@@ -2,6 +2,9 @@ package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
+import ru.tsystems.internetshop.model.DTO.ClientDTO;
+import ru.tsystems.internetshop.model.DTO.OrderDTO;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -33,8 +36,11 @@ public class Client {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Order> orders = new HashSet<>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<ClientAddress> addresses = new HashSet<>();
 
     public Client() {
     }
@@ -46,6 +52,29 @@ public class Client {
         this.email = email;
         this.password = password;
     }
+
+//    @Override
+//    public ClientDTO clone() throws CloneNotSupportedException {
+//        ClientDTO clientDTO = new ClientDTO();
+//        clientDTO.setId(id);
+//        clientDTO.setBirthday(birthday);
+//        clientDTO.setEmail(email);
+//        clientDTO.setFirstName(firstName);
+//        clientDTO.setLastName(lastName);
+//        clientDTO.setPassword(password);
+//
+//        Set<OrderDTO> orderDTOS = new HashSet<>();
+//        for (Order order : orders)
+//            orderDTOS.add(order.clone());
+//
+//        clientDTO.setOrders(orderDTOS);
+//
+//        Set<ClientAddressDTO> addressDTOs = new HashSet<>();
+//        for (ClientAddress clientAddress : addresses)
+//            addressDTOs.add(clientAddress.clone());
+//
+//        clientDTO.setAddresses(addressDTOs);
+//
+//        return clientDTO;
+//    }
 }
-
-

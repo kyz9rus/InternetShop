@@ -70,7 +70,7 @@
 
       <div class="content" align="center">
         <div class="registrationBlock" align="left">
-          <form method="post" action="create-client">
+          <spring:form method="post" action="create-client" modelAttribute="client">
             <div class="form-group">
               <label>Last name</label>
               <input name="lastName" required />
@@ -96,7 +96,7 @@
               <input type="password" name="repeatPassword" required/>
             </div>
             <button class="btn formButton">REGISTER</button>
-          </form>
+          </spring:form>
 
           <label class="formMessage"></label>
           <label class="successMessage">${successMessage}</label>

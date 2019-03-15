@@ -2,6 +2,9 @@ package ru.tsystems.internetshop.model.DTO;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.tsystems.internetshop.model.entity.Client;
+import ru.tsystems.internetshop.model.entity.ClientAddress;
+import ru.tsystems.internetshop.model.entity.Order;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -27,7 +30,11 @@ public class ClientDTO {
 
     @NotNull(message = "Please enter password")
     private String password;
-    private Set<OrderDTO> orders = new HashSet<>();
+    private Set<Order> orders = new HashSet<>();
+    private Set<ClientAddress> addresses = new HashSet<>();
+
+    public ClientDTO() {
+    }
 
     public ClientDTO(@NotNull(message = "Please enter first name") String firstName, @NotNull(message = "Please enter last name") String lastName, LocalDate birthday, @Email(message = "Email should be valid") String email) {
         this.firstName = firstName;
@@ -35,6 +42,29 @@ public class ClientDTO {
         this.birthday = birthday;
         this.email = email;
     }
+
+//    @Override
+//    public Client clone() throws CloneNotSupportedException {
+//        Client client = new Client();
+//        client.setId(id);
+//        client.setLastName(lastName);
+//        client.setFirstName(firstName);
+//        client.setEmail(email);
+//        client.setPassword(password);
+//        client.setBirthday(birthday);
+//
+//        Set<Order> orders = new HashSet<>();
+//        for (OrderDTO orderDTO : this.orders)
+//            orders.add(orderDTO.clone());
+//        client.setOrders(orders);
+//
+//        Set<ClientAddress> clientAddresses = new HashSet<>();
+//        for (ClientAddressDTO clientAddressDTO : this.addresses)
+//            clientAddresses.add(clientAddressDTO.clone());
+//        client.setAddresses(clientAddresses);
+//
+//        return client;
+//    }
 }
 
 

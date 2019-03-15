@@ -17,6 +17,7 @@
   <link rel="stylesheet" href='<c:url value="/resources/css/profile.css" />'>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
   <script>
       $(function(){
           $("#footer").load("<c:url value="/resources/jsp/footer.jsp"/>");
@@ -83,18 +84,54 @@
             </div>
 
             <div class="variant editProfileBlock">
-              <form action="update-client" method="post" >
+              <%--<form action="update-client" method="post" modelAttribute="client" >--%>
+                <%--<div class="mainPanelBlock">--%>
+                  <%--<p class="headerText">Main</p>--%>
+                  <%--<div class="subBlock">--%>
+                    <%--<div class="form-group">--%>
+                      <%--<label>Last name</label>--%>
+                      <%--<input name="lastName"/>--%>
+                    <%--</div>--%>
+
+                    <%--<div class="form-group">--%>
+                      <%--<label>First name</label>--%>
+                      <%--<input name="firstName"/>--%>
+                    <%--</div>--%>
+                  <%--</div>--%>
+                <%--</div>--%>
+
+                <%--<div class="mainPanelBlock">--%>
+                  <%--<p class="headerText">Additionally</p>--%>
+                  <%--<div class="subBlock">--%>
+                    <%--<div class="form-group">--%>
+                      <%--<label>Birthday</label>--%>
+                      <%--<input name="birthday"/>--%>
+                    <%--</div>--%>
+
+                    <%--<div class="form-group">--%>
+                      <%--<label>Email</label>--%>
+                      <%--<input type="email" name="email"/>--%>
+                    <%--</div>--%>
+                  <%--</div>--%>
+                <%--</div>--%>
+
+                <%--<div class="mainPanelBlock">--%>
+                  <%--<button class="btn formButton">CHANGE</button>--%>
+                <%--</div>--%>
+              <%--</form>--%>
+
+              <spring:form action="update-client" method="post" modelAttribute="client" >
                 <div class="mainPanelBlock">
                   <p class="headerText">Main</p>
                   <div class="subBlock">
                     <div class="form-group">
                       <label>Last name</label>
-                      <input name="lastName"/>
+                      <spring:input path="lastName"/>
                     </div>
 
                     <div class="form-group">
                       <label>First name</label>
-                      <input name="firstName"/>
+                      <spring:input path="firstName"/>
                     </div>
                   </div>
                 </div>
@@ -104,12 +141,12 @@
                   <div class="subBlock">
                     <div class="form-group">
                       <label>Birthday</label>
-                      <input name="birthday"/>
+                      <spring:input path="birthday"/>
                     </div>
 
                     <div class="form-group">
                       <label>Email</label>
-                      <input type="email" name="email"/>
+                      <spring:input type="email" path="email"/>
                     </div>
                   </div>
                 </div>
@@ -117,7 +154,7 @@
                 <div class="mainPanelBlock">
                   <button class="btn formButton">CHANGE</button>
                 </div>
-              </form>
+              </spring:form>
             </div>
 
           </div>

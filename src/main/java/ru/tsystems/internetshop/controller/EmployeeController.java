@@ -1,10 +1,13 @@
 package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.tsystems.internetshop.facade.OrderFacade;
+import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.entity.Order;
 import ru.tsystems.internetshop.model.OrderStatus;
 import ru.tsystems.internetshop.model.entity.Product;
@@ -27,9 +30,15 @@ public class EmployeeController {
     @Autowired
     private CategoryInfo categoryInfo;
 
+    @Autowired
+    private OrderFacade orderFacade;
+
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("get-orders")
     public String getOrders(Model model) {
-        List<Order> orders = orderService.getOrders();
+//        List<OrderDTO> orders = orderService.getOrders();
+
+        List<OrderDTO> orders = orderFacade.getOrders();
 
         if (orders.isEmpty())
             model.addAttribute("emptyListMessage", "Order list is empty.");
@@ -41,6 +50,7 @@ public class EmployeeController {
         return "employeeProfile/orders";
     }
 
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("changeOrderStatus")
     public String changeOrderStatusPage(Model model) {
         model.addAttribute("categories", categoryInfo.getInstance());
@@ -48,6 +58,7 @@ public class EmployeeController {
         return "employeeProfile/changeOrderStatus";
     }
 
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("saleStatistic")
     public String saleStatisticPage(Model model) {
         model.addAttribute("categories", categoryInfo.getInstance());
@@ -55,6 +66,7 @@ public class EmployeeController {
         return "employeeProfile/saleStatistic";
     }
 
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("addProduct")
     public String addProductPage(Model model) {
         model.addAttribute("categories", categoryInfo.getInstance());
@@ -62,6 +74,7 @@ public class EmployeeController {
         return "employeeProfile/addProduct";
     }
 
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("manageCategories")
     public String manageCategoriesPage(Model model) {
         model.addAttribute("categories", categoryInfo.getInstance());
@@ -69,6 +82,7 @@ public class EmployeeController {
         return "employeeProfile/manageCategories";
     }
 
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("import-products-from-file")
     public String importFromFile(Model model) {
         model.addAttribute("categories", categoryInfo.getInstance());
@@ -80,15 +94,24 @@ public class EmployeeController {
         return "employeeProfile/importProductsFromFile";
     }
 
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("change-order-status")
     public String changeOrderStatus(@RequestParam("id") Long id, @RequestParam("orderStatus") OrderStatus orderStatus, Model model) {
 
-        Order order = orderService.getOrder(id);
-        if (order != null) {
-            order.setOrderStatus(orderStatus);
-            orderService.updateOrder(order);
+        OrderDTO orderDTO = orderService.getOrder(id);
+        if (orderDTO != null) {
+////            Order order = null;
+////            try {
+////                order = orderDTO.clone();
+////            } catch (CloneNotSupportedException e) {
+////                e.printStackTrace();
+////            }
+//
+//            order.setOrderStatus(orderStatus);
+//
+//            orderService.updateOrder(order);
 
-            model.addAttribute("successMessage", "Order status for order with id " + order.getId() + " successfully changed!");
+            model.addAttribute("successMessage", "Order status for order with id " + orderDTO.getId() + " successfully changed!");
         } else
             model.addAttribute("errorMessage", "Order with id " + id + " doesn't exist. Inform the administrator!");
 
@@ -97,6 +120,7 @@ public class EmployeeController {
         return "employeeProfile/changeOrderStatus";
     }
 
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("create-product")
     public String createProduct(@Validated @ModelAttribute("product") Product product, Model model) {
         System.out.println(product);

@@ -1,22 +1,22 @@
 package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
-import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.util.CategoryInfo;
-
-import java.time.LocalDate;
 
 @Controller
 @RequestMapping("clientProfile")
+@SessionAttributes(value = "client")
 public class ClientController {
+
     @Autowired
     private CategoryInfo categoryInfo;
 
+    @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("editProfile")
     public String editProfile(Model model) {
         model.addAttribute(categoryInfo.getInstance());
@@ -24,6 +24,7 @@ public class ClientController {
         return "clientProfile/editProfile";
     }
 
+    @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("changePassword")
     public String changePasswordPage(Model model) {
         model.addAttribute(categoryInfo.getInstance());
@@ -31,6 +32,7 @@ public class ClientController {
         return "clientProfile/changePassword";
     }
 
+    @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("issueOrder")
     public String issueOrderPage(Model model) {
         model.addAttribute(categoryInfo.getInstance());
@@ -38,6 +40,7 @@ public class ClientController {
         return "clientProfile/issueOrder";
     }
 
+    @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("showOrderHistory")
     public String showOrderHistoryPage(Model model) {
         model.addAttribute(categoryInfo.getInstance());
@@ -45,6 +48,7 @@ public class ClientController {
         return "clientProfile/showOrderHistory";
     }
 
+    @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("repeatOrder")
     public String repeatOrderPage(Model model) {
         model.addAttribute(categoryInfo.getInstance());
@@ -52,6 +56,7 @@ public class ClientController {
         return "clientProfile/repeatOrder";
     }
 
+    @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "update-client")
     public String updateClient(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
         System.out.println(clientDTO);
@@ -72,9 +77,12 @@ public class ClientController {
 
         model.addAttribute("categories", categoryInfo.getInstance());
 
+        model.addAttribute("client", clientDTO);
+
         return "clientProfile/editProfile";
     }
 
+    @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "change-password")
     public String changePassword(@RequestParam("password") String password, @RequestParam("newPassword") String newPassword, @RequestParam("repeatNewPassword") String repeatNewPassword, Model model) {
 

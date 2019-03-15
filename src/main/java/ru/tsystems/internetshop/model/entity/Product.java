@@ -1,6 +1,10 @@
 package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
+import ru.tsystems.internetshop.dao.ProductDAO;
+import ru.tsystems.internetshop.model.DTO.ColorDTO;
+import ru.tsystems.internetshop.model.DTO.OrderDTO;
+import ru.tsystems.internetshop.model.DTO.ProductDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -63,4 +67,28 @@ public class Product {
         this.volume = volume;
         this.quantityInStock = quantityInStock;
     }
+
+//    @Override
+//    public ProductDTO clone() throws CloneNotSupportedException {
+//        ProductDTO productDTO = new ProductDTO();
+//        productDTO.setId(id);
+//        productDTO.setName(name);
+//        productDTO.setPrice(price);
+//        productDTO.setWeight(weight);
+//        productDTO.setVolume(volume);
+//        productDTO.setQuantityInStock(quantityInStock);
+//        productDTO.setCategory(category.clone());
+//
+//        Set<ColorDTO> colorDTOS = new HashSet<>();
+//        for (Color color : colors)
+//            colorDTOS.add(color.clone());
+//        productDTO.setColors(colorDTOS);
+//
+//        Set<OrderDTO> orderDTOS = new HashSet<>();
+//        for (Order order : orders)
+//            orderDTOS.add(order.clone());
+//        productDTO.setOrders(orderDTOS);
+//
+//        return productDTO;
+//    }
 }

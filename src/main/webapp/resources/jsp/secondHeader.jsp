@@ -1,7 +1,9 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 
 <div id="logoDiv">
-    <img class="logo" alt="AVON" src="/resources/images/logo.png">
+    <a href="/">
+        <img class="logo" alt="AVON" src="/resources/images/logo.png">
+    </a>
 </div>
 
 <div id="basketDiv">

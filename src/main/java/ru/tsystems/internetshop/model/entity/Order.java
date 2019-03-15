@@ -1,6 +1,8 @@
 package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
+import ru.tsystems.internetshop.model.DTO.OrderDTO;
+import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.model.DeliveryMethod;
 import ru.tsystems.internetshop.model.OrderStatus;
 import ru.tsystems.internetshop.model.PaymentMethod;
@@ -19,11 +21,11 @@ public class Order {
     @SequenceGenerator(name = "order_seq", sequenceName = "SEQ_ORDER", allocationSize = 1)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_address")
     private ClientAddress clientAddress;
 
@@ -35,7 +37,7 @@ public class Order {
     @Enumerated (EnumType.STRING)
     private DeliveryMethod deliveryMethod;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "order_product",
             joinColumns =  @JoinColumn(name = "order_id", referencedColumnName = "id"),
@@ -63,4 +65,25 @@ public class Order {
         this.paymentStatus = paymentStatus;
         this.orderStatus = orderStatus;
     }
+
+//    @Override
+//    public OrderDTO clone() throws CloneNotSupportedException {
+//        OrderDTO orderDTO = new OrderDTO();
+//        orderDTO.setId(id);
+//        orderDTO.setDeliveryMethod(deliveryMethod);
+//        orderDTO.setPaymentStatus(paymentStatus);
+//        orderDTO.setPaymentMethod(paymentMethod);
+//        orderDTO.setOrderStatus(orderStatus);
+//        orderDTO.setClient(client.clone());
+//        orderDTO.setClientAddress(clientAddress.clone());
+//
+//        Set<ProductDTO> products = new HashSet<>();
+//        for (Product product : this.products)
+//            products.add(product.clone());
+//        orderDTO.setProducts(products);
+//
+//        orderDTO.setClient(client.clone());
+//
+//        return orderDTO;
+//    }
 }

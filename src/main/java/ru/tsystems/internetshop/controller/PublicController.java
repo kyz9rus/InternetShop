@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.tsystems.internetshop.facade.UserClientFacade;
+import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.entity.Category;
-import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.model.entity.Product;
 import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.service.ProductService;
@@ -19,6 +19,7 @@ import ru.tsystems.internetshop.util.CategoryInfo;
 import java.util.List;
 
 @Controller
+@SessionAttributes(value = "client")
 public class PublicController {
 
     @Autowired
@@ -34,7 +35,7 @@ public class PublicController {
     private CategoryInfo categoryInfo;
 
     @PostMapping(value = "create-client")
-    public String createClient(@Validated @ModelAttribute("client") Client client, @RequestParam("repeatPassword") String repeatPassword, Model model) {
+    public String createClient(@Validated @ModelAttribute("client") ClientDTO client, @RequestParam("repeatPassword") String repeatPassword, Model model) {
         if (clientService.getClientByEmail(client.getEmail()) != null)
             model.addAttribute("errorMessage", "A user with this email address already exists.");
         else {
