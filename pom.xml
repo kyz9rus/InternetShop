@@ -27,6 +27,7 @@
         <c3p0.version>0.9.5.3</c3p0.version>
         <mysql.version>5.1.47</mysql.version>
         <postgres.version>42.2.5</postgres.version>
+        <liquebase.version>3.6.3</liquebase.version>
 
         <servlets.version>4.0.1</servlets.version>
         <jstl.version>1.2</jstl.version>
@@ -124,11 +125,24 @@
             <version>${spring.framework.security.version}</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>${spring.framework.security.version}</version>
+        </dependency>
+
+        <!-- Liquebase -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquebase.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-dbcp</artifactId>
+            <version>7.0.55</version>
         </dependency>
 
     </dependencies>
