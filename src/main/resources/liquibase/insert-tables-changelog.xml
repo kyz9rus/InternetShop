@@ -4,25 +4,25 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="admin" author="1">
-        <sqlFile dbms="PostgreSQL"
-                 encoding="utf8"
-                 endDelimiter="\nGO"
-                 path="/inserting-database.sql"
-                 relativeToChangelogFile="true"
-                 splitStatements="true"
-                 stripComments="true"/>
-    </changeSet>
-    
-    <!--<changeSet author="admin" id="1">-->
-        <!--<insert tableName="category">-->
-            <!--<column name="name" value="fragrances"/>-->
-        <!--</insert>-->
-        <!--<insert tableName="category">-->
-            <!--<column name="name" value="for body"/>-->
-        <!--</insert>-->
-        <!--<insert tableName="category">-->
-            <!--<column name="name" value="for face"/>-->
-        <!--</insert>-->
+    <!--<changeSet id="1" author="admin">-->
+        <!--<sqlFile dbms="PostgreSQL"-->
+                 <!--encoding="utf8"-->
+                 <!--endDelimiter="\nGO"-->
+                 <!--path="/inserting-database.sql"-->
+                 <!--relativeToChangelogFile="true"-->
+                 <!--splitStatements="true"-->
+                 <!--stripComments="true"/>-->
     <!--</changeSet>-->
+    
+    <changeSet author="admin" id="1">
+        <insert tableName="category">
+            <column name="name" value="fragrances"/>
+        </insert>
+        <insert tableName="category">
+            <column name="name" value="for body"/>
+        </insert>
+        <insert tableName="category">
+            <column name="name" value="for face"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

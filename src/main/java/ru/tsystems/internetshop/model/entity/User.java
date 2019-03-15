@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
 
@@ -27,6 +28,7 @@ public class User implements Serializable, Cloneable {
     private String email;
 
     @NotNull
+    @JsonIgnore
     private String password;
 
     @ManyToMany

@@ -138,11 +138,29 @@
             <version>${liquebase.version}</version>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tomcat</groupId>-->
+            <!--<artifactId>tomcat-dbcp</artifactId>-->
+            <!--<version>8.5.24</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>javax.el</groupId>-->
+            <!--<artifactId>javax.el-api</artifactId>-->
+            <!--<version>3.0.0</version>-->
+        <!--</dependency>-->
+
+        <!-- Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.8</version>
+        </dependency>
 
         <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-dbcp</artifactId>
-            <version>7.0.55</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.8</version>
         </dependency>
 
     </dependencies>
@@ -150,13 +168,16 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <url>http://localhost:8080/manager/text</url>
+                    <server>tomcatserver</server>
+                    <path>/internetShop</path>
+                    <username>admin</username>
+                    <password>admin</password>
                 </configuration>
-                <version>3.8.0</version>
             </plugin>
         </plugins>
     </build>

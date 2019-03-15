@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+
 <div class="largeHeader">
     <div class="becomeRepresentativeHeaderBlock">
         <a href="http://smartavon.ru/Registration.html">BECOME A REPRESENTATIVE</a>
@@ -16,3 +18,5 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="<c:url value="/resources/js/displayUsingAuthority.js"/>"></script>

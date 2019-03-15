@@ -21,6 +21,7 @@
           $("#footer").load("<c:url value="/resources/jsp/footer.jsp"/>");
           $("#largeHeader").load("<c:url value="/resources/jsp/largeHeader.jsp"/>");
           $("#secondHeader").load("<c:url value="/resources/jsp/secondHeader.jsp"/>");
+          $("#logoAndLastBlock").load("<c:url value="/resources/jsp/logoAndLastBlock.jsp"/>");
       });
   </script>
 </head>
@@ -45,29 +46,12 @@
                   </j:forEach>
                   <li class="divider"></li>
                   <hr>
-                  <li><a href="/registration">REGISTER</a></li>
+                  <li><a class="register" href="/registration">REGISTER</a></li>
                   <li><a href="http://smartavon.ru/Registration.html">BECOME A REPRESENTATIVE</a></li>
                 </ul>
               </nav>
             </div>
-            <div class="logoBlock">
-              <a href="#">
-                <img class="logo" alt="AVON" src="/resources/images/logo.png" width="500px">
-              </a>
-            </div>
-            <div class="lastBlock">
-              <div>
-                <img id="basket" src="/resources/images/basket.png" alt="AVON"><br/>
-                <div id="basketInfo">
-                  <p class="emptyBasket">Your bag is empty</p>
-                </div>
-              </div>
-              <div>
-                <a href="login">
-                  <img id="login" src="/resources/images/login.png"/>
-                </a>
-              </div>
-            </div>
+            <div id="logoAndLastBlock"></div>
           </div>
         </div>
 

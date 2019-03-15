@@ -1,2 +1,1 @@
-insert into "public".category (name) values ('fragrances');
-delete
+insert into category (name) values ('frangrances');
