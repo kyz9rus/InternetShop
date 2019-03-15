@@ -24,6 +24,7 @@
           $("#footer").load("<c:url value="/resources/jsp/footer.jsp"/>");
           $("#largeHeader").load("<c:url value="/resources/jsp/largeHeader.jsp"/>");
           $("#secondHeader").load("<c:url value="/resources/jsp/secondHeader.jsp"/>");
+          $("#leftEmployeePanel").load("<c:url value="/resources/jsp/leftEmployeePanel.jsp"/>");
       });
   </script>
 </head>
@@ -90,46 +91,7 @@
 
       <div class="content">
         <div class="row">
-          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel">
-              <ul>
-                  <li><h5>Orders</h5></li>
-                  <li class="employeeOperation">
-                      <a href="/employeeProfile/get-orders">
-                          <label>View orders</label>
-                      </a>
-                  </li>
-                  <li class="employeeOperation">
-                      <a href="/employeeProfile/changeOrderStatus">
-                          <label>Change order status</label>
-                      </a>
-                  </li>
-                  <li class="divider"></li>
-
-                  <li class="employeeOperation">
-                      <a href="/employeeProfile/saleStatistic">
-                          <label>Sales statistics</label>
-                      </a>
-                  </li>
-                  <li class="divider"></li>
-
-                  <li><h5>Products</h5></li>
-                  <li class="employeeOperation">
-                      <a href="/employeeProfile/addProduct">
-                          <label>Add product</label>
-                      </a>
-                  </li>
-                  <li class="employeeOperation">
-                      <a href="/employeeProfile/manageCategories">
-                          <label>Creating and managing categories of the directory</label>
-                      </a>
-                  </li>
-                  <li class="employeeOperation">
-                      <a href="/employeeProfile/import-from-file">
-                          <label>Import from file</label>
-                      </a>
-                  </li>
-              </ul>
-          </div>
+            <div id="leftEmployeePanel" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel"></div>
 
           <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mainPanel">

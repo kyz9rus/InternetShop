@@ -22,6 +22,7 @@
           $("#footer").load("<c:url value="/resources/jsp/footer.jsp"/>");
           $("#largeHeader").load("<c:url value="/resources/jsp/largeHeader.jsp"/>");
           $("#secondHeader").load("<c:url value="/resources/jsp/secondHeader.jsp"/>");
+          $("#leftClientPanel").load("<c:url value="/resources/jsp/leftClientPanel.jsp"/>");
       });
   </script>
 </head>
@@ -88,39 +89,7 @@
 
       <div class="content">
         <div class="row">
-          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel">
-            <ul>
-              <li><h5>Profile</h5></li>
-              <%--<li class="clientOperation"><label>View profile</label></li>--%>
-              <li class="clientOperation">
-                <a href="/clientProfile/editProfile">
-                  <label>Edit profile data</label>
-                </a>
-              </li>
-              <li class="clientOperation">
-                <a href="/clientProfile/changePassword">
-                  <label>Change password</label>
-                </a>
-              </li>
-              <li class="divider"></li>
-              <li><h5>Orders</h5></li>
-              <li class="clientOperation">
-                <a href="/clientProfile/issueOrder">
-                  <label>Issue order</label>
-                </a>
-              </li>
-              <li class="clientOperation">
-                <a href="/clientProfile/showOrderHistory">
-                  <label>View order history</label>
-                </a>
-              </li>
-              <li class="clientOperation">
-                <a href="/clientProfile/repeatOrder">
-                  <label>Repeat order</label>
-                </a>
-              </li>
-            </ul>
-          </div>
+          <div id="leftClientPanel" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel"></div>
 
           <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mainPanel">
