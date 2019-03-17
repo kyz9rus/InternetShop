@@ -30,11 +30,12 @@ public class Client {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthday;
 
-    @Column(unique = true, length = 70)
-    private String email;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name="email", unique = true, referencedColumnName="email")
+//    private User user;
 
-    @Column(nullable = false)
-    private String password;
+    @Column(unique = true)
+    private String email;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Order> orders = new HashSet<>();
@@ -44,37 +45,4 @@ public class Client {
 
     public Client() {
     }
-
-    public Client(String firstName, String lastName, LocalDate birthday, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.email = email;
-        this.password = password;
-    }
-
-//    @Override
-//    public ClientDTO clone() throws CloneNotSupportedException {
-//        ClientDTO clientDTO = new ClientDTO();
-//        clientDTO.setId(id);
-//        clientDTO.setBirthday(birthday);
-//        clientDTO.setEmail(email);
-//        clientDTO.setFirstName(firstName);
-//        clientDTO.setLastName(lastName);
-//        clientDTO.setPassword(password);
-//
-//        Set<OrderDTO> orderDTOS = new HashSet<>();
-//        for (Order order : orders)
-//            orderDTOS.add(order.clone());
-//
-//        clientDTO.setOrders(orderDTOS);
-//
-//        Set<ClientAddressDTO> addressDTOs = new HashSet<>();
-//        for (ClientAddress clientAddress : addresses)
-//            addressDTOs.add(clientAddress.clone());
-//
-//        clientDTO.setAddresses(addressDTOs);
-//
-//        return clientDTO;
-//    }
 }

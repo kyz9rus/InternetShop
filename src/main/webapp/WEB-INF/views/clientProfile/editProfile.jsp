@@ -84,42 +84,6 @@
             </div>
 
             <div class="variant editProfileBlock">
-              <%--<form action="update-client" method="post" modelAttribute="client" >--%>
-                <%--<div class="mainPanelBlock">--%>
-                  <%--<p class="headerText">Main</p>--%>
-                  <%--<div class="subBlock">--%>
-                    <%--<div class="form-group">--%>
-                      <%--<label>Last name</label>--%>
-                      <%--<input name="lastName"/>--%>
-                    <%--</div>--%>
-
-                    <%--<div class="form-group">--%>
-                      <%--<label>First name</label>--%>
-                      <%--<input name="firstName"/>--%>
-                    <%--</div>--%>
-                  <%--</div>--%>
-                <%--</div>--%>
-
-                <%--<div class="mainPanelBlock">--%>
-                  <%--<p class="headerText">Additionally</p>--%>
-                  <%--<div class="subBlock">--%>
-                    <%--<div class="form-group">--%>
-                      <%--<label>Birthday</label>--%>
-                      <%--<input name="birthday"/>--%>
-                    <%--</div>--%>
-
-                    <%--<div class="form-group">--%>
-                      <%--<label>Email</label>--%>
-                      <%--<input type="email" name="email"/>--%>
-                    <%--</div>--%>
-                  <%--</div>--%>
-                <%--</div>--%>
-
-                <%--<div class="mainPanelBlock">--%>
-                  <%--<button class="btn formButton">CHANGE</button>--%>
-                <%--</div>--%>
-              <%--</form>--%>
-
               <spring:form action="update-client" method="post" modelAttribute="client" >
                 <div class="mainPanelBlock">
                   <p class="headerText">Main</p>

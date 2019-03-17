@@ -35,14 +35,13 @@ public class PublicController {
     private CategoryInfo categoryInfo;
 
     @PostMapping(value = "create-client")
-    public String createClient(@Validated @ModelAttribute("client") ClientDTO client, @RequestParam("repeatPassword") String repeatPassword, Model model) {
+    public String createClient(@Validated @ModelAttribute("client") ClientDTO client, @RequestParam("password") String password, @RequestParam("repeatPassword") String repeatPassword, Model model) {
         if (clientService.getClientByEmail(client.getEmail()) != null)
             model.addAttribute("errorMessage", "A user with this email address already exists.");
         else {
-            if (client.getPassword().equals(repeatPassword)) {
-                client.setPassword(new BCryptPasswordEncoder().encode(client.getPassword()));
-                userClientFacade.registerUser(client);
-//                clientService.saveClient(client);
+            if (password.equals(repeatPassword)) {
+                password = (new BCryptPasswordEncoder().encode(password));
+                userClientFacade.registerUser(client, password);
 
                 model.addAttribute("successMessage", "You have been successfully registered. Sign in!");
             } else {

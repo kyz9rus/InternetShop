@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.ProductDAO;
 import ru.tsystems.internetshop.dao.UserDAO;
+import ru.tsystems.internetshop.model.DTO.UserDTO;
 import ru.tsystems.internetshop.model.entity.Category;
 import ru.tsystems.internetshop.model.entity.Product;
 import ru.tsystems.internetshop.model.entity.User;
@@ -23,5 +24,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(User user) {
         userDAO.SaveOrUpdateUser(user);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userDAO.update(user);
+    }
+
+    @Override
+    public UserDTO getUserByEmail(String email) {
+        return userDAO.findByEmail(email);
     }
 }

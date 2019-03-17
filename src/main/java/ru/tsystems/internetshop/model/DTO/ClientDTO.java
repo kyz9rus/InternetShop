@@ -28,8 +28,6 @@ public class ClientDTO {
     @Email(message = "Email should be valid")
     private String email;
 
-    @NotNull(message = "Please enter password")
-    private String password;
     private Set<Order> orders = new HashSet<>();
     private Set<ClientAddress> addresses = new HashSet<>();
 

@@ -43,18 +43,18 @@ $('.registrationBlock button').click(function (e) {
     formMessage.show();
 });
 
-$('.changePassword .formButton').click(function (e) {
+$('.changePasswordBlock .formButton').click(function (e) {
     var newPassword = $('input[name="newPassword"]').val();
     var repeatNewPassword = $('input[name="repeatNewPassword"]').val();
 
     if (!newPassword.match(/(?=.*[0-9])[0-9a-zA-Z!@#$%^&*]{7,}/)) {
-        $('.changePassword .errorMessage').text('The password must consist of at least 7 characters and contain one digit');
+        $('.errorMessage').text('The password must consist of at least 7 characters and contain one digit');
         e.preventDefault()
     } else if (newPassword !== repeatNewPassword) {
-        $('.changePassword .errorMessage').text('Entered passwords do not match');
+        $('.errorMessage').text('Entered passwords do not match');
         e.preventDefault();
     } else
-        $('.changePassword .errorMessage').text('');
+        $('.errorMessage').text('');
 
 });
 

@@ -1,9 +1,13 @@
 package ru.tsystems.internetshop.service;
 
+import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.entity.Client;
 
 public interface ClientService {
-    void saveClient(Client client);
+    void saveClient(ClientDTO clientDTO);
 
-    Client getClientByEmail(String email);
+    void updateClient(ClientDTO client);
+
+//    Client getClientByEmail(String email);
+    ClientDTO getClientByEmail(String email);
 }

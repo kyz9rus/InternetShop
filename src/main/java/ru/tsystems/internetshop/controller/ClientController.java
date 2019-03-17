@@ -2,10 +2,15 @@ package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
+import ru.tsystems.internetshop.model.DTO.UserDTO;
+import ru.tsystems.internetshop.service.ClientService;
+import ru.tsystems.internetshop.service.UserService;
 import ru.tsystems.internetshop.util.CategoryInfo;
 
 @Controller
@@ -15,6 +20,15 @@ public class ClientController {
 
     @Autowired
     private CategoryInfo categoryInfo;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ClientService clientService;
+
+    @Autowired
+    private UserClientFacade userClientFacade;
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("editProfile")
@@ -59,24 +73,10 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "update-client")
     public String updateClient(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
-        System.out.println(clientDTO);
+        clientService.updateClient(clientDTO);
 
-
-        // add SPRING SESSION
-//        if (clientService.getClientByEmail(clientDto.getEmail()) != null)
-//            modelAndView.addObject("errorMessage", "A user with this email address already exists.");
-//        else {
-//            if (clientDto.getPassword().equals(repeatPassword)) {
-//                clientService.saveClient(clientDto);
-//
-//                modelAndView.addObject("successMessage", "You have been successfully registered. Sign in!");
-//            } else {
-//                modelAndView.addObject("errorMessage", "Entered passwords do not match.");
-//            }
-//        }
-
+        model.addAttribute("successMessage", "Your data successfully changed");
         model.addAttribute("categories", categoryInfo.getInstance());
-
         model.addAttribute("client", clientDTO);
 
         return "clientProfile/editProfile";
@@ -84,16 +84,20 @@ public class ClientController {
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "change-password")
-    public String changePassword(@RequestParam("password") String password, @RequestParam("newPassword") String newPassword, @RequestParam("repeatNewPassword") String repeatNewPassword, Model model) {
+    public String changePassword(@ModelAttribute("client") ClientDTO clientDTO, @RequestParam("password") String password, @RequestParam("newPassword") String newPassword, @RequestParam("repeatNewPassword") String repeatNewPassword, Model model) {
+        UserDTO userDTO = userService.getUserByEmail(clientDTO.getEmail());
 
-        // add spring session
-        // сравнить пароль пользователя с password, если совпадают
-        if (newPassword.equals(repeatNewPassword)) {
-            // изменить пароль в бд
-            model.addAttribute("successMessage", "Password successfully changed");
-        } else {
-            model.addAttribute("errorMessage", "Entered passwords do not match");
-        }
+        if (new BCryptPasswordEncoder().matches(password, userDTO.getPassword()))
+            if (newPassword.equals(repeatNewPassword)) {
+                userDTO.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+                userClientFacade.updateUser(clientDTO, userDTO);
+
+                model.addAttribute("successMessage", "Password successfully changed");
+            } else {
+                model.addAttribute("errorMessage", "Entered passwords do not match");
+            }
+        else
+            model.addAttribute("errorMessage", "You entered the wrong password.");
 
         model.addAttribute("categories", categoryInfo.getInstance());
 

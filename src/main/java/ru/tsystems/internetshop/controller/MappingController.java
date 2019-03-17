@@ -2,18 +2,25 @@ package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
+import ru.tsystems.internetshop.model.DTO.UserDTO;
 import ru.tsystems.internetshop.model.entity.Category;
 import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.service.CategoryService;
+import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.util.CategoryInfo;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -22,6 +29,9 @@ public class MappingController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ClientService clientService;
 
     @Autowired
     private CategoryInfo categoryInfo;
@@ -37,7 +47,9 @@ public class MappingController {
 
         model.addAttribute("categories", categoryInfo.getInstance());
 
-        model.addAttribute("client", createClient());
+        if (!model.containsAttribute("client"))
+            model.addAttribute("client", createClient());
+
         return "index";
     }
 
@@ -56,9 +68,22 @@ public class MappingController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping(value = "clientProfile")
     public String toClientProfile(Model model) {
-//        model.addAttribute("client", new Client("Daniil", "Kuzchutkomov", LocalDate.of(1998, 4, 23), "kyz9rus@yandex.ru", "null"));
-        if(!model.containsAttribute("client"))
-            model.addAttribute("client", createClient());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        if (!authorities.isEmpty()) {
+            for (GrantedAuthority grantedAuthority : authorities) {
+                if (grantedAuthority.getAuthority().equals("ROLE_CLIENT")) {
+
+                    UserDTO userDTO = (UserDTO) authentication.getPrincipal();
+
+                    ClientDTO clientDTO = clientService.getClientByEmail(userDTO.getEmail());
+
+                    model.addAttribute("client", clientDTO);
+                }
+            }
+        }
 
         model.addAttribute("categories", categoryInfo.getInstance());
         return "clientProfile";

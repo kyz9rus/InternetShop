@@ -23,7 +23,7 @@ public class User implements Serializable, Cloneable {
     @SequenceGenerator(name = "user_seq", sequenceName = "SEQ_USER", allocationSize = 1)
     private Long id;
 
-    @Column(length = 100, name = "email")
+    @Column(length = 100, name = "email", unique = true)
     @Email
     private String email;
 
