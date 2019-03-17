@@ -5,21 +5,19 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
 import ru.tsystems.internetshop.model.entity.Category;
-import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.service.CategoryService;
 import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.util.CategoryInfo;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,7 +36,7 @@ public class MappingController {
 
     @GetMapping(value = "/")
     public String main(Model model) {
-        List<Category> categories = categoryService.getAllCategories();
+        List<CategoryDTO> categories = categoryService.getAllCategories();
 
         categories.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
 

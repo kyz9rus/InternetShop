@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.tsystems.internetshop.dao.AbstractDAO;
 import ru.tsystems.internetshop.dao.ProductDAO;
 import ru.tsystems.internetshop.model.entity.Category;
+import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.model.entity.Product;
 
 import javax.persistence.TypedQuery;

@@ -10,6 +10,7 @@ import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
 import ru.tsystems.internetshop.service.ClientService;
+import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.service.UserService;
 import ru.tsystems.internetshop.util.CategoryInfo;
 
@@ -26,6 +27,9 @@ public class ClientController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Autowired
     private UserClientFacade userClientFacade;
@@ -73,11 +77,17 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "update-client")
     public String updateClient(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
-        clientService.updateClient(clientDTO);
 
-        model.addAttribute("successMessage", "Your data successfully changed");
-        model.addAttribute("categories", categoryInfo.getInstance());
-        model.addAttribute("client", clientDTO);
+        if (orderService.getOrdersByClientAndDeliveredStatus(clientDTO).size() != 0)
+            model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
+        else {
+
+            clientService.updateClient(clientDTO);
+
+            model.addAttribute("successMessage", "Your data successfully changed");
+            model.addAttribute("categories", categoryInfo.getInstance());
+            model.addAttribute("client", clientDTO);
+        }
 
         return "clientProfile/editProfile";
     }

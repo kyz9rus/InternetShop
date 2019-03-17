@@ -84,18 +84,20 @@
           <ul class="productList">
             <j:forEach items="${products}" var="product" varStatus="tagStatus">
               <li>
-                <div class="product">
-                  <div class="productInfo">
-                    <p class="productName">${product.name}</p>
-                    <p class="productWeight">Weight: ${product.weight}г.</p>
-                    <p class="productSize">Volume: ${product.volume}</p>
+                <%--<form action="/busket/put-product" method="post">--%>
+                  <div class="product">
+                    <div class="productInfo">
+                      <p class="productName">${product.name}</p>
+                      <p class="productWeight">Weight: ${product.weight}г.</p>
+                      <p class="productSize">Volume: ${product.volume}</p>
+                    </div>
+                    <div class="productInfo2">
+                      <p class="productPrice">Price: ${product.price} руб.</p>
+                      <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
+                      <button class="btn buyButton">BUY</button>
+                    </div>
                   </div>
-                  <div class="productInfo2">
-                    <p class="productPrice">Price: ${product.price} руб.</p>
-                    <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
-                    <button class="btn buyButton">BUY</button>
-                  </div>
-                </div>
+                <%--</form>--%>
               </li>
             </j:forEach>
           </ul>

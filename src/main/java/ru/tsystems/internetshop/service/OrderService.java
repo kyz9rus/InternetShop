@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.service;
 
+import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.entity.Order;
 
@@ -10,6 +11,7 @@ public interface OrderService {
 
     OrderDTO getOrder(Long id);
 
-//    List<OrderDTO> getOrders();
     List<Order> getOrders();
+
+    List<OrderDTO> getOrdersByClientAndDeliveredStatus(ClientDTO clientDTO);
 }

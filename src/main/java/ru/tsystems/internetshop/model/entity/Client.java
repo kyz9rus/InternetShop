@@ -37,12 +37,26 @@ public class Client {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "client")
     private Set<Order> orders = new HashSet<>();
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private Set<ClientAddress> addresses = new HashSet<>();
 
     public Client() {
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                ", orders=" + orders.size() +
+                ", addresses=" + addresses.size() +
+                '}';
     }
 }

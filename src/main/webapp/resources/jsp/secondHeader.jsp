@@ -7,7 +7,9 @@
 </div>
 
 <div id="basketDiv">
-    <img id="basket" src="/resources/images/basket.png" alt="AVON"><br/>
+    <a href="/clientProfile/issueOrder">
+        <img id="basket" src="/resources/images/basket.png" alt="AVON"><br/>
+    </a>
     <div id="basketInfo">
         <p class="emptyBasket">Your bag is empty</p>
     </div>

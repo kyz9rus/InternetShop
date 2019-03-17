@@ -18,7 +18,8 @@ public class ClientAddress {
     @SequenceGenerator(name = "clientaddress_seq", sequenceName = "SEQ_CLIENTADDRESS", allocationSize = 1)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+//    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
 
@@ -41,26 +42,21 @@ public class ClientAddress {
     @NotNull
     private int room;
 
-    @OneToMany(mappedBy = "clientAddress", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "clientAddress", fetch = FetchType.LAZY)
     private Set<Order> orders = new HashSet<>();
 
-//    @Override
-//    public ClientAddressDTO clone() throws CloneNotSupportedException {
-//        ClientAddressDTO clientAddressDTO = new ClientAddressDTO();
-//        clientAddressDTO.setCity(city);
-//        clientAddressDTO.setCountry(country);
-//        clientAddressDTO.setHouse(house);
-//        clientAddressDTO.setId(id);
-//        clientAddressDTO.setPostalCode(postalCode);
-//        clientAddressDTO.setRoom(room);
-//        clientAddressDTO.setStreet(street);
-//
-//        Set<OrderDTO> orderDTOs = new HashSet<>();
-//        for (Order order : orders)
-//            orderDTOs.add(order.clone());
-//
-//        clientAddressDTO.setOrders(orderDTOs);
-//
-//        return clientAddressDTO;
-//    }
+    @Override
+    public String toString() {
+        return "ClientAddress{" +
+                "id=" + id +
+                ", client=" + client.getId() +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", postalCode=" + postalCode +
+                ", street='" + street + '\'' +
+                ", house='" + house + '\'' +
+                ", room=" + room +
+                ", orders=" + orders.size() +
+                '}';
+    }
 }

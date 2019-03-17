@@ -9,4 +9,19 @@ import java.util.Set;
 public class CategoryDTO {
     private String name;
     private Set<ProductDTO> products = new HashSet<>();
+
+    public CategoryDTO() {
+    }
+
+    public CategoryDTO(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryDTO{" +
+                "name='" + name + '\'' +
+                ", products:" + products.size() +
+                '}';
+    }
 }

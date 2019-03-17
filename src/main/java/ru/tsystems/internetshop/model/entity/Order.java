@@ -21,11 +21,13 @@ public class Order {
     @SequenceGenerator(name = "order_seq", sequenceName = "SEQ_ORDER", allocationSize = 1)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+//    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+//    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "client_address")
     private ClientAddress clientAddress;
 
@@ -66,24 +68,17 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-//    @Override
-//    public OrderDTO clone() throws CloneNotSupportedException {
-//        OrderDTO orderDTO = new OrderDTO();
-//        orderDTO.setId(id);
-//        orderDTO.setDeliveryMethod(deliveryMethod);
-//        orderDTO.setPaymentStatus(paymentStatus);
-//        orderDTO.setPaymentMethod(paymentMethod);
-//        orderDTO.setOrderStatus(orderStatus);
-//        orderDTO.setClient(client.clone());
-//        orderDTO.setClientAddress(clientAddress.clone());
-//
-//        Set<ProductDTO> products = new HashSet<>();
-//        for (Product product : this.products)
-//            products.add(product.clone());
-//        orderDTO.setProducts(products);
-//
-//        orderDTO.setClient(client.clone());
-//
-//        return orderDTO;
-//    }
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", client=" + client.getEmail() +
+                ", clientAddress=" + clientAddress +
+                ", paymentMethod=" + paymentMethod +
+                ", deliveryMethod=" + deliveryMethod +
+                ", products=" + products.size() +
+                ", paymentStatus=" + paymentStatus +
+                ", orderStatus=" + orderStatus +
+                '}';
+    }
 }
