@@ -87,6 +87,7 @@
                 <%--<form action="/busket/put-product" method="post">--%>
                   <div class="product">
                     <div class="productInfo">
+                      <img src="${product.imgSrc}" alt="NO IMAGE"/>
                       <p class="productName">${product.name}</p>
                       <p class="productWeight">Weight: ${product.weight}г.</p>
                       <p class="productSize">Volume: ${product.volume}</p>
