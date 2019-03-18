@@ -18,19 +18,4 @@ public class ProductDTO {
     private String volume;
     private Set<OrderDTO> orders = new HashSet<>();
     private long quantityInStock;
-
-    @Override
-    public String toString() {
-        return "ProductDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", category=" + category +
-                ", colors:" + colors.size() +
-                ", weight=" + weight +
-                ", volume='" + volume + '\'' +
-                ", orders:" + orders.size() +
-                ", quantityInStock=" + quantityInStock +
-                '}';
-    }
 }

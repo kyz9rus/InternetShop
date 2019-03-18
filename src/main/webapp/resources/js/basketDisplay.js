@@ -1,10 +1,10 @@
 var displayBasket = false;
 
-$('#basket').click(function (){
+$('.basket').click(function (){
     displayBasket = !displayBasket;
 
     if (displayBasket)
-        $('#basketInfo').show();
+        $('.basketInfo').show();
     else
-        $('#basketInfo').hide();
+        $('.basketInfo').hide();
 });

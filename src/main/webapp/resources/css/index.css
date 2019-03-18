@@ -9,11 +9,11 @@
     flex: 1 0 auto;
 }
 
-.headers {
+#header {
     padding: 10px 17%;
 }
 
-.headers > div {
+#header > div {
     height: 60px;
     margin-bottom: 10px;
 }
@@ -43,7 +43,6 @@
     margin-left: 20px;
 }
 
-
 #logoDiv {
     float: left;
 }
@@ -58,7 +57,7 @@
     cursor: pointer;
 }
 
-#basket {
+.basket {
     width: 80px;
     cursor: pointer;
 }
@@ -86,7 +85,7 @@
 }
 
 hr {
-    margin: 0 -25%;
+    margin: 0 -25% !important;;
 }
 
 .footerData {
@@ -98,7 +97,7 @@ hr {
     margin-left: 20px;
 }
 
-#basketInfo {
+.basketInfo {
     position: absolute;
     float: right;
     top: 150px;
@@ -110,7 +109,7 @@ hr {
     display: none;
 }
 
-#basketDiv:hover > #basketInfo{
+#basketDiv:hover > .basketInfo{
     display: block;
 }
 
@@ -205,7 +204,6 @@ hr {
     .becomeRepresentativeBlock p:not(.article) {
         font-size: 17px;
     }
-
 }
 
 @media (max-width: 576px) {
@@ -253,21 +251,21 @@ hr {
         float: right;
         display: inline-block;
     }
-    .largeHeader, #secondHeader, #thirdHeader {
+    #largeHeader, #secondHeader, #thirdHeader {
         display: none;
     }
     .logo {
         width: 150px;
     }
-    .headers{
+    #header{
         padding: 0 0;
         margin: 10px 20px;
     }
-    #basket{
+    .basket{
         width: 50px !important;;
         margin-top: -10px;
     }
-    #basketInfo {
+    .basketInfo {
         top: 80px;
         right: 0px;
     }

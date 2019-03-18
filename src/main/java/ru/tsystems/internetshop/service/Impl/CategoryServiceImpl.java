@@ -26,9 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryDTO> getAllCategories() {
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
 
-//        List<Category> categories = categoryDAO.findAll();
-        List<Category> categories = new ArrayList<>();
-        categories.addAll(Arrays.asList(new Category("frangrances"), new Category("for face"), new Category("for body")));
+        List<Category> categories = categoryDAO.findAll();
 
         for (Category category : categories)
             categoryDTOS.add(mapper.convertToDto(category));
