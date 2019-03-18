@@ -133,11 +133,11 @@
         </dependency>
 
         <!-- Liquebase -->
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>${liquebase.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.liquibase</groupId>-->
+            <!--<artifactId>liquibase-core</artifactId>-->
+            <!--<version>${liquebase.version}</version>-->
+        <!--</dependency>-->
 
         <!--<dependency>-->
             <!--<groupId>org.apache.tomcat</groupId>-->
@@ -164,6 +164,7 @@
             <version>${jackson.version}</version>
         </dependency>
 
+        <!-- ModelMapper -->
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>

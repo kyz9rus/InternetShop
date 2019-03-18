@@ -33,7 +33,7 @@ li > h5 {
 }
 
 .mainPanelBlock {
-    padding: 10 20;
+    padding: 10px 20px;
 }
 
 .subBlock {
@@ -61,6 +61,75 @@ li > h5 {
 
 .messageBlock {
     margin: 2px 3%;
+}
+
+.category {
+    border: 1px solid beige;
+    width: 350px;
+    margin-bottom: 10px;
+    height: 32px;
+}
+
+.category input{
+    float: left;
+}
+
+.category button{
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.category img {
+    cursor: pointer;
+}
+
+.categoryOperations {
+    float: right;
+    margin-top: 5px;
+}
+
+.categoryText {
+    float: left;
+    height: 30px;
+    font-size: 18px;
+}
+
+.categoryTextBlock {
+    height: 30px;
+}
+
+.categoryOperations > img {
+    float: left;
+    width: 30px;
+}
+
+.categoryOperations form {
+    float: right;
+}
+
+.categoryOperations button {
+    background: none;
+    border: none;
+}
+
+.categoryOperations button img {
+    width: 16px;
+}
+
+.categoryFormBlock {
+    display: none;
+    height: 32px;
+}
+
+.categoryFormBlock button{
+    float: right;
+}
+
+.categoryFormBlock input {
+    width: 82%;
+    font-weight: bold;
+    padding-left: 7px;
+    font-size: 16px;
 }
 
 @media (max-width: 576px) {

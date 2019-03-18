@@ -36,4 +36,8 @@ public class Mapper {
     public User convertToEntity(UserDTO userDTO) {
         return modelMapper.map(userDTO, User.class);
     }
+
+    public Category convertToEntity(CategoryDTO categoryDTO) {
+        return modelMapper.map(categoryDTO, Category.class);
+    }
 }

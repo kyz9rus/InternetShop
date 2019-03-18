@@ -35,4 +35,14 @@ public class CategoryServiceImpl implements CategoryService {
 
         return categoryDTOS;
     }
+
+    @Override
+    public void updateCategory(String oldName, CategoryDTO categoryDTO) {
+        categoryDAO.updateCategory(oldName, mapper.convertToEntity(categoryDTO));
+    }
+
+    @Override
+    public void removeCategory(CategoryDTO categoryDTO) {
+        categoryDAO.delete(mapper.convertToEntity(categoryDTO));
+    }
 }

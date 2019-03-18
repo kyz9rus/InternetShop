@@ -26,9 +26,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomUserDetailService userDetailsService;
-//
-//    @Autowired
-//    private CustomUserDetailFacade customUserDetailFacade;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -40,7 +37,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/login*").permitAll()
-//                .antMatchers("/api/admin/**", "/admin/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin().permitAll()

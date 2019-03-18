@@ -1,5 +1,7 @@
 package ru.tsystems.internetshop.model.entity;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

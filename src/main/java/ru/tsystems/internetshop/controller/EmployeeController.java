@@ -2,15 +2,20 @@ package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.tsystems.internetshop.facade.OrderFacade;
+import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
+import ru.tsystems.internetshop.model.entity.Category;
 import ru.tsystems.internetshop.model.entity.Order;
 import ru.tsystems.internetshop.model.OrderStatus;
 import ru.tsystems.internetshop.model.entity.Product;
+import ru.tsystems.internetshop.service.CategoryService;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.service.ProductService;
 import ru.tsystems.internetshop.util.CategoryInfo;
@@ -26,6 +31,9 @@ public class EmployeeController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Autowired
     private CategoryInfo categoryInfo;
@@ -128,12 +136,59 @@ public class EmployeeController {
         if (productService.getProductByName(product.getName()) == null) {
             productService.saveProduct(product);
 
-            model.addAttribute("successMessage", "Product saved successfully!");
+            model.addAttribute("successMessage", "Product saved successfully.");
         } else
             model.addAttribute("errorMessage", "Product with this name already exists.");
 
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "employeeProfile/addProduct";
+    }
+
+    @PostMapping("update-category")
+    public String updateCategory(@ModelAttribute("category") CategoryDTO categoryDTO, @RequestParam("oldName") String oldName, Model model) {
+        categoryDTO.setName(categoryDTO.getName().toLowerCase());
+        oldName = oldName.toLowerCase();
+
+        categoryService.updateCategory(oldName, categoryDTO);
+
+        categoryInfo.getInstance().clear();
+
+        List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
+        categoryDTOS.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
+
+        categoryInfo.getInstance().addAll(categoryDTOS);
+
+        model.addAttribute("successMessage", "Category successfully changed.");
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+        return "employeeProfile/manageCategories";
+    }
+
+    @PostMapping("remove-category")
+    public String removeCategory(@RequestParam("oldName") String oldName, Model model) {
+        oldName = oldName.toLowerCase();
+
+        categoryService.removeCategory(new CategoryDTO(oldName));
+
+        categoryInfo.getInstance().clear();
+
+        List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
+        categoryDTOS.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
+
+        categoryInfo.getInstance().addAll(categoryDTOS);
+
+        model.addAttribute("successMessage", "Category successfully changed.");
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+        return "employeeProfile/manageCategories";
+    }
+
+    @ResponseBody
+    @GetMapping("/getAuthority")
+    public Object getAuthority() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        return authentication.getPrincipal();
     }
 }

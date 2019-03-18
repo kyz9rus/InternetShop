@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
-import ru.tsystems.internetshop.model.entity.Category;
 import ru.tsystems.internetshop.service.CategoryService;
 import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.util.CategoryInfo;

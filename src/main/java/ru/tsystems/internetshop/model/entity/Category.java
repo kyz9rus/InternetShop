@@ -1,5 +1,7 @@
 package ru.tsystems.internetshop.model.entity;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +14,9 @@ public class Category {
     @Column(length = 70, name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Set<Product> products = new HashSet<>();
 
     public Category() {
