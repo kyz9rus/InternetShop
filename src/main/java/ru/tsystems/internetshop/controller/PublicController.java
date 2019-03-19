@@ -48,8 +48,6 @@ public class PublicController {
     public String main(Model model) {
         List<CategoryDTO> categories = categoryService.getAllCategories();
 
-        categories.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
-
         categoryInfo.getInstance().clear();
         categoryInfo.getInstance().addAll(categories);
 

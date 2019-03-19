@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="J" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div id="firstHeader">
     <div id="largeHeader">
@@ -125,7 +126,7 @@
 <div id="thirdHeader">
     <ul class="menu">
         <j:forEach items="${categories}" var="category" varStatus="tagStatus">
-            <li><a href="/category/${category.name}">${category.name}</a></li>
+            <li><a href="/category/${fn:replace(fn:toUpperCase(category.name), '_', ' ')}">${fn:replace(fn:toUpperCase(category.name), '_', ' ')}</a></li>
         </j:forEach>
         </li>
     </ul>
