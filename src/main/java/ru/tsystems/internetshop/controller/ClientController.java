@@ -2,23 +2,24 @@ package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
+import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
 import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.service.UserService;
 import ru.tsystems.internetshop.util.CategoryInfo;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("clientProfile")
-@SessionAttributes(value = "client")
+@SessionAttributes(value = {"client", "authentication"})
 public class ClientController {
 
     @Autowired
@@ -62,10 +63,17 @@ public class ClientController {
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("showOrderHistory")
-    public String showOrderHistoryPage(Model model) {
+    public String showOrderHistoryPage(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
+        List<OrderDTO> orders = orderService.getOrdersByClient(clientDTO);
+
+        if (orders.isEmpty())
+            model.addAttribute("emptyListMessage", "Order list is empty.");
+        else
+            model.addAttribute("orders", orders);
+
         model.addAttribute(categoryInfo.getInstance());
 
-        return "clientProfile/showOrderHistory";
+        return "clientProfile/orderHistory";
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
@@ -79,8 +87,7 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "update-client")
     public String updateClient(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
-
-        if (orderService.getOrdersByClientAndDeliveredStatus(clientDTO).size() != 0)
+        if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
             model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
         else {
 
@@ -114,13 +121,5 @@ public class ClientController {
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "clientProfile/changePassword";
-    }
-
-    @ResponseBody
-    @GetMapping("/getAuthority")
-    public Object getAuthority() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        return authentication.getPrincipal();
     }
 }

@@ -38,8 +38,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> getOrdersByClientAndDeliveredStatus(ClientDTO clientDTO) {
-        List<Order> orders = orderDAO.findOrdersByClientAndWithDeliveredStatus(clientDTO);
+    public List<OrderDTO> getOrdersByClient(ClientDTO clientDTO) {
+        List<Order> orders = orderDAO.getOrdersByClient(mapper.convertToEntity(clientDTO));
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+
+        for (Order order : orders)
+            orderDTOS.add(mapper.convertToDto(order));
+        return orderDTOS;
+    }
+
+    @Override
+    public List<OrderDTO> getUnfinishedOrdersByClient(ClientDTO clientDTO) {
+        List<Order> orders = orderDAO.getUnfinishedOrdersByClient(mapper.convertToEntity(clientDTO));
         List<OrderDTO> orderDTOS = new ArrayList<>();
 
         for (Order order : orders)

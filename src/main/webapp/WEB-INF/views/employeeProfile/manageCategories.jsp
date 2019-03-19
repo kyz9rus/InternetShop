@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%request.setCharacterEncoding("UTF-8");%>
 
@@ -47,7 +48,7 @@
                     <j:forEach items="${categories}" var="category" varStatus="tagStatus">
                         <div class="category">
                             <div class="categoryTextBlock categoryTextBlock-${tagStatus.index}">
-                                <h5 class="categoryText">${category.name}</h5>
+                                <h5 class="categoryText">${fn:replace(fn:toUpperCase(category.name), '_', ' ')}</h5>
                                 <div class="categoryOperations">
                                     <img class="img-${tagStatus.index}" src="/resources/images/writingHand.png" alt="pen"/>
                                     <form action="remove-category" method="post">
@@ -60,7 +61,7 @@
                             </div>
                             <spring:form action="update-category" method="post">
                             <div class="categoryFormBlock categoryFormBlock-${tagStatus.index}">
-                                <input name="name" value="${category.name}">
+                                <input name="name" value="${fn:replace(fn:toUpperCase(category.name), '_', ' ')}">
                                 <input name="oldName" style="display: none" value="${category.name}"/>
                                 <button class="btn formButton">EDIT</button>
                             </div>
@@ -68,6 +69,13 @@
                         </div>
                     </j:forEach>
                 </ul>
+                <button class="brn formButton addCategoryButton">ADD CATEGORY</button>
+                <div class="addCategoryBlock">
+                    <form action="create-category" method="post">
+                        <input name="name"/>
+                        <button class="brn formButton">ADD CATEGORY</button>
+                    </form>
+                </div>
               </div>
           </div>
 

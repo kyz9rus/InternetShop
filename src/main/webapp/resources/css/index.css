@@ -26,6 +26,11 @@
     width: 120px;
 }
 
+input:focus{
+    border: 3px solid pink;
+    transition: 1;
+}
+
 .becomeRepresentativeHeaderBlock {
     float: left;
 }

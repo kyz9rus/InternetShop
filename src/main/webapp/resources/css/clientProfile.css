@@ -132,6 +132,29 @@ li > h5 {
     font-size: 16px;
 }
 
+.ordersBlock {
+    width: 100%;
+}
+
+.orderTable {
+    border: 1px solid grey;
+}
+
+tr:nth-child(even){
+    background: pink;
+}
+
+tr {
+    border-block-end: 1px solid grey;
+}
+
+td {
+    border: 1px solid grey;
+    padding: 10px;
+}
+
+
+
 @media (max-width: 576px) {
     .leftPanel {
         width: 87%;

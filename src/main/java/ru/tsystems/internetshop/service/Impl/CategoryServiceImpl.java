@@ -35,6 +35,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public CategoryDTO getCategory(String name) {
+        try {
+            return mapper.convertToDto(categoryDAO.findByKey(name));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public void saveCategory(CategoryDTO categoryDTO) {
+        categoryDAO.create(mapper.convertToEntity(categoryDTO));
+    }
+
+    @Override
     public void updateCategory(String oldName, CategoryDTO categoryDTO) {
         categoryDAO.updateCategory(oldName, mapper.convertToEntity(categoryDTO));
     }

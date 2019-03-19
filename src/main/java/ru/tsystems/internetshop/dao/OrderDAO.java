@@ -1,10 +1,12 @@
 package ru.tsystems.internetshop.dao;
 
-import ru.tsystems.internetshop.model.DTO.ClientDTO;
+import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.model.entity.Order;
 
 import java.util.List;
 
 public interface OrderDAO extends DAO<Order, Long> {
-    List<Order> findOrdersByClientAndWithDeliveredStatus(ClientDTO clientDTO);
+    List<Order> getUnfinishedOrdersByClient(Client client);
+
+    List<Order> getOrdersByClient(Client client);
 }

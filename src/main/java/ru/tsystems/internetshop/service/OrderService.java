@@ -13,5 +13,7 @@ public interface OrderService {
 
     List<OrderDTO> getOrders();
 
-    List<OrderDTO> getOrdersByClientAndDeliveredStatus(ClientDTO clientDTO);
+    List<OrderDTO> getOrdersByClient(ClientDTO clientDTO);
+
+    List<OrderDTO> getUnfinishedOrdersByClient(ClientDTO clientDTO);
 }

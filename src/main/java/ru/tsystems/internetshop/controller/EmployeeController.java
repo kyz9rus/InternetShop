@@ -131,6 +131,31 @@ public class EmployeeController {
         return "employeeProfile/addProduct";
     }
 
+    @PostMapping("create-category")
+    public String createCategory(@ModelAttribute("category") CategoryDTO categoryDTO, Model model) {
+        categoryDTO.setName(categoryDTO.getName().toLowerCase());
+
+        if (categoryService.getCategory(categoryDTO.getName()) == null) {
+
+            categoryService.saveCategory(categoryDTO);
+
+            categoryInfo.getInstance().clear();
+
+            List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
+            categoryDTOS.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
+
+            categoryInfo.getInstance().addAll(categoryDTOS);
+
+            model.addAttribute("successMessage", "Category successfully changed.");
+        } else
+            model.addAttribute("errorMessage", "Category already exist.");
+
+
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+        return "employeeProfile/manageCategories";
+    }
+
     @PostMapping("update-category")
     public String updateCategory(@ModelAttribute("category") CategoryDTO categoryDTO, @RequestParam("oldName") String oldName, Model model) {
         categoryDTO.setName(categoryDTO.getName().toLowerCase());
@@ -168,13 +193,5 @@ public class EmployeeController {
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "employeeProfile/manageCategories";
-    }
-
-    @ResponseBody
-    @GetMapping("/getAuthority")
-    public Object getAuthority() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        return authentication.getPrincipal();
     }
 }

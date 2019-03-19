@@ -153,6 +153,15 @@ td {
     padding: 10px;
 }
 
+.manageCategoriesBlock .formButton {
+    height: 30px;
+    border-radius: 8px;
+}
+
+.addCategoryBlock{
+    display: none;
+}
+
 @media (max-width: 576px) {
     .leftPanel {
         width: 87%;
