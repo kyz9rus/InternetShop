@@ -6,6 +6,7 @@ import ru.tsystems.internetshop.model.DTO.ProductDTO;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -25,16 +26,16 @@ public class Color {
     )
     private Set<Product> products = new HashSet<>();
 
-//    @Override
-//    public ColorDTO clone() throws CloneNotSupportedException {
-//        ColorDTO colorDTO = new ColorDTO();
-//        colorDTO.setName(name);
-//
-//        Set<ProductDTO> productDTOS = new HashSet<>();
-//        for (Product product : products)
-//            productDTOS.add(product.clone());
-//        colorDTO.setProducts(productDTOS);
-//
-//        return colorDTO;
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Color color = (Color) o;
+        return Objects.equals(name, color.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

@@ -23,27 +23,18 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private Mapper mapper;
 
-    public void saveOrder(Order order) {
-        orderDAO.create(order);
+    public void saveOrder(OrderDTO orderDTO) {
+        orderDAO.create(mapper.convertToEntity(orderDTO));
     }
 
-    public List<Order> getOrders() {
+    public List<OrderDTO> getOrders() {
         List<Order> orders = orderDAO.findAll();
+        List<OrderDTO> orderDTOS = new ArrayList<>();
 
-//        try {
-//            for (Order order : orders)
-//                orderDTOs.add(order.clone());
-//        } catch (CloneNotSupportedException e) {
-//            e.printStackTrace();
-//        }
+        for(Order order : orders)
+            orderDTOS.add(mapper.convertToDto(order));
 
-//        OrderDTO orderDTO = convertToDto(orders.get(0));
-
-//        System.out.println(orderDTO);
-
-//        return orders.stream().map(this::convertToDto).collect(Collectors.toList());
-
-        return orders;
+        return orderDTOS;
     }
 
     @Override
@@ -57,19 +48,15 @@ public class OrderServiceImpl implements OrderService {
         return orderDTOS;
     }
 
-    public void updateOrder(Order order) {
-        orderDAO.update(order);
+    public void updateOrder(OrderDTO orderDTO) {
+        orderDAO.update(mapper.convertToEntity(orderDTO));
     }
 
     public OrderDTO getOrder(Long id) {
-//        OrderDTO orderDTO = convertToDto(orderDAO.findByKey(id));
-        OrderDTO orderDTO = null;
-//        try {
-//            orderDTO = orderDAO.findByKey(id).clone();
-//        } catch (CloneNotSupportedException e) {
-//            e.printStackTrace();
-//        }
-
-        return orderDTO;
+        Order order = orderDAO.findByKey(id);
+        if (order != null)
+            return mapper.convertToDto(order);
+        else
+            return null;
     }
 }

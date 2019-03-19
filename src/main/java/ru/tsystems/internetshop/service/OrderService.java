@@ -7,11 +7,11 @@ import ru.tsystems.internetshop.model.entity.Order;
 import java.util.List;
 
 public interface OrderService {
-    void updateOrder(Order order);
+    void updateOrder(OrderDTO orderDTO);
 
     OrderDTO getOrder(Long id);
 
-    List<Order> getOrders();
+    List<OrderDTO> getOrders();
 
     List<OrderDTO> getOrdersByClientAndDeliveredStatus(ClientDTO clientDTO);
 }

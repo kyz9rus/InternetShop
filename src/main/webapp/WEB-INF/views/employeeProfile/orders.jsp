@@ -15,15 +15,10 @@
   <link rel="stylesheet" href='<c:url value="/resources/css/index.css" />'>
   <link rel="stylesheet" href='<c:url value="/resources/css/submenu.css" />'>
 
-  <link rel="stylesheet" href='<c:url value="/resources/css/profile.css" />'>
+  <link rel="stylesheet" href='<c:url value="/resources/css/employeeProfile.css" />'>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-  <script>
-      $(function(){
-          $("#leftEmployeePanel").load("<c:url value="/resources/jsp/leftEmployeePanel.jsp"/>");
-      });
-  </script>
 </head>
 
 <body>
@@ -35,11 +30,10 @@
     </div>
 
       <div class="content">
-        <div class="row">
-            <div id="leftEmployeePanel" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel"></div>
-
-          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mainPanel">
+          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel">
+              <j:import url="../common/leftEmployeePanel.jsp"/>
+          </div>
+          <div class="mainPanel">
             <div class="messageBlock">
                 <label class="successMessage">${successMessage}</label>
                 <label class="errorMessage">${errorMessage}</label>
@@ -47,16 +41,60 @@
             </div>
 
               <div class="variant ordersBlock">
-                  <ul class="orderList">
-                      <j:forEach items="${orders}" var="order" varStatus="tagStatus">
-                          <li>${order.id}, ${order.paymentMethod}, ${order.paymentStatus}, ${order.orderStatus}</li>
-                      </j:forEach>
-                  </ul>
+                  <table class="orderTable">
+                    <tr align="center">
+                        <td>Order ID</td>
+                        <td>Client name</td>
+                        <td>Client email</td>
+                        <td>Client address</td>
+                        <td>Delivery method</td>
+                        <td>Payment method</td>
+                        <td>Order status</td>
+                        <td>Payment status</td>
+                        <td>price</td>
+                    </tr>
+                    <j:forEach items="${orders}" var="order" varStatus="tagStatus">
+                      <tr align="center">
+                          <td>${order.id}</td>
+                          <td>${order.client.lastName} ${order.client.firstName}</td>
+                          <td>${order.client.email}</td>
+                          <td>ID: ${order.clientAddress.id}, ${order.clientAddress.postalCode}, ${order.clientAddress.country}, ${order.clientAddress.city}, ${order.clientAddress.street}, ${order.clientAddress.house}, ${order.clientAddress.room}</td>
+                          <td>${order.deliveryMethod}</td>
+                          <td>${order.paymentMethod}</td>
+                          <j:choose>
+                              <j:when test="${order.orderStatus == 'waitingForPayment'}">
+                                  <td class="text-danger">waiting for payment</td>
+                              </j:when>
+                              <j:when test="${order.orderStatus == 'waitingForShipment'}">
+                                  <td class="text-warning">waiting for shipment</td>
+                              </j:when>
+                              <j:when test="${order.orderStatus == 'shipped'}">
+                                  <td class="text-primary">shipped</td>
+                              </j:when>
+                              <j:when test="${order.orderStatus == 'delivered'}">
+                                  <td class="text-success">delivered</td>
+                              </j:when>
+                              <j:otherwise>
+                                  <td>${order.orderStatus}</td>
+                              </j:otherwise>
+                          </j:choose>
+                          <j:choose>
+                              <j:when test="${order.paymentStatus == 'waitingForPayment'}">
+                                  <td class="text-warning">waiting for payment</td>
+                              </j:when>
+                              <j:when test="${order.paymentStatus == 'paid'}">
+                                  <td class="text-success">paid</td>
+                              </j:when>
+                              <j:otherwise>
+                                  <td>${order.paymentStatus}</td>
+                              </j:otherwise>
+                          </j:choose>
+                          <td>${order.price}</td>
+                      </tr>
+                    </j:forEach>
+                  </table>
               </div>
           </div>
-
-          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
-        </div>
        </div>
 
         <div id="footer">
@@ -67,6 +105,7 @@
 
   <script type="text/javascript" src="<c:url value="/resources/js/routingFromImages.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/resources/js/orders.js"/>"></script>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
   <script>
       // Маска для полей

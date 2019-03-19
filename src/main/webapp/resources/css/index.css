@@ -63,7 +63,7 @@
 }
 
 #thirdHeader {
-    height: 30px !important;
+    height: 34px !important;
 }
 
 .content {
@@ -84,8 +84,8 @@
     font-weight: bold;
 }
 
-hr {
-    margin: 0 -25% !important;;
+.hr {
+    margin: 0 -25%;
 }
 
 .footerData {
@@ -189,6 +189,9 @@ hr {
 }
 
 @media (min-width: 577px) {
+    hr{
+        margin: 0px 0px;
+    }
     .mobileHeader {
         display: none;
     }

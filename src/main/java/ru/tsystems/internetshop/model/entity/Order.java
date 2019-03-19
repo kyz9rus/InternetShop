@@ -10,6 +10,7 @@ import ru.tsystems.internetshop.model.PaymentStatus;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -21,12 +22,10 @@ public class Order {
     @SequenceGenerator(name = "order_seq", sequenceName = "SEQ_ORDER", allocationSize = 1)
     private Long id;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
     @ManyToOne
     @JoinColumn(name = "client_address")
     private ClientAddress clientAddress;
@@ -55,6 +54,8 @@ public class Order {
     @Enumerated (EnumType.STRING)
     private OrderStatus orderStatus;
 
+    private int price;
+
     public Order() {
     }
 
@@ -80,5 +81,22 @@ public class Order {
                 ", paymentStatus=" + paymentStatus +
                 ", orderStatus=" + orderStatus +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id) &&
+                paymentMethod == order.paymentMethod &&
+                deliveryMethod == order.deliveryMethod &&
+                paymentStatus == order.paymentStatus &&
+                orderStatus == order.orderStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, paymentMethod, deliveryMethod, paymentStatus, orderStatus);
     }
 }

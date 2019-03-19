@@ -17,9 +17,6 @@ public class Category {
     @Column(length = 70, name = "name")
     private String name;
 
-//    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<Product> products = new HashSet<>();
-
     public Category() {
     }
 

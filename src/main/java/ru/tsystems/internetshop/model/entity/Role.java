@@ -26,8 +26,5 @@ public class Role {
         this.name = name;
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
+
 }

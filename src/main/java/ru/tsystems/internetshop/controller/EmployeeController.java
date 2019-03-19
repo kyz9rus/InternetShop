@@ -38,15 +38,10 @@ public class EmployeeController {
     @Autowired
     private CategoryInfo categoryInfo;
 
-    @Autowired
-    private OrderFacade orderFacade;
-
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("get-orders")
     public String getOrders(Model model) {
-//        List<OrderDTO> orders = orderService.getOrders();
-
-        List<OrderDTO> orders = orderFacade.getOrders();
+        List<OrderDTO> orders = orderService.getOrders();
 
         if (orders.isEmpty())
             model.addAttribute("emptyListMessage", "Order list is empty.");
@@ -93,9 +88,9 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("import-products-from-file")
     public String importFromFile(Model model) {
-        model.addAttribute("categories", categoryInfo.getInstance());
-
 //        ...
+
+        model.addAttribute("categories", categoryInfo.getInstance());
 
         model.addAttribute("successMessage", "import of products successfully completed");
 
@@ -105,19 +100,10 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("change-order-status")
     public String changeOrderStatus(@RequestParam("id") Long id, @RequestParam("orderStatus") OrderStatus orderStatus, Model model) {
-
         OrderDTO orderDTO = orderService.getOrder(id);
         if (orderDTO != null) {
-////            Order order = null;
-////            try {
-////                order = orderDTO.clone();
-////            } catch (CloneNotSupportedException e) {
-////                e.printStackTrace();
-////            }
-//
-//            order.setOrderStatus(orderStatus);
-//
-//            orderService.updateOrder(order);
+            orderDTO.setOrderStatus(orderStatus);
+            orderService.updateOrder(orderDTO);
 
             model.addAttribute("successMessage", "Order status for order with id " + orderDTO.getId() + " successfully changed!");
         } else

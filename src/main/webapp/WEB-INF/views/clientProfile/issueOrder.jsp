@@ -14,15 +14,10 @@
   <link rel="stylesheet" href='<c:url value="/resources/css/index.css" />'>
   <link rel="stylesheet" href='<c:url value="/resources/css/submenu.css" />'>
 
-  <link rel="stylesheet" href='<c:url value="/resources/css/profile.css" />'>
+  <link rel="stylesheet" href='<c:url value="/resources/css/clientProfile.css" />'>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-  <script>
-      $(function(){
-          $("#leftClientPanel").load("<c:url value="/resources/jsp/leftClientPanel.jsp"/>");
-      });
-  </script>
 </head>
 
 <body>
@@ -35,7 +30,9 @@
 
       <div class="content">
         <div class="row">
-          <div id="leftClientPanel" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel"></div>
+          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel">
+            <j:import url="../common/leftClientPanel.jsp"/>
+          </div>
 
           <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mainPanel">

@@ -40,4 +40,8 @@ public class Mapper {
     public Category convertToEntity(CategoryDTO categoryDTO) {
         return modelMapper.map(categoryDTO, Category.class);
     }
+
+    public Order convertToEntity(OrderDTO orderDTO) {
+        return modelMapper.map(orderDTO, Order.class);
+    }
 }

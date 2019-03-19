@@ -1,0 +1,160 @@
+.leftPanel {
+    border: 1px solid grey;
+    margin-left: 20px;
+    /*     height: 340px; */
+}
+
+.leftPanel li {
+    font-size: 14px;
+}
+
+.leftPanel a {
+    color: black;
+}
+
+li > h5 {
+    margin-top: 10px;
+}
+
+.variant {
+    padding: 10px;
+}
+
+.headerText {
+    font-size: 20px;
+}
+
+.leftPanel li label:hover{
+    color: rgb(215, 69, 144);
+}
+
+.operation:hover {
+    background: whitesmoke;
+}
+
+.mainPanelBlock {
+    padding: 10px 20px;
+}
+
+.subBlock {
+    padding: 0 20px;
+    color: grey;
+}
+
+.subBlock li{
+    border-block-end: 1px solid black;
+    margin-bottom: 5px;
+}
+
+.subBlock label {
+    margin-right: 10px;
+}
+
+.leftPanel hr {
+    width: 306px;
+    margin-left: -14px;
+}
+
+.changePassword input {
+    width: 100%;
+}
+
+.messageBlock {
+    margin: 2px 3%;
+}
+
+.category {
+    border: 1px solid beige;
+    width: 350px;
+    margin-bottom: 10px;
+    height: 32px;
+}
+
+.category input{
+    float: left;
+}
+
+.category button{
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.category img {
+    cursor: pointer;
+}
+
+.categoryOperations {
+    float: right;
+    margin-top: 5px;
+}
+
+.categoryText {
+    float: left;
+    height: 30px;
+    font-size: 18px;
+}
+
+.categoryTextBlock {
+    height: 30px;
+}
+
+.categoryOperations > img {
+    float: left;
+    width: 30px;
+}
+
+.categoryOperations form {
+    float: right;
+}
+
+.categoryOperations button {
+    background: none;
+    border: none;
+}
+
+.categoryOperations button img {
+    width: 16px;
+}
+
+.categoryFormBlock {
+    display: none;
+    height: 32px;
+}
+
+.categoryFormBlock button{
+    float: right;
+}
+
+.categoryFormBlock input {
+    width: 82%;
+    font-weight: bold;
+    padding-left: 7px;
+    font-size: 16px;
+}
+
+.ordersBlock {
+    width: 100%;
+}
+
+.orderTable {
+    border: 1px solid grey;
+}
+
+tr:nth-child(even){
+    background: pink;
+}
+
+tr {
+    border-block-end: 1px solid grey;
+}
+
+td {
+    border: 1px solid grey;
+    padding: 10px;
+}
+
+@media (max-width: 576px) {
+    .leftPanel {
+        width: 87%;
+    }
+}

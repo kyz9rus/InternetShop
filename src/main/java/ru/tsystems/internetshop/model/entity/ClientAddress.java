@@ -7,6 +7,7 @@ import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -58,5 +59,24 @@ public class ClientAddress {
                 ", room=" + room +
                 ", orders=" + orders.size() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClientAddress that = (ClientAddress) o;
+        return postalCode == that.postalCode &&
+                room == that.room &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(country, that.country) &&
+                Objects.equals(city, that.city) &&
+                Objects.equals(street, that.street) &&
+                Objects.equals(house, that.house);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, country, city, postalCode, street, house, room);
     }
 }
