@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.ProductDAO;
+import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.model.entity.Category;
@@ -22,18 +23,27 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductDAO productDAO;
 
+    @Autowired
+    private Mapper mapper;
+
     @Override
-    public void saveProduct(Product product) {
-        productDAO.create(product);
+    public void saveProduct(ProductDTO productDTO) {
+        productDAO.create(mapper.convertToEntity(productDTO));
     }
 
     @Override
-    public Product getProductByName(String name) {
-        return productDAO.findProductByName(name);
+    public ProductDTO getProductByName(String name) {
+        return mapper.convertToDto(productDAO.findProductByName(name));
     }
 
     @Override
-    public List<Product> getProductsByCategory(Category category) {
-        return productDAO.findProductsByCategory(category);
+    public List<ProductDTO> getProductsByCategory(CategoryDTO categoryDTO) {
+        List<Product> products = productDAO.findProductsByCategory(mapper.convertToEntity(categoryDTO));
+        List<ProductDTO> productDTOS = new ArrayList<>();
+
+        for (Product product : products)
+            productDTOS.add(mapper.convertToDto(product));
+
+        return productDTOS;
     }
 }

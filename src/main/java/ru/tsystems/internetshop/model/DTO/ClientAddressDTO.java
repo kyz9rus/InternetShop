@@ -19,26 +19,4 @@ public class ClientAddressDTO {
     private String house;
     private int room;
     private Set<OrderDTO> orders = new HashSet<>();
-
-//    @Override
-//    protected ClientAddress clone() throws CloneNotSupportedException {
-//        ClientAddress clientAddress = new ClientAddress();
-//        clientAddress.setId(id);
-//        clientAddress.setCountry(country);
-//        clientAddress.setCity(city);
-//        clientAddress.setPostalCode(postalCode);
-//        clientAddress.setStreet(street);
-//        clientAddress.setHouse(house);
-//        clientAddress.setRoom(room);
-//
-//        clientAddress.setClient(client.clone());
-//
-//        Set<Order> orders = new HashSet<>();
-//        for (OrderDTO orderDTO : this.orders)
-//            orders.add(orderDTO.clone());
-//
-//        clientAddress.setOrders(orders);
-//
-//        return clientAddress;
-//    }
 }

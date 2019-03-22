@@ -2,19 +2,14 @@ package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.tsystems.internetshop.facade.OrderFacade;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
-import ru.tsystems.internetshop.model.entity.Category;
-import ru.tsystems.internetshop.model.entity.Order;
+import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.model.OrderStatus;
-import ru.tsystems.internetshop.model.entity.Product;
 import ru.tsystems.internetshop.service.CategoryService;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.service.ProductService;
@@ -116,11 +111,11 @@ public class EmployeeController {
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("create-product")
-    public String createProduct(@Validated @ModelAttribute("product") Product product, Model model) {
-        System.out.println(product);
+    public String createProduct(@Validated @ModelAttribute("product") ProductDTO productDTO, Model model) {
+        System.out.println(productDTO);
 
-        if (productService.getProductByName(product.getName()) == null) {
-            productService.saveProduct(product);
+        if (productService.getProductByName(productDTO.getName()) == null) {
+            productService.saveProduct(productDTO);
 
             model.addAttribute("successMessage", "Product saved successfully.");
         } else

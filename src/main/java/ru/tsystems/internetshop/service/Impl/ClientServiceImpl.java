@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.ClientDAO;
+import ru.tsystems.internetshop.exception.BusinessException;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.util.Mapper;
@@ -30,7 +31,7 @@ public class ClientServiceImpl implements ClientService {
         try {
             return mapper.convertToDto(clientDAO.findByEmail(email));
         } catch (IllegalArgumentException e) {
-            return null;
+            throw null;
         }
     }
 }

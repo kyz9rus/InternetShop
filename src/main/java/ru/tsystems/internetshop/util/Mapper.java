@@ -44,4 +44,12 @@ public class Mapper {
     public Order convertToEntity(OrderDTO orderDTO) {
         return modelMapper.map(orderDTO, Order.class);
     }
+
+    public ClientAddress convertToEntity(ClientAddressDTO clientAddressDTO) {
+        return modelMapper.map(clientAddressDTO, ClientAddress.class);
+    }
+
+    public Product convertToEntity(ProductDTO productDTO) {
+        return modelMapper.map(productDTO, Product.class);
+    }
 }

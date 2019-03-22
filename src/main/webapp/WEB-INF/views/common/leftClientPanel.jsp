@@ -1,6 +1,5 @@
 <ul>
     <li><h5>Profile</h5></li>
-    <%--<li class="clientOperation"><label>View profile</label></li>--%>
     <li class="clientOperation">
         <a href="/clientProfile/editProfile">
             <label>Edit profile data</label>

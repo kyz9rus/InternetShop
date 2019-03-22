@@ -8,6 +8,5 @@ public interface ClientService {
 
     void updateClient(ClientDTO client);
 
-//    Client getClientByEmail(String email);
     ClientDTO getClientByEmail(String email);
 }

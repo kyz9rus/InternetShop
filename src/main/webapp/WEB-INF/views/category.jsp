@@ -36,24 +36,7 @@
           <ul class="productList">
             <j:forEach items="${products}" var="product" varStatus="tagStatus">
               <li>
-                <%--<form action="/busket/put-product" method="post">--%>
-                <%--<div class="product">
-                      <div class="productImage">
-                        <img src="https://avatars.mds.yandex.net/get-pdb/1620281/5b427da9-dd9e-4385-9fff-45c78d96f07e/s1200" alt="NO IMAGE">
-
-                    </div><div class="productInfo1">
-                      <div class="productInfo">
-                      <p class="productName">Fragrancy #1</p>
-                      <p class="productWeight">Weight: 100.0г.</p>
-                      <p class="productSize">Volume: 120x12x129</p>
-                    </div>
-                    <div class="productInfo2">
-                      <p class="productPrice">Price: 123 руб.</p>
-                      <p class="quantityInStock">Quantity in stock: 12</p>
-                      <button class="btn buyButton">BUY</button>
-                    </div>
-                    </div></div>--%>
-
+                <form action="${categoryName}/put-product" method="post">
                   <div class="product">
                     <div class="productImage">
                       <img src="${product.imgSrc}" alt="NO IMAGE"/>
@@ -71,7 +54,16 @@
                       </div>
                     </div>
                   </div>
-                <%--</form>--%>
+
+                  <input name="imgSrc" value="${product.imgSrc}" style="display: none"/>
+                  <input name="name" value="${product.name}" style="display: none"/>
+                  <input name="weight" value="${product.weight}" style="display: none"/>
+                  <input name="volume" value="${product.volume}" style="display: none"/>
+                  <input name="price" value="${product.price}" style="display: none"/>
+                  <input name="quantityInStock" value="${product.quantityInStock}" style="display: none"/>
+                  <input name="category" value="${categoryName}" style="display: none"/>
+
+                </form>
               </li>
             </j:forEach>
           </ul>

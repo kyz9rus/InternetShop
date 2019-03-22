@@ -11,12 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import ru.tsystems.internetshop.facade.UserClientFacade;
+import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
+import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
-import ru.tsystems.internetshop.model.entity.Category;
-import ru.tsystems.internetshop.model.entity.Product;
 import ru.tsystems.internetshop.service.CategoryService;
 import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.service.ProductService;
@@ -26,7 +27,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Controller
-@SessionAttributes(value = {"client", "authenticationRole"})
+@SessionAttributes(value = {"client", "authenticationRole", "basket"})
 public class PublicController {
 
     @Autowired
@@ -44,6 +45,11 @@ public class PublicController {
     @Autowired
     private ProductService productService;
 
+    @GetMapping("exception")
+    public String toExceptionPage() {
+        return "exception";
+    }
+
     @GetMapping(value = "/")
     public String main(Model model) {
         List<CategoryDTO> categories = categoryService.getAllCategories();
@@ -53,16 +59,14 @@ public class PublicController {
 
         model.addAttribute("categories", categoryInfo.getInstance());
 
-        if (!model.containsAttribute("client"))
-            model.addAttribute("client", createClient());
-
         return "index";
     }
 
     @GetMapping(value = "registration")
-    public String toRegistrationPage(Model model) {
-        model.addAttribute("client", new ClientDTO());
+    public String toRegistrationPage(Model model) throws NoHandlerFoundException {
         model.addAttribute("categories", categoryInfo.getInstance());
+
+//        throw new NoHandlerFoundException("1", "2", HttpHeaders.EMPTY);
         return "registration";
     }
 
@@ -88,7 +92,7 @@ public class PublicController {
 
     @GetMapping(value = "category/{categoryName}")
     public String getCategory(@PathVariable("categoryName") String categoryName, Model model) {
-        List<Product> products = productService.getProductsByCategory(new Category(categoryName));
+        List<ProductDTO> products = productService.getProductsByCategory(new CategoryDTO(categoryName));
 
         if (!products.isEmpty())
             model.addAttribute("products", products);
@@ -102,19 +106,31 @@ public class PublicController {
         return "category";
     }
 
+    @PostMapping("category/{categoryName}/put-product")
+    public String putProduct(@ModelAttribute("basket") Basket basket, @ModelAttribute("product") ProductDTO productDTO, @PathVariable("categoryName") String categoryName, Model model) {
+        basket.addProduct(productDTO);
+
+        model.addAttribute("basket", basket);
+        model.addAttribute("categories", categoryInfo.getInstance());
+        return "redirect:" + "/category/" + categoryName;
+    }
+
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping(value = "clientProfile")
     public String toClientProfile(Model model) {
         Authentication authentication = getAuthentication();
 
-        if (getAuthenticationRole().equals("ROLE_CLIENT")) {
-            UserDTO userDTO = (UserDTO) authentication.getPrincipal();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        if (!authorities.isEmpty())
+            for (GrantedAuthority grantedAuthority : authorities)
+                if (grantedAuthority.getAuthority().equals("ROLE_CLIENT")) {
+                    UserDTO userDTO = (UserDTO) authentication.getPrincipal();
 
-            ClientDTO clientDTO = clientService.getClientByEmail(userDTO.getEmail());
+                    ClientDTO clientDTO = clientService.getClientByEmail(userDTO.getEmail());
 
-            model.addAttribute("client", clientDTO);
-            model.addAttribute("authenticationRole", "ROLE_CLIENT");
-        }
+                    model.addAttribute("client", clientDTO);
+                }
+
 
         model.addAttribute("categories", categoryInfo.getInstance());
         return "clientProfile";
@@ -124,7 +140,6 @@ public class PublicController {
     @GetMapping(value = "employeeProfile")
     public String toEmployeeProfile(Model model) {
         model.addAttribute("categories", categoryInfo.getInstance());
-        model.addAttribute("authenticationRole", "ROLE_EMPLOYEE");
         return "employeeProfile";
     }
 
@@ -133,19 +148,9 @@ public class PublicController {
         return new ClientDTO();
     }
 
-    @ModelAttribute("authenticationRole")
-    public String getAuthenticationRole() {
-        Authentication authentication = getAuthentication();
-
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        if (!authorities.isEmpty())
-            for (GrantedAuthority grantedAuthority : authorities) {
-                if (grantedAuthority.getAuthority().equals("ROLE_CLIENT"))
-                    return "ROLE_CLIENT";
-                else if (grantedAuthority.getAuthority().equals("ROLE_EMPLOYEE"))
-                    return "ROLE_EMPLOYEE";
-            }
-        return "AnonymousUser";
+    @ModelAttribute("basket")
+    public Basket createBasket() {
+        return new Basket();
     }
 
     public Authentication getAuthentication() {
@@ -154,8 +159,6 @@ public class PublicController {
 
     @GetMapping("logout")
     public ModelAndView logout(Model model) {
-        model.addAttribute("client", createClient());
-//        model.addAttribute("basket", createBasket());
         return new ModelAndView("redirect:" + "/logout");
     }
 }

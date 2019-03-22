@@ -13,7 +13,7 @@
     padding: 10px 17%;
 }
 
-#header > div {
+#header > div:not(#thirdHeader) {
     height: 60px;
     margin-bottom: 10px;
 }
@@ -67,13 +67,8 @@ input:focus{
     cursor: pointer;
 }
 
-#thirdHeader {
-    height: 34px !important;
-}
-
 .content {
     flex: 1 0 auto;
-    /*     margin: 50px auto; */
     padding: 10px;
     min-height: 700px;
 }
@@ -108,10 +103,15 @@ input:focus{
     top: 150px;
     right: 18%;
     border: 1px solid #d7d7d7;
-    width: 170px;
+    width: 190px;
     text-align: center;
     border-block-start: 2px solid rgb(215, 69, 144);
+    padding: 5px;
     display: none;
+}
+
+.basketInfo .basketInfoBlock p{
+    float: left;
 }
 
 #basketDiv:hover > .basketInfo{
@@ -179,6 +179,34 @@ input:focus{
     width: 150px;
     height: 40px;
     font-size: 18px;
+}
+
+.errorBlock {
+    width: 70%;
+    padding: 0px 10%;
+}
+
+.errorImageBlock {
+    float: right;
+}
+
+.errorImageBlock img{
+    width: 70%;
+}
+
+.errorInfoBlock {
+    float: left;
+    margin-top: 40px;
+    font-size: 35px;
+}
+
+.errorInfoBlock button{
+    margin-top: -40px;
+
+}
+
+.image404Block {
+    margin-bottom: 30px;
 }
 
 @media (max-width: 822px) {
@@ -277,14 +305,11 @@ input:focus{
         top: 80px;
         right: 0px;
     }
-    #login{
+    .login, .logout{
         width: 70px !important;;
     }
     #pull {
         display: unset;
-    }
-    hr {
-        margin: 0 -5%;
     }
 
     .becomeRepresentativeBlock {

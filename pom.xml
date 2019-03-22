@@ -171,6 +171,13 @@
             <version>2.3.2</version>
         </dependency>
 
+        <!-- For prefix <auth:...> -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.framework.security.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

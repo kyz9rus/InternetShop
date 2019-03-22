@@ -40,17 +40,86 @@
               <label class="successMessage">${successMessage}</label>
               <label class="errorMessage">${errorMessage}</label>
             </div>
-
             <div class="variant issueOrderBlock">
-              <p>Issue order block</p>
+              <form action="issue-order" method="post">
+                <j:choose>
+                  <j:when test="${basket.products.size() == 0}">
+                    <p>You have not chosen anything yet.</p>
+                    <p>Choose category above and do shopping right now!</p>
+                  </j:when>
+                  <j:otherwise>
+                    <p>Product list:</p>
+                    <ul class="productList">
+                      <j:forEach items="${basket.products}" var="product" varStatus="tagStatus">
+                        <li>
+                          <div class="product">
+                            <div class="productImage">
+                              <img src="${product.imgSrc}" alt="NO IMAGE"/>
+                            </div>
+                            <div class="productInfo">
+                              <div class="productInfo1">
+                                <p class="productName">${product.name}</p>
+                                <p class="productWeight">Weight: ${product.weight}г.</p>
+                                <p class="productSize">Volume: ${product.volume}</p>
+                              </div>
+                              <div class="productInfo2">
+                                <p class="productPrice">Price: ${product.price} руб.</p>
+                                <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </j:forEach>
+                    </ul>
+
+                    <div class="clientAddress">
+                      <p>Enter your address</p>
+                      <div class="form-group">
+                        <label>Country</label>
+                        <input name="country" required />
+                      </div>
+                      <div class="form-group">
+                        <label>City</label>
+                        <input name="city" required />
+                      </div>
+                      <div class="form-group">
+                        <label>Postal code</label>
+                        <input name="postalCode" required />
+                      </div>
+                      <div class="form-group">
+                        <label>Street</label>
+                        <input name="street" required />
+                      </div>
+                      <div class="form-group">
+                        <label>House</label>
+                        <input name="house" required />
+                      </div>
+                      <div class="form-group">
+                        <label>Room</label>
+                        <input name="room" required />
+                      </div>
+                    </div>
+
+                    <div class="orderInfo">
+                      <div class="form-group">
+                        <label>Enter delivery method</label>
+                        <input name="deliveryMethod" required />
+                      </div>
+                      <div class="form-group">
+                        <label>Enter payment method</label>
+                        <input name="paymentMethod" required />
+                      </div>
+                    </div>
+                  </j:otherwise>
+                </j:choose>
+              </form>
             </div>
+          </div>
 
           </div>
 
           <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
         </div>
-
-      </div>
 
       <div id="footer">
         <j:import url="../common/footer.jsp"/>

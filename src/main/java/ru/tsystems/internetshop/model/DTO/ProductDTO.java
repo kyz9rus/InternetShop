@@ -18,4 +18,5 @@ public class ProductDTO {
     private String volume;
     private Set<OrderDTO> orders = new HashSet<>();
     private long quantityInStock;
+    private String imgSrc;
 }

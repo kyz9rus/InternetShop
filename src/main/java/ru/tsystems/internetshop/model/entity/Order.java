@@ -9,9 +9,7 @@ import ru.tsystems.internetshop.model.PaymentMethod;
 import ru.tsystems.internetshop.model.PaymentStatus;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity(name = "ord")
@@ -44,7 +42,7 @@ public class Order {
             joinColumns =  @JoinColumn(name = "order_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
     )
-    private Set<Product> products = new HashSet<>();
+    private List<Product> products = new ArrayList<>();
 
     @Column(name = "payment_status")
     @Enumerated (EnumType.STRING)
@@ -59,7 +57,8 @@ public class Order {
     public Order() {
     }
 
-    public Order(Client client, ClientAddress clientAddress, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, Set<Product> products, PaymentStatus paymentStatus, OrderStatus orderStatus) {
+//    public Order(Client client, ClientAddress clientAddress, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, Set<Product> products, PaymentStatus paymentStatus, OrderStatus orderStatus) {
+    public Order(Client client, ClientAddress clientAddress, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, List<Product> products, PaymentStatus paymentStatus, OrderStatus orderStatus) {
         this.client = client;
         this.clientAddress = clientAddress;
         this.paymentMethod = paymentMethod;

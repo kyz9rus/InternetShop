@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.OrderDAO;
+import ru.tsystems.internetshop.model.*;
+import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
+import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.model.entity.Order;
+import ru.tsystems.internetshop.model.entity.Product;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.util.Mapper;
 
@@ -23,15 +27,11 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private Mapper mapper;
 
-    public void saveOrder(OrderDTO orderDTO) {
-        orderDAO.create(mapper.convertToEntity(orderDTO));
-    }
-
     public List<OrderDTO> getOrders() {
         List<Order> orders = orderDAO.findAll();
         List<OrderDTO> orderDTOS = new ArrayList<>();
 
-        for(Order order : orders)
+        for (Order order : orders)
             orderDTOS.add(mapper.convertToDto(order));
 
         return orderDTOS;
@@ -68,5 +68,30 @@ public class OrderServiceImpl implements OrderService {
             return mapper.convertToDto(order);
         else
             return null;
+    }
+
+    @Override
+    public void issueOrder(ClientDTO clientDTO, ClientAddressDTO clientAddressDTO, Basket basket, DeliveryMethod deliveryMethod, PaymentMethod paymentMethod) {
+        Order order = new Order();
+        order.setClient(mapper.convertToEntity(clientDTO));
+        order.setClientAddress(mapper.convertToEntity(clientAddressDTO));
+        order.setDeliveryMethod(deliveryMethod);
+        order.setPaymentMethod(paymentMethod);
+        order.setPaymentStatus(PaymentStatus.waitingForPayment);
+        order.setOrderStatus(OrderStatus.waitingForPayment);
+
+        List<ProductDTO> productDTOs = basket.getProducts();
+        List<Product> products = new ArrayList<>();
+
+        int price = 0;
+        for (ProductDTO productDTO : productDTOs) {
+            products.add(mapper.convertToEntity(productDTO));
+            price += productDTO.getPrice();
+        }
+
+        order.setProducts(products);
+        order.setPrice(price);
+
+        orderDAO.create(order);
     }
 }

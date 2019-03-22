@@ -7,9 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.tsystems.internetshop.facade.UserClientFacade;
+import ru.tsystems.internetshop.model.Basket;
+import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
+import ru.tsystems.internetshop.model.DeliveryMethod;
+import ru.tsystems.internetshop.model.PaymentMethod;
 import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.service.UserService;
@@ -19,7 +23,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("clientProfile")
-@SessionAttributes(value = {"client", "authentication"})
+@SessionAttributes(value = {"client", "authentication", "basket"})
 public class ClientController {
 
     @Autowired
@@ -51,14 +55,6 @@ public class ClientController {
         model.addAttribute(categoryInfo.getInstance());
 
         return "clientProfile/changePassword";
-    }
-
-    @PreAuthorize("hasAnyRole('CLIENT')")
-    @GetMapping("issueOrder")
-    public String issueOrderPage(Model model) {
-        model.addAttribute(categoryInfo.getInstance());
-
-        return "clientProfile/issueOrder";
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
@@ -94,10 +90,10 @@ public class ClientController {
             clientService.updateClient(clientDTO);
 
             model.addAttribute("successMessage", "Your data successfully changed");
-            model.addAttribute("categories", categoryInfo.getInstance());
             model.addAttribute("client", clientDTO);
         }
 
+        model.addAttribute("categories", categoryInfo.getInstance());
         return "clientProfile/editProfile";
     }
 
@@ -121,5 +117,23 @@ public class ClientController {
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "clientProfile/changePassword";
+    }
+
+    @PreAuthorize("hasAnyRole('CLIENT')")
+    @GetMapping("issueOrder")
+    public String issueOrderPage(@ModelAttribute("basket") Basket basket, Model model) {
+
+        model.addAttribute("basket", basket);
+        model.addAttribute(categoryInfo.getInstance());
+        return "clientProfile/issueOrder";
+    }
+
+    @PostMapping("issue-order")
+    public String createOrder(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @ModelAttribute("basket") Basket basket, @RequestParam("deliveryMethod") DeliveryMethod deliveryMethod, @RequestParam("paymentMethod") PaymentMethod paymentMethod, Model model) {
+        orderService.issueOrder(clientDTO, clientAddressDTO, basket, deliveryMethod, paymentMethod);
+
+        model.addAttribute(categoryInfo.getInstance());
+        model.addAttribute("basket", new Basket());
+        return "clientProfile";
     }
 }
