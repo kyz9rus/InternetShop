@@ -12,8 +12,7 @@ import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
-import ru.tsystems.internetshop.model.DeliveryMethod;
-import ru.tsystems.internetshop.model.PaymentMethod;
+import ru.tsystems.internetshop.service.ClientAddressService;
 import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.service.UserService;
@@ -34,6 +33,9 @@ public class ClientController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private ClientAddressService clientAddressService;
 
     @Autowired
     private OrderService orderService;
@@ -62,11 +64,7 @@ public class ClientController {
     public String showOrderHistoryPage(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
         List<OrderDTO> orders = orderService.getOrdersByClient(clientDTO);
 
-        if (orders.isEmpty())
-            model.addAttribute("emptyListMessage", "Order list is empty.");
-        else
-            model.addAttribute("orders", orders);
-
+        model.addAttribute("orders", orders);
         model.addAttribute(categoryInfo.getInstance());
 
         return "clientProfile/orderHistory";
@@ -120,17 +118,84 @@ public class ClientController {
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
-    @GetMapping("issueOrder")
-    public String issueOrderPage(@ModelAttribute("basket") Basket basket, Model model) {
+    @PostMapping(value = "create-address")
+    public String createClientAddress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, Model model) {
+        clientAddressDTO.setClient(clientDTO);
+        if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
+            model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
+        else {
+            clientAddressService.saveClientAddress(clientAddressDTO);
 
+            clientDTO.setAddresses(clientAddressService.getAddressesByClient(clientDTO));
+
+            model.addAttribute("successMessage", "Your data successfully saved");
+            model.addAttribute("client", clientDTO);
+        }
+
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+        return "clientProfile/editProfile";
+    }
+
+    @PreAuthorize("hasAnyRole('CLIENT')")
+    @PostMapping(value = "update-address")
+    public String updateClientAdress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @RequestParam("addressId") Long addressId, Model model) {
+        clientAddressDTO.setId(addressId);
+        clientAddressDTO.setClient(clientDTO);
+        if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
+            model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
+        else {
+            clientAddressService.updateClientAddress(clientAddressDTO);
+
+            clientDTO.setAddresses(clientAddressService.getAddressesByClient(clientDTO));
+
+            model.addAttribute("successMessage", "Your data successfully changed");
+            model.addAttribute("client", clientDTO);
+        }
+
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+        return "clientProfile/editProfile";
+    }
+
+    @PreAuthorize("hasAnyRole('CLIENT')")
+    @PostMapping(value = "delete-address")
+    public String deleteAddress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @RequestParam("addressId") Long addressId, Model model) {
+        clientAddressDTO.setId(addressId);
+        clientAddressDTO.setClient(clientDTO);
+        if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
+            model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
+        else {
+            clientAddressService.deleteAddress(clientAddressDTO);
+
+            clientDTO.setAddresses(clientAddressService.getAddressesByClient(clientDTO));
+
+            model.addAttribute("successMessage", "Your address successfully deleted");
+            model.addAttribute("client", clientDTO);
+        }
+
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+        return "clientProfile/editProfile";
+    }
+
+    @PreAuthorize("hasAnyRole('CLIENT')")
+    @GetMapping("issueOrder")
+    public String issueOrderPage(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, Model model) {
+        model.addAttribute("client", clientDTO);
         model.addAttribute("basket", basket);
         model.addAttribute(categoryInfo.getInstance());
         return "clientProfile/issueOrder";
     }
 
+    @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping("issue-order")
-    public String createOrder(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @ModelAttribute("basket") Basket basket, @RequestParam("deliveryMethod") DeliveryMethod deliveryMethod, @RequestParam("paymentMethod") PaymentMethod paymentMethod, Model model) {
-        orderService.issueOrder(clientDTO, clientAddressDTO, basket, deliveryMethod, paymentMethod);
+    public String createOrder(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("deliveryMethod") String deliveryMethodString, @RequestParam("paymentMethod") String paymentMethodString, @RequestParam("addressId") Long addressId, Model model) {
+        ClientAddressDTO clientAddressDTO = clientAddressService.getClientAddressById(addressId);
+
+        clientAddressDTO.setId(null);
+
+        orderService.issueOrder(clientDTO, clientAddressDTO, basket, orderService.getDeliveryMethod(deliveryMethodString), orderService.getPaymentMethod(paymentMethodString));
 
         model.addAttribute(categoryInfo.getInstance());
         model.addAttribute("basket", new Basket());

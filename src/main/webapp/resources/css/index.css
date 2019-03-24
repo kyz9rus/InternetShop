@@ -52,7 +52,7 @@ input:focus{
     float: left;
 }
 
-#basketDiv {
+.basketDiv {
     float: right;
     margin-right: 7%;
 }
@@ -100,21 +100,21 @@ input:focus{
 .basketInfo {
     position: absolute;
     float: right;
-    top: 150px;
-    right: 18%;
+    top: 146px;
+    margin-left: -60px;
     border: 1px solid #d7d7d7;
-    width: 190px;
+    width: 210px;
     text-align: center;
-    border-block-start: 2px solid rgb(215, 69, 144);
+    border-block-start: 4px solid rgb(215, 69, 144);
     padding: 5px;
-    display: none;
+         display: none;
 }
 
 .basketInfo .basketInfoBlock p{
     float: left;
 }
 
-#basketDiv:hover > .basketInfo{
+.basketDiv:hover > .basketInfo{
     display: block;
 }
 
@@ -148,14 +148,12 @@ input:focus{
 .article {
     margin-top: 20px;
     font-size: 25px;
-    /*     font-size: 35px; */
     font-weight: bold;
 }
 
 .becomeRepresentativeBlock {
     border: 1px solid grey;
     height: 130px;
-    /*     width: 90%; */
     margin: 0px 10%;
 }
 
@@ -207,6 +205,10 @@ input:focus{
 
 .image404Block {
     margin-bottom: 30px;
+}
+
+.basketInfoBlock p{
+    float: left;
 }
 
 @media (max-width: 822px) {
@@ -318,6 +320,11 @@ input:focus{
 
     .becomeRepresentativeBlock .formButton {
         margin-top: -60px;
+    }
+
+    .basketInfo {
+        top: 45px;
+        background: white;
     }
 }
 

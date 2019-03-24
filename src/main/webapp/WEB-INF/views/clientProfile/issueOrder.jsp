@@ -29,13 +29,52 @@
       </div>
 
       <div class="content">
+       <form action="/clientProfile/issue-order" method="post">
         <div class="row">
-          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel">
-            <j:import url="../common/leftClientPanel.jsp"/>
+          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <div class="leftPanel">
+                <j:import url="../common/leftClientPanel.jsp"/>
+            </div>
+                <j:if test="${basket.products.size() != 0}">
+                    <div class="orderInfoPanel">
+                        <div class="clientAddress">
+                            <div class="form-group">
+                                <label>Choose your address</label>
+                                <j:choose>
+                                    <j:when test="${client.addresses.size() > 0}">
+                                        <select name="addressId">
+                                            <j:forEach items="${client.addresses}" var="address" varStatus="tagStatus">
+                                                <option value="${address.id}">${address.postalCode}, ${address.country}, ${address.city}, ${address.street}, ${address.house}, ${address.room}</option>
+                                            </j:forEach>
+                                        </select>
+                                    </j:when>
+                                </j:choose>
+                            </div>
+                        </div>
+
+                        <div class="orderInfo">
+                            <div class="form-group">
+                                <label>Enter delivery method</label>
+                                <select name="deliveryMethod" required>
+                                    <option>Post of Russia</option>
+                                    <option>Avon service centers</option>
+                                    <option>Home delivery</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Enter payment method</label>
+                                <select name="paymentMethod" required>
+                                    <option>By cash</option>
+                                    <option>By card</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input class="btn formButton" type="submit" value="ISSUE ORDER"/>
+                    </div>
+                </j:if>
           </div>
 
-          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mainPanel">
+          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mainPanel">
             <div class="messageBlock">
               <label class="successMessage">${successMessage}</label>
               <label class="errorMessage">${errorMessage}</label>
@@ -48,67 +87,30 @@
                     <p>Choose category above and do shopping right now!</p>
                   </j:when>
                   <j:otherwise>
-                    <p>Product list:</p>
-                    <ul class="productList">
-                      <j:forEach items="${basket.products}" var="product" varStatus="tagStatus">
-                        <li>
-                          <div class="product">
-                            <div class="productImage">
-                              <img src="${product.imgSrc}" alt="NO IMAGE"/>
-                            </div>
-                            <div class="productInfo">
-                              <div class="productInfo1">
-                                <p class="productName">${product.name}</p>
-                                <p class="productWeight">Weight: ${product.weight}г.</p>
-                                <p class="productSize">Volume: ${product.volume}</p>
+                    <p class="headerText">Product list:</p>
+                    <div class="productsBlock">
+                      <ul class="productList">
+                          <j:forEach items="${basket.products}" var="product" varStatus="tagStatus">
+                            <li>
+                              <div class="product">
+                                <div class="productImage">
+                                  <img src="${product.imgSrc}" alt="NO IMAGE"/>
+                                </div>
+                                <div class="productInfo">
+                                  <div class="productInfo1">
+                                    <p class="productName">${product.name}</p>
+                                    <p class="productWeight">Weight: ${product.weight}г.</p>
+                                    <p class="productSize">Volume: ${product.volume}</p>
+                                  </div>
+                                  <div class="productInfo2">
+                                    <p class="productPrice">Price: ${product.price} руб.</p>
+                                    <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
+                                  </div>
+                                </div>
                               </div>
-                              <div class="productInfo2">
-                                <p class="productPrice">Price: ${product.price} руб.</p>
-                                <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                      </j:forEach>
-                    </ul>
-
-                    <div class="clientAddress">
-                      <p>Enter your address</p>
-                      <div class="form-group">
-                        <label>Country</label>
-                        <input name="country" required />
-                      </div>
-                      <div class="form-group">
-                        <label>City</label>
-                        <input name="city" required />
-                      </div>
-                      <div class="form-group">
-                        <label>Postal code</label>
-                        <input name="postalCode" required />
-                      </div>
-                      <div class="form-group">
-                        <label>Street</label>
-                        <input name="street" required />
-                      </div>
-                      <div class="form-group">
-                        <label>House</label>
-                        <input name="house" required />
-                      </div>
-                      <div class="form-group">
-                        <label>Room</label>
-                        <input name="room" required />
-                      </div>
-                    </div>
-
-                    <div class="orderInfo">
-                      <div class="form-group">
-                        <label>Enter delivery method</label>
-                        <input name="deliveryMethod" required />
-                      </div>
-                      <div class="form-group">
-                        <label>Enter payment method</label>
-                        <input name="paymentMethod" required />
-                      </div>
+                            </li>
+                          </j:forEach>
+                      </ul>
                     </div>
                   </j:otherwise>
                 </j:choose>
@@ -116,9 +118,9 @@
             </div>
           </div>
 
-          </div>
+        </div>
+       </form>
 
-          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
         </div>
 
       <div id="footer">
@@ -127,7 +129,6 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="<c:url value="/resources/js/routingFromImages.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
   <script>
       // Маска для полей

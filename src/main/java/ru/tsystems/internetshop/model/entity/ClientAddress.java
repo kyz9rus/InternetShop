@@ -19,7 +19,6 @@ public class ClientAddress {
     @SequenceGenerator(name = "clientaddress_seq", sequenceName = "SEQ_CLIENTADDRESS", allocationSize = 1)
     private Long id;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
@@ -43,21 +42,19 @@ public class ClientAddress {
     @NotNull
     private int room;
 
-    @OneToMany(mappedBy = "clientAddress", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "clientAddress", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
 
     @Override
     public String toString() {
         return "ClientAddress{" +
                 "id=" + id +
-                ", client=" + client.getId() +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", postalCode=" + postalCode +
                 ", street='" + street + '\'' +
                 ", house='" + house + '\'' +
                 ", room=" + room +
-                ", orders=" + orders.size() +
                 '}';
     }
 

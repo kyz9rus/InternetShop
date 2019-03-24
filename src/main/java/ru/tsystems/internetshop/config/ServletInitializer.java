@@ -1,4 +1,4 @@
-package ru.tsystems.internetshop.spring.web.config;
+package ru.tsystems.internetshop.config;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;

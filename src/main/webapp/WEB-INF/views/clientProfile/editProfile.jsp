@@ -76,7 +76,141 @@
                 <div class="mainPanelBlock">
                   <button class="btn formButton">CHANGE</button>
                 </div>
-              </spring:form>
+                </spring:form>
+
+                <div class="mainPanelBlock">
+                  <j:choose>
+                    <j:when test="${client.addresses.size() != 0}">
+                      <p class="headerText">Addresses</p>
+                      <div class="subBlock">
+                        <ul>
+                          <j:forEach items="${client.addresses}" var="address" varStatus="tagStatus">
+                            <li>
+                              <div class="address" align="float">
+                                <div class="addressTextBlock addressTextBlock-${tagStatus.count}">
+                                  <h5>${tagStatus.count}. ${address.postalCode}, ${address.country}</h5>
+                                  <h5>${address.city}, ${address.street}, ${address.house}, ${address.room}</h5>
+                                  <div class="addressOperations">
+                                      <button class="btn formButton editAddress editAddressButton-${tagStatus.count}">EDIT</button>
+                                    <form action="delete-address" method="post">
+                                      <input name="addressId" style="display: none" value="${address.id}"/>
+                                      <button class="btn formButton">REMOVE</button>
+                                    </form>
+                                  </div>
+                                </div>
+                                <spring:form action="update-address" method="post">
+                                  <div class="addressFormBlock addressFormBlock-${tagStatus.count}">
+                                    <div class="clientAddressData">
+                                      <div class="form-group">
+                                        <label>Country</label>
+                                        <input name="country" required value="${address.country}"/>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>City</label>
+                                        <input name="city" required value="${address.city}"/>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Postal code</label>
+                                        <input name="postalCode" required value="${address.postalCode}"/>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Street</label>
+                                        <input name="street" required value="${address.street}"/>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>House</label>
+                                        <input name="house" required value="${address.house}"/>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Room</label>
+                                        <input name="room" required value="${address.room}"/>
+                                      </div>
+                                    </div>
+                                    <input name="addressId" style="display: none" value="${address.id}"/>
+                                    <button class="btn formButton">EDIT</button>
+                                  </div>
+                                </spring:form>
+                              </div>
+                            </li>
+                          </j:forEach>
+                        </ul>
+                        <button class="btn formButton addAddressButton">ADD ADDRESS</button>
+
+                  <%--<div style="display: block;" class="mainPanelBlock addAddressBlock">
+                            <p class="headerText">Add address</p>
+                          <form method="post" class="subBlock" action="create-address">
+                            <div class="clientAddressData">
+                              <div class="form-group">
+                                <label>Country</label>
+                                <input name="country" required="">
+                              </div>
+                              <div class="form-group">
+                                <label>City</label>
+                                <input name="city" required="">
+                              </div>
+                              <div class="form-group">
+                                <label>Postal code</label>
+                                <input name="postalCode" required="">
+                              </div>
+                              <div class="form-group">
+                                <label>Street</label>
+                                <input name="street" required="">
+                              </div>
+                              <div class="form-group">
+                                <label>House</label>
+                                <input name="house" required="">
+                              </div>
+                              <div class="form-group">
+                                <label>Room</label>
+                                <input name="room" required="">
+                              </div>
+                            </div>
+                            <input name="name">
+                            <button class="btn formButton">ADD ADDRESS</button>
+                          </form>
+                        </div>--%>
+
+                      </div>
+                    </j:when>
+                    <j:otherwise>
+                        <p>Empty addresses list</p>
+                        <button class="btn formButton addAddressButton">ADD ADDRESS</button>
+                    </j:otherwise>
+                  </j:choose>
+                </div>
+
+                <div class="mainPanelBlock addAddressBlock">
+                    <p class="headerText">Add address</p>
+                    <form action="create-address" method="post" class="subBlock">
+                        <div class="clientAddressData">
+                            <div class="form-group">
+                                <label>Country</label>
+                                <input name="country" required/>
+                            </div>
+                            <div class="form-group">
+                                <label>City</label>
+                                <input name="city" required/>
+                            </div>
+                            <div class="form-group">
+                                <label>Postal code</label>
+                                <input name="postalCode" required/>
+                            </div>
+                            <div class="form-group">
+                                <label>Street</label>
+                                <input name="street" required/>
+                            </div>
+                            <div class="form-group">
+                                <label>House</label>
+                                <input name="house" required/>
+                            </div>
+                            <div class="form-group">
+                                <label>Room</label>
+                                <input name="room" required/>
+                            </div>
+                        </div>
+                        <button class="btn formButton">ADD ADDRESS</button>
+                    </form>
+                </div>
             </div>
 
           </div>
@@ -92,7 +226,7 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="<c:url value="/resources/js/routingFromImages.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/resources/js/manageAddresses.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
   <script>
       // Маска для полей

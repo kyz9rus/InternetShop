@@ -35,63 +35,63 @@
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mainPanel">
-            <div class="messageBlock">
-              <label class="successMessage">${successMessage}</label>
-              <label class="errorMessage">${errorMessage}</label>
-              <label>${emptyListMessage}</label>
-            </div>
-
-            <div class="variant orderHistory">
-              <table class="orderTable">
-                <tr align="center">
-                  <td>ID</td>
-                  <td>Adress</td>
-                  <td>Delivery method</td>
-                  <td>Payment method</td>
-                  <td>Order status</td>
-                  <td>Payment status</td>
-                  <td>price</td>
-                </tr>
-                <j:forEach items="${orders}" var="order" varStatus="tagStatus">
-                  <tr align="center">
-                    <td>${order.id}</td>
-                    <td>ID: ${order.clientAddress.id}, ${order.clientAddress.postalCode}, ${order.clientAddress.country}, ${order.clientAddress.city}, ${order.clientAddress.street}, ${order.clientAddress.house}, ${order.clientAddress.room}</td>
-                    <td>${order.deliveryMethod}</td>
-                    <td>${order.paymentMethod}</td>
-                    <j:choose>
-                      <j:when test="${order.orderStatus == 'waitingForPayment'}">
-                        <td class="text-danger">waiting for payment</td>
-                      </j:when>
-                      <j:when test="${order.orderStatus == 'waitingForShipment'}">
-                        <td class="text-warning">waiting for shipment</td>
-                      </j:when>
-                      <j:when test="${order.orderStatus == 'shipped'}">
-                        <td class="text-primary">shipped</td>
-                      </j:when>
-                      <j:when test="${order.orderStatus == 'delivered'}">
-                        <td class="text-success">delivered</td>
-                      </j:when>
-                      <j:otherwise>
-                        <td>${order.orderStatus}</td>
-                      </j:otherwise>
-                    </j:choose>
-                    <j:choose>
-                      <j:when test="${order.paymentStatus == 'waitingForPayment'}">
-                        <td class="text-warning">waiting for payment</td>
-                      </j:when>
-                      <j:when test="${order.paymentStatus == 'paid'}">
-                        <td class="text-success">paid</td>
-                      </j:when>
-                      <j:otherwise>
-                        <td>${order.paymentStatus}</td>
-                      </j:otherwise>
-                    </j:choose>
-                    <td>${order.price}</td>
-                  </tr>
-                </j:forEach>
-              </table>
-            </div>
-
+              <j:choose>
+                <j:when test="${orders.isEmpty()}">
+                  <label class="emptyListLabel">Order list is empty.</label>
+                </j:when>
+                <j:otherwise>
+                  <div class="variant orderHistory">
+                    <table class="orderTable">
+                      <tr align="center">
+                        <td>ID</td>
+                        <td>Adress</td>
+                        <td>Delivery method</td>
+                        <td>Payment method</td>
+                        <td>Order status</td>
+                        <td>Payment status</td>
+                        <td>price</td>
+                      </tr>
+                      <j:forEach items="${orders}" var="order" varStatus="tagStatus">
+                        <tr align="center">
+                          <td>${order.id}</td>
+                          <td>ID: ${order.clientAddress.id}, ${order.clientAddress.postalCode}, ${order.clientAddress.country}, ${order.clientAddress.city}, ${order.clientAddress.street}, ${order.clientAddress.house}, ${order.clientAddress.room}</td>
+                          <td>${order.deliveryMethod}</td>
+                          <td>${order.paymentMethod}</td>
+                          <j:choose>
+                            <j:when test="${order.orderStatus == 'waitingForPayment'}">
+                              <td class="text-danger">waiting for payment</td>
+                            </j:when>
+                            <j:when test="${order.orderStatus == 'waitingForShipment'}">
+                              <td class="text-warning">waiting for shipment</td>
+                            </j:when>
+                            <j:when test="${order.orderStatus == 'shipped'}">
+                              <td class="text-primary">shipped</td>
+                            </j:when>
+                            <j:when test="${order.orderStatus == 'delivered'}">
+                              <td class="text-success">delivered</td>
+                            </j:when>
+                            <j:otherwise>
+                              <td>${order.orderStatus}</td>
+                            </j:otherwise>
+                          </j:choose>
+                          <j:choose>
+                            <j:when test="${order.paymentStatus == 'waitingForPayment'}">
+                              <td class="text-warning">waiting for payment</td>
+                            </j:when>
+                            <j:when test="${order.paymentStatus == 'paid'}">
+                              <td class="text-success">paid</td>
+                            </j:when>
+                            <j:otherwise>
+                              <td>${order.paymentStatus}</td>
+                            </j:otherwise>
+                          </j:choose>
+                          <td>${order.price}</td>
+                        </tr>
+                      </j:forEach>
+                    </table>
+                  </div>
+                </j:otherwise>
+              </j:choose>
           </div>
         </div>
 
@@ -103,7 +103,6 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="<c:url value="/resources/js/routingFromImages.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
   <script>
       // Маска для полей

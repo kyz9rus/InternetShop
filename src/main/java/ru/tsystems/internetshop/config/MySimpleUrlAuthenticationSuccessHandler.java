@@ -1,4 +1,4 @@
-package ru.tsystems.internetshop.spring.web.config;
+package ru.tsystems.internetshop.config;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

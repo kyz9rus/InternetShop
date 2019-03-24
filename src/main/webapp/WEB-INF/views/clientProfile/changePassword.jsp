@@ -71,7 +71,6 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="<c:url value="/resources/js/routingFromImages.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
 </body>

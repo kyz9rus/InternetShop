@@ -28,6 +28,9 @@ public class Mapper {
         return modelMapper.map(product, ProductDTO.class);
     }
 
+    public ClientAddressDTO convertToDto(ClientAddress clientAddress) {
+        return modelMapper.map(clientAddress, ClientAddressDTO.class);
+    }
 
     public Client convertToEntity(ClientDTO clientDTO) {
         return modelMapper.map(clientDTO, Client.class);

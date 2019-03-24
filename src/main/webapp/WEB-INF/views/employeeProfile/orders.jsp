@@ -33,67 +33,68 @@
           <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel">
               <j:import url="../common/leftEmployeePanel.jsp"/>
           </div>
-          <div class="mainPanel">
-            <div class="messageBlock">
-                <label class="successMessage">${successMessage}</label>
-                <label class="errorMessage">${errorMessage}</label>
-                <label>${emptyListMessage}</label>
-            </div>
-
-              <div class="variant ordersBlock">
-                  <table class="orderTable">
-                    <tr align="center">
-                        <td>Order ID</td>
-                        <td>Client name</td>
-                        <td>Client email</td>
-                        <td>Client address</td>
-                        <td>Delivery method</td>
-                        <td>Payment method</td>
-                        <td>Order status</td>
-                        <td>Payment status</td>
-                        <td>price</td>
-                    </tr>
-                    <j:forEach items="${orders}" var="order" varStatus="tagStatus">
-                      <tr align="center">
-                          <td>${order.id}</td>
-                          <td>${order.client.lastName} ${order.client.firstName}</td>
-                          <td>${order.client.email}</td>
-                          <td>ID: ${order.clientAddress.id}, ${order.clientAddress.postalCode}, ${order.clientAddress.country}, ${order.clientAddress.city}, ${order.clientAddress.street}, ${order.clientAddress.house}, ${order.clientAddress.room}</td>
-                          <td>${order.deliveryMethod}</td>
-                          <td>${order.paymentMethod}</td>
-                          <j:choose>
-                              <j:when test="${order.orderStatus == 'waitingForPayment'}">
-                                  <td class="text-danger">waiting for payment</td>
-                              </j:when>
-                              <j:when test="${order.orderStatus == 'waitingForShipment'}">
-                                  <td class="text-warning">waiting for shipment</td>
-                              </j:when>
-                              <j:when test="${order.orderStatus == 'shipped'}">
-                                  <td class="text-primary">shipped</td>
-                              </j:when>
-                              <j:when test="${order.orderStatus == 'delivered'}">
-                                  <td class="text-success">delivered</td>
-                              </j:when>
-                              <j:otherwise>
-                                  <td>${order.orderStatus}</td>
-                              </j:otherwise>
-                          </j:choose>
-                          <j:choose>
-                              <j:when test="${order.paymentStatus == 'waitingForPayment'}">
-                                  <td class="text-warning">waiting for payment</td>
-                              </j:when>
-                              <j:when test="${order.paymentStatus == 'paid'}">
-                                  <td class="text-success">paid</td>
-                              </j:when>
-                              <j:otherwise>
-                                  <td>${order.paymentStatus}</td>
-                              </j:otherwise>
-                          </j:choose>
-                          <td>${order.price}</td>
-                      </tr>
-                    </j:forEach>
-                  </table>
-              </div>
+          <div class="mainPanel" align="center">
+              <j:choose>
+                  <j:when test="${orders.isEmpty()}">
+                      <label class="emptyListLabel">Order list is empty.</label>
+                  </j:when>
+                  <j:otherwise>
+                      <div class="variant ordersBlock">
+                          <table class="orderTable">
+                              <tr align="center">
+                                  <td>Order ID</td>
+                                  <td>Client name</td>
+                                  <td>Client email</td>
+                                  <td>Client address</td>
+                                  <td>Delivery method</td>
+                                  <td>Payment method</td>
+                                  <td>Order status</td>
+                                  <td>Payment status</td>
+                                  <td>price</td>
+                              </tr>
+                              <j:forEach items="${orders}" var="order" varStatus="tagStatus">
+                                  <tr align="center">
+                                      <td>${order.id}</td>
+                                      <td>${order.client.lastName} ${order.client.firstName}</td>
+                                      <td>${order.client.email}</td>
+                                      <td>ID: ${order.clientAddress.id}, ${order.clientAddress.postalCode}, ${order.clientAddress.country}, ${order.clientAddress.city}, ${order.clientAddress.street}, ${order.clientAddress.house}, ${order.clientAddress.room}</td>
+                                      <td>${order.deliveryMethod}</td>
+                                      <td>${order.paymentMethod}</td>
+                                      <j:choose>
+                                          <j:when test="${order.orderStatus == 'waitingForPayment'}">
+                                              <td class="text-danger">waiting for payment</td>
+                                          </j:when>
+                                          <j:when test="${order.orderStatus == 'waitingForShipment'}">
+                                              <td class="text-warning">waiting for shipment</td>
+                                          </j:when>
+                                          <j:when test="${order.orderStatus == 'shipped'}">
+                                              <td class="text-primary">shipped</td>
+                                          </j:when>
+                                          <j:when test="${order.orderStatus == 'delivered'}">
+                                              <td class="text-success">delivered</td>
+                                          </j:when>
+                                          <j:otherwise>
+                                              <td>${order.orderStatus}</td>
+                                          </j:otherwise>
+                                      </j:choose>
+                                      <j:choose>
+                                          <j:when test="${order.paymentStatus == 'waitingForPayment'}">
+                                              <td class="text-warning">waiting for payment</td>
+                                          </j:when>
+                                          <j:when test="${order.paymentStatus == 'paid'}">
+                                              <td class="text-success">paid</td>
+                                          </j:when>
+                                          <j:otherwise>
+                                              <td>${order.paymentStatus}</td>
+                                          </j:otherwise>
+                                      </j:choose>
+                                      <td>${order.price}</td>
+                                  </tr>
+                              </j:forEach>
+                          </table>
+                      </div>
+                  </j:otherwise>
+              </j:choose>
           </div>
        </div>
 
@@ -103,7 +104,6 @@
      </div>
   </div>
 
-  <script type="text/javascript" src="<c:url value="/resources/js/routingFromImages.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/js/orders.js"/>"></script>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>

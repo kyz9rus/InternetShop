@@ -6,9 +6,10 @@ import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.DeliveryMethod;
 import ru.tsystems.internetshop.model.PaymentMethod;
-import ru.tsystems.internetshop.model.entity.Order;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface OrderService {
     void issueOrder(ClientDTO clientDTO, ClientAddressDTO clientAddressDTO, Basket basket, DeliveryMethod deliveryMethod, PaymentMethod paymentMethod);
@@ -22,4 +23,8 @@ public interface OrderService {
     List<OrderDTO> getOrdersByClient(ClientDTO clientDTO);
 
     List<OrderDTO> getUnfinishedOrdersByClient(ClientDTO clientDTO);
+
+    DeliveryMethod getDeliveryMethod(String deliveryMethodString);
+
+    PaymentMethod getPaymentMethod(String paymentMethodString);
 }

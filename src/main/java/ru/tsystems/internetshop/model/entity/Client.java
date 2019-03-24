@@ -8,9 +8,7 @@ import ru.tsystems.internetshop.model.DTO.OrderDTO;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity(name = "client")
@@ -43,7 +41,7 @@ public class Client {
     private Set<Order> orders = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
-    private Set<ClientAddress> addresses = new HashSet<>();
+    private List<ClientAddress> addresses = new ArrayList<>();
 
     public Client() {
     }
@@ -56,8 +54,6 @@ public class Client {
                 ", lastName='" + lastName + '\'' +
                 ", birthday=" + birthday +
                 ", email='" + email + '\'' +
-                ", orders=" + orders.size() +
-                ", addresses=" + addresses.size() +
                 '}';
     }
 

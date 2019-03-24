@@ -47,10 +47,10 @@
                 <ul>
                     <j:forEach items="${categories}" var="category" varStatus="tagStatus">
                         <div class="category">
-                            <div class="categoryTextBlock categoryTextBlock-${tagStatus.index}">
+                            <div class="categoryTextBlock categoryTextBlock-${tagStatus.count}">
                                 <h5 class="categoryText">${fn:replace(fn:toUpperCase(category.name), '_', ' ')}</h5>
                                 <div class="categoryOperations">
-                                    <img class="img-${tagStatus.index}" src="/resources/images/writingHand.png" alt="pen"/>
+                                    <img class="img-${tagStatus.count}" src="/resources/images/writingHand.png" alt="pen"/>
                                     <form action="remove-category" method="post">
                                         <button>
                                             <img src="/resources/images/cross.png" alt="cross"/>
@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                             <spring:form action="update-category" method="post">
-                            <div class="categoryFormBlock categoryFormBlock-${tagStatus.index}">
+                            <div class="categoryFormBlock categoryFormBlock-${tagStatus.count}">
                                 <input name="name" value="${fn:replace(fn:toUpperCase(category.name), '_', ' ')}">
                                 <input name="oldName" style="display: none" value="${category.name}"/>
                                 <button class="btn formButton">EDIT</button>
@@ -72,7 +72,7 @@
                 <button class="brn formButton addCategoryButton">ADD CATEGORY</button>
                 <div class="addCategoryBlock">
                     <form action="create-category" method="post">
-                        <input name="name"/>
+                        <input name="name" required/>
                         <button class="brn formButton">ADD CATEGORY</button>
                     </form>
                 </div>
@@ -89,7 +89,6 @@
      </div>
   </div>
 
-  <script type="text/javascript" src="<c:url value="/resources/js/routingFromImages.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/js/manageCategories.js"/>"></script>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>

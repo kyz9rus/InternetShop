@@ -63,7 +63,7 @@ public class PublicController {
     }
 
     @GetMapping(value = "registration")
-    public String toRegistrationPage(Model model) throws NoHandlerFoundException {
+    public String toRegistrationPage(Model model) {
         model.addAttribute("categories", categoryInfo.getInstance());
 
 //        throw new NoHandlerFoundException("1", "2", HttpHeaders.EMPTY);

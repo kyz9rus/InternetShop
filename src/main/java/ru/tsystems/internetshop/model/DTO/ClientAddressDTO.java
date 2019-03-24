@@ -1,12 +1,10 @@
 package ru.tsystems.internetshop.model.DTO;
 
 import lombok.Data;
-import ru.tsystems.internetshop.model.entity.Client;
-import ru.tsystems.internetshop.model.entity.ClientAddress;
-import ru.tsystems.internetshop.model.entity.Order;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Data
 public class ClientAddressDTO {
@@ -18,5 +16,37 @@ public class ClientAddressDTO {
     private String street;
     private String house;
     private int room;
-    private Set<OrderDTO> orders = new HashSet<>();
+    private List<OrderDTO> orders = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "ClientAddressDTO{" +
+                "id=" + id +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", postalCode=" + postalCode +
+                ", street='" + street + '\'' +
+                ", house='" + house + '\'' +
+                ", room=" + room +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClientAddressDTO that = (ClientAddressDTO) o;
+        return postalCode == that.postalCode &&
+                room == that.room &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(country, that.country) &&
+                Objects.equals(city, that.city) &&
+                Objects.equals(street, that.street) &&
+                Objects.equals(house, that.house);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, country, city, postalCode, street, house, room);
+    }
 }

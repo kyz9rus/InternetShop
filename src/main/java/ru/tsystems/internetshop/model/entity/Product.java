@@ -76,11 +76,8 @@ public class Product {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
-                ", category=" + category.getName() +
-                ", colors=" + colors.size() +
                 ", weight=" + weight +
                 ", volume='" + volume + '\'' +
-                ", orders=" + orders.size() +
                 ", quantityInStock=" + quantityInStock +
                 ", imgSrc='" + imgSrc + '\'' +
                 '}';

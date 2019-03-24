@@ -9,8 +9,7 @@ import ru.tsystems.internetshop.model.entity.Order;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 public class ClientDTO {
@@ -29,7 +28,7 @@ public class ClientDTO {
     private String email;
 
     private Set<Order> orders = new HashSet<>();
-    private Set<ClientAddress> addresses = new HashSet<>();
+    private List<ClientAddress> addresses = new ArrayList<>();
 
     public ClientDTO() {
     }
@@ -41,28 +40,33 @@ public class ClientDTO {
         this.email = email;
     }
 
-//    @Override
-//    public Client clone() throws CloneNotSupportedException {
-//        Client client = new Client();
-//        client.setId(id);
-//        client.setLastName(lastName);
-//        client.setFirstName(firstName);
-//        client.setEmail(email);
-//        client.setPassword(password);
-//        client.setBirthday(birthday);
-//
-//        Set<Order> orders = new HashSet<>();
-//        for (OrderDTO orderDTO : this.orders)
-//            orders.add(orderDTO.clone());
-//        client.setOrders(orders);
-//
-//        Set<ClientAddress> clientAddresses = new HashSet<>();
-//        for (ClientAddressDTO clientAddressDTO : this.addresses)
-//            clientAddresses.add(clientAddressDTO.clone());
-//        client.setAddresses(clientAddresses);
-//
-//        return client;
-//    }
+    @Override
+    public String toString() {
+        return "ClientDTO{" +
+                "id=" + id + '\'' +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClientDTO clientDTO = (ClientDTO) o;
+        return Objects.equals(id, clientDTO.id) &&
+                Objects.equals(firstName, clientDTO.firstName) &&
+                Objects.equals(lastName, clientDTO.lastName) &&
+                Objects.equals(birthday, clientDTO.birthday) &&
+                Objects.equals(email, clientDTO.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, birthday, email);
+    }
 }
 
 

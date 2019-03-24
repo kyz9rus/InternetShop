@@ -38,11 +38,7 @@ public class EmployeeController {
     public String getOrders(Model model) {
         List<OrderDTO> orders = orderService.getOrders();
 
-        if (orders.isEmpty())
-            model.addAttribute("emptyListMessage", "Order list is empty.");
-        else
-            model.addAttribute("orders", orders);
-
+        model.addAttribute("orders", orders);
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "employeeProfile/orders";

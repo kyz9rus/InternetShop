@@ -1,15 +1,15 @@
 package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
-import ru.tsystems.internetshop.model.DTO.OrderDTO;
-import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.model.DeliveryMethod;
 import ru.tsystems.internetshop.model.OrderStatus;
 import ru.tsystems.internetshop.model.PaymentMethod;
 import ru.tsystems.internetshop.model.PaymentStatus;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity(name = "ord")
@@ -24,7 +24,7 @@ public class Order {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "client_address")
     private ClientAddress clientAddress;
 
@@ -57,7 +57,6 @@ public class Order {
     public Order() {
     }
 
-//    public Order(Client client, ClientAddress clientAddress, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, Set<Product> products, PaymentStatus paymentStatus, OrderStatus orderStatus) {
     public Order(Client client, ClientAddress clientAddress, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, List<Product> products, PaymentStatus paymentStatus, OrderStatus orderStatus) {
         this.client = client;
         this.clientAddress = clientAddress;
@@ -72,11 +71,9 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", client=" + client.getEmail() +
                 ", clientAddress=" + clientAddress +
                 ", paymentMethod=" + paymentMethod +
                 ", deliveryMethod=" + deliveryMethod +
-                ", products=" + products.size() +
                 ", paymentStatus=" + paymentStatus +
                 ", orderStatus=" + orderStatus +
                 '}';

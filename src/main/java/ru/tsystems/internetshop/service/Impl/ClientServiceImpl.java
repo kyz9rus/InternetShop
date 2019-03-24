@@ -30,7 +30,7 @@ public class ClientServiceImpl implements ClientService {
     public ClientDTO getClientByEmail(String email) {
         try {
             return mapper.convertToDto(clientDAO.findByEmail(email));
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             throw null;
         }
     }

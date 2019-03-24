@@ -1,4 +1,4 @@
-//package ru.tsystems.internetshop.spring.web.config;
+//package ru.tsystems.internetshop.config;
 //
 //import liquibase.integration.spring.SpringLiquibase;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +8,7 @@
 //import org.springframework.core.io.ResourceLoader;
 //import org.springframework.util.Assert;
 //
-//import liquibase.logging.Logger;
-//
-//
 //import javax.sql.DataSource;
-//import java.util.HashMap;
-//import java.util.Map;
 //
 //@Configuration
 //public class LiquibaseConfig {
@@ -40,6 +35,7 @@
 //        liquibase.setDefaultSchema("public");
 //        liquibase.setDropFirst(false);
 //        liquibase.setShouldRun(true);
+//
 //
 //        // Verbose logging
 ////        Map<String, String> params = new HashMap<>();

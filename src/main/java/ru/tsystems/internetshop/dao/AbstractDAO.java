@@ -20,13 +20,18 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
     @Autowired
     protected SessionFactory sessionFactory;
 
-    protected Session getSession() {
+    private Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 
     @Override
     public void create(T entity) {
         getSession().persist(entity);
+    }
+
+//    @Override
+    public void createOrUpdate(T entity) {
+        getSession().saveOrUpdate(entity);
     }
 
     @Override

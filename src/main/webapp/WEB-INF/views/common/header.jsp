@@ -75,10 +75,25 @@
             </a>
         </div>
         <div class="lastBlock">
-            <div>
+            <div class="basketDiv">
                 <img class="basket" src="/resources/images/basket.png" alt="AVON"><br/>
                 <div class="basketInfo">
-                    <p class="emptyBasket">Your bag is empty</p>
+                    <j:choose>
+                        <j:when test="${basket.numberOfProducts != 0}">
+                            <div class="basketInfoBlock" align="left">
+                                <p>Number of products: ${basket.numberOfProducts}</p>
+                                <p>Summary price: ${basket.summaryPrice} rub.</p>
+                            </div>
+                            <div class="issue">
+                                <a href="/clientProfile/issueOrder">
+                                    <button class="btn formButton">ISSUE ORDER</button>
+                                </a>
+                            </div>
+                        </j:when>
+                        <j:otherwise>
+                            <p class="emptyBasket">Your bag is empty</p>
+                        </j:otherwise>
+                    </j:choose>
                 </div>
             </div>
             <div>
@@ -104,7 +119,7 @@
         </a>
     </div>
 
-    <div id="basketDiv">
+    <div class="basketDiv">
         <a href="/clientProfile/issueOrder">
             <img class="basket" src="/resources/images/basket.png" alt="AVON"><br/>
         </a>
@@ -113,7 +128,7 @@
                 <j:when test="${basket.numberOfProducts != 0}">
                     <div class="basketInfoBlock">
                         <p>Number of products: ${basket.numberOfProducts}</p>
-                        <p>Summary price: ${basket.summaryPrice}</p>
+                        <p>Summary price: ${basket.summaryPrice} rub.</p>
                     </div>
                     <div class="issue">
                         <a href="/clientProfile/issueOrder">

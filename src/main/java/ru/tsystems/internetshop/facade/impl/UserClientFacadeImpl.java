@@ -1,12 +1,11 @@
 package ru.tsystems.internetshop.facade.impl;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
-import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.model.entity.Role;
 import ru.tsystems.internetshop.model.entity.User;
 import ru.tsystems.internetshop.service.ClientService;
@@ -14,9 +13,7 @@ import ru.tsystems.internetshop.service.RoleService;
 import ru.tsystems.internetshop.service.UserService;
 import ru.tsystems.internetshop.util.Mapper;
 
-import java.text.ParseException;
-
-//@Transactional ?????????
+@Transactional
 @Component
 public class UserClientFacadeImpl implements UserClientFacade {
 

@@ -15,11 +15,26 @@ import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.util.Mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    private Map<String, DeliveryMethod> deliveryMethodMap = new HashMap<String, DeliveryMethod>()
+    {{
+        put("Post of Russia", DeliveryMethod.postOfRussia);
+        put("Avon service centers", DeliveryMethod.avonServiceCenters);
+        put("Home delivery", DeliveryMethod.homeDelivery);
+    }};
+
+    private Map<String, PaymentMethod> paymentMethodMap = new HashMap<String, PaymentMethod>()
+    {{
+        put("By cash", PaymentMethod.cash);
+        put("By card", PaymentMethod.card);
+    }};
 
     @Autowired
     private OrderDAO orderDAO;
@@ -85,6 +100,7 @@ public class OrderServiceImpl implements OrderService {
 
         int price = 0;
         for (ProductDTO productDTO : productDTOs) {
+            productDTO.setCategory(null);
             products.add(mapper.convertToEntity(productDTO));
             price += productDTO.getPrice();
         }
@@ -93,5 +109,13 @@ public class OrderServiceImpl implements OrderService {
         order.setPrice(price);
 
         orderDAO.create(order);
+    }
+
+    public DeliveryMethod getDeliveryMethod(String deliveryMethodString) {
+        return deliveryMethodMap.get(deliveryMethodString);
+    }
+
+    public PaymentMethod getPaymentMethod(String paymentMethodString) {
+        return paymentMethodMap.get(paymentMethodString);
     }
 }
