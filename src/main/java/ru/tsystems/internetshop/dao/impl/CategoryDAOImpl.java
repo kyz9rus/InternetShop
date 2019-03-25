@@ -17,7 +17,6 @@ public class CategoryDAOImpl extends AbstractDAO<Category, String> implements Ca
     public void updateCategory(String oldName, Category category) {
         String queryString = "UPDATE category c set c.name = :name where c.name = :oldName";
 
-//        TypedQuery<Category> query = sessionFactory.getCurrentSession().createQuery(queryString, Category.class);
         Query query = sessionFactory.getCurrentSession().createQuery(queryString);
         query.setParameter("name", category.getName());
         query.setParameter("oldName", oldName);

@@ -2,20 +2,38 @@ package ru.tsystems.internetshop.model.DTO;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Data
 public class ClientAddressDTO {
+
     private Long id;
+
+    @NotNull
     private ClientDTO client;
+
+    @NotNull
     private String country;
+
+    @NotNull
     private String city;
+
+    @NotNull
     private int postalCode;
+
+    @NotNull
     private String street;
+
+    @NotNull
     private String house;
+
+    @NotNull
     private int room;
+
+
     private List<OrderDTO> orders = new ArrayList<>();
 
     @Override

@@ -14,6 +14,8 @@ import java.util.Map;
 public interface OrderService {
     void issueOrder(ClientDTO clientDTO, ClientAddressDTO clientAddressDTO, Basket basket, DeliveryMethod deliveryMethod, PaymentMethod paymentMethod);
 
+    void repeatOrder(OrderDTO orderDTO);;
+
     void updateOrder(OrderDTO orderDTO);
 
     OrderDTO getOrder(Long id);

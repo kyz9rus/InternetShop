@@ -10,6 +10,7 @@ import ru.tsystems.internetshop.model.entity.ClientAddress;
 import ru.tsystems.internetshop.model.entity.Order;
 import ru.tsystems.internetshop.model.entity.Product;
 
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,13 +18,27 @@ import java.util.Set;
 @Data
 public class OrderDTO {
     private Long id;
+
+    @NotNull
     private Client client;
+
+    @NotNull
     private ClientAddress clientAddress;
+
+    @NotNull
     private PaymentMethod paymentMethod;
+
+    @NotNull
     private DeliveryMethod deliveryMethod;
     private Set<Product> products = new HashSet<>();
+
+    @NotNull
     private PaymentStatus paymentStatus;
+
+    @NotNull
     private OrderStatus orderStatus;
+
+    @NotNull
     private int price;
 
     @Override

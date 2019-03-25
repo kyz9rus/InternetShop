@@ -5,11 +5,6 @@
             <label>View orders</label>
         </a>
     </li>
-    <li class="employeeOperation">
-        <a href="/employeeProfile/changeOrderStatus">
-            <label>Change order status</label>
-        </a>
-    </li>
     <li class="divider"></li>
 
     <li class="employeeOperation">

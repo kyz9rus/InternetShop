@@ -100,7 +100,6 @@ public class OrderServiceImpl implements OrderService {
 
         int price = 0;
         for (ProductDTO productDTO : productDTOs) {
-            productDTO.setCategory(null);
             products.add(mapper.convertToEntity(productDTO));
             price += productDTO.getPrice();
         }
@@ -109,6 +108,11 @@ public class OrderServiceImpl implements OrderService {
         order.setPrice(price);
 
         orderDAO.create(order);
+    }
+
+    @Override
+    public void repeatOrder(OrderDTO orderDTO) {
+        orderDAO.create(mapper.convertToEntity(orderDTO));
     }
 
     public DeliveryMethod getDeliveryMethod(String deliveryMethodString) {

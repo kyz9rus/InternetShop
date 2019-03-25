@@ -1,8 +1,6 @@
 package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
-import ru.tsystems.internetshop.model.DTO.ColorDTO;
-import ru.tsystems.internetshop.model.DTO.ProductDTO;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -20,9 +18,9 @@ public class Color {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-        name = "product_color",
-        joinColumns = @JoinColumn(name = "color", referencedColumnName = "name"),
-        inverseJoinColumns =  @JoinColumn(name = "product_id", referencedColumnName = "id")
+            name = "product_color",
+            joinColumns = @JoinColumn(name = "color", referencedColumnName = "name"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
     )
     private Set<Product> products = new HashSet<>();
 

@@ -51,6 +51,8 @@
                         <p class="productPrice">Price: ${product.price} руб.</p>
                         <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
                         <button class="btn buyButton">BUY</button>
+
+                        <input name="id" value="${product.id}" hidden/>
                       </div>
                     </div>
                   </div>

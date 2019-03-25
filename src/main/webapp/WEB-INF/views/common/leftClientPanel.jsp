@@ -22,9 +22,4 @@
             <label>View order history</label>
         </a>
     </li>
-    <li class="clientOperation">
-        <a href="/clientProfile/repeatOrder">
-            <label>Repeat order</label>
-        </a>
-    </li>
 </ul>

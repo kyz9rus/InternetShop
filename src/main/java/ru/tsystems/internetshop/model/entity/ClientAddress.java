@@ -1,19 +1,17 @@
 package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
-import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
-import ru.tsystems.internetshop.model.DTO.OrderDTO;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Data
 @Entity(name = "clientAddress")
 @Table(name = "clientaddress")
 public class ClientAddress {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientaddress_seq")
     @SequenceGenerator(name = "clientaddress_seq", sequenceName = "SEQ_CLIENTADDRESS", allocationSize = 1)
@@ -23,27 +21,35 @@ public class ClientAddress {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @NotNull
     private String country;
 
-    @NotNull
     private String city;
 
-    @NotNull
     @Column(name = "postal_code")
     private int postalCode;
 
-    @NotNull
     private String street;
 
-    @NotNull
     private String house;
 
-    @NotNull
     private int room;
 
-    @OneToMany(mappedBy = "clientAddress", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    private Set<Order> orders = new HashSet<>();
+    @OneToMany(mappedBy = "clientAddress", cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
+
+    public ClientAddress() {
+    }
+
+    public ClientAddress(Client client, String country, String city, int postalCode, String street, String house, int room, List<Order> orders) {
+        this.client = client;
+        this.country = country;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.street = street;
+        this.house = house;
+        this.room = room;
+        this.orders = orders;
+    }
 
     @Override
     public String toString() {

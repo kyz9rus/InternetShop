@@ -10,6 +10,8 @@ import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.model.OrderStatus;
+import ru.tsystems.internetshop.model.PaymentMethod;
+import ru.tsystems.internetshop.model.PaymentStatus;
 import ru.tsystems.internetshop.service.CategoryService;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.service.ProductService;
@@ -42,14 +44,6 @@ public class EmployeeController {
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "employeeProfile/orders";
-    }
-
-    @PreAuthorize("hasAnyRole('EMPLOYEE')")
-    @GetMapping("changeOrderStatus")
-    public String changeOrderStatusPage(Model model) {
-        model.addAttribute("categories", categoryInfo.getInstance());
-
-        return "employeeProfile/changeOrderStatus";
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
@@ -100,9 +94,28 @@ public class EmployeeController {
         } else
             model.addAttribute("errorMessage", "Order with id " + id + " doesn't exist. Inform the administrator!");
 
+        model.addAttribute("orders", orderService.getOrders());
         model.addAttribute("categories", categoryInfo.getInstance());
 
-        return "employeeProfile/changeOrderStatus";
+        return "employeeProfile/orders";
+    }
+
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
+    @PostMapping("change-payment-status")
+    public String changePaymentStatus(@RequestParam("id") Long id, @RequestParam("paymentStatus") PaymentStatus paymentStatus, Model model) {
+        OrderDTO orderDTO = orderService.getOrder(id);
+        if (orderDTO != null) {
+            orderDTO.setPaymentStatus(paymentStatus);
+            orderService.updateOrder(orderDTO);
+
+            model.addAttribute("successMessage", "Payment status for order with id " + orderDTO.getId() + " successfully changed!");
+        } else
+            model.addAttribute("errorMessage", "Order with id " + id + " doesn't exist. Inform the administrator!");
+
+        model.addAttribute("orders", orderService.getOrders());
+        model.addAttribute("categories", categoryInfo.getInstance());
+
+        return "employeeProfile/orders";
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")

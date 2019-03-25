@@ -67,6 +67,7 @@
                                     <option>By cash</option>
                                     <option>By card</option>
                                 </select>
+                                <%--by card block--%>
                             </div>
                         </div>
                         <input class="btn formButton" type="submit" value="ISSUE ORDER"/>
@@ -105,6 +106,7 @@
                                   <div class="productInfo2">
                                     <p class="productPrice">Price: ${product.price} руб.</p>
                                     <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
+                                    <input name="id" value="${product.id}" hidden/>
                                   </div>
                                 </div>
                               </div>

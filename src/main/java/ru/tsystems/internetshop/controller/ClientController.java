@@ -12,6 +12,9 @@ import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
+import ru.tsystems.internetshop.model.OrderStatus;
+import ru.tsystems.internetshop.model.PaymentMethod;
+import ru.tsystems.internetshop.model.PaymentStatus;
 import ru.tsystems.internetshop.service.ClientAddressService;
 import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.service.OrderService;
@@ -71,11 +74,26 @@ public class ClientController {
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
-    @GetMapping("repeatOrder")
-    public String repeatOrderPage(Model model) {
+    @PostMapping("repeat-order")
+    public String repeatOrder(@RequestParam("orderId") Long orderId, Model model) {
+        OrderDTO orderDTO = orderService.getOrder(orderId);
+
+        if (orderDTO == null)
+            model.addAttribute("errorMessage", "Order with id: " + orderId + " doesn't exist");
+        else {
+            orderDTO.setId(null);
+            orderDTO.setPaymentStatus(PaymentStatus.waitingForPayment);
+            orderDTO.setOrderStatus(OrderStatus.waitingForPayment);
+            orderService.repeatOrder(orderDTO);
+
+            model.addAttribute("successMessage", "Order successfully submitted");
+        }
+
+        model.addAttribute("orders", orderService.getOrders());
+
         model.addAttribute(categoryInfo.getInstance());
 
-        return "clientProfile/repeatOrder";
+        return "clientProfile/orderHistory";
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
@@ -193,12 +211,11 @@ public class ClientController {
     public String createOrder(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("deliveryMethod") String deliveryMethodString, @RequestParam("paymentMethod") String paymentMethodString, @RequestParam("addressId") Long addressId, Model model) {
         ClientAddressDTO clientAddressDTO = clientAddressService.getClientAddressById(addressId);
 
-        clientAddressDTO.setId(null);
-
         orderService.issueOrder(clientDTO, clientAddressDTO, basket, orderService.getDeliveryMethod(deliveryMethodString), orderService.getPaymentMethod(paymentMethodString));
 
         model.addAttribute(categoryInfo.getInstance());
         model.addAttribute("basket", new Basket());
-        return "clientProfile";
+        model.addAttribute("successMessage", "Order successfully issued");
+        return "clientProfile/issueOrder";
     }
 }

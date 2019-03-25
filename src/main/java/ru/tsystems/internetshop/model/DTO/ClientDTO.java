@@ -2,7 +2,6 @@ package ru.tsystems.internetshop.model.DTO;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.model.entity.ClientAddress;
 import ru.tsystems.internetshop.model.entity.Order;
 
@@ -13,6 +12,7 @@ import java.util.*;
 
 @Data
 public class ClientDTO {
+
     private Long id;
 
     @NotNull(message = "Please enter first name")

@@ -33,6 +33,10 @@
           <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leftPanel">
               <j:import url="../common/leftEmployeePanel.jsp"/>
           </div>
+          <div class="messageBlock">
+              <label class="successMessage">${successMessage}</label>
+              <label class="errorMessage">${errorMessage}</label>
+          </div>
           <div class="mainPanel" align="center">
               <j:choose>
                   <j:when test="${orders.isEmpty()}">
@@ -62,16 +66,60 @@
                                       <td>${order.paymentMethod}</td>
                                       <j:choose>
                                           <j:when test="${order.orderStatus == 'waitingForPayment'}">
-                                              <td class="text-danger">waiting for payment</td>
+                                              <td class="orderStatus-${tagStatus.count} text-danger orderStatus">waiting for payment</td>
+                                              <td class="editOrderStatus editOrderStatus-${tagStatus.count}">
+                                                  <form action="change-order-status" method="post">
+                                                      <select name="orderStatus">
+                                                          <option>waitingForShipment</option>
+                                                          <option>shipped</option>
+                                                          <option>delivered</option>
+                                                      </select>
+                                                      <input name="id" value="${order.id}" hidden/>
+                                                      <button class="btn formButton">CHANGE</button>
+                                                  </form>
+                                              </td>
                                           </j:when>
                                           <j:when test="${order.orderStatus == 'waitingForShipment'}">
-                                              <td class="text-warning">waiting for shipment</td>
+                                              <td class="orderStatus-${tagStatus.count} text-warning orderStatus">waiting for shipment</td>
+                                              <td class="editOrderStatus editOrderStatus-${tagStatus.count}">
+                                                  <form action="change-order-status" method="post">
+                                                      <select name="orderStatus">
+                                                          <option>waitingForPayment</option>
+                                                          <option>shipped</option>
+                                                          <option>delivered</option>
+                                                      </select>
+                                                      <input name="id" value="${order.id}" hidden/>
+                                                      <button class="btn formButton">CHANGE</button>
+                                                  </form>
+                                              </td>
                                           </j:when>
                                           <j:when test="${order.orderStatus == 'shipped'}">
-                                              <td class="text-primary">shipped</td>
+                                              <td class="orderStatus-${tagStatus.count} text-primary orderStatus">shipped</td>
+                                              <td class="editOrderStatus editOrderStatus-${tagStatus.count}">
+                                                  <form action="change-order-status" method="post">
+                                                      <select name="orderStatus">
+                                                          <option>waitingForPayment</option>
+                                                          <option>waitingForShipment</option>
+                                                          <option>delivered</option>
+                                                      </select>
+                                                      <input name="id" value="${order.id}" hidden/>
+                                                      <button class="btn formButton">CHANGE</button>
+                                                  </form>
+                                              </td>
                                           </j:when>
                                           <j:when test="${order.orderStatus == 'delivered'}">
-                                              <td class="text-success">delivered</td>
+                                              <td class="orderStatus-${tagStatus.count} text-success orderStatus">delivered</td>
+                                              <td class="editOrderStatus editOrderStatus-${tagStatus.count}">
+                                                  <form action="change-order-status" method="post">
+                                                      <select name="orderStatus">
+                                                          <option>waitingForPayment</option>
+                                                          <option>waitingForShipment</option>
+                                                          <option>shipped</option>
+                                                      </select>
+                                                      <input name="id" value="${order.id}" hidden/>
+                                                      <button class="btn formButton">CHANGE</button>
+                                                  </form>
+                                              </td>
                                           </j:when>
                                           <j:otherwise>
                                               <td>${order.orderStatus}</td>
@@ -79,10 +127,28 @@
                                       </j:choose>
                                       <j:choose>
                                           <j:when test="${order.paymentStatus == 'waitingForPayment'}">
-                                              <td class="text-warning">waiting for payment</td>
+                                              <td class="paymentStatus-${tagStatus.count} text-warning paymentStatus">waiting for payment</td>
+                                              <td class="editPaymentStatus editPaymentStatus-${tagStatus.count}">
+                                                  <form action="change-payment-status" method="post">
+                                                      <select name="paymentStatus">
+                                                          <option>paid</option>
+                                                      </select>
+                                                      <input name="id" value="${order.id}" hidden/>
+                                                      <button class="btn formButton">CHANGE</button>
+                                                  </form>
+                                              </td>
                                           </j:when>
                                           <j:when test="${order.paymentStatus == 'paid'}">
-                                              <td class="text-success">paid</td>
+                                              <td class="paymentStatus-${tagStatus.count} text-success paymentStatus">paid</td>
+                                              <td class="editPaymentStatus editPaymentStatus-${tagStatus.count}">
+                                                  <form action="change-payment-status" method="post">
+                                                      <select name="paymentStatus">
+                                                          <option>waitingForPayment</option>
+                                                      </select>
+                                                      <input name="id" value="${order.id}" hidden/>
+                                                      <button class="btn formButton">CHANGE</button>
+                                                  </form>
+                                              </td>
                                           </j:when>
                                           <j:otherwise>
                                               <td>${order.paymentStatus}</td>

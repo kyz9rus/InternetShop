@@ -24,6 +24,9 @@ public class Category {
         this.name = name;
     }
 
+//    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+//    private List<Product> productList = new ArrayList<>();
+
     @Override
     public String toString() {
         return "Category{" +

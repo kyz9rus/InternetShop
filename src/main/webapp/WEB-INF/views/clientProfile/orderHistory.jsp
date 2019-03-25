@@ -50,6 +50,7 @@
                         <td>Order status</td>
                         <td>Payment status</td>
                         <td>price</td>
+                        <td></td>
                       </tr>
                       <j:forEach items="${orders}" var="order" varStatus="tagStatus">
                         <tr align="center">
@@ -86,6 +87,12 @@
                             </j:otherwise>
                           </j:choose>
                           <td>${order.price}</td>
+                          <td>
+                            <form action="repeat-order" method="post">
+                              <input name="orderId" value="${order.id}" hidden/>
+                              <button class="btn formButton">REPEAT</button>
+                            </form>
+                          </td>
                         </tr>
                       </j:forEach>
                     </table>

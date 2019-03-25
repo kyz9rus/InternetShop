@@ -2,18 +2,18 @@ package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
-import ru.tsystems.internetshop.model.DTO.ClientDTO;
-import ru.tsystems.internetshop.model.DTO.OrderDTO;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity(name = "client")
 @Table(name = "client")
 public class Client {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_seq")
     @SequenceGenerator(name = "client_seq", sequenceName = "SEQ_CLIENT", allocationSize = 1)
@@ -29,18 +29,13 @@ public class Client {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthday;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name="email", unique = true, referencedColumnName="email")
-//    private User user;
-
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
-//    @OneToMany(mappedBy = "client")
-    private Set<Order> orders = new HashSet<>();
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "client")
     private List<ClientAddress> addresses = new ArrayList<>();
 
     public Client() {

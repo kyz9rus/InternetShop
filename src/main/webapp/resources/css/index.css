@@ -26,6 +26,10 @@
     width: 120px;
 }
 
+input {
+    width: 100%;
+}
+
 input:focus{
     border: 3px solid pink;
     transition: 1;

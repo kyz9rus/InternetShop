@@ -15,6 +15,7 @@ import java.util.Objects;
 @Entity(name = "ord")
 @Table(name = "ord")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
     @SequenceGenerator(name = "order_seq", sequenceName = "SEQ_ORDER", allocationSize = 1)
@@ -24,32 +25,32 @@ public class Order {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "client_address")
     private ClientAddress clientAddress;
 
     @Column(name = "payment_method")
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
     @Column(name = "delivery_method")
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private DeliveryMethod deliveryMethod;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "order_product",
-            joinColumns =  @JoinColumn(name = "order_id", referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
     )
     private List<Product> products = new ArrayList<>();
 
     @Column(name = "payment_status")
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
     @Column(name = "order_status")
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     private int price;

@@ -16,6 +16,7 @@ public class UserDTO implements Serializable {
     private Long id;
 
     @Email
+    @NotNull
     private String email;
 
     @NotNull

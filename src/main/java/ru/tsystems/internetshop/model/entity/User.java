@@ -5,11 +5,7 @@ import lombok.Data;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,10 +20,8 @@ public class User implements Serializable, Cloneable {
     private Long id;
 
     @Column(length = 100, name = "email", unique = true)
-    @Email
     private String email;
 
-    @NotNull
     @JsonIgnore
     private String password;
 
@@ -38,19 +32,7 @@ public class User implements Serializable, Cloneable {
     public User() {
     }
 
-    public User(User user) {
-        email = user.getEmail();
-        password = user.getPassword();
-        roles = user.getRoles();
-    }
-
-    public User(@Email String email, @NotNull String password, Set<Role> roles) {
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-    }
-
-    public User(@Email String email, @NotNull String password) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
     }

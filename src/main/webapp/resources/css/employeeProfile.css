@@ -1,7 +1,6 @@
 .leftPanel {
     border: 1px solid grey;
     margin-left: 20px;
-    /*     height: 340px; */
 }
 
 .leftPanel li {
@@ -165,6 +164,19 @@ td {
 .emptyListLabel {
     margin-left: 50px;
     font-size: 20px;
+}
+
+.orderStatus, .paymentStatus {
+    cursor: pointer;
+}
+
+.editOrderStatus, .editPaymentStatus{
+    display: none;
+}
+
+.editOrderStatus button, .editPaymentStatus button {
+    width: 70%;
+    padding: 1px;
 }
 
 @media (max-width: 576px) {
