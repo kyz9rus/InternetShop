@@ -59,16 +59,16 @@
                           <td>${order.deliveryMethod}</td>
                           <td>${order.paymentMethod}</td>
                           <j:choose>
-                            <j:when test="${order.orderStatus == 'waitingForPayment'}">
+                            <j:when test="${order.orderStatus == 'WAITING_FOR_PAYMENT'}">
                               <td class="text-danger">waiting for payment</td>
                             </j:when>
-                            <j:when test="${order.orderStatus == 'waitingForShipment'}">
+                            <j:when test="${order.orderStatus == 'WAITING_FOR_SHIPMENT'}">
                               <td class="text-warning">waiting for shipment</td>
                             </j:when>
-                            <j:when test="${order.orderStatus == 'shipped'}">
+                            <j:when test="${order.orderStatus == 'SHIPPED'}">
                               <td class="text-primary">shipped</td>
                             </j:when>
-                            <j:when test="${order.orderStatus == 'delivered'}">
+                            <j:when test="${order.orderStatus == 'DELIVERED'}">
                               <td class="text-success">delivered</td>
                             </j:when>
                             <j:otherwise>
@@ -76,10 +76,10 @@
                             </j:otherwise>
                           </j:choose>
                           <j:choose>
-                            <j:when test="${order.paymentStatus == 'waitingForPayment'}">
+                            <j:when test="${order.paymentStatus == 'WAITING_FOR_PAYMENT'}">
                               <td class="text-warning">waiting for payment</td>
                             </j:when>
-                            <j:when test="${order.paymentStatus == 'paid'}">
+                            <j:when test="${order.paymentStatus == 'PAID'}">
                               <td class="text-success">paid</td>
                             </j:when>
                             <j:otherwise>

@@ -13,7 +13,6 @@ import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
 import ru.tsystems.internetshop.model.OrderStatus;
-import ru.tsystems.internetshop.model.PaymentMethod;
 import ru.tsystems.internetshop.model.PaymentStatus;
 import ru.tsystems.internetshop.service.ClientAddressService;
 import ru.tsystems.internetshop.service.ClientService;
@@ -82,8 +81,8 @@ public class ClientController {
             model.addAttribute("errorMessage", "Order with id: " + orderId + " doesn't exist");
         else {
             orderDTO.setId(null);
-            orderDTO.setPaymentStatus(PaymentStatus.waitingForPayment);
-            orderDTO.setOrderStatus(OrderStatus.waitingForPayment);
+            orderDTO.setPaymentStatus(PaymentStatus.WAITING_FOR_PAYMENT);
+            orderDTO.setOrderStatus(OrderStatus.WAITING_FOR_PAYMENT);
             orderService.repeatOrder(orderDTO);
 
             model.addAttribute("successMessage", "Order successfully submitted");

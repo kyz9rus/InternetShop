@@ -1,5 +1,5 @@
 package ru.tsystems.internetshop.model;
 
 public enum OrderStatus {
-    waitingForPayment, waitingForShipment, shipped, delivered
+    WAITING_FOR_PAYMENT, WAITING_FOR_SHIPMENT, SHIPPED, DELIVERED
 }

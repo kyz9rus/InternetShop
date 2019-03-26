@@ -18,11 +18,6 @@ import ru.tsystems.internetshop.service.CustomUserDetailService;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    /*@Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
-        return new MySimpleUrlAuthenticationSuccessHandler();
-    }*/
-
     @Autowired
     private CustomUserDetailService userDetailsService;
 
@@ -39,7 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin().permitAll()
-//                .successHandler(myAuthenticationSuccessHandler())
                 .and()
                 .logout().logoutSuccessUrl("/")
                 .and()

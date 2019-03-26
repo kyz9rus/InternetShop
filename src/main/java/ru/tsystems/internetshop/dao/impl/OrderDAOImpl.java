@@ -20,7 +20,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
         TypedQuery<Order> query = sessionFactory.getCurrentSession().createQuery(queryString, Order.class);
         query.setParameter("id", client.getId());
-        query.setParameter("order_status", OrderStatus.delivered);
+        query.setParameter("order_status", OrderStatus.DELIVERED);
 
         return query.getResultList();
     }

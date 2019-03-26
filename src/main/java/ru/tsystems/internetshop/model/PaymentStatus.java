@@ -1,5 +1,5 @@
 package ru.tsystems.internetshop.model;
 
 public enum PaymentStatus {
-    waitingForPayment, paid
+    WAITING_FOR_PAYMENT, PAID
 }

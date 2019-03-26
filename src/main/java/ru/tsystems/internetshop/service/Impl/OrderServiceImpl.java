@@ -92,8 +92,8 @@ public class OrderServiceImpl implements OrderService {
         order.setClientAddress(mapper.convertToEntity(clientAddressDTO));
         order.setDeliveryMethod(deliveryMethod);
         order.setPaymentMethod(paymentMethod);
-        order.setPaymentStatus(PaymentStatus.waitingForPayment);
-        order.setOrderStatus(OrderStatus.waitingForPayment);
+        order.setPaymentStatus(PaymentStatus.WAITING_FOR_PAYMENT);
+        order.setOrderStatus(OrderStatus.WAITING_FOR_PAYMENT);
 
         List<ProductDTO> productDTOs = basket.getProducts();
         List<Product> products = new ArrayList<>();
