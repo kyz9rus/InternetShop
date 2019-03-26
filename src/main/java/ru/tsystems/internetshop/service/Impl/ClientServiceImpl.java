@@ -31,7 +31,7 @@ public class ClientServiceImpl implements ClientService {
         try {
             return mapper.convertToDto(clientDAO.findByEmail(email));
         } catch (IllegalArgumentException | NullPointerException e) {
-            throw null;
+            return null;
         }
     }
 }

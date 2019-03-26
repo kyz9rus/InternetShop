@@ -5,9 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Data
 public class ProductDTO {
@@ -19,12 +17,12 @@ public class ProductDTO {
     @NotNull
     private int price;
     private CategoryDTO category;
-    private Set<ColorDTO> colors = new HashSet<>();
+    private List<ColorDTO> colors = new ArrayList<>();
     private double weight;
 
     @Size(min = 11, max = 11)
     private String volume;
-    private Set<OrderDTO> orders = new HashSet<>();
+    private List<OrderDTO> orders = new ArrayList<>();
 
     @NotNull
     private long quantityInStock;

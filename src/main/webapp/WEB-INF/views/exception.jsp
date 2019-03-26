@@ -30,7 +30,7 @@
         <div class="errorBlock">
           <div class="errorInfoBlock">
             <div class="image404Block">
-              <img alt="404" src="/resources/images/404.png">
+              <img alt="404" src="<c:url value="/resources/images/404.png"/>">
             </div>
             <div>
               <p>PAGE NOT FOUND</p>
@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="errorImageBlock">
-            <img src="/resources/images/errorImage.png">
+            <img src="<c:url value="/resources/images/errorImage.png"/>">
           </div>
         </div>
       </div>

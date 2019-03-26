@@ -30,7 +30,7 @@
         <div class="becomeRepresentativeBlock">
           <div class="row">
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 presentImage">
-              <img src="/resources/images/present.png"/>
+              <img src="<c:url value="/resources/images/present.png" />"/>
             </div>
             <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
               <p class="article">Do you want a 30% discount and a prize?</p>

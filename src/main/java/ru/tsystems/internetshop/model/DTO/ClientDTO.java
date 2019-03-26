@@ -27,7 +27,7 @@ public class ClientDTO {
     @Email(message = "Email should be valid")
     private String email;
 
-    private Set<Order> orders = new HashSet<>();
+    private List<Order> orders = new ArrayList<>();
     private List<ClientAddress> addresses = new ArrayList<>();
 
     public ClientDTO() {

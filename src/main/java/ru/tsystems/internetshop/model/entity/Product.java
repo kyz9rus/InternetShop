@@ -4,9 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity(name = "product")
@@ -33,7 +31,7 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "color", referencedColumnName = "name")
     )
-    private Set<Color> colors = new HashSet<>();
+    private List<Color> colors = new ArrayList<>();
 
     private double weight;
 

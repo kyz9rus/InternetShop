@@ -7,13 +7,12 @@ import ru.tsystems.internetshop.model.PaymentMethod;
 import ru.tsystems.internetshop.model.PaymentStatus;
 import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.model.entity.ClientAddress;
-import ru.tsystems.internetshop.model.entity.Order;
 import ru.tsystems.internetshop.model.entity.Product;
 
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Data
 public class OrderDTO {
@@ -30,7 +29,7 @@ public class OrderDTO {
 
     @NotNull
     private DeliveryMethod deliveryMethod;
-    private Set<Product> products = new HashSet<>();
+    private List<Product> products = new ArrayList<>();
 
     @NotNull
     private PaymentStatus paymentStatus;

@@ -25,15 +25,15 @@ public class OrderServiceImpl implements OrderService {
 
     private Map<String, DeliveryMethod> deliveryMethodMap = new HashMap<String, DeliveryMethod>()
     {{
-        put("Post of Russia", DeliveryMethod.postOfRussia);
-        put("Avon service centers", DeliveryMethod.avonServiceCenters);
-        put("Home delivery", DeliveryMethod.homeDelivery);
+        put("Post of Russia", DeliveryMethod.POST_OF_RUSSIA);
+        put("Avon service centers", DeliveryMethod.AVON_SERVICE_CENTERS);
+        put("Home delivery", DeliveryMethod.HOME_DELIVERY);
     }};
 
     private Map<String, PaymentMethod> paymentMethodMap = new HashMap<String, PaymentMethod>()
     {{
-        put("By cash", PaymentMethod.cash);
-        put("By card", PaymentMethod.card);
+        put("By CASH", PaymentMethod.CASH);
+        put("By CARD", PaymentMethod.CARD);
     }};
 
     @Autowired

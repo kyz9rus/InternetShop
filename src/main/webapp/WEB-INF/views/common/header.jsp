@@ -13,30 +13,30 @@
         <div class="signInBlock">
             <div class="registrationHeaderBlock">
                 <auth:authorize access="hasRole('CLIENT')">
-                    <a href="/clientProfile">
-                        <img src="/resources/images/profile.png">
+                    <a href="<c:url value="/clientProfile"/>">
+                        <img src="<c:url value="/resources/images/profile.png" />">
                     </a>
                 </auth:authorize>
                 <auth:authorize access="hasRole('EMPLOYEE')">
-                    <a href="/employeeProfile">
-                        <img src="/resources/images/profile.png">
+                    <a href="<c:url value="/employeeProfile"/>">
+                        <img src="<c:url value="/resources/images/profile.png" />">
                     </a>
                 </auth:authorize>
                 <auth:authorize access="isAnonymous()">
-                <a href="/registration">
-                    <img src="/resources/images/register.png">
+                <a href="<c:url value="/registration"/>">
+                    <img src="<c:url value="/resources/images/register.png" />">
                 </a>
                 </auth:authorize>
             </div>
             <div class="loginHeaderBlock">
                 <auth:authorize access="!isAuthenticated()">
-                    <a href="/login">
-                        <img src="/resources/images/login.png">
+                    <a href="<c:url value="/login"/>">
+                        <img src="<c:url value="/resources/images/login.png" />">
                     </a>
                 </auth:authorize>
                 <auth:authorize access="isAuthenticated()">
-                    <a href="/logout">
-                        <img src="/resources/images/logout.png">
+                    <a href="<c:url value="/logout"/>">
+                        <img src="<c:url value="/resources/images/logout.png" />">
                     </a>
                 </auth:authorize>
             </div>
@@ -57,26 +57,26 @@
                     <li class="divider"></li>
                     <hr>
                     <auth:authorize access="hasRole('CLIENT')">
-                        <li><a class="register" href="/clientProfile">PROFILE</a></li>
+                        <li><a class="register" href="<c:url value="/clientProfile"/>">PROFILE</a></li>
                     </auth:authorize>
                     <auth:authorize access="hasRole('EMPLOYEE')">
-                        <li><a class="register" href="/employeeProfile">PROFILE</a></li>
+                        <li><a class="register" href="<c:url value="/employeeProfile"/>">PROFILE</a></li>
                     </auth:authorize>
                     <auth:authorize access="isAnonymous()">
-                        <li><a class="register" href="/registration">REGISTER</a></li>
+                        <li><a class="register" href="<c:url value="/registration"/>">REGISTER</a></li>
                     </auth:authorize>
                     <li><a href="http://smartavon.ru/Registration.html">BECOME A REPRESENTATIVE</a></li>
                 </ul>
             </nav>
         </div>
         <div class="logoBlock">
-            <a href="/">
-                <img class="logo" alt="AVON" src="/resources/images/logo.png" width="500px">
+            <a href="<c:url value="/"/>">
+                <img class="logo" alt="AVON" width="500px" src="<c:url value="/resources/images/logo.png" />">
             </a>
         </div>
         <div class="lastBlock">
             <div class="basketDiv">
-                <img class="basket" src="/resources/images/basket.png" alt="AVON"><br/>
+                <img class="basket" alt="BASKET" src="<c:url value="/resources/images/basket.png" />"><br/>
                 <div class="basketInfo">
                     <j:choose>
                         <j:when test="${basket.numberOfProducts != 0}">
@@ -85,7 +85,7 @@
                                 <p>Summary price: ${basket.summaryPrice} rub.</p>
                             </div>
                             <div class="issue">
-                                <a href="/clientProfile/issueOrder">
+                                <a href="<c:url value="/clientProfile/issueOrder"/>">
                                     <button class="btn formButton">ISSUE ORDER</button>
                                 </a>
                             </div>
@@ -98,13 +98,13 @@
             </div>
             <div>
                 <auth:authorize access="!isAuthenticated()">
-                    <a href="/login">
-                        <img class="login" src="/resources/images/login.png">
+                    <a href="<c:url value="/login"/>">
+                        <img class="login" src="<c:url value="/resources/images/login.png"/>">
                     </a>
                 </auth:authorize>
                 <auth:authorize access="isAuthenticated()">
-                    <a href="/logout">
-                        <img class="logout" src="/resources/images/logout.png">
+                    <a href="<c:url value="/logout"/>">
+                        <img class="logout" src="<c:url value="/resources/images/logout.png"/>">
                     </a>
                 </auth:authorize>
             </div>
@@ -114,14 +114,14 @@
 
 <div id="secondHeader">
     <div id="logoDiv">
-        <a href="/">
-            <img class="logo" alt="AVON" src="/resources/images/logo.png">
+        <a href="<c:url value="/"/>">
+            <img class="logo" alt="AVON" src="<c:url value="/resources/images/logo.png" />">
         </a>
     </div>
 
     <div class="basketDiv">
-        <a href="/clientProfile/issueOrder">
-            <img class="basket" src="/resources/images/basket.png" alt="AVON"><br/>
+        <a href="<c:url value="/clientProfile/issueOrder"/>"/>
+            <img class="basket" src="<c:url value="/resources/images/basket.png" />" alt="AVON"><br/>
         </a>
         <div class="basketInfo">
             <j:choose>
@@ -131,7 +131,7 @@
                         <p>Summary price: ${basket.summaryPrice} rub.</p>
                     </div>
                     <div class="issue">
-                        <a href="/clientProfile/issueOrder">
+                        <a href="<c:url value="/clientProfile/issueOrder"/>"/>
                             <button class="btn formButton">ISSUE ORDER</button>
                         </a>
                     </div>
@@ -149,7 +149,7 @@
 <div id="thirdHeader">
     <ul class="menu">
         <j:forEach items="${categories}" var="category" varStatus="tagStatus">
-            <li><a href="/category/${fn:replace(fn:toUpperCase(category.name), '_', ' ')}">${fn:replace(fn:toUpperCase(category.name), '_', ' ')}</a></li>
+            <li><a href="<c:url value="/category/${fn:replace(fn:toUpperCase(category.name), '_', ' ')}"/>">${fn:replace(fn:toUpperCase(category.name), '_', ' ')}</a></li>
         </j:forEach>
         </li>
     </ul>

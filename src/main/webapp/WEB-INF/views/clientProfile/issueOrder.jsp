@@ -29,7 +29,7 @@
       </div>
 
       <div class="content">
-       <form action="/clientProfile/issue-order" method="post">
+       <form action="issue-order" method="post">
         <div class="row">
           <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
             <div class="leftPanel">
@@ -67,7 +67,7 @@
                                     <option>By cash</option>
                                     <option>By card</option>
                                 </select>
-                                <%--by card block--%>
+                                <%--by CARD block--%>
                             </div>
                         </div>
                         <input class="btn formButton" type="submit" value="ISSUE ORDER"/>

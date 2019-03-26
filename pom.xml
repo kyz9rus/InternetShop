@@ -132,25 +132,6 @@
             <version>${spring.framework.security.version}</version>
         </dependency>
 
-        <!-- Liquebase -->
-        <!--<dependency>-->
-            <!--<groupId>org.liquibase</groupId>-->
-            <!--<artifactId>liquibase-core</artifactId>-->
-            <!--<version>${liquebase.version}</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat</groupId>-->
-            <!--<artifactId>tomcat-dbcp</artifactId>-->
-            <!--<version>8.5.24</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>javax.el</groupId>-->
-            <!--<artifactId>javax.el-api</artifactId>-->
-            <!--<version>3.0.0</version>-->
-        <!--</dependency>-->
-
         <!-- Jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -189,7 +170,7 @@
                 <configuration>
                     <url>http://localhost:8081/manager/text</url>
                     <server>tomcatserver</server>
-                    <path>/internetShop</path>
+                    <path>/</path>
                     <username>admin</username>
                     <password>admin</password>
                 </configuration>
