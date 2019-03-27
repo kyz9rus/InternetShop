@@ -84,32 +84,42 @@
               <form action="issue-order" method="post">
                 <j:choose>
                   <j:when test="${basket.products.size() == 0}">
-                    <p>You have not chosen anything yet.</p>
-                    <p>Choose category above and do shopping right now!</p>
+                    <p class="emptyProductsListLabel">You have not chosen anything yet.</p>
+                    <p class="emptyProductsListLabel">Choose category above and do shopping right now!</p>
                   </j:when>
                   <j:otherwise>
+                    <p class="emptyProductsListLabel" style="display: none">You have not chosen anything yet.</p>
+                    <p class="emptyProductsListLabel" style="display: none">Choose category above and do shopping right now!</p>
                     <p class="headerText">Product list:</p>
                     <div class="productsBlock">
                       <ul class="productList">
                           <j:forEach items="${basket.products}" var="product" varStatus="tagStatus">
                             <li>
-                              <div class="product">
-                                <div class="productImage">
-                                  <img src="${product.imgSrc}" alt="NO IMAGE"/>
+                                <div class="productBlock productBlock-${tagStatus.count}">
+                                    <div class="product">
+                                        <div class="productImage">
+                                            <img src="${product.key.imgSrc}" alt="NO IMAGE"/>
+                                        </div>
+                                        <div class="productInfo">
+                                            <div class="productInfo1">
+                                                <p class="productName">${product.key.name}</p>
+                                                <p class="productWeight">Weight: ${product.key.weight}г.</p>
+                                                <p class="productSize">Volume: ${product.key.volume}</p>
+                                            </div>
+                                            <div class="productInfo2">
+                                                <p class="productPrice">Price: ${product.key.price} руб.</p>
+                                                <p class="quantityInStock">Quantity in stock: ${product.key.quantityInStock}</p>
+                                                <input name="id" value="${product.key.id}" hidden/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="productOperations">
+                                        <img class="remove remove-${tagStatus.count}" src="<c:url value="/resources/images/cross.jpeg"/>" alt="X"/>
+                                        <img class="plus plus-${tagStatus.count}" src="<c:url value="/resources/images/plus.jpeg"/>" alt="+"/>
+                                        <img class="minus minus-${tagStatus.count}" src="<c:url value="/resources/images/minus.jpeg"/>" alt="-"/>
+                                        <label class="numberOfProduct numberOfProduct-${tagStatus.count}">${product.value}</label>
+                                    </div>
                                 </div>
-                                <div class="productInfo">
-                                  <div class="productInfo1">
-                                    <p class="productName">${product.name}</p>
-                                    <p class="productWeight">Weight: ${product.weight}г.</p>
-                                    <p class="productSize">Volume: ${product.volume}</p>
-                                  </div>
-                                  <div class="productInfo2">
-                                    <p class="productPrice">Price: ${product.price} руб.</p>
-                                    <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
-                                    <input name="id" value="${product.id}" hidden/>
-                                  </div>
-                                </div>
-                              </div>
                             </li>
                           </j:forEach>
                       </ul>
@@ -132,6 +142,7 @@
   </div>
 
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/resources/js/issueOrder.js"/>"></script>
   <script>
       // Маска для полей
       $('.editProfileBlock input[name="birthday"]').mask('99-99-9999');

@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
         order.setPaymentStatus(PaymentStatus.WAITING_FOR_PAYMENT);
         order.setOrderStatus(OrderStatus.WAITING_FOR_PAYMENT);
 
-        List<ProductDTO> productDTOs = basket.getProducts();
+        List<ProductDTO> productDTOs = new ArrayList<>(basket.getProducts().keySet());
         List<Product> products = new ArrayList<>();
 
         int price = 0;

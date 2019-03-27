@@ -1,20 +1,23 @@
 $('.buyButton').click(function () {
-    var data = {};
-    data["productId"] = $('.productInfo2 input[name="id"]').val();
+    var imgClass = $(this).attr('class');
+    var index = imgClass.substr(24, imgClass.length);
 
-    $.ajax({
+    var data = {};
+    data["productId"] = $('.product-' + index + ' input[name="id"]').val();
+
+    $.post({
         url: '/put-product',
-        type: "GET",
         data: data,
         dataType: 'json',
         success: function (basket) {
-            console.log(basket);
+            $('.basketInfo .numberOfProductsText').text('Number of products: ' + basket.numberOfProducts);
+            $('.basketInfo .summaryPrice').text('Summary price: ' + basket.summaryPrice + ' rub.');
 
-            $('.basketBlock .numberOfProductsText').text('Number of products: ' + basket.numberOfProducts);
-            $('.basketBlock .summaryPrice').text('Summary price: ' + basket.summaryPrice + ' rub.');
+            $('.emptyBasket').hide();
+            $('.numberOfProductsText').show();
+            $('.summaryPrice').show();
+            $('.issue').show();
 
-            $('.emptyBasketBlock').hide();
-            $('.basketBlock').show();
             $('.basketInfo')
                 .fadeIn()
                 .delay(2000)

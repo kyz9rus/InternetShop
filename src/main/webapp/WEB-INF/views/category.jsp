@@ -36,7 +36,7 @@
           <ul class="productList">
             <j:forEach items="${products}" var="product" varStatus="tagStatus">
               <li>
-                  <div class="product">
+                  <div class="product product-${tagStatus.count}">
                     <div class="productImage">
                       <img src="${product.imgSrc}" alt="NO IMAGE"/>
                     </div>
@@ -49,7 +49,7 @@
                       <div class="productInfo2">
                         <p class="productPrice">Price: ${product.price} руб.</p>
                         <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
-                        <button class="btn buyButton">BUY</button>
+                        <button class="btn buyButton buyButton-${tagStatus.count}">BUY</button>
 
                         <input name="id" value="${product.id}" hidden/>
                       </div>
@@ -67,7 +67,6 @@
     </div>
   </div>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="<c:url value="/resources/js/category.js"/>"></script>
 </body>
 </html>

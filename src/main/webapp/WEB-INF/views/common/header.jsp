@@ -78,22 +78,36 @@
             <div class="basketDiv">
                 <img class="basket" alt="BASKET" src="<c:url value="/resources/images/basket.png" />"><br/>
                 <div class="basketInfo">
-                    <j:choose>
-                        <j:when test="${basket.numberOfProducts != 0}">
-                            <div class="basketInfoBlock" align="left">
-                                <p>Number of products: ${basket.numberOfProducts}</p>
-                                <p>Summary price: ${basket.summaryPrice} rub.</p>
-                            </div>
-                            <div class="issue">
-                                <a href="<c:url value="/clientProfile/issueOrder"/>">
-                                    <button class="btn formButton">ISSUE ORDER</button>
-                                </a>
+                    <J:choose>
+                        <j:when test="${basket.products.size() == 0}">
+                            <div class="basketInfo">
+                                <div class="basketInfoBlock">
+                                    <p class="emptyBasket">Your bag is empty</p>
+                                    <p class="numberOfProductsText" style="display:none">Number of products: ${basket.numberOfProducts}</p>
+                                    <p class="summaryPrice" style="display:none">Summary price: ${basket.summaryPrice} rub.</p>
+                                </div>
+                                <div class="issue" style="display:none">
+                                    <a href="<c:url value="/clientProfile/issueOrder"/>">
+                                        <button class="btn formButton">ISSUE ORDER</button>
+                                    </a>
+                                </div>
                             </div>
                         </j:when>
                         <j:otherwise>
-                            <p class="emptyBasket">Your bag is empty</p>
+                            <div class="basketInfo">
+                                <div class="basketInfoBlock">
+                                    <p class="emptyBasket" style="display:none">Your bag is empty</p>
+                                    <p class="numberOfProductsText">Number of products: ${basket.numberOfProducts}</p>
+                                    <p class="summaryPrice">Summary price: ${basket.summaryPrice} rub.</p>
+                                </div>
+                                <div class="issue">
+                                    <a href="<c:url value="/clientProfile/issueOrder"/>">
+                                        <button class="btn formButton">ISSUE ORDER</button>
+                                    </a>
+                                </div>
+                            </div>
                         </j:otherwise>
-                    </j:choose>
+                    </J:choose>
                 </div>
             </div>
             <div>
@@ -123,22 +137,36 @@
         <a href="<c:url value="/clientProfile/issueOrder"/>">
             <img class="basket" src="<c:url value="/resources/images/basket.png" />" alt="AVON"><br/>
         </a>
-        <div class="basketInfo">
-            <div class="basketBlock">
-                <div class="basketInfoBlock">
-                    <p class="numberOfProductsText">Number of products: ${basket.numberOfProducts}</p>
-                    <p class="summaryPrice">Summary price: ${basket.summaryPrice} rub.</p>
+        <J:choose>
+            <j:when test="${basket.products.size() == 0}">
+                <div class="basketInfo">
+                    <div class="basketInfoBlock">
+                        <p class="emptyBasket">Your bag is empty</p>
+                        <p class="numberOfProductsText" style="display:none">Number of products: ${basket.numberOfProducts}</p>
+                        <p class="summaryPrice" style="display:none">Summary price: ${basket.summaryPrice} rub.</p>
+                    </div>
+                    <div class="issue" style="display:none">
+                        <a href="<c:url value="/clientProfile/issueOrder"/>">
+                            <button class="btn formButton">ISSUE ORDER</button>
+                        </a>
+                    </div>
                 </div>
-                <div class="issue">
-                    <a href="<c:url value="/clientProfile/issueOrder"/>">
-                        <button class="btn formButton">ISSUE ORDER</button>
-                    </a>
+            </j:when>
+            <j:otherwise>
+                <div class="basketInfo">
+                    <div class="basketInfoBlock">
+                        <p class="emptyBasket" style="display:none">Your bag is empty</p>
+                        <p class="numberOfProductsText">Number of products: ${basket.numberOfProducts}</p>
+                        <p class="summaryPrice">Summary price: ${basket.summaryPrice} rub.</p>
+                    </div>
+                    <div class="issue">
+                        <a href="<c:url value="/clientProfile/issueOrder"/>">
+                            <button class="btn formButton">ISSUE ORDER</button>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="emptyBasketBlock">
-                <p class="emptyBasket">Your bag is empty</p>
-            </div>
-        </div>
+            </j:otherwise>
+        </J:choose>
     </div>
 
 </div>
@@ -154,6 +182,4 @@
 </div>
 <hr class="hr">
 
-<script type="text/javascript" src="<c:url value="/resources/js/displayUsingAuthority.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/routingFromImages.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/displayMobileMenu.js"/>"></script>

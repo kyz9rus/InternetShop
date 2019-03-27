@@ -115,7 +115,7 @@ input:focus{
     text-align: center;
     border-block-start: 4px solid rgb(215, 69, 144);
     padding: 5px;
-         display: none;
+    display: none;
 }
 
 .basketInfo .basketInfoBlock p{
@@ -123,7 +123,7 @@ input:focus{
 }
 
 .basketDiv:hover > .basketInfo{
-    display: block;
+    display: block !important;
 }
 
 .formButton {
