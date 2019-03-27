@@ -87,13 +87,6 @@
             <version>${postgres.version}</version>
         </dependency>
 
-        <!-- MySQL-Driver -->
-        <!--<dependency>-->
-            <!--<groupId>mysql</groupId>-->
-            <!--<artifactId>mysql-connector-java</artifactId>-->
-            <!--<version>${mysql.version}</version>-->
-        <!--</dependency>-->
-
         <!--Hibernate ORM-->
         <dependency>
             <groupId>org.hibernate</groupId>

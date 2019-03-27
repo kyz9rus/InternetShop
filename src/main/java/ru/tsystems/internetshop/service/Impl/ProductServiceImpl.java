@@ -46,4 +46,9 @@ public class ProductServiceImpl implements ProductService {
 
         return productDTOS;
     }
+
+    @Override
+    public ProductDTO getProduct(Long id) {
+        return mapper.convertToDto(productDAO.findByKey(id));
+    }
 }

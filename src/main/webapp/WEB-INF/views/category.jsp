@@ -36,7 +36,6 @@
           <ul class="productList">
             <j:forEach items="${products}" var="product" varStatus="tagStatus">
               <li>
-                <form action="${categoryName}/put-product" method="post">
                   <div class="product">
                     <div class="productImage">
                       <img src="${product.imgSrc}" alt="NO IMAGE"/>
@@ -56,16 +55,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <input name="imgSrc" value="${product.imgSrc}" style="display: none"/>
-                  <input name="name" value="${product.name}" style="display: none"/>
-                  <input name="weight" value="${product.weight}" style="display: none"/>
-                  <input name="volume" value="${product.volume}" style="display: none"/>
-                  <input name="price" value="${product.price}" style="display: none"/>
-                  <input name="quantityInStock" value="${product.quantityInStock}" style="display: none"/>
-                  <input name="category" value="${categoryName}" style="display: none"/>
-
-                </form>
               </li>
             </j:forEach>
           </ul>
@@ -78,5 +67,7 @@
     </div>
   </div>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="<c:url value="/resources/js/category.js"/>"></script>
 </body>
 </html>

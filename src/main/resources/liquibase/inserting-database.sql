@@ -1,1 +1,0 @@
-insert into category (name) values ('frangrances');

@@ -1,6 +1,9 @@
 package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.NoHandlerFoundException;
 import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
@@ -27,7 +29,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Controller
-@SessionAttributes(value = {"client", "authenticationRole", "basket"})
+@SessionAttributes(value = {"client", "basket"})
 public class PublicController {
 
     @Autowired
@@ -68,6 +70,11 @@ public class PublicController {
         return "registration";
     }
 
+    @GetMapping(value = "login")
+    public String toLoginPage() {
+        return "login";
+    }
+
     @PostMapping(value = "create-client")
     public String createClient(@Validated @ModelAttribute("client") ClientDTO client, @RequestParam("password") String password, @RequestParam("repeatPassword") String repeatPassword, Model model) {
         if (clientService.getClientByEmail(client.getEmail()) != null)
@@ -104,13 +111,15 @@ public class PublicController {
         return "category";
     }
 
-    @PostMapping("category/{categoryName}/put-product")
-    public String putProduct(@ModelAttribute("basket") Basket basket, @ModelAttribute("product") ProductDTO productDTO, @PathVariable("categoryName") String categoryName, Model model) {
+    @ResponseBody
+    @GetMapping(value = "put-product", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Basket> getHello(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
+        ProductDTO productDTO = productService.getProduct(productId);
         basket.addProduct(productDTO);
 
-        model.addAttribute("basket", basket);
         model.addAttribute("categories", categoryInfo.getInstance());
-        return "redirect:" + "/category/" + categoryName;
+
+        return new ResponseEntity<>(basket, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
