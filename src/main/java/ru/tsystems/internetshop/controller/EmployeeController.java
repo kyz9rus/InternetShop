@@ -7,12 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
+import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.model.OrderStatus;
 import ru.tsystems.internetshop.model.PaymentMethod;
 import ru.tsystems.internetshop.model.PaymentStatus;
 import ru.tsystems.internetshop.service.CategoryService;
+import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.service.ProductService;
 import ru.tsystems.internetshop.util.CategoryInfo;
@@ -35,6 +37,9 @@ public class EmployeeController {
     @Autowired
     private CategoryInfo categoryInfo;
 
+    @Autowired
+    private ClientService clientService;
+
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("get-orders")
     public String getOrders(Model model) {
@@ -47,11 +52,27 @@ public class EmployeeController {
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
-    @GetMapping("saleStatistic")
-    public String saleStatisticPage(Model model) {
+    @GetMapping("clientStatistic")
+    public String clientStatisticPage(Model model) {
+        model.addAttribute("clients", clientService.getTop10Clients());
+        model.addAttribute("categories", categoryInfo.getInstance());
+        return "employeeProfile/statistic/topClients";
+    }
+
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
+    @GetMapping("productStatistic")
+    public String productStatisticPage(Model model) {
+        model.addAttribute("products", productService.getTop10Products());
+        model.addAttribute("categories", categoryInfo.getInstance());
+        return "employeeProfile/statistic/topProducts";
+    }
+
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
+    @GetMapping("revenue")
+    public String revenuePage(Model model) {
         model.addAttribute("categories", categoryInfo.getInstance());
 
-        return "employeeProfile/saleStatistic";
+        return "employeeProfile/statistic/revenue";
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")

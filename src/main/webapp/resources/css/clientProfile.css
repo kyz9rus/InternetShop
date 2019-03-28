@@ -17,16 +17,16 @@ li {
     color: black;
 }
 
-.orderInfoPanel {
-    margin-top: 30px;
-    border: 1px solid grey;
-    max-height: 790px;
-    padding: 10px;
-    margin-left: 20px;
-}
-
 .orderInfoPanel input , .orderInfoPanel select{
     width: 100%;
+}
+
+.orderInfoPanel .formButton {
+    width: 50%;
+}
+
+.orderInfoPanel label {
+    float: left;
 }
 
 li > h5 {
@@ -206,7 +206,7 @@ td {
 }
 
 .productOperations img:first-child{
-    margin-left: 7px;
+    margin-left: 4px;
 }
 
 .product {
@@ -313,6 +313,60 @@ td {
     font-size: 20px;
 }
 
+.byCardBlock{
+    margin: 20px 0px;
+    padding: 20px;
+    border: 1px solid rgb(229, 229, 229);
+    border-block-end: 1px solid grey;
+}
+
+.cardsImage {
+    float: left;
+    width: 20%;
+}
+
+.cardsImage img{
+    width: 100%;
+}
+
+.orderInfoInCardBlock{
+    width: 50%;
+    /*     margin-left: 10%; */
+}
+
+.orderInfoInCardBlock > div{
+    width: 250px;
+}
+
+.orderInfoPoint {
+    float: left;
+    color: grey;
+}
+
+.orderInfoValue {
+    float: right !important;
+}
+
+.priceOrderInfo {
+    font-size: 20px;
+}
+
+.cardDate {
+    height: 50px;
+}
+
+.cardDate input{
+    float: left;
+    width: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 2px;
+}
+
+.totalPrice {
+    float: right !important;;
+}
+
 @media (max-width: 1060px) {
     .product {
         min-height: 310px;
@@ -349,5 +403,20 @@ td {
 @media(max-width: 576px){
     .leftPanel {
         width: 87%;
+    }
+}
+
+@media(max-width: 408px) {
+    .orderInfoInCardBlock {
+        width: 59%;
+        font-size: 10px;
+    }
+
+    .orderInfoInCardBlock div {
+        width: 100%;
+    }
+
+    .priceOrderInfo{
+        font-size: 10.5px;
     }
 }

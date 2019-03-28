@@ -219,6 +219,10 @@ input:focus{
     float: left;
 }
 
+.byCardBlock {
+    display: none;
+}
+
 @media (max-width: 822px) {
     .presentImage {
         display: none;

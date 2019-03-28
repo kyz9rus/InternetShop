@@ -13,6 +13,9 @@ import java.util.Set;
 public class Color {
 
     @Id
+    @GeneratedValue
+    private Long id;
+
     @Column(length = 70, name = "name")
     private String name;
 

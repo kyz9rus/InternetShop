@@ -51,4 +51,15 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO getProduct(Long id) {
         return mapper.convertToDto(productDAO.findByKey(id));
     }
+
+    @Override
+    public List<ProductDTO> getTop10Products() {
+        List<Product> products = productDAO.getTop10Products();
+        List<ProductDTO> productDTOS = new ArrayList<>();
+
+        for (Product product: products)
+            productDTOS.add(mapper.convertToDto(product));
+
+        return productDTOS;
+    }
 }

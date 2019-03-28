@@ -1,6 +1,7 @@
 .leftPanel {
     border: 1px solid grey;
     margin-left: 20px;
+    max-height: 420px
 }
 
 .leftPanel li {
@@ -178,6 +179,141 @@ td {
     width: 70%;
     padding: 1px;
 }
+
+
+.productsBlock {
+    margin: 70px 16%;
+}
+
+.productList {
+    width: 100%;
+}
+
+.productList li:not(:nth-child(1)) {
+    margin-top: 30px;
+}
+
+.productOperations {
+    width: 5%;
+    float: left;
+    border: 1px solid rgb(229, 229, 229);
+    height: 150px;
+}
+
+.productOperations *{
+    width: 15px;
+    float: left;
+    margin-top: 18px;
+    cursor: pointer;
+}
+
+.productOperations .plus, .productOperations .minus {
+    margin-left: 5px;
+}
+
+.productOperations img:first-child{
+    margin-left: 4px;
+}
+
+.product {
+    border: 1px solid rgb(229, 229, 229);
+    height: 150px;
+    width: 94%;
+    float: left;
+    margin-bottom: 30px;
+}
+
+.product > div {
+    height: 148px;
+}
+
+.productImage {
+    float: left;
+    width: 30%;
+}
+
+.productImage img {
+    padding: 1%;
+    height: 100%;
+}
+
+.productInfo {
+    width: 55%;
+    float: right;
+    margin-left: 5%;
+}
+
+.productInfo1 {
+    float: left;
+    width: 50%;
+    font-size: 13px;
+    margin: 10px 0px;
+}
+
+.productInfo2 {
+    float: right;
+    display: inline-block;
+    margin: 10px 0px;
+    width: 50%;
+}
+
+.productName {
+    font-size: 18px;
+}
+
+.productPrice {
+    font-size: 14px;
+}
+
+.quantityInStock {
+    color: grey;
+    font-size: 12px;
+}
+
+.productPrice {
+    font-size: 17px;
+}
+
+.position {
+    position: absolute;
+    font-size: 15px;
+    padding: 3px;
+}
+
+
+@media (max-width: 1060px) {
+    .product {
+        min-height: 310px;
+    }
+
+    .productImage {
+        width: 100%;
+    }
+
+    .productImage img {
+        height: 149px;
+        max-width: 100%;
+    }
+
+    .productInfo {
+        border-block-start: 1px solid rgb(229, 229, 229);
+        width: 100%;
+        padding: 10px;
+    }
+
+}
+
+@media(max-width: 709px) {
+    .product {
+        min-height: 420px;
+    }
+
+    .productInfo1, .productInfo2 {
+        width: 100%;
+        padding: 0px 10px;
+    }
+}
+
 
 @media (max-width: 576px) {
     .leftPanel {

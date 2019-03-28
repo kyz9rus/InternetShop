@@ -2,10 +2,7 @@ package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Data
@@ -14,6 +11,9 @@ import java.util.Objects;
 public class Category {
 
     @Id
+    @GeneratedValue
+    private Long id;
+
     @Column(length = 70, name = "name")
     private String name;
 

@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.OrderDAO;
-import ru.tsystems.internetshop.model.*;
-import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
-import ru.tsystems.internetshop.model.DTO.ProductDTO;
+import ru.tsystems.internetshop.model.DeliveryMethod;
+import ru.tsystems.internetshop.model.PaymentMethod;
 import ru.tsystems.internetshop.model.entity.Order;
-import ru.tsystems.internetshop.model.entity.Product;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.util.Mapper;
 
@@ -23,17 +21,15 @@ import java.util.Map;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private Map<String, DeliveryMethod> deliveryMethodMap = new HashMap<String, DeliveryMethod>()
-    {{
+    private Map<String, DeliveryMethod> deliveryMethodMap = new HashMap<String, DeliveryMethod>() {{
         put("Post of Russia", DeliveryMethod.POST_OF_RUSSIA);
         put("Avon service centers", DeliveryMethod.AVON_SERVICE_CENTERS);
         put("Home delivery", DeliveryMethod.HOME_DELIVERY);
     }};
 
-    private Map<String, PaymentMethod> paymentMethodMap = new HashMap<String, PaymentMethod>()
-    {{
-        put("By CASH", PaymentMethod.CASH);
-        put("By CARD", PaymentMethod.CARD);
+    private Map<String, PaymentMethod> paymentMethodMap = new HashMap<String, PaymentMethod>() {{
+        put("By cash", PaymentMethod.CASH);
+        put("By card", PaymentMethod.CARD);
     }};
 
     @Autowired
@@ -83,36 +79,6 @@ public class OrderServiceImpl implements OrderService {
             return mapper.convertToDto(order);
         else
             return null;
-    }
-
-    @Override
-    public void issueOrder(ClientDTO clientDTO, ClientAddressDTO clientAddressDTO, Basket basket, DeliveryMethod deliveryMethod, PaymentMethod paymentMethod) {
-        Order order = new Order();
-        order.setClient(mapper.convertToEntity(clientDTO));
-        order.setClientAddress(mapper.convertToEntity(clientAddressDTO));
-        order.setDeliveryMethod(deliveryMethod);
-        order.setPaymentMethod(paymentMethod);
-        order.setPaymentStatus(PaymentStatus.WAITING_FOR_PAYMENT);
-        order.setOrderStatus(OrderStatus.WAITING_FOR_PAYMENT);
-
-        List<ProductDTO> productDTOs = new ArrayList<>(basket.getProducts().keySet());
-        List<Product> products = new ArrayList<>();
-
-        int price = 0;
-        for (ProductDTO productDTO : productDTOs) {
-            products.add(mapper.convertToEntity(productDTO));
-            price += productDTO.getPrice();
-        }
-
-        order.setProducts(products);
-        order.setPrice(price);
-
-        orderDAO.create(order);
-    }
-
-    @Override
-    public void repeatOrder(OrderDTO orderDTO) {
-        orderDAO.create(mapper.convertToEntity(orderDTO));
     }
 
     public DeliveryMethod getDeliveryMethod(String deliveryMethodString) {

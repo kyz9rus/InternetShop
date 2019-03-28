@@ -27,6 +27,8 @@ public class ClientDTO {
     @Email(message = "Email should be valid")
     private String email;
 
+    private Long summaryOrdersPrice;
+
     private List<Order> orders = new ArrayList<>();
     private List<ClientAddress> addresses = new ArrayList<>();
 

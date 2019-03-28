@@ -17,8 +17,9 @@ import java.util.Objects;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
-    @SequenceGenerator(name = "order_seq", sequenceName = "SEQ_ORDER", allocationSize = 1)
+    @GeneratedValue
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
+//    @SequenceGenerator(name = "order_seq", sequenceName = "SEQ_ORDER", allocationSize = 1)
     private Long id;
 
     @ManyToOne

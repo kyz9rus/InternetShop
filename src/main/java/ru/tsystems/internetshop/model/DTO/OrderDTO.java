@@ -29,7 +29,7 @@ public class OrderDTO {
 
     @NotNull
     private DeliveryMethod deliveryMethod;
-    private List<Product> products = new ArrayList<>();
+    private List<ProductDTO> products = new ArrayList<>();
 
     @NotNull
     private PaymentStatus paymentStatus;

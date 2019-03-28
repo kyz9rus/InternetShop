@@ -2,25 +2,23 @@ package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.tsystems.internetshop.facade.OrderProductClientFacade;
 import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.model.Basket;
-import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
-import ru.tsystems.internetshop.model.DTO.ClientDTO;
-import ru.tsystems.internetshop.model.DTO.OrderDTO;
-import ru.tsystems.internetshop.model.DTO.UserDTO;
-import ru.tsystems.internetshop.model.OrderStatus;
-import ru.tsystems.internetshop.model.PaymentStatus;
-import ru.tsystems.internetshop.service.ClientAddressService;
-import ru.tsystems.internetshop.service.ClientService;
-import ru.tsystems.internetshop.service.OrderService;
-import ru.tsystems.internetshop.service.UserService;
+import ru.tsystems.internetshop.model.DTO.*;
+import ru.tsystems.internetshop.service.*;
 import ru.tsystems.internetshop.util.CategoryInfo;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("clientProfile")
@@ -43,32 +41,35 @@ public class ClientController {
     private OrderService orderService;
 
     @Autowired
+    private OrderProductClientFacade orderProductClientFacade;
+
+    @Autowired
     private UserClientFacade userClientFacade;
+
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("editProfile")
-    public String editProfile(@ModelAttribute("basket") Basket basket, Model model) {
-        model.addAttribute("basket", basket);
-
+    public String editProfile(Model model) {
+        model.addAttribute("categories", categoryInfo.getInstance());
         return "clientProfile/editProfile";
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("changePassword")
-    public String changePasswordPage(@ModelAttribute("basket") Basket basket, Model model) {
-
-        model.addAttribute("basket", basket);
+    public String changePasswordPage(Model model) {
+        model.addAttribute("categories", categoryInfo.getInstance());
         return "clientProfile/changePassword";
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("showOrderHistory")
-    public String showOrderHistoryPage(@ModelAttribute("basket") Basket basket, @ModelAttribute("client") ClientDTO clientDTO, Model model) {
+    public String showOrderHistoryPage(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
         List<OrderDTO> orders = orderService.getOrdersByClient(clientDTO);
 
         model.addAttribute("orders", orders);
-
-        model.addAttribute("basket", basket);
+        model.addAttribute("categories", categoryInfo.getInstance());
 
         return "clientProfile/orderHistory";
     }
@@ -81,24 +82,33 @@ public class ClientController {
         if (orderDTO == null)
             model.addAttribute("errorMessage", "Order with id: " + orderId + " doesn't exist");
         else {
-            orderDTO.setId(null);
-            orderDTO.setPaymentStatus(PaymentStatus.WAITING_FOR_PAYMENT);
-            orderDTO.setOrderStatus(OrderStatus.WAITING_FOR_PAYMENT);
-            orderService.repeatOrder(orderDTO);
+            List<ProductDTO> productsFromDb = orderDTO.getProducts();
+            Map<ProductDTO, Integer> products = new HashMap<>();
 
-            model.addAttribute("successMessage", "Order successfully submitted");
+            int numberOfProducts = 0, summaryPrice = 0;
+            for (ProductDTO productDTO : productsFromDb) {
+                if (products.containsKey(productDTO))
+                    products.put(productDTO, products.get(productDTO) + 1);
+                else
+                    products.put(productDTO, 1);
+
+                numberOfProducts++;
+                summaryPrice += productDTO.getPrice();
+            }
+
+            basket = new Basket(products, numberOfProducts, summaryPrice);
         }
 
         model.addAttribute("orders", orderService.getOrders());
         model.addAttribute("basket", basket);
+        model.addAttribute("categories", categoryInfo.getInstance());
 
-
-        return "clientProfile/orderHistory";
+        return "clientProfile/issueOrder";
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "update-client")
-    public String updateClient(@ModelAttribute("basket") Basket basket, @ModelAttribute("client") ClientDTO clientDTO, Model model) {
+    public String updateClient(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
         if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
             model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
         else {
@@ -109,14 +119,13 @@ public class ClientController {
             model.addAttribute("client", clientDTO);
         }
 
-        model.addAttribute("basket", basket);
         model.addAttribute("categories", categoryInfo.getInstance());
         return "clientProfile/editProfile";
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "change-password")
-    public String changePassword(@ModelAttribute("basket") Basket basket, @ModelAttribute("client") ClientDTO clientDTO, @RequestParam("password") String password, @RequestParam("newPassword") String newPassword, @RequestParam("repeatNewPassword") String repeatNewPassword, Model model) {
+    public String changePassword(@ModelAttribute("client") ClientDTO clientDTO, @RequestParam("password") String password, @RequestParam("newPassword") String newPassword, @RequestParam("repeatNewPassword") String repeatNewPassword, Model model) {
         UserDTO userDTO = userService.getUserByEmail(clientDTO.getEmail());
 
         if (new BCryptPasswordEncoder().matches(password, userDTO.getPassword()))
@@ -131,7 +140,6 @@ public class ClientController {
         else
             model.addAttribute("errorMessage", "You entered the wrong password.");
 
-        model.addAttribute("basket", basket);
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "clientProfile/changePassword";
@@ -139,7 +147,7 @@ public class ClientController {
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "create-address")
-    public String createClientAddress(@ModelAttribute("basket") Basket basket, @ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, Model model) {
+    public String createClientAddress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, Model model) {
         clientAddressDTO.setClient(clientDTO);
         if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
             model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
@@ -152,7 +160,6 @@ public class ClientController {
             model.addAttribute("client", clientDTO);
         }
 
-        model.addAttribute("basket", basket);
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "clientProfile/editProfile";
@@ -160,7 +167,7 @@ public class ClientController {
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "update-address")
-    public String updateClientAdress(@ModelAttribute("basket") Basket basket, @ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @RequestParam("addressId") Long addressId, Model model) {
+    public String updateClientAdress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @RequestParam("addressId") Long addressId, Model model) {
         clientAddressDTO.setId(addressId);
         clientAddressDTO.setClient(clientDTO);
         if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
@@ -174,7 +181,6 @@ public class ClientController {
             model.addAttribute("client", clientDTO);
         }
 
-        model.addAttribute("basket", basket);
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "clientProfile/editProfile";
@@ -182,7 +188,7 @@ public class ClientController {
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "delete-address")
-    public String deleteAddress(@ModelAttribute("basket") Basket basket, @ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @RequestParam("addressId") Long addressId, Model model) {
+    public String deleteAddress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @RequestParam("addressId") Long addressId, Model model) {
         clientAddressDTO.setId(addressId);
         clientAddressDTO.setClient(clientDTO);
         if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
@@ -196,7 +202,6 @@ public class ClientController {
             model.addAttribute("client", clientDTO);
         }
 
-        model.addAttribute("basket", basket);
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "clientProfile/editProfile";
@@ -204,11 +209,29 @@ public class ClientController {
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("issueOrder")
-    public String issueOrderPage(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, Model model) {
-        model.addAttribute("client", clientDTO);
-        model.addAttribute("basket", basket);
+    public String issueOrderPage(Model model) {
+        Authentication authentication = authenticationService.getAuthentication();
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        if (!authorities.isEmpty())
+            for (GrantedAuthority grantedAuthority : authorities)
+                if (grantedAuthority.getAuthority().equals("ROLE_CLIENT")) {
+                    UserDTO userDTO = (UserDTO) authentication.getPrincipal();
+
+                    ClientDTO clientDTO = clientService.getClientByEmail(userDTO.getEmail());
+
+                    model.addAttribute("client", clientDTO);
+                }
+
         model.addAttribute("categories", categoryInfo.getInstance());
         return "clientProfile/issueOrder";
+    }
+
+    @PreAuthorize("hasAnyRole('CLIENT')")
+    @GetMapping("issueOrder2")
+    public String issueOrderPage2(Model model) {
+        model.addAttribute("categories", categoryInfo.getInstance());
+        return "clientProfile/issueOrder2";
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
@@ -216,7 +239,7 @@ public class ClientController {
     public String createOrder(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("deliveryMethod") String deliveryMethodString, @RequestParam("paymentMethod") String paymentMethodString, @RequestParam("addressId") Long addressId, Model model) {
         ClientAddressDTO clientAddressDTO = clientAddressService.getClientAddressById(addressId);
 
-        orderService.issueOrder(clientDTO, clientAddressDTO, basket, orderService.getDeliveryMethod(deliveryMethodString), orderService.getPaymentMethod(paymentMethodString));
+        orderProductClientFacade.issueOrder(clientDTO, clientAddressDTO, basket, orderService.getDeliveryMethod(deliveryMethodString), orderService.getPaymentMethod(paymentMethodString));
 
         model.addAttribute("categories", categoryInfo.getInstance());
         model.addAttribute("basket", new Basket());

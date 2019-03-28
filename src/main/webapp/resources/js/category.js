@@ -9,9 +9,9 @@ $('.buyButton').click(function () {
         url: '/put-product',
         data: data,
         dataType: 'json',
-        success: function (basket) {
-            $('.basketInfo .numberOfProductsText').text('Number of products: ' + basket.numberOfProducts);
-            $('.basketInfo .summaryPrice').text('Summary price: ' + basket.summaryPrice + ' rub.');
+        success: function (basketInfo) {
+            $('.basketInfo .numberOfProductsText').text('Number of products: ' + basketInfo.basket.numberOfProducts);
+            $('.basketInfo .summaryPrice').text('Summary price: ' + basketInfo.basket.summaryPrice + ' rub.');
 
             $('.emptyBasket').hide();
             $('.numberOfProductsText').show();
@@ -23,8 +23,8 @@ $('.buyButton').click(function () {
                 .delay(2000)
                 .fadeOut();
         },
-        error: function (basket) {
-            console.log('ERROR: ' + basket);
+        error: function (basketInfo) {
+            console.log('ERROR: ' + basketInfo);
         }
     });
 });

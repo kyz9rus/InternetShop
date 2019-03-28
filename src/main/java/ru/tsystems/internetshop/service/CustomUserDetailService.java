@@ -24,16 +24,6 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<UserDTO> userDTO = Optional.of(userDAO.findByEmail(email));
 
-
-//        Optional<UserDTO> userDTO = Optional.empty();
-//
-//        try {
-//            userDTO = Optional.of ((UserDTO) user.clone());
-//        } catch (CloneNotSupportedException e) {
-//            e.printStackTrace();
-//        }
-//        Optional<User> user = Optional.ofNullable(userDAO.findByEmail(email));
-
         userDTO.orElseThrow(() -> new UsernameNotFoundException("Email not found"));
         return userDTO.map(CustomUserDetail::new).get();
     }

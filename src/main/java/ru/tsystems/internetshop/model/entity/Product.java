@@ -12,8 +12,9 @@ import java.util.List;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
-    @SequenceGenerator(name = "product_seq", sequenceName = "SEQ_PRODUCT", allocationSize = 1)
+    @GeneratedValue
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
+//    @SequenceGenerator(name = "product_seq", sequenceName = "SEQ_PRODUCT", allocationSize = 1)
     private Long id;
 
     @Column(unique = true, length = 70)
@@ -44,6 +45,9 @@ public class Product {
 
     @Column(columnDefinition = "text default 'http://promusicayouthchorus.org/wp-content/uploads/2018/07/no-image.jpg'")
     private String imgSrc;
+
+    @Column(name = "number_of_sales", columnDefinition = "bigint default 0")
+    private long numberOfSales;
 
     public Product() {
     }

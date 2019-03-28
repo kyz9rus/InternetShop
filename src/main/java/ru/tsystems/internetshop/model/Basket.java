@@ -18,6 +18,12 @@ public class Basket {
         products = new HashMap<>();
     }
 
+    public Basket(Map<ProductDTO, Integer> products, int numberOfProducts, int summaryPrice) {
+        this.products = products;
+        this.numberOfProducts = numberOfProducts;
+        this.summaryPrice = summaryPrice;
+    }
+
     public Map<ProductDTO, Integer> getProducts() {
         return products;
     }

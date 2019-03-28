@@ -29,6 +29,8 @@ public class ProductDTO {
     private long quantityInStock;
     private String imgSrc;
 
+    private long numberOfSales;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

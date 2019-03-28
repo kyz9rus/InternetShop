@@ -15,8 +15,9 @@ import java.util.Objects;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_seq")
-    @SequenceGenerator(name = "client_seq", sequenceName = "SEQ_CLIENT", allocationSize = 1)
+    @GeneratedValue
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_seq")
+//    @SequenceGenerator(name = "client_seq", sequenceName = "SEQ_CLIENT", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
@@ -31,6 +32,9 @@ public class Client {
 
     @Column(unique = true)
     private String email;
+
+    @Column(name = "summary_orders_price", columnDefinition = "bigint default 0")
+    private Long summaryOrdersPrice;
 
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();

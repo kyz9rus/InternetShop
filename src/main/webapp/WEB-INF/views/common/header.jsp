@@ -52,7 +52,7 @@
             <nav class="mobileMenu">
                 <ul>
                     <j:forEach items="${categories}" var="category" varStatus="tagStatus">
-                        <li><a href="/category/${category.name}">${category.name}</a></li>
+                        <li><a href="<c:url value="/category/${fn:replace(fn:toUpperCase(category.name), '_', ' ')}"/>">${fn:replace(fn:toUpperCase(category.name), '_', ' ')}</a></li>
                     </j:forEach>
                     <li class="divider"></li>
                     <hr>
@@ -77,7 +77,6 @@
         <div class="lastBlock">
             <div class="basketDiv">
                 <img class="basket" alt="BASKET" src="<c:url value="/resources/images/basket.png" />"><br/>
-                <div class="basketInfo">
                     <J:choose>
                         <j:when test="${basket.products.size() == 0}">
                             <div class="basketInfo">
@@ -108,7 +107,6 @@
                             </div>
                         </j:otherwise>
                     </J:choose>
-                </div>
             </div>
             <div>
                 <auth:authorize access="!isAuthenticated()">

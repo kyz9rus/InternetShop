@@ -9,6 +9,7 @@ import ru.tsystems.internetshop.model.entity.Product;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ProductDAOImpl extends AbstractDAO<Product, Long> implements ProductDAO {
@@ -36,5 +37,14 @@ public class ProductDAOImpl extends AbstractDAO<Product, Long> implements Produc
             return products.get(0);
         else
             return null;
+    }
+
+    @Override
+    public List<Product> getTop10Products() {
+        String queryString = "SELECT p FROM product p ORDER BY p.numberOfSales DESC";
+
+        TypedQuery<Product> query = sessionFactory.getCurrentSession().createQuery(queryString, Product.class);
+
+        return query.getResultList().stream().limit(10).collect(Collectors.toList());
     }
 }

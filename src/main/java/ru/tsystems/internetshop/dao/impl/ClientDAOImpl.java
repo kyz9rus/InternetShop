@@ -7,6 +7,7 @@ import ru.tsystems.internetshop.model.entity.Client;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDAO {
@@ -24,5 +25,14 @@ public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDA
             return clients.get(0);
         else
             return null;
+    }
+
+    @Override
+    public List<Client> getTop10Clients() {
+        String queryString = "SELECT c FROM client c ORDER BY c.summaryOrdersPrice DESC";
+
+        TypedQuery<Client> query = sessionFactory.getCurrentSession().createQuery(queryString, Client.class);
+
+        return query.getResultList().stream().limit(10).collect(Collectors.toList());
     }
 }

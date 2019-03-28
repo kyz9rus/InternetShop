@@ -13,8 +13,9 @@ import java.util.Objects;
 public class ClientAddress {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientaddress_seq")
-    @SequenceGenerator(name = "clientaddress_seq", sequenceName = "SEQ_CLIENTADDRESS", allocationSize = 1)
+    @GeneratedValue
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientaddress_seq")
+//    @SequenceGenerator(name = "clientaddress_seq", sequenceName = "SEQ_CLIENTADDRESS", allocationSize = 1)
     private Long id;
 
     @ManyToOne

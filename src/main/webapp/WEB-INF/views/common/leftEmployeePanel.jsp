@@ -8,13 +8,6 @@
     </li>
     <li class="divider"></li>
 
-    <li class="employeeOperation">
-        <a href="<c:url value="/employeeProfile/saleStatistic"/>">
-            <label>Sales statistics</label>
-        </a>
-    </li>
-    <li class="divider"></li>
-
     <li><h5>Products</h5></li>
     <li class="employeeOperation">
         <a href="<c:url value="/employeeProfile/addProduct"/>">
@@ -30,5 +23,24 @@
         <form method="post" action="/employeeProfile/import-products-from-file">
             <label>Import from file</label>
         </form>
+    </li>
+
+    <li class="divider"></li>
+    <li><h5>Statistics</h5></li>
+
+    <li class="employeeOperation">
+        <a href="<c:url value="/employeeProfile/clientStatistic"/>">
+            <label>Client statistics</label>
+        </a>
+    </li>
+    <li class="employeeOperation">
+        <a href="<c:url value="/employeeProfile/productStatistic"/>">
+            <label>Product statistics</label>
+        </a>
+    </li>
+    <li class="employeeOperation">
+        <a href="<c:url value="/employeeProfile/revenue"/>">
+            <label>Monthly/weekly revenue</label>
+        </a>
     </li>
 </ul>

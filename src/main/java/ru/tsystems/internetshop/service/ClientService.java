@@ -1,7 +1,8 @@
 package ru.tsystems.internetshop.service;
 
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
-import ru.tsystems.internetshop.model.entity.Client;
+
+import java.util.List;
 
 public interface ClientService {
     void saveClient(ClientDTO clientDTO);
@@ -9,4 +10,6 @@ public interface ClientService {
     void updateClient(ClientDTO client);
 
     ClientDTO getClientByEmail(String email);
+
+    List<ClientDTO> getTop10Clients();
 }

@@ -2,8 +2,6 @@ package ru.tsystems.internetshop.service;
 
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.ProductDTO;
-import ru.tsystems.internetshop.model.entity.Category;
-import ru.tsystems.internetshop.model.entity.Product;
 
 import java.util.List;
 
@@ -15,4 +13,6 @@ public interface ProductService {
     List<ProductDTO> getProductsByCategory(CategoryDTO categoryDTO);
 
     ProductDTO getProduct(Long id);
+
+    List<ProductDTO> getTop10Products();
 }

@@ -29,50 +29,11 @@
       </div>
 
       <div class="content">
-       <form action="issue-order" method="post">
         <div class="row">
           <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
             <div class="leftPanel">
                 <j:import url="../common/leftClientPanel.jsp"/>
             </div>
-                <j:if test="${basket.products.size() != 0}">
-                    <div class="orderInfoPanel">
-                        <div class="clientAddress">
-                            <div class="form-group">
-                                <label>Choose your address</label>
-                                <j:choose>
-                                    <j:when test="${client.addresses.size() > 0}">
-                                        <select name="addressId">
-                                            <j:forEach items="${client.addresses}" var="address" varStatus="tagStatus">
-                                                <option value="${address.id}">${address.postalCode}, ${address.country}, ${address.city}, ${address.street}, ${address.house}, ${address.room}</option>
-                                            </j:forEach>
-                                        </select>
-                                    </j:when>
-                                </j:choose>
-                            </div>
-                        </div>
-
-                        <div class="orderInfo">
-                            <div class="form-group">
-                                <label>Enter delivery method</label>
-                                <select name="deliveryMethod" required>
-                                    <option>Post of Russia</option>
-                                    <option>Avon service centers</option>
-                                    <option>Home delivery</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Enter payment method</label>
-                                <select name="paymentMethod" required>
-                                    <option>By cash</option>
-                                    <option>By card</option>
-                                </select>
-                                <%--by CARD block--%>
-                            </div>
-                        </div>
-                        <input class="btn formButton" type="submit" value="ISSUE ORDER"/>
-                    </div>
-                </j:if>
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mainPanel">
@@ -81,7 +42,6 @@
               <label class="errorMessage">${errorMessage}</label>
             </div>
             <div class="variant issueOrderBlock">
-              <form action="issue-order" method="post">
                 <j:choose>
                   <j:when test="${basket.products.size() == 0}">
                     <p class="emptyProductsListLabel">You have not chosen anything yet.</p>
@@ -113,7 +73,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="productOperations">
+                                    <div class="productOperations" align="center">
                                         <img class="remove remove-${tagStatus.count}" src="<c:url value="/resources/images/cross.jpeg"/>" alt="X"/>
                                         <img class="plus plus-${tagStatus.count}" src="<c:url value="/resources/images/plus.jpeg"/>" alt="+"/>
                                         <img class="minus minus-${tagStatus.count}" src="<c:url value="/resources/images/minus.jpeg"/>" alt="-"/>
@@ -124,14 +84,18 @@
                           </j:forEach>
                       </ul>
                     </div>
+
+                    <div class="orderPageButton" align="center">
+                        <a href="<j:url value="/clientProfile/issueOrder2"/> ">
+                            <button class="btn formButton">CONTINUE</button>
+                        </a>
+                    </div>
                   </j:otherwise>
                 </j:choose>
-              </form>
             </div>
           </div>
 
         </div>
-       </form>
 
         </div>
 
