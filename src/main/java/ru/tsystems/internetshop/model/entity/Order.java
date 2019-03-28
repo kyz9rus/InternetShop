@@ -1,12 +1,14 @@
 package ru.tsystems.internetshop.model.entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.tsystems.internetshop.model.DeliveryMethod;
 import ru.tsystems.internetshop.model.OrderStatus;
 import ru.tsystems.internetshop.model.PaymentMethod;
 import ru.tsystems.internetshop.model.PaymentStatus;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,8 +20,6 @@ public class Order {
 
     @Id
     @GeneratedValue
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
-//    @SequenceGenerator(name = "order_seq", sequenceName = "SEQ_ORDER", allocationSize = 1)
     private Long id;
 
     @ManyToOne
@@ -38,10 +38,12 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private DeliveryMethod deliveryMethod;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "order_product",
+//            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id", columnDefinition = "bigint references order(id) on delete cascade"),
             joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id", columnDefinition = "bigint references product(id) on delete cascade")
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
     )
     private List<Product> products = new ArrayList<>();
@@ -53,6 +55,10 @@ public class Order {
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
+    @Column(name = "order_date")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate orderDate;
 
     private int price;
 

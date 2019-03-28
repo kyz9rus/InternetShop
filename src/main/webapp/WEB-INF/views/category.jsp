@@ -27,8 +27,10 @@
       </div>
 
       <div class="content" align="left">
-
-        <p class="categoryName">${categoryName}</p>
+        <div>
+          <p class="categoryName">${categoryName}</p>
+          <input class="searchProduct"/>
+        </div>
 
         <div class="productsBlock">
           <p>${emptyListMessage}</p>
@@ -43,11 +45,11 @@
                     <div class="productInfo">
                       <div class="productInfo1">
                         <p class="productName">${product.name}</p>
-                        <p class="productWeight">Weight: ${product.weight}г.</p>
+                        <p class="productWeight">Weight: ${product.weight}g.</p>
                         <p class="productSize">Volume: ${product.volume}</p>
                       </div>
                       <div class="productInfo2">
-                        <p class="productPrice">Price: ${product.price} руб.</p>
+                        <p class="productPrice">Price: ${product.price} rubles.</p>
                         <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
                         <button class="btn buyButton buyButton-${tagStatus.count}">BUY</button>
 

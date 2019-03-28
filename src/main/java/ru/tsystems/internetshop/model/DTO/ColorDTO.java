@@ -8,6 +8,9 @@ import java.util.Set;
 
 @Data
 public class ColorDTO {
+    @NotNull
+    private Long id;
+    @NotNull
     private String name;
     private Set<ProductDTO> products = new HashSet<>();
 }

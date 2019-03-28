@@ -10,6 +10,7 @@ import ru.tsystems.internetshop.model.entity.ClientAddress;
 import ru.tsystems.internetshop.model.entity.Product;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,6 +37,9 @@ public class OrderDTO {
 
     @NotNull
     private OrderStatus orderStatus;
+
+    @NotNull
+    private LocalDate orderDate;
 
     @NotNull
     private int price;

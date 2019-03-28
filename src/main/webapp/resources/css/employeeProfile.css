@@ -162,6 +162,14 @@ td {
     display: none;
 }
 
+.addCategoryBlock input {
+    width: 350px;
+}
+
+.addCategoryBlock button{
+    margin-top: 10px;
+}
+
 .emptyListLabel {
     margin-left: 50px;
     font-size: 20px;

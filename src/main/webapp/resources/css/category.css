@@ -90,6 +90,13 @@
     background: red !important;
 }
 
+.searchProduct {
+    width: 200px;
+    margin-left: 20px;
+    border-radius: 8px;
+    margin-top: -2px;
+}
+
 @media (max-width: 879px) {
     .product {
         min-height: 310px;

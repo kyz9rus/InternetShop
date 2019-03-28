@@ -28,3 +28,22 @@ $('.buyButton').click(function () {
         }
     });
 });
+
+$('.searchProduct').on('input', function () {
+    filterProducts($('.productList'));
+});
+
+function filterProducts(data) {
+    var filters = $('.searchProduct');
+    var rows = data.find('.product');
+    rows.each(function () {
+        var valid = true;
+        if ($(this).find('.productName').text().toLowerCase().indexOf(filters.val().toLowerCase()) === -1)
+            valid = valid && false;
+
+        if (valid === true)
+            $(this).css('display', '');
+        else
+            $(this).css('display', 'none');
+    });
+}

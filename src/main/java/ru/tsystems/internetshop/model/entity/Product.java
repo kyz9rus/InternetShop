@@ -13,8 +13,6 @@ public class Product {
 
     @Id
     @GeneratedValue
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
-//    @SequenceGenerator(name = "product_seq", sequenceName = "SEQ_PRODUCT", allocationSize = 1)
     private Long id;
 
     @Column(unique = true, length = 70)
@@ -23,7 +21,7 @@ public class Product {
     private int price;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_name")
+    @JoinColumn(name = "category_id", columnDefinition = "bigint references category(id) on delete cascade")
     private Category category;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -38,7 +36,7 @@ public class Product {
 
     private String volume;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
     private List<Order> orders = new ArrayList<>();
 
     private long quantityInStock;

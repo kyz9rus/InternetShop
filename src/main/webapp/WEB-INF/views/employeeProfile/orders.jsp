@@ -70,7 +70,7 @@
                                               <td class="editOrderStatus editOrderStatus-${tagStatus.count}">
                                                   <form action="change-order-status" method="post">
                                                       <select name="orderStatus">
-                                                          <option>waitingForShipment</option>
+                                                          <option>waiting for shipment</option>
                                                           <option>shipped</option>
                                                           <option>delivered</option>
                                                       </select>
@@ -84,7 +84,7 @@
                                               <td class="editOrderStatus editOrderStatus-${tagStatus.count}">
                                                   <form action="change-order-status" method="post">
                                                       <select name="orderStatus">
-                                                          <option>waitingForPayment</option>
+                                                          <option>wayting for payment</option>
                                                           <option>shipped</option>
                                                           <option>delivered</option>
                                                       </select>
@@ -98,8 +98,8 @@
                                               <td class="editOrderStatus editOrderStatus-${tagStatus.count}">
                                                   <form action="change-order-status" method="post">
                                                       <select name="orderStatus">
-                                                          <option>waitingForPayment</option>
-                                                          <option>waitingForShipment</option>
+                                                          <option>waiting for payment</option>
+                                                          <option>waiting for shipment</option>
                                                           <option>delivered</option>
                                                       </select>
                                                       <input name="id" value="${order.id}" hidden/>
@@ -112,8 +112,8 @@
                                               <td class="editOrderStatus editOrderStatus-${tagStatus.count}">
                                                   <form action="change-order-status" method="post">
                                                       <select name="orderStatus">
-                                                          <option>waitingForPayment</option>
-                                                          <option>waitingForShipment</option>
+                                                          <option>waiting for payment</option>
+                                                          <option>waiting for shipment</option>
                                                           <option>shipped</option>
                                                       </select>
                                                       <input name="id" value="${order.id}" hidden/>
@@ -143,7 +143,7 @@
                                               <td class="editPaymentStatus editPaymentStatus-${tagStatus.count}">
                                                   <form action="change-payment-status" method="post">
                                                       <select name="paymentStatus">
-                                                          <option>waitingForPayment</option>
+                                                          <option>waiting for payment</option>
                                                       </select>
                                                       <input name="id" value="${order.id}" hidden/>
                                                       <button class="btn formButton">CHANGE</button>

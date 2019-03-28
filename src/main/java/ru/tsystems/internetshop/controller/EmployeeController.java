@@ -13,6 +13,7 @@ import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.model.OrderStatus;
 import ru.tsystems.internetshop.model.PaymentMethod;
 import ru.tsystems.internetshop.model.PaymentStatus;
+import ru.tsystems.internetshop.model.RevenueInfo;
 import ru.tsystems.internetshop.service.CategoryService;
 import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.service.OrderService;
@@ -70,8 +71,10 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("revenue")
     public String revenuePage(Model model) {
-        model.addAttribute("categories", categoryInfo.getInstance());
+        RevenueInfo revenueInfo = orderService.getRevenueInfo();
 
+        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("revenue", revenueInfo);
         return "employeeProfile/statistic/revenue";
     }
 
@@ -105,10 +108,10 @@ public class EmployeeController {
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("change-order-status")
-    public String changeOrderStatus(@RequestParam("id") Long id, @RequestParam("orderStatus") OrderStatus orderStatus, Model model) {
+    public String changeOrderStatus(@RequestParam("id") Long id, @RequestParam("orderStatus") String orderStatusString, Model model) {
         OrderDTO orderDTO = orderService.getOrder(id);
         if (orderDTO != null) {
-            orderDTO.setOrderStatus(orderStatus);
+            orderDTO.setOrderStatus(orderService.getOrderStatus(orderStatusString));
             orderService.updateOrder(orderDTO);
 
             model.addAttribute("successMessage", "Order status for order with id " + orderDTO.getId() + " successfully changed!");
@@ -123,10 +126,10 @@ public class EmployeeController {
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("change-payment-status")
-    public String changePaymentStatus(@RequestParam("id") Long id, @RequestParam("paymentStatus") PaymentStatus paymentStatus, Model model) {
+    public String changePaymentStatus(@RequestParam("id") Long id, @RequestParam("paymentStatus") String paymentStatusString, Model model) {
         OrderDTO orderDTO = orderService.getOrder(id);
         if (orderDTO != null) {
-            orderDTO.setPaymentStatus(paymentStatus);
+            orderDTO.setPaymentStatus(orderService.getPaymentStatus(paymentStatusString));
             orderService.updateOrder(orderDTO);
 
             model.addAttribute("successMessage", "Payment status for order with id " + orderDTO.getId() + " successfully changed!");
@@ -160,7 +163,7 @@ public class EmployeeController {
     public String createCategory(@ModelAttribute("category") CategoryDTO categoryDTO, Model model) {
         categoryDTO.setName(categoryDTO.getName().toLowerCase());
 
-        if (categoryService.getCategory(categoryDTO.getName()) == null) {
+        if (categoryService.getCategoryByName(categoryDTO.getName()) == null) {
 
             categoryService.saveCategory(categoryDTO);
 
@@ -202,19 +205,27 @@ public class EmployeeController {
     }
 
     @PostMapping("remove-category")
-    public String removeCategory(@RequestParam("oldName") String oldName, Model model) {
-        oldName = oldName.toLowerCase();
+    public String removeCategory(@RequestParam("oldName") String categoryName, Model model) {
+        CategoryDTO categoryDTO = categoryService.getCategoryByName(categoryName);
+        List<OrderDTO> orders = orderService.getOrdersByCategory(categoryDTO);
+        if (orders.isEmpty()) {
+            categoryName = categoryName.toLowerCase();
 
-        categoryService.removeCategory(new CategoryDTO(oldName));
+            categoryService.removeCategoryByName(categoryName);
 
-        categoryInfo.getInstance().clear();
+            categoryInfo.getInstance().clear();
 
-        List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
-        categoryDTOS.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
+            List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
+            categoryDTOS.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
 
-        categoryInfo.getInstance().addAll(categoryDTOS);
+            categoryInfo.getInstance().addAll(categoryDTOS);
 
-        model.addAttribute("successMessage", "Category successfully changed.");
+            model.addAttribute("successMessage", "Category successfully changed.");
+        } else {
+            model.addAttribute("errorMessage", "Category cannot be removed (There are incomplete orders)");
+        }
+
+
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "employeeProfile/manageCategories";

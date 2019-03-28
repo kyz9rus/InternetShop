@@ -1,15 +1,11 @@
 package ru.tsystems.internetshop.service;
 
-import ru.tsystems.internetshop.model.Basket;
-import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
+import ru.tsystems.internetshop.model.*;
+import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
-import ru.tsystems.internetshop.model.DeliveryMethod;
-import ru.tsystems.internetshop.model.PaymentMethod;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface OrderService {
     void updateOrder(OrderDTO orderDTO);
@@ -25,4 +21,12 @@ public interface OrderService {
     DeliveryMethod getDeliveryMethod(String deliveryMethodString);
 
     PaymentMethod getPaymentMethod(String paymentMethodString);
+
+    PaymentStatus getPaymentStatus(String paymentStatusString);
+
+    OrderStatus getOrderStatus(String orderStatusString);
+
+    List<OrderDTO> getOrdersByCategory(CategoryDTO categoryDTO);
+
+    RevenueInfo getRevenueInfo();
 }

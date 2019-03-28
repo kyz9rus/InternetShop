@@ -16,8 +16,6 @@ public class User implements Serializable, Cloneable {
 
     @Id
     @GeneratedValue
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-//    @SequenceGenerator(name = "user_seq", sequenceName = "SEQ_USER", allocationSize = 1)
     private Long id;
 
     @Column(length = 100, name = "email", unique = true)

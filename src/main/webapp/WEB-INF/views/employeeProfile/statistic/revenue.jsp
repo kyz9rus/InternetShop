@@ -34,19 +34,17 @@
                 <j:import url="../../common/leftEmployeePanel.jsp"/>
             </div>
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mainPanel" align="center">
-                <div class="variant clientsStatistic" align="left">
-                    <j:choose>
-                        <j:when test="${clients.size() == 0}">
-                            <p>Clients list is empty</p>
-                        </j:when>
-                        <j:otherwise>
-                            <ul class="topClientsList">
-                                <j:forEach items="${clients}" var="client" varStatus="tagStatus">
-                                    <li><p class="client">${tagStatus.count}. ${client.lastName} ${client.firstName} (${client.email}): ${client.summaryOrdersPrice} rubles</p></li>
-                                </j:forEach>
-                            </ul>
-                        </j:otherwise>
-                    </j:choose>
+                <div class="variant revenue" align="left">
+                    <div class="revenueBlock">
+                        <div class="form-group revenueForWeekBlock">
+                            <label class="revenueForWeekPoint">Revenue for last week:</label>
+                            <label class="revenueForWeekValue"><label class="text-success">${revenue.revenueForWeek}</label> rubles</label>
+                        </div>
+                        <div class="form-group revenueForMonthBlock">
+                            <label class="revenueForWeekPoint">Revenue for last month:</label>
+                            <label class="revenueForWeekValue"><label class="text-success">${revenue.revenueForMonth}</label> rubles</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

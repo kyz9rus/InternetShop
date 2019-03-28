@@ -10,7 +10,6 @@ import ru.tsystems.internetshop.service.CategoryService;
 import ru.tsystems.internetshop.util.Mapper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Transactional
@@ -35,9 +34,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO getCategory(String name) {
+    public CategoryDTO getCategoryByName(String name) {
         try {
-            return mapper.convertToDto(categoryDAO.findByKey(name));
+            return mapper.convertToDto(categoryDAO.findByName(name));
         } catch (IllegalArgumentException e) {
             return null;
         }
@@ -54,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void removeCategory(CategoryDTO categoryDTO) {
-        categoryDAO.delete(mapper.convertToEntity(categoryDTO));
+    public void removeCategoryByName(String categoryName) {
+        categoryDAO.deleteByName(categoryName);
     }
 }

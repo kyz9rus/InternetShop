@@ -15,6 +15,7 @@ import ru.tsystems.internetshop.model.entity.Order;
 import ru.tsystems.internetshop.model.entity.Product;
 import ru.tsystems.internetshop.util.Mapper;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,8 @@ public class OrderProductClientClientFacadeImpl implements OrderProductClientFac
 
         order.setProducts(productsToOrder);
         order.setPrice(price);
+
+        order.setOrderDate(LocalDate.now());
 
         orderDAO.create(order);
 

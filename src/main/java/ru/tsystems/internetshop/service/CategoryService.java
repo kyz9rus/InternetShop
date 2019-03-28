@@ -9,9 +9,9 @@ public interface CategoryService {
 
     void updateCategory(String oldName, CategoryDTO categoryDTO);
 
-    void removeCategory(CategoryDTO categoryDTO);
+    void removeCategoryByName(String categoryName);
 
     List<CategoryDTO> getAllCategories();
 
-    CategoryDTO getCategory(String name);
+    CategoryDTO getCategoryByName(String name);
 }
