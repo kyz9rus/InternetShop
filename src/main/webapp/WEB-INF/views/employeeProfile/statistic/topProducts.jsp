@@ -47,7 +47,7 @@
                                         <div class="productBlock">
                                             <div class="product">
                                                 <p class="position">${tagStatus.count}.</p>
-                                                <div class="productImage">
+                                                <div class="productImage" align="center">
                                                     <img src="${product.imgSrc}" alt="NO IMAGE"/>
                                                 </div>
                                                 <div class="productInfo">

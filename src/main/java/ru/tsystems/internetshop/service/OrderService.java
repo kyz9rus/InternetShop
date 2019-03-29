@@ -8,6 +8,8 @@ import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import java.util.List;
 
 public interface OrderService {
+    void saveOrder(OrderDTO orderDTO);
+
     void updateOrder(OrderDTO orderDTO);
 
     OrderDTO getOrder(Long id);

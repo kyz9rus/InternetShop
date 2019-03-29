@@ -12,6 +12,7 @@ import ru.tsystems.internetshop.model.entity.Order;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.util.Mapper;
 
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,10 +83,17 @@ public class OrderServiceImpl implements OrderService {
         return orderDTOS;
     }
 
+    @Override
+    public void saveOrder(OrderDTO orderDTO) {
+        orderDAO.create(mapper.convertToEntity(orderDTO));
+    }
+
+    @Override
     public void updateOrder(OrderDTO orderDTO) {
         orderDAO.update(mapper.convertToEntity(orderDTO));
     }
 
+    @Override
     public OrderDTO getOrder(Long id) {
         Order order = orderDAO.findByKey(id);
         if (order != null)

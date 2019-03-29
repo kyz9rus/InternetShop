@@ -1,6 +1,5 @@
 .categoryName {
     float: left;
-    margin-left: 16%;
 }
 
 .productsBlock {
@@ -91,10 +90,49 @@
 }
 
 .searchProduct {
-    width: 200px;
-    margin-left: 20px;
+    width: 100%;
     border-radius: 8px;
-    margin-top: -2px;
+}
+
+.contentHeader {
+    padding: 10px 16.3%;
+}
+
+.searchBlock {
+    margin-bottom: 20px;
+}
+
+.filters {
+    border: 1px solid rgb(229,229,229);
+    height: 200px;
+    padding: 10px 10px;
+    margin-top: 40px;
+}
+
+.priceFilter {
+    width: 100%;
+}
+
+.range-quantity{
+    background-color: rgb(235, 110, 153) !important;
+}
+
+.priceFilterBlock {
+    width: 56%;
+    padding-left: 25px;
+    float: left;
+}
+
+.filterValue {
+    margin-left: 36px;
+    margin-top: 26px;
+    width: 45px;
+    border-radius: 4px;
+    font-size: 12px;
+    height: 27px;
+    text-align: center;
+    border: 1px solid rgb(229, 229, 229);
+    font-weight: bold;
 }
 
 @media (max-width: 879px) {
@@ -117,6 +155,16 @@
         padding: 10px;
     }
 
+}
+
+.inStockInfo {
+    width: 150px;
+    height: 50px;
+}
+
+.inStockCheckbox {
+    float: right;
+    margin-top: -25px;
 }
 
 @media(max-width: 577px) {

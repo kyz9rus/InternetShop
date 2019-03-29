@@ -55,9 +55,9 @@
                       <ul class="productList">
                           <j:forEach items="${basket.products}" var="product" varStatus="tagStatus">
                             <li>
-                                <div class="productBlock productBlock-${tagStatus.count}">
-                                    <div class="product">
-                                        <div class="productImage">
+                                <div class="productBlock productBlock-${tagStatus.count} row">
+                                    <div class="product col-xs-10 col-sm-10 col-md-10 col-lg-11">
+                                        <div class="productImage" align="center">
                                             <img src="${product.key.imgSrc}" alt="NO IMAGE"/>
                                         </div>
                                         <div class="productInfo">
@@ -73,11 +73,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="productOperations" align="center">
-                                        <img class="remove remove-${tagStatus.count}" src="<c:url value="/resources/images/cross.jpeg"/>" alt="X"/>
-                                        <img class="plus plus-${tagStatus.count}" src="<c:url value="/resources/images/plus.jpeg"/>" alt="+"/>
-                                        <img class="minus minus-${tagStatus.count}" src="<c:url value="/resources/images/minus.jpeg"/>" alt="-"/>
-                                        <label class="numberOfProduct numberOfProduct-${tagStatus.count}">${product.value}</label>
+                                    <div class="productOperations col-xs-2 col-sm-2 col-md-2 col-lg-1" align="center">
+                                        <div class="form-group">
+                                            <img class="remove remove-${tagStatus.count}" src="<c:url value="/resources/images/cross.jpeg"/>" alt="X"/>
+                                            <img class="plus plus-${tagStatus.count}" src="<c:url value="/resources/images/plus.jpeg"/>" alt="+"/>
+                                            <img class="minus minus-${tagStatus.count}" src="<c:url value="/resources/images/minus.jpeg"/>" alt="-"/>
+                                            <label class="numberOfProduct numberOfProduct-${tagStatus.count}">${product.value}</label>
+                                        </div>
                                     </div>
                                 </div>
                             </li>

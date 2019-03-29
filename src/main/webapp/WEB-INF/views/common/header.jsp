@@ -169,7 +169,6 @@
 
 </div>
 
-<hr class="hr">
 <div id="thirdHeader">
     <ul class="menu">
         <j:forEach items="${categories}" var="category" varStatus="tagStatus">
@@ -178,6 +177,6 @@
         </li>
     </ul>
 </div>
-<hr class="hr">
 
 <script type="text/javascript" src="<c:url value="/resources/js/displayMobileMenu.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/displayProducts.js"/>"></script>

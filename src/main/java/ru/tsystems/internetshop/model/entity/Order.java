@@ -38,7 +38,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private DeliveryMethod deliveryMethod;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH})
     @JoinTable(
             name = "order_product",
 //            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id", columnDefinition = "bigint references order(id) on delete cascade"),

@@ -188,25 +188,15 @@ td {
 }
 
 .productOperations {
-    width: 5%;
-    float: left;
+    float: right;
     border: 1px solid rgb(229, 229, 229);
-    height: 150px;
+    height: 150px !important;
 }
 
 .productOperations *{
     width: 15px;
-    float: left;
     margin-top: 18px;
     cursor: pointer;
-}
-
-.productOperations .plus, .productOperations .minus {
-    margin-left: 5px;
-}
-
-.productOperations img:first-child{
-    margin-left: 4px;
 }
 
 .product {
@@ -403,6 +393,27 @@ td {
 @media(max-width: 576px){
     .leftPanel {
         width: 87%;
+    }
+
+    .productOperations {
+        width: 94%;
+        height: 40px !important;
+        margin-top: -30px;
+    }
+
+    .productOperations > div {
+        width: 100%;
+        margin-top:-10px;
+    }
+
+    .productOperations div *:not(.numberOfProduct) {
+        float: left;
+        width: 20px;
+        margin-right: 19%;
+    }
+
+    .minus {
+        margin-top: 25px;
     }
 }
 

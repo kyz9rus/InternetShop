@@ -20,11 +20,12 @@ public class Product {
 
     private int price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id", columnDefinition = "bigint references category(id) on delete cascade")
+    @ManyToOne(cascade = {CascadeType.DETACH})
+//    @ManyToOne
+    @JoinColumn(name = "category_id", columnDefinition = "bigint references category(id) on delete set null")
     private Category category;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH})
     @JoinTable(
             name = "product_color",
             joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
@@ -36,8 +37,8 @@ public class Product {
 
     private String volume;
 
-    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
-    private List<Order> orders = new ArrayList<>();
+//    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
+//    private List<Order> orders = new ArrayList<>();
 
     private long quantityInStock;
 

@@ -32,6 +32,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void updateProduct(ProductDTO productDTO) {
+        productDAO.update(mapper.convertToEntity(productDTO));
+    }
+
+    @Override
     public ProductDTO getProductByName(String name) {
         return mapper.convertToDto(productDAO.findProductByName(name));
     }

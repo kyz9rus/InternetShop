@@ -14,8 +14,10 @@
   <link rel="stylesheet" href='<c:url value="/resources/css/index.css" />'>
   <link rel="stylesheet" href='<c:url value="/resources/css/submenu.css" />'>
   <link rel="stylesheet" href='<c:url value="/resources/css/category.css" />'>
+  <link rel="stylesheet" href='<c:url value="/resources/css/powerange.css" />' />
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="<c:url value="/resources/js/powerange.js" />"></script>
 </head>
 
 <body>
@@ -27,10 +29,29 @@
       </div>
 
       <div class="content" align="left">
-        <div>
-          <p class="categoryName">${categoryName}</p>
-          <input class="searchProduct"/>
+        <div class="contentHeader">
+          <p class="categoryName">FRANGRANCES</p>
+
+          <div class="filters">
+            <div class="searchBlock">
+              <input class="searchProduct" placeholder="Search">
+            </div>
+            <div class="form-group priceFilterBlock">
+              <label class="filterName">Price:</label>
+              <input class="js-range"/>
+            </div>
+            <label class="filterValue">93</label>
+            <div class="inStockInfo">
+              <label>In stock</label>
+              <input type="checkbox" class="inStockCheckbox">
+            </div>
+          </div>
+
+          <div class="sorts">
+
+          </div>
         </div>
+
 
         <div class="productsBlock">
           <p>${emptyListMessage}</p>
@@ -39,7 +60,7 @@
             <j:forEach items="${products}" var="product" varStatus="tagStatus">
               <li>
                   <div class="product product-${tagStatus.count}">
-                    <div class="productImage">
+                    <div class="productImage" align="center">
                       <img src="${product.imgSrc}" alt="NO IMAGE"/>
                     </div>
                     <div class="productInfo">
@@ -54,6 +75,8 @@
                         <button class="btn buyButton buyButton-${tagStatus.count}">BUY</button>
 
                         <input name="id" value="${product.id}" hidden/>
+                        <input name="price" class="productPriceValue" value="${product.price}" hidden/>
+                        <input name="quantityInStock" class="quantityInStockValue" value="${product.quantityInStock}" hidden/>
                       </div>
                     </div>
                   </div>

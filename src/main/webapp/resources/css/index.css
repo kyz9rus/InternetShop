@@ -26,6 +26,16 @@
     width: 120px;
 }
 
+#thirdHeader {
+    margin: 0px -26%;
+    border-block-start: 1px solid rgb(229, 229, 229);
+    border-block-end: 1px solid rgb(229, 229, 229);
+}
+
+.menu {
+    margin: 0px 16% !important;
+}
+
 input {
     width: 100%;
 }
@@ -93,7 +103,7 @@ input:focus{
 }
 
 .hr {
-    margin: 0 -25%;
+    /*     margin: 0 -25%; */
 }
 
 .footerData {
@@ -260,7 +270,7 @@ input:focus{
     .mobileMenu {
         position: fixed;
         left: 0;
-        top: 92px;
+        top: 79.6px;
         z-index: 1;
         width: 58%;
         height: 100vh;

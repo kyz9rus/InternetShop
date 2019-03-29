@@ -10,9 +10,12 @@ import ru.tsystems.internetshop.facade.OrderProductClientFacade;
 import ru.tsystems.internetshop.model.*;
 import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
+import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.model.entity.Order;
 import ru.tsystems.internetshop.model.entity.Product;
+import ru.tsystems.internetshop.service.OrderService;
+import ru.tsystems.internetshop.service.ProductService;
 import ru.tsystems.internetshop.util.Mapper;
 
 import java.time.LocalDate;
@@ -28,45 +31,45 @@ public class OrderProductClientClientFacadeImpl implements OrderProductClientFac
     private Mapper mapper;
 
     @Autowired
-    private OrderDAO orderDAO;
+    private OrderService orderService;
 
     @Autowired
-    private ProductDAO productDAO;
+    private ProductService productService;
 
     @Autowired
     private ClientDAO clientDAO;
 
     @Override
     public void issueOrder(ClientDTO clientDTO, ClientAddressDTO clientAddressDTO, Basket basket, DeliveryMethod deliveryMethod, PaymentMethod paymentMethod) {
-        Order order = new Order();
-        order.setClient(mapper.convertToEntity(clientDTO));
-        order.setClientAddress(mapper.convertToEntity(clientAddressDTO));
-        order.setDeliveryMethod(deliveryMethod);
-        order.setPaymentMethod(paymentMethod);
-        order.setPaymentStatus(PaymentStatus.WAITING_FOR_PAYMENT);
-        order.setOrderStatus(OrderStatus.WAITING_FOR_PAYMENT);
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setClient(mapper.convertToEntity(clientDTO));
+        orderDTO.setClientAddress(mapper.convertToEntity(clientAddressDTO));
+        orderDTO.setDeliveryMethod(deliveryMethod);
+        orderDTO.setPaymentMethod(paymentMethod);
+        orderDTO.setPaymentStatus(PaymentStatus.WAITING_FOR_PAYMENT);
+        orderDTO.setOrderStatus(OrderStatus.WAITING_FOR_PAYMENT);
 
         Map<ProductDTO, Integer> products = basket.getProducts();
-        List<Product> productsToOrder = new ArrayList<>();
+        List<ProductDTO> productsToOrder = new ArrayList<>();
         int price = 0;
 
         for (ProductDTO productDTO : products.keySet()) {
             int numberProduct = products.get(productDTO);
             for (int i = 0; i < numberProduct; i++) {
                 productDTO.setNumberOfSales(productDTO.getNumberOfSales() + 1);
-                productsToOrder.add(mapper.convertToEntity(productDTO));
+                productsToOrder.add(productDTO);
                 price += productDTO.getPrice();
 
-                productDAO.update(mapper.convertToEntity(productDTO));
+                productService.updateProduct(productDTO);
             }
         }
 
-        order.setProducts(productsToOrder);
-        order.setPrice(price);
+        orderDTO.setProducts(productsToOrder);
+        orderDTO.setPrice(price);
 
-        order.setOrderDate(LocalDate.now());
+        orderDTO.setOrderDate(LocalDate.now());
 
-        orderDAO.create(order);
+        orderService.saveOrder(orderDTO);
 
         clientDAO.update(mapper.convertToEntity(clientDTO));
     }
