@@ -30,26 +30,30 @@
 
       <div class="content" align="left">
         <div class="contentHeader">
-          <p class="categoryName">FRANGRANCES</p>
+          <p class="categoryName">${categoryName}</p>
 
-          <div class="filters">
+          <div class="filters sorts">
             <div class="searchBlock">
               <input class="searchProduct" placeholder="Search">
             </div>
             <div class="form-group priceFilterBlock">
               <label class="filterName">Price:</label>
-              <input class="js-range"/>
+              <input class="js-range" />
             </div>
             <label class="filterValue">93</label>
             <div class="inStockInfo">
               <label>In stock</label>
               <input type="checkbox" class="inStockCheckbox">
             </div>
-          </div>
-
-          <div class="sorts">
-
-          </div>
+            <div class="sortBlock">
+              <select id="sortSelect">
+                <option>Sort by:</option>
+                <option>Alphabet (A-Z):</option>
+                <option>Alphabet (Z-A):</option>
+                <option>Price (descending):</option>
+                <option>Price (ascending):</option>
+              </select>
+            </div></div>
         </div>
 
 
@@ -93,5 +97,7 @@
   </div>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
   <script src="<c:url value="/resources/js/category.js"/>"></script>
+  <script src="<c:url value="/resources/js/filter.js"/>"></script>
+  <script src="<c:url value="/resources/js/sort.js"/>"></script>
 </body>
 </html>
