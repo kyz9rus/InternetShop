@@ -1,0 +1,131 @@
+.productsBlock {
+    margin: 70px 16%;
+}
+
+.productList {
+    width: 100%;
+}
+
+.productList li:not(:nth-child(1)) {
+    margin-top: 30px;
+}
+
+
+.product {
+    border: 1px solid rgb(229, 229, 229);
+    height: 150px;
+    width: 94%;
+    float: left;
+    margin-bottom: 30px;
+}
+
+.product > div {
+    height: 148px;
+}
+
+.productImage {
+    float: left;
+    width: 30%;
+}
+
+.productImage img {
+    padding: 1%;
+    height: 100%;
+}
+
+.productInfo {
+    width: 55%;
+    float: right;
+    margin-left: 5%;
+}
+
+.productInfo1 {
+    float: left;
+    width: 50%;
+    font-size: 13px;
+    margin: 10px 0px;
+}
+
+.productInfo2 {
+    float: right;
+    display: inline-block;
+    margin: 10px 0px;
+    width: 50%;
+}
+
+.productName {
+    font-size: 18px;
+}
+
+.productPrice {
+    font-size: 14px;
+}
+
+.quantityInStock {
+    color: grey;
+    font-size: 12px;
+}
+
+.productPrice {
+    font-size: 17px;
+}
+
+.position {
+    position: absolute;
+    font-size: 15px;
+    padding: 3px;
+}
+
+
+.buyButton {
+    width: 100px;
+    height: 30px;
+    background: rgb(235, 110, 153);
+    border: rgb(235, 110, 153);
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+}
+
+.buyButton:hover {
+    background-color: rgb(215, 69, 144);
+}
+
+.buyButton:active {
+    background: red !important;
+}
+
+
+@media (max-width: 879px) {
+    .product {
+        min-height: 310px;
+    }
+
+    .productImage {
+        width: 100%;
+        text-align: center;
+    }
+
+    .productImage img {
+        height: 149px;
+        max-width: 100%;
+    }
+
+    .productInfo {
+        border-block-start: 1px solid rgb(229, 229, 229);
+        width: 100%;
+        padding: 10px;
+    }
+
+}
+
+@media(max-width: 577px) {
+    .product {
+        min-height: 420px;
+    }
+
+    .productInfo1, .productInfo2 {
+        width: 100%;
+        padding: 0px 10px;
+    }
+}

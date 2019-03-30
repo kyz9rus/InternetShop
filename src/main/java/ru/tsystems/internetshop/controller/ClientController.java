@@ -15,10 +15,7 @@ import ru.tsystems.internetshop.model.DTO.*;
 import ru.tsystems.internetshop.service.*;
 import ru.tsystems.internetshop.util.CategoryInfo;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("clientProfile")
@@ -82,18 +79,15 @@ public class ClientController {
         if (orderDTO == null)
             model.addAttribute("errorMessage", "Order with id: " + orderId + " doesn't exist");
         else {
-            List<ProductDTO> productsFromDb = orderDTO.getProducts();
+            List<OrderProductDTO> orderProductsFromDb = orderDTO.getOrderProducts();
             Map<ProductDTO, Integer> products = new HashMap<>();
 
             int numberOfProducts = 0, summaryPrice = 0;
-            for (ProductDTO productDTO : productsFromDb) {
-                if (products.containsKey(productDTO))
-                    products.put(productDTO, products.get(productDTO) + 1);
-                else
-                    products.put(productDTO, 1);
-
+            for (OrderProductDTO orderProductDTO : orderProductsFromDb) {
+                products.put(orderProductDTO.getProduct(), orderProductDTO.getAmount());
                 numberOfProducts++;
-                summaryPrice += productDTO.getPrice();
+
+                summaryPrice += orderProductDTO.getProduct().getPrice();
             }
 
             basket = new Basket(products, numberOfProducts, summaryPrice);

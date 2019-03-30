@@ -233,6 +233,16 @@ input:focus{
     display: none;
 }
 
+
+.topProductsBlock {
+    padding: 10px 17%;
+    margin-top: 20px;
+}
+
+.topProductsBlock > p{
+    font-size: 20px;
+}
+
 @media (max-width: 822px) {
     .presentImage {
         display: none;

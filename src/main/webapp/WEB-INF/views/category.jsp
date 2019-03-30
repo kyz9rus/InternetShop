@@ -15,6 +15,7 @@
   <link rel="stylesheet" href='<c:url value="/resources/css/submenu.css" />'>
   <link rel="stylesheet" href='<c:url value="/resources/css/category.css" />'>
   <link rel="stylesheet" href='<c:url value="/resources/css/powerange.css" />' />
+  <link rel="stylesheet" href='<c:url value="/resources/css/products.css" />'>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="<c:url value="/resources/js/powerange.js" />"></script>
@@ -75,8 +76,15 @@
                       </div>
                       <div class="productInfo2">
                         <p class="productPrice">Price: ${product.price} rubles.</p>
-                        <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
-                        <button class="btn buyButton buyButton-${tagStatus.count}">BUY</button>
+                        <j:choose>
+                          <j:when test="${product.quantityInStock != 0}">
+                            <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
+                            <button class="btn buyButton buyButton-${tagStatus.count}">BUY</button>
+                          </j:when>
+                          <j:otherwise>
+                            <p class="quantityInStock">Product is temporarily out of stock</p>
+                          </j:otherwise>
+                        </j:choose>
 
                         <input name="id" value="${product.id}" hidden/>
                         <input name="price" class="productPriceValue" value="${product.price}" hidden/>

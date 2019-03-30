@@ -16,6 +16,12 @@ import java.util.List;
 @Repository
 public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
+//    @Override
+//    public Long saveOrder(Order order) {
+//        getSession().saveOrUpdate(order);
+//        return order.getId();
+//    }
+
     @Override
     public List<Order> getUnfinishedOrdersByClient(Client client) {
         String queryString = "SELECT o FROM ord o WHERE o.client.id = :id AND o.orderStatus != :order_status";

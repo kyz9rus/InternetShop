@@ -1,9 +1,9 @@
 package ru.tsystems.internetshop.service;
 
-import ru.tsystems.internetshop.model.*;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
+import ru.tsystems.internetshop.model.*;
 
 import java.util.List;
 

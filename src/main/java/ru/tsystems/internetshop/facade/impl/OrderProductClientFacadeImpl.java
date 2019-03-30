@@ -4,17 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.ClientDAO;
-import ru.tsystems.internetshop.dao.OrderDAO;
-import ru.tsystems.internetshop.dao.ProductDAO;
 import ru.tsystems.internetshop.facade.OrderProductClientFacade;
 import ru.tsystems.internetshop.model.*;
-import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
-import ru.tsystems.internetshop.model.DTO.ClientDTO;
-import ru.tsystems.internetshop.model.DTO.OrderDTO;
-import ru.tsystems.internetshop.model.DTO.ProductDTO;
-import ru.tsystems.internetshop.model.entity.Order;
-import ru.tsystems.internetshop.model.entity.Product;
+import ru.tsystems.internetshop.model.DTO.*;
+//import ru.tsystems.internetshop.service.OrderProductService;
+import ru.tsystems.internetshop.model.entity.OrderProduct;
+import ru.tsystems.internetshop.model.entity.Role;
+import ru.tsystems.internetshop.model.entity.User;
+import ru.tsystems.internetshop.service.OrderProductsService;
 import ru.tsystems.internetshop.service.OrderService;
+//import ru.tsystems.internetshop.service.OrderProductService;
 import ru.tsystems.internetshop.service.ProductService;
 import ru.tsystems.internetshop.util.Mapper;
 
@@ -25,10 +24,13 @@ import java.util.Map;
 
 @Transactional
 @Component
-public class OrderProductClientClientFacadeImpl implements OrderProductClientFacade {
+public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
 
     @Autowired
     private Mapper mapper;
+
+    @Autowired
+    private OrderProductsService orderProductsService;
 
     @Autowired
     private OrderService orderService;
@@ -50,25 +52,28 @@ public class OrderProductClientClientFacadeImpl implements OrderProductClientFac
         orderDTO.setOrderStatus(OrderStatus.WAITING_FOR_PAYMENT);
 
         Map<ProductDTO, Integer> products = basket.getProducts();
-        List<ProductDTO> productsToOrder = new ArrayList<>();
         int price = 0;
 
         for (ProductDTO productDTO : products.keySet()) {
             int numberProduct = products.get(productDTO);
             for (int i = 0; i < numberProduct; i++) {
                 productDTO.setNumberOfSales(productDTO.getNumberOfSales() + 1);
-                productsToOrder.add(productDTO);
                 price += productDTO.getPrice();
-
-                productService.updateProduct(productDTO);
             }
+
+            OrderProductDTO orderProductDTO = new OrderProductDTO();
+            orderProductDTO.setOrder(orderDTO);
+            orderProductDTO.setProduct(productDTO);
+            orderProductDTO.setAmount(products.get(productDTO));
+
+            orderDTO.getOrderProducts().add(orderProductDTO);
+
+            productService.updateProduct(productDTO);
         }
 
-        orderDTO.setProducts(productsToOrder);
         orderDTO.setPrice(price);
-
         orderDTO.setOrderDate(LocalDate.now());
-
+        clientDTO.setSummaryOrdersPrice((long) price);
         orderService.saveOrder(orderDTO);
 
         clientDAO.update(mapper.convertToEntity(clientDTO));

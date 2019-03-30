@@ -12,7 +12,6 @@ import ru.tsystems.internetshop.model.entity.Order;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.util.Mapper;
 
-import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,11 +83,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void saveOrder(OrderDTO orderDTO) {
-        orderDAO.create(mapper.convertToEntity(orderDTO));
-    }
-
-    @Override
     public void updateOrder(OrderDTO orderDTO) {
         orderDAO.update(mapper.convertToEntity(orderDTO));
     }
@@ -153,6 +147,13 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return new RevenueInfo(revenueForWeek[0], revenueForMonth[0]);
+    }
+
+    @Override
+    public void saveOrder(OrderDTO orderDTO) {
+        orderDAO.create(mapper.convertToEntity(orderDTO));
+
+//        return orderDAO.saveOrder(mapper.convertToEntity(orderDTO));
     }
 
     private List<OrderDTO> getPaidOrders() {

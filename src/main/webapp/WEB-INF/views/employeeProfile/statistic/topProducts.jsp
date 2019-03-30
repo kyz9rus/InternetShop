@@ -14,8 +14,8 @@
   <link rel="stylesheet" href='<c:url value="/resources/css/bootstrap.min.css" />'>
   <link rel="stylesheet" href='<c:url value="/resources/css/index.css" />'>
   <link rel="stylesheet" href='<c:url value="/resources/css/submenu.css" />'>
-
   <link rel="stylesheet" href='<c:url value="/resources/css/employeeProfile.css" />'>
+  <link rel="stylesheet" href='<c:url value="/resources/css/products.css" />'>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>

@@ -3,6 +3,7 @@ package ru.tsystems.internetshop.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,6 @@ public class Product {
     private int price;
 
     @ManyToOne(cascade = {CascadeType.DETACH})
-//    @ManyToOne
     @JoinColumn(name = "category_id", columnDefinition = "bigint references category(id) on delete set null")
     private Category category;
 
@@ -36,9 +36,6 @@ public class Product {
     private double weight;
 
     private String volume;
-
-//    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
-//    private List<Order> orders = new ArrayList<>();
 
     private long quantityInStock;
 

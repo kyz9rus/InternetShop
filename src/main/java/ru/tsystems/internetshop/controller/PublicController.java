@@ -63,6 +63,7 @@ public class PublicController {
         categoryInfo.getInstance().clear();
         categoryInfo.getInstance().addAll(categories);
 
+        model.addAttribute("products", productService.getTop10Products());
         model.addAttribute("categories", categoryInfo.getInstance());
 
         return "index";

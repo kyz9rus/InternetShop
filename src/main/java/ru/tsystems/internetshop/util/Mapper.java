@@ -55,4 +55,8 @@ public class Mapper {
     public Product convertToEntity(ProductDTO productDTO) {
         return modelMapper.map(productDTO, Product.class);
     }
+
+    public OrderProduct convertToEntity(OrderProductDTO orderProductDTO) {
+        return modelMapper.map(orderProductDTO, OrderProduct.class);
+    }
 }

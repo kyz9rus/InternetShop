@@ -7,7 +7,6 @@ import ru.tsystems.internetshop.model.PaymentMethod;
 import ru.tsystems.internetshop.model.PaymentStatus;
 import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.model.entity.ClientAddress;
-import ru.tsystems.internetshop.model.entity.Product;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -30,7 +29,7 @@ public class OrderDTO {
 
     @NotNull
     private DeliveryMethod deliveryMethod;
-    private List<ProductDTO> products = new ArrayList<>();
+    private List<OrderProductDTO> orderProducts = new ArrayList<>();
 
     @NotNull
     private PaymentStatus paymentStatus;
@@ -46,13 +45,13 @@ public class OrderDTO {
 
     @Override
     public String toString() {
-        return "OrderDTO{" +
+        return "Order{" +
                 "id=" + id +
+                ", clientAddress=" + clientAddress +
                 ", paymentMethod=" + paymentMethod +
                 ", deliveryMethod=" + deliveryMethod +
                 ", paymentStatus=" + paymentStatus +
                 ", orderStatus=" + orderStatus +
-                ", price=" + price +
                 '}';
     }
 
@@ -61,17 +60,15 @@ public class OrderDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDTO orderDTO = (OrderDTO) o;
-        return price == orderDTO.price &&
-                Objects.equals(id, orderDTO.id) &&
+        return Objects.equals(id, orderDTO.id) &&
                 paymentMethod == orderDTO.paymentMethod &&
                 deliveryMethod == orderDTO.deliveryMethod &&
-                Objects.equals(products, orderDTO.products) &&
                 paymentStatus == orderDTO.paymentStatus &&
                 orderStatus == orderDTO.orderStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, paymentMethod, deliveryMethod, products, paymentStatus, orderStatus, price);
+        return Objects.hash(id, paymentMethod, deliveryMethod, paymentStatus, orderStatus);
     }
 }

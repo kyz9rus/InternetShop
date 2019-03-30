@@ -10,6 +10,7 @@ import ru.tsystems.internetshop.model.PaymentStatus;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,15 +39,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private DeliveryMethod deliveryMethod;
 
-    @ManyToMany(cascade = {CascadeType.DETACH})
-    @JoinTable(
-            name = "order_product",
-//            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id", columnDefinition = "bigint references order(id) on delete cascade"),
-            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id", columnDefinition = "bigint references product(id) on delete cascade")
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
-    )
-    private List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderProduct> orderProducts = new ArrayList<>();
 
     @Column(name = "payment_status")
     @Enumerated(EnumType.STRING)
@@ -65,12 +59,11 @@ public class Order {
     public Order() {
     }
 
-    public Order(Client client, ClientAddress clientAddress, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, List<Product> products, PaymentStatus paymentStatus, OrderStatus orderStatus) {
+    public Order(Client client, ClientAddress clientAddress, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, PaymentStatus paymentStatus, OrderStatus orderStatus) {
         this.client = client;
         this.clientAddress = clientAddress;
         this.paymentMethod = paymentMethod;
         this.deliveryMethod = deliveryMethod;
-        this.products = products;
         this.paymentStatus = paymentStatus;
         this.orderStatus = orderStatus;
     }
