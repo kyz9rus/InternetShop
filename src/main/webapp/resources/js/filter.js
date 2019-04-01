@@ -7,19 +7,32 @@ function createPriceFilter() {
     var minPrice = parseInt(findMinPrice(), 10);
     var maxPrice = parseInt(findMaxPrice(), 10);
 
-    var init = new Powerange(elem, {
-        min: minPrice,
-        max: maxPrice,
-        start: (maxPrice - minPrice) / 2,
-        decimal: true,
-        klass: 'priceFilter',
-        callback: function () {
-            filterProductsByPrice();
-        }
-    });
+    if (minPrice === 9999999 || maxPrice === 0) {
+        var init = new Powerange(elem, {
+            min: 0,
+            max: 500,
+            start: 250,
+            decimal: true,
+            klass: 'priceFilter',
+            callback: function () {
+                filterProductsByPrice();
+            }
+        });
+    } else {
+        var init = new Powerange(elem, {
+            min: minPrice,
+            max: maxPrice,
+            start: (maxPrice - minPrice) / 2,
+            decimal: true,
+            klass: 'priceFilter',
+            callback: function () {
+                filterProductsByPrice();
+            }
+        });
 
-    $('.priceFilter .range-min').text(minPrice);
-    $('.priceFilter .range-max').text(maxPrice);
+        $('.priceFilter .range-min').text(minPrice);
+        $('.priceFilter .range-max').text(maxPrice);
+    }
 }
 
 function findMinPrice() {

@@ -37,11 +37,20 @@
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mainPanel">
-            <div class="messageBlock">
-              <label class="successMessage">${successMessage}</label>
-              <label class="errorMessage">${errorMessage}</label>
-            </div>
-            <div class="variant issueOrderBlock">
+              <form action="/clientProfile/issueOrder2" method="get">
+                <div class="couponBlock">
+                  <label>Do you have coupons?</label><br/>
+                  <div class="form-group">
+                      <label>Enter coupon</label>
+                      <input name="couponValue"/>
+                  </div>
+                  <p id="checkCouponMessage"></p>
+                  <button class="btn formButton noCouponButton">I don't have coupons :(</button>
+                  <button class="btn formButton checkCouponButton">CHECK COUPON</button>
+                  <button class="btn formButton continueCouponButton">CONTINUE</button>
+                </div>
+              </form>
+                <div class="variant issueOrderBlock">
                 <j:choose>
                   <j:when test="${basket.products.size() == 0}">
                     <p class="emptyProductsListLabel">You have not chosen anything yet.</p>
@@ -67,7 +76,7 @@
                                                 <p class="productSize">Volume: ${product.key.volume}</p>
                                             </div>
                                             <div class="productInfo2">
-                                                <p class="productPrice">Price: ${product.key.price} руб.</p>
+                                                <p class="productPrice">Price: ${product.key.price} rubles.</p>
                                                 <p class="quantityInStock">Quantity in stock: ${product.key.quantityInStock}</p>
                                                 <input name="id" value="${product.key.id}" hidden/>
                                             </div>
@@ -85,6 +94,9 @@
                             </li>
                           </j:forEach>
                       </ul>
+                    </div>
+                    <div class="priceBlock">
+                        <p>Total price <b class="text-success">${basket.summaryPrice}</b> rubles</p>
                     </div>
 
                     <div class="orderPageButton" align="center">

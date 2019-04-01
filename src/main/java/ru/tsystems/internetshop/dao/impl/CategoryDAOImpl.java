@@ -29,7 +29,10 @@ public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements Cate
         TypedQuery<Category> query = sessionFactory.getCurrentSession().createQuery(queryString, Category.class);
         query.setParameter("name", name);
 
-        return query.getResultList().get(0);
+        if (!query.getResultList().isEmpty())
+            return query.getResultList().get(0);
+        else
+            return null;
     }
 
     @Override

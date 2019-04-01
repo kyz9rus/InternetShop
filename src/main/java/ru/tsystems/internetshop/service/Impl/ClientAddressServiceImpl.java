@@ -12,6 +12,7 @@ import ru.tsystems.internetshop.service.ClientAddressService;
 import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.util.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -45,8 +46,14 @@ public class ClientAddressServiceImpl implements ClientAddressService {
     }
 
     @Override
-    public List<ClientAddress> getAddressesByClient(ClientDTO clientDTO) {
-        return clientAddressDAO.getAddressesByClient(mapper.convertToEntity(clientDTO));
+    public List<ClientAddressDTO> getAddressesByClient(ClientDTO clientDTO) {
+        List<ClientAddress> clientAddresses = clientAddressDAO.getAddressesByClient(mapper.convertToEntity(clientDTO));
+        List<ClientAddressDTO> clientAddressDTOS = new ArrayList<>();
+
+        for (ClientAddress clientAddress : clientAddresses)
+            clientAddressDTOS.add(mapper.convertToDto(clientAddress));
+
+        return clientAddressDTOS;
     }
 
     @Override

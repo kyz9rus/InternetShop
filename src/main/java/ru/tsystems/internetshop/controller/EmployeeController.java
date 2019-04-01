@@ -47,8 +47,7 @@ public class EmployeeController {
         List<OrderDTO> orders = orderService.getOrders();
 
         model.addAttribute("orders", orders);
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/orders";
     }
 
@@ -56,7 +55,7 @@ public class EmployeeController {
     @GetMapping("clientStatistic")
     public String clientStatisticPage(Model model) {
         model.addAttribute("clients", clientService.getTop10Clients());
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/statistic/topClients";
     }
 
@@ -64,7 +63,7 @@ public class EmployeeController {
     @GetMapping("productStatistic")
     public String productStatisticPage(Model model) {
         model.addAttribute("products", productService.getTop10Products());
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/statistic/topProducts";
     }
 
@@ -73,24 +72,22 @@ public class EmployeeController {
     public String revenuePage(Model model) {
         RevenueInfo revenueInfo = orderService.getRevenueInfo();
 
-        model.addAttribute("categories", categoryInfo.getInstance());
         model.addAttribute("revenue", revenueInfo);
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/statistic/revenue";
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("addProduct")
     public String addProductPage(Model model) {
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/addProduct";
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("manageCategories")
     public String manageCategoriesPage(Model model) {
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/manageCategories";
     }
 
@@ -99,10 +96,9 @@ public class EmployeeController {
     public String importFromFile(Model model) {
 //        ...
 
-        model.addAttribute("categories", categoryInfo.getInstance());
 
         model.addAttribute("successMessage", "import of products successfully completed");
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/importProductsFromFile";
     }
 
@@ -119,8 +115,7 @@ public class EmployeeController {
             model.addAttribute("errorMessage", "Order with id " + id + " doesn't exist. Inform the administrator!");
 
         model.addAttribute("orders", orderService.getOrders());
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/orders";
     }
 
@@ -137,8 +132,7 @@ public class EmployeeController {
             model.addAttribute("errorMessage", "Order with id " + id + " doesn't exist. Inform the administrator!");
 
         model.addAttribute("orders", orderService.getOrders());
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/orders";
     }
 
@@ -154,8 +148,7 @@ public class EmployeeController {
         } else
             model.addAttribute("errorMessage", "Product with this name already exists.");
 
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/addProduct";
     }
 
@@ -167,20 +160,18 @@ public class EmployeeController {
 
             categoryService.saveCategory(categoryDTO);
 
-            categoryInfo.getInstance().clear();
+            categoryInfo.getCategories().clear();
 
             List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
             categoryDTOS.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
 
-            categoryInfo.getInstance().addAll(categoryDTOS);
+            categoryInfo.getCategories().addAll(categoryDTOS);
 
             model.addAttribute("successMessage", "Category successfully changed.");
         } else
             model.addAttribute("errorMessage", "Category already exist.");
 
-
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/manageCategories";
     }
 
@@ -191,15 +182,15 @@ public class EmployeeController {
 
         categoryService.updateCategory(oldName, categoryDTO);
 
-        categoryInfo.getInstance().clear();
+        categoryInfo.getCategories().clear();
 
         List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
         categoryDTOS.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
 
-        categoryInfo.getInstance().addAll(categoryDTOS);
+        categoryInfo.getCategories().addAll(categoryDTOS);
 
         model.addAttribute("successMessage", "Category successfully changed.");
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
 
         return "employeeProfile/manageCategories";
     }
@@ -213,21 +204,19 @@ public class EmployeeController {
 
             categoryService.removeCategoryByName(categoryName);
 
-            categoryInfo.getInstance().clear();
+            categoryInfo.getCategories().clear();
 
             List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
             categoryDTOS.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
 
-            categoryInfo.getInstance().addAll(categoryDTOS);
+            categoryInfo.getCategories().addAll(categoryDTOS);
 
             model.addAttribute("successMessage", "Category successfully changed.");
         } else {
             model.addAttribute("errorMessage", "Category cannot be removed (There are incomplete orders)");
         }
 
-
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/manageCategories";
     }
 }

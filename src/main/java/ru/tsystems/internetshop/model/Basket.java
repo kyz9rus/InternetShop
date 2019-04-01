@@ -2,6 +2,7 @@ package ru.tsystems.internetshop.model;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
+import ru.tsystems.internetshop.model.DTO.CouponDTO;
 import ru.tsystems.internetshop.model.DTO.ProductDTO;
 
 import java.util.HashMap;
@@ -13,6 +14,7 @@ public class Basket {
     private Map<ProductDTO, Integer> products;
     private int numberOfProducts;
     private int summaryPrice;
+    private CouponDTO couponDTO;
 
     public Basket() {
         products = new HashMap<>();

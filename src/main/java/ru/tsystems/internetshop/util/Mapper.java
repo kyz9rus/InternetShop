@@ -24,6 +24,10 @@ public class Mapper {
         return modelMapper.map(category, CategoryDTO.class);
     }
 
+    public CouponDTO convertToDto(Coupon coupon) {
+        return modelMapper.map(coupon, CouponDTO.class);
+    }
+
     public ProductDTO convertToDto(Product product) {
         return modelMapper.map(product, ProductDTO.class);
     }

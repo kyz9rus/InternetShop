@@ -5,8 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,23 +16,17 @@ import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.BasketInfo;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
+import ru.tsystems.internetshop.model.DTO.CouponDTO;
 import ru.tsystems.internetshop.model.DTO.ProductDTO;
-import ru.tsystems.internetshop.model.DTO.UserDTO;
-import ru.tsystems.internetshop.service.AuthenticationService;
-import ru.tsystems.internetshop.service.CategoryService;
-import ru.tsystems.internetshop.service.ClientService;
-import ru.tsystems.internetshop.service.ProductService;
+import ru.tsystems.internetshop.service.*;
 import ru.tsystems.internetshop.util.CategoryInfo;
+import ru.tsystems.internetshop.util.ResponseInfo;
 
-import java.util.Collection;
 import java.util.List;
 
 @Controller
 @SessionAttributes(value = {"client", "basket"})
 public class PublicController {
-
-    @Autowired
-    private CategoryService categoryService;
 
     @Autowired
     private ClientService clientService;
@@ -51,6 +43,12 @@ public class PublicController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @Autowired
+    private CouponService couponService;
+
+    @Autowired
+    private MailService mailService;
+
     @GetMapping("exception")
     public String toExceptionPage() {
         return "exception";
@@ -58,26 +56,20 @@ public class PublicController {
 
     @GetMapping(value = "/")
     public String main(Model model) {
-        List<CategoryDTO> categories = categoryService.getAllCategories();
-
-        categoryInfo.getInstance().clear();
-        categoryInfo.getInstance().addAll(categories);
-
+        model.addAttribute("client", authenticationService.getClient());
         model.addAttribute("products", productService.getTop10Products());
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "index";
     }
 
     @GetMapping(value = "registration")
     public String toRegistrationPage(Model model) {
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "registration";
     }
 
     @GetMapping(value = "login")
-    public String toLoginPage(Model model) {
-        model.addAttribute("categories", categoryInfo.getInstance());
+    public String toLoginPage() {
         return "login";
     }
 
@@ -96,7 +88,7 @@ public class PublicController {
             }
         }
 
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
 
         return "registration";
     }
@@ -112,7 +104,7 @@ public class PublicController {
 
         model.addAttribute("categoryName", categoryName.replaceAll("_", " ").toUpperCase());
         model.addAttribute("products", products);
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
 
         return "category";
     }
@@ -123,7 +115,7 @@ public class PublicController {
         basket.addProduct(productDTO);
 
         model.addAttribute("basket", basket);
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
 
         return new ResponseEntity<>(new BasketInfo(basket, basket.getProducts().get(productDTO)), HttpStatus.OK);
     }
@@ -135,7 +127,7 @@ public class PublicController {
         basket.increaseProduct(productDTO);
 
         model.addAttribute("basket", basket);
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
 
         return new ResponseEntity<>(new BasketInfo(basket, basket.getProducts().get(productDTO)), HttpStatus.OK);
     }
@@ -147,7 +139,7 @@ public class PublicController {
         basket.removeProduct(productDTO);
 
         model.addAttribute("basket", basket);
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
 
         return new ResponseEntity<>(new BasketInfo(basket, basket.getProducts().get(productDTO)), HttpStatus.OK);
     }
@@ -155,29 +147,36 @@ public class PublicController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping(value = "clientProfile")
     public String toClientProfile(Model model) {
-        Authentication authentication = authenticationService.getAuthentication();
-
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        if (!authorities.isEmpty())
-            for (GrantedAuthority grantedAuthority : authorities)
-                if (grantedAuthority.getAuthority().equals("ROLE_CLIENT")) {
-                    UserDTO userDTO = (UserDTO) authentication.getPrincipal();
-
-                    ClientDTO clientDTO = clientService.getClientByEmail(userDTO.getEmail());
-
-                    model.addAttribute("client", clientDTO);
-                }
-
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("client", authenticationService.getClient());
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile";
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping(value = "employeeProfile")
     public String toEmployeeProfile(Model model) {
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile";
+    }
+
+    @PreAuthorize("hasAnyRole('CLIENT')")
+    @PostMapping(value = "send-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody
+    ResponseEntity<ResponseInfo> sendCoupon(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
+        String email = clientDTO.getEmail();
+        ResponseEntity<ResponseInfo> responseEntity;
+
+        CouponDTO couponDTO = couponService.getCouponByValue("HAPPY_ORDER");
+
+        if (clientDTO.getCoupons().contains(couponDTO))
+            responseEntity = new ResponseEntity<>(new ResponseInfo("You have already used this coupon."), HttpStatus.NOT_FOUND);
+        else {
+            mailService.sendLetter(email, couponDTO);
+            responseEntity = new ResponseEntity<>(new ResponseInfo("Сoupon successfully sent.\nCheck your email."), HttpStatus.OK);
+        }
+
+        model.addAttribute("categories", categoryInfo.getCategories());
+        return responseEntity;
     }
 
     @ModelAttribute("client")
@@ -191,7 +190,7 @@ public class PublicController {
     }
 
     @GetMapping("logout")
-    public ModelAndView logout(Model model) {
+    public ModelAndView logout() {
         return new ModelAndView("redirect:" + "/logout");
     }
 }

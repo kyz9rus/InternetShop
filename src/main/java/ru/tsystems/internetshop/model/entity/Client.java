@@ -40,6 +40,14 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private List<ClientAddress> addresses = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "client_coupon",
+            joinColumns = @JoinColumn(name = "client_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "coupon_id", referencedColumnName = "id")
+    )
+    private List<Coupon> coupons = new ArrayList<>();
+
     public Client() {
     }
 

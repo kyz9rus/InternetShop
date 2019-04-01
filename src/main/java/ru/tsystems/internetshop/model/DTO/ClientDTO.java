@@ -3,6 +3,7 @@ package ru.tsystems.internetshop.model.DTO;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.tsystems.internetshop.model.entity.ClientAddress;
+import ru.tsystems.internetshop.model.entity.Coupon;
 import ru.tsystems.internetshop.model.entity.Order;
 
 import javax.validation.constraints.Email;
@@ -29,8 +30,9 @@ public class ClientDTO {
 
     private Long summaryOrdersPrice;
 
-    private List<Order> orders = new ArrayList<>();
-    private List<ClientAddress> addresses = new ArrayList<>();
+    private List<OrderDTO> orders = new ArrayList<>();
+    private List<ClientAddressDTO> addresses = new ArrayList<>();
+    private List<CouponDTO> coupons = new ArrayList<>();
 
     public ClientDTO() {
     }

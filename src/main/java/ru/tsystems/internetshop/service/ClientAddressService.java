@@ -14,7 +14,7 @@ public interface ClientAddressService {
 
     ClientAddressDTO getClientAddressById(Long id);
 
-    List<ClientAddress> getAddressesByClient(ClientDTO clientDTO);
+    List<ClientAddressDTO> getAddressesByClient(ClientDTO clientDTO);
 
     void deleteAddress(ClientAddressDTO clientAddressDTO);
 }

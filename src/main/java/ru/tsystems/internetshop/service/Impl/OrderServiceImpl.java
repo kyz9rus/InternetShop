@@ -135,12 +135,12 @@ public class OrderServiceImpl implements OrderService {
         try {
             orders.stream().filter(orderDTO ->
                     orderDTO.getOrderDate().isBefore(localDate)
-                            && orderDTO.getOrderDate().isAfter(localDate.minusWeeks(1))
+                            && orderDTO.getOrderDate().isAfter(localDate.minusWeeks(1)) || orderDTO.getOrderDate().isEqual(localDate)
             ).forEach(orderDTO -> revenueForWeek[0] += orderDTO.getPrice());
 
             orders.stream().filter(orderDTO ->
                     orderDTO.getOrderDate().isBefore(localDate)
-                            && orderDTO.getOrderDate().isAfter(localDate.minusMonths(1))
+                            && orderDTO.getOrderDate().isAfter(localDate.minusMonths(1)) || orderDTO.getOrderDate().isEqual(localDate)
             ).forEach(orderDTO -> revenueForMonth[0] += orderDTO.getPrice());
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -152,8 +152,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void saveOrder(OrderDTO orderDTO) {
         orderDAO.create(mapper.convertToEntity(orderDTO));
-
-//        return orderDAO.saveOrder(mapper.convertToEntity(orderDTO));
     }
 
     private List<OrderDTO> getPaidOrders() {

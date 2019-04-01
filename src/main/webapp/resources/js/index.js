@@ -28,3 +28,40 @@ $('.buyButton').click(function () {
         }
     });
 });
+
+function showCouponWindow() {
+    $('.couponWindow').show();
+    $('body').css({'background-color': 'rgba(0,0,0,0.4)'});
+}
+
+function hideCouponWindow() {
+    $('.couponWindow').hide();
+    $('body').css({'background-color': 'rgba(0,0,0,0)'});
+}
+
+$('.becomeRepresentativeBlock button').click(function() {
+    showCouponWindow();
+});
+
+$('.couponWindow img').click(function () {
+    hideCouponWindow();
+});
+
+$('.couponWindow button').click(function () {
+    hideCouponWindow();
+});
+
+$('.getCouponButton').click(function () {
+    $.post({
+        url: '/send-coupon',
+        dataType: 'json',
+        success: function (responseInfo) {
+            $('.couponWindow p').attr('class', 'text-success');
+            $('.couponWindow p').text(responseInfo.message);
+        },
+        error: function (response) {
+            $('.couponWindow p').attr('class', 'text-danger');
+            $('.couponWindow p').text(responseInfo.message);
+        }
+    });
+});

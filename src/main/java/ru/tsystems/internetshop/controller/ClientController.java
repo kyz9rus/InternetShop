@@ -1,9 +1,10 @@
 package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +13,14 @@ import ru.tsystems.internetshop.facade.OrderProductClientFacade;
 import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.DTO.*;
+import ru.tsystems.internetshop.model.entity.Coupon;
 import ru.tsystems.internetshop.service.*;
 import ru.tsystems.internetshop.util.CategoryInfo;
+import ru.tsystems.internetshop.util.ResponseInfo;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("clientProfile")
@@ -46,17 +51,23 @@ public class ClientController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @Autowired
+    private CouponService couponService;
+
+    @Autowired
+    private BasketService basketService;
+
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("editProfile")
     public String editProfile(Model model) {
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/editProfile";
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("changePassword")
     public String changePasswordPage(Model model) {
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/changePassword";
     }
 
@@ -66,8 +77,7 @@ public class ClientController {
         List<OrderDTO> orders = orderService.getOrdersByClient(clientDTO);
 
         model.addAttribute("orders", orders);
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/orderHistory";
     }
 
@@ -95,8 +105,7 @@ public class ClientController {
 
         model.addAttribute("orders", orderService.getOrders());
         model.addAttribute("basket", basket);
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/issueOrder";
     }
 
@@ -113,7 +122,7 @@ public class ClientController {
             model.addAttribute("client", clientDTO);
         }
 
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/editProfile";
     }
 
@@ -134,8 +143,7 @@ public class ClientController {
         else
             model.addAttribute("errorMessage", "You entered the wrong password.");
 
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/changePassword";
     }
 
@@ -154,8 +162,7 @@ public class ClientController {
             model.addAttribute("client", clientDTO);
         }
 
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/editProfile";
     }
 
@@ -175,8 +182,7 @@ public class ClientController {
             model.addAttribute("client", clientDTO);
         }
 
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/editProfile";
     }
 
@@ -196,35 +202,52 @@ public class ClientController {
             model.addAttribute("client", clientDTO);
         }
 
-        model.addAttribute("categories", categoryInfo.getInstance());
-
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/editProfile";
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("issueOrder")
     public String issueOrderPage(Model model) {
-        Authentication authentication = authenticationService.getAuthentication();
-
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        if (!authorities.isEmpty())
-            for (GrantedAuthority grantedAuthority : authorities)
-                if (grantedAuthority.getAuthority().equals("ROLE_CLIENT")) {
-                    UserDTO userDTO = (UserDTO) authentication.getPrincipal();
-
-                    ClientDTO clientDTO = clientService.getClientByEmail(userDTO.getEmail());
-
-                    model.addAttribute("client", clientDTO);
-                }
-
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("client", authenticationService.getClient());
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/issueOrder";
     }
 
+    @PostMapping(value = "/issueOrder/check-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody
+    ResponseEntity<ResponseInfo> checkCoupon(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("couponValue") String couponValue, Model model) {
+        ResponseEntity<ResponseInfo> responseEntity;
+
+        CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
+        if (couponDTO == null)
+            responseEntity = new ResponseEntity<>(new ResponseInfo("Incorrect coupon"), HttpStatus.NOT_FOUND);
+        else
+            if (clientDTO.getCoupons().contains(couponDTO))
+                responseEntity = new ResponseEntity<>(new ResponseInfo("You have already use this coupon"), HttpStatus.NOT_FOUND);
+            else
+                responseEntity = new ResponseEntity<>(new ResponseInfo("Correct coupon"), HttpStatus.OK);
+
+        model.addAttribute("basket", basket);
+        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute("coupon", couponDTO);
+        return responseEntity;
+    }
+
+
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("issueOrder2")
-    public String issueOrderPage2(Model model) {
-        model.addAttribute("categories", categoryInfo.getInstance());
+    public String issueOrderPage2(@RequestParam("couponValue") String couponValue, @ModelAttribute("basket") Basket basket, Model model) {
+        CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
+
+        if (couponDTO != null && basket.getCouponDTO() == null)
+            if (couponDTO.getName().equals("FIRST_ORDER"))
+                basket.setSummaryPrice((int) Math.round(basketService.calcPrice(basket) * 0.7));
+
+        basket.setCouponDTO(couponDTO);
+
+        model.addAttribute("basket", basket);
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/issueOrder2";
     }
 
@@ -235,7 +258,7 @@ public class ClientController {
 
         orderProductClientFacade.issueOrder(clientDTO, clientAddressDTO, basket, orderService.getDeliveryMethod(deliveryMethodString), orderService.getPaymentMethod(paymentMethodString));
 
-        model.addAttribute("categories", categoryInfo.getInstance());
+        model.addAttribute("categories", categoryInfo.getCategories());
         model.addAttribute("basket", new Basket());
         model.addAttribute("successMessage", "Order successfully issued");
         return "clientProfile/issueOrder";

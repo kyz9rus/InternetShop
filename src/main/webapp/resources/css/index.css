@@ -126,6 +126,8 @@ input:focus{
     border-block-start: 4px solid rgb(215, 69, 144);
     padding: 5px;
     display: none;
+    background: white;
+    z-index: 1;
 }
 
 .basketInfo .basketInfoBlock p{
@@ -173,6 +175,7 @@ input:focus{
     border: 1px solid grey;
     height: 130px;
     margin: 0px 10%;
+    z-index: 0;
 }
 
 .becomeRepresentativeBlock p:not(.article) {
@@ -241,6 +244,36 @@ input:focus{
 
 .topProductsBlock > p{
     font-size: 20px;
+}
+
+.couponWindow {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 250px;
+    height: 134px;
+    background: white;
+    position: fixed;
+    left: 40%;
+    z-index: 1;
+    display: none;
+}
+
+.couponWindow img{
+    width: 15px;
+    float: right;
+    margin: 7px;
+    cursor: pointer;
+}
+
+.couponWindow p {
+    margin-top: 40px;
+    margin-bottom: 0px;
+}
+
+.couponWindow button {
+    width: 60px;
+    float: right;
+    margin: 7px;
 }
 
 @media (max-width: 822px) {

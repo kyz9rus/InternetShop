@@ -3,6 +3,7 @@
 <%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="J" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="auth" uri="http://www.springframework.org/security/tags" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8"%>
 
 <html>
@@ -29,6 +30,12 @@
       </div>
 
       <div class="content" align="center">
+        <div class="couponWindow">
+          <img src="/resources/images/cross.png" alt="X">
+          <p class="text-danger">Log in first</p>
+          <button class="btn formButton">OK</button>
+        </div>
+
         <div class="becomeRepresentativeBlock">
           <div class="row">
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 presentImage">
@@ -39,9 +46,13 @@
               <p class=>Get a promo code right now!</p>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 buttonBlock">
-              <a href="http://smartavon.ru/Registration.html">
+              <auth:authorize access="hasRole('EMPLOYEE') || isAnonymous()">
                 <button class="btn formButton">GET IT</button>
-              </a>
+              </auth:authorize>
+              <auth:authorize access="hasRole('CLIENT')">
+                <button class="btn formButton getCouponButton">GET IT</button>
+                <input name="email" value="${client.email}" hidden/>
+              </auth:authorize>
             </div>
           </div>
         </div>

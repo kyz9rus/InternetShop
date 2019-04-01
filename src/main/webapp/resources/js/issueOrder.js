@@ -14,6 +14,7 @@ $('.productOperations .plus').click(function(){
 
             $('.basketInfo .numberOfProductsText').text('Number of products: ' + basketInfo.basket.numberOfProducts);
             $('.basketInfo .summaryPrice').text('Summary price: ' + basketInfo.basket.summaryPrice + ' rub.');
+            $('.priceBlock b').text(basketInfo.basket.summaryPrice);
 
             $('.emptyBasketBlock').hide();
             $('.basketInfo')
@@ -67,6 +68,7 @@ $('.productOperations .minus').click(function(){
 
             $('.basketInfo .numberOfProductsText').text('Number of products: ' + basketInfo.basket.numberOfProducts);
             $('.basketInfo .summaryPrice').text('Summary price: ' + basketInfo.basket.summaryPrice + ' rub.');
+            $('.priceBlock b').text(basketInfo.basket.summaryPrice);
 
             $('.emptyBasketBlock').hide();
             $('.basketInfo')
@@ -123,6 +125,7 @@ $('.productOperations .remove').click(function(){
 
             $('.basketInfo .numberOfProductsText').text('Number of products: ' + basketInfo.basket.numberOfProducts);
             $('.basketInfo .summaryPrice').text('Summary price: ' + basketInfo.basket.summaryPrice + ' rub.');
+            $('.priceBlock b').text(basketInfo.basket.summaryPrice);
 
             $('.emptyBasketBlock').hide();
             $('.basketInfo')
@@ -134,6 +137,47 @@ $('.productOperations .remove').click(function(){
         },
         error: function (basketInfo) {
             console.log('ERROR: ' + basketInfo);
+        }
+    });
+});
+
+
+function showCouponBlock() {
+    $('.couponBlock').show();
+    $('body').css({'background-color': 'rgba(0,0,0,0.4)'});
+}
+
+$('.orderPageButton button').click(function(e) {
+    showCouponBlock();
+    e.preventDefault();
+});
+
+$('.checkCouponButton').click(function(e) {
+    e.preventDefault();
+    var data = {};
+    var couponName = $('.couponBlock input[name="couponValue"]').val();
+    data["couponValue"] = couponName;
+
+    if (couponName.length === 0) {
+        $('#checkCouponMessage').text('Enter your coupon.');
+        $('#checkCouponMessage').attr('class', 'text-danger');
+        return;
+    }
+
+    $.post({
+        url: '/clientProfile/issueOrder/check-coupon',
+        data: data,
+        dataType: 'json',
+        success: function (responseInfo) {
+            $('#checkCouponMessage').attr('class', 'text-success');
+            $('#checkCouponMessage').text(responseInfo.message);
+
+            $('.checkCouponButton').hide();
+            $('.continueCouponButton').show();
+        },
+        error: function (responseInfo) {
+            $('#checkCouponMessage').attr('class', 'text-danger');
+            $('#checkCouponMessage').text(responseInfo.message);
         }
     });
 });

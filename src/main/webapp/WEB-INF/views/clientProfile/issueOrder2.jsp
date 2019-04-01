@@ -38,10 +38,6 @@
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mainPanel">
-            <div class="messageBlock">
-              <label class="successMessage">${successMessage}</label>
-              <label class="errorMessage">${errorMessage}</label>
-            </div>
             <div class="variant issueOrderBlock">
               <form action="issue-order" method="post">
                   <j:if test="${basket.products.size() != 0}">
@@ -125,6 +121,10 @@
                                       </div>
                                   </div>
                               </div>
+                          </div>
+
+                          <div align="left">
+                              <p>Total price <b class="text-success">${basket.summaryPrice}</b> rubles</p>
                           </div>
 
                           <input class="btn formButton issueOrderButton" type="submit" value="ISSUE ORDER"/>

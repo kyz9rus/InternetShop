@@ -19,7 +19,6 @@ public class BusinessExceptionHandler {
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-//    @ResponseStatus(value= HttpStatus.NOT_FOUND)
     public ModelAndView requestHandlingNoHandlerFound() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("exception");
@@ -33,7 +32,7 @@ public class BusinessExceptionHandler {
 //        ModelAndView modelAndView = new ModelAndView();
 //        modelAndView.setViewName("exception");
 //
-//        modelAndView.addObject("errorMsg", "Page not found!EXCEPTION");
+//        modelAndView.addObject("errorMsg", "EXCEPTION");
 //        return modelAndView;
 //    }
 }

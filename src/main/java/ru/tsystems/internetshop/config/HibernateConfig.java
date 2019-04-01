@@ -28,7 +28,7 @@ public class HibernateConfig {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setDataSource(dataSource());
         factoryBean.setHibernateProperties(hibernateProperties());
-        factoryBean.setAnnotatedClasses(Client.class, Order.class, ClientAddress.class, Color.class, Product.class, Category.class, User.class, Role.class, OrderProduct.class);
+        factoryBean.setAnnotatedClasses(Client.class, Order.class, ClientAddress.class, Color.class, Product.class, Category.class, User.class, Role.class, OrderProduct.class, Coupon.class);
         return factoryBean;
     }
 

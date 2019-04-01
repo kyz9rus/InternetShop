@@ -27,14 +27,20 @@
         <c3p0.version>0.9.5.3</c3p0.version>
         <mysql.version>5.1.47</mysql.version>
         <postgres.version>42.2.5</postgres.version>
+        <h2.version>1.4.199</h2.version>
         <liquebase.version>3.6.3</liquebase.version>
-
         <servlets.version>4.0.1</servlets.version>
         <jstl.version>1.2</jstl.version>
         <validation.version>2.0.1.Final</validation.version>
         <jackson.version>2.9.8</jackson.version>
-
         <sonar.version>3.6.0.1398</sonar.version>
+        <model-mapper.version>2.3.2</model-mapper.version>
+        <lombok.version>1.18.4</lombok.version>
+        <junit.version>4.12</junit.version>
+        <hamcrest.version>1.3</hamcrest.version>
+        <json-path.version>2.2.0</json-path.version>
+        <spring.framework.data.version>1.11.1.RELEASE</spring.framework.data.version>
+        <javax.mail.version>1.6.2</javax.mail.version>
     </properties>
 
     <dependencies>
@@ -70,7 +76,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.4</version>
+            <version>${lombok.version}</version>
         </dependency>
 
         <!-- Sonar -->
@@ -85,6 +91,14 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgres.version}</version>
+        </dependency>
+
+        <!-- H2-Driver -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!--Hibernate ORM-->
@@ -142,7 +156,7 @@
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
-            <version>2.3.2</version>
+            <version>${model-mapper.version}</version>
         </dependency>
 
         <!-- For prefix <auth:...> -->
@@ -150,6 +164,60 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
             <version>${spring.framework.security.version}</version>
+        </dependency>
+
+        <!-- For Testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.framework.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${json-path.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.data</groupId>-->
+            <!--<artifactId>spring-data-jpa</artifactId>-->
+            <!--<version>${spring.framework.data.version}</version>-->
+        <!--</dependency>-->
+
+        <!-- Java-Mail -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${javax.mail.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.framework.version}</version>
         </dependency>
 
     </dependencies>
