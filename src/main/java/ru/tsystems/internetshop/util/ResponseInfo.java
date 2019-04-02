@@ -1,13 +1,14 @@
 package ru.tsystems.internetshop.util;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 @Data
 public class ResponseInfo {
+    private int statusCode;
     private String message;
 
-    public ResponseInfo(String message) {
+    public ResponseInfo(String message, int statusCode) {
         this.message = message;
+        this.statusCode = statusCode;
     }
 }

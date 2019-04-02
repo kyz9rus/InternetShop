@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.tsystems.internetshop.model.DeliveryMethod;
@@ -23,10 +24,12 @@ public class Order {
     @GeneratedValue
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "client_address")
     private ClientAddress clientAddress;

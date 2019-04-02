@@ -16,6 +16,7 @@
   <link rel="stylesheet" href='<c:url value="/resources/css/submenu.css" />'>
 
   <link rel="stylesheet" href='<c:url value="/resources/css/employeeProfile.css" />'>
+  <link rel="stylesheet" href='<c:url value="/resources/css/products.css" />'>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
@@ -44,6 +45,11 @@
                   </j:when>
                   <j:otherwise>
                       <div class="variant ordersBlock">
+                          <div class="productsWindow">
+                              <img class="close" src="<j:url value="/resources/images/cross.png"/>" alt="X">
+                              <ul class="orderProductList">
+                              </ul>
+                          </div>
                           <table class="orderTable">
                               <tr align="center">
                                   <td>Order ID</td>
@@ -54,7 +60,8 @@
                                   <td>Payment method</td>
                                   <td>Order status</td>
                                   <td>Payment status</td>
-                                  <td>price</td>
+                                  <td>Price</td>
+                                  <td>Products</td>
                               </tr>
                               <j:forEach items="${orders}" var="order" varStatus="tagStatus">
                                   <tr align="center">
@@ -155,6 +162,9 @@
                                           </j:otherwise>
                                       </j:choose>
                                       <td>${order.price}</td>
+                                      <td>
+                                          <button class="btn formButton showProducts showProducts-${order.id}">SHOW PRODUCTS</button>
+                                      </td>
                                   </tr>
                               </j:forEach>
                           </table>
@@ -172,6 +182,7 @@
 
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/js/orders.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/resources/js/showProductList.js"/>"></script>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
   <script>
       // Маска для полей

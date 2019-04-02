@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.controller;
 
+import com.sun.mail.smtp.SMTPSendFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -115,7 +116,6 @@ public class PublicController {
         basket.addProduct(productDTO);
 
         model.addAttribute("basket", basket);
-        model.addAttribute("categories", categoryInfo.getCategories());
 
         return new ResponseEntity<>(new BasketInfo(basket, basket.getProducts().get(productDTO)), HttpStatus.OK);
     }
@@ -127,7 +127,6 @@ public class PublicController {
         basket.increaseProduct(productDTO);
 
         model.addAttribute("basket", basket);
-        model.addAttribute("categories", categoryInfo.getCategories());
 
         return new ResponseEntity<>(new BasketInfo(basket, basket.getProducts().get(productDTO)), HttpStatus.OK);
     }
@@ -162,21 +161,24 @@ public class PublicController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "send-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
-    ResponseEntity<ResponseInfo> sendCoupon(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
+    ResponseInfo sendCoupon(@ModelAttribute("client") ClientDTO clientDTO) {
         String email = clientDTO.getEmail();
-        ResponseEntity<ResponseInfo> responseEntity;
+        ResponseInfo responseInfo;
 
         CouponDTO couponDTO = couponService.getCouponByValue("HAPPY_ORDER");
 
         if (clientDTO.getCoupons().contains(couponDTO))
-            responseEntity = new ResponseEntity<>(new ResponseInfo("You have already used this coupon."), HttpStatus.NOT_FOUND);
+            responseInfo = new ResponseInfo("You have already used this coupon.", 404);
         else {
-            mailService.sendLetter(email, couponDTO);
-            responseEntity = new ResponseEntity<>(new ResponseInfo("Сoupon successfully sent.\nCheck your email."), HttpStatus.OK);
+            try {
+                mailService.sendLetter(email, couponDTO);
+                responseInfo = new ResponseInfo("Сoupon successfully sent.\nCheck your email.", 200);
+            } catch (SMTPSendFailedException e) {
+                responseInfo = new ResponseInfo("Incorrect email. Change it in your profile!", 404);
+            }
         }
 
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return responseEntity;
+        return responseInfo;
     }
 
     @ModelAttribute("client")

@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.model.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.tsystems.internetshop.model.entity.ClientAddress;

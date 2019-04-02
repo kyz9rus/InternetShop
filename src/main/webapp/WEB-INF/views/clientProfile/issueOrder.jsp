@@ -15,6 +15,7 @@
   <link rel="stylesheet" href='<c:url value="/resources/css/submenu.css" />'>
 
   <link rel="stylesheet" href='<c:url value="/resources/css/clientProfile.css" />'>
+  <link rel="stylesheet" href='<c:url value="/resources/css/products.css" />'>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
@@ -37,6 +38,9 @@
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mainPanel">
+              <div class="messageBlock">
+                  <p class="successMessage">${successMessage}</p>
+              </div>
               <form action="/clientProfile/issueOrder2" method="get">
                 <div class="couponBlock">
                   <label>Do you have coupons?</label><br/>

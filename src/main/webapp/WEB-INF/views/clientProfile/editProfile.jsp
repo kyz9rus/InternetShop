@@ -149,7 +149,7 @@
                                 <input name="city" required="">
                               </div>
                               <div class="form-group">
-                                <label>Postal code</label>
+                                <label>Postal statusCode</label>
                                 <input name="postalCode" required="">
                               </div>
                               <div class="form-group">

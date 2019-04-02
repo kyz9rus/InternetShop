@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -34,12 +35,15 @@ public class Client {
     @Column(name = "summary_orders_price", columnDefinition = "bigint default 0")
     private Long summaryOrdersPrice;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<ClientAddress> addresses = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "client_coupon",

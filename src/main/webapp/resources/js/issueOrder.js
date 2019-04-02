@@ -169,15 +169,19 @@ $('.checkCouponButton').click(function(e) {
         data: data,
         dataType: 'json',
         success: function (responseInfo) {
-            $('#checkCouponMessage').attr('class', 'text-success');
-            $('#checkCouponMessage').text(responseInfo.message);
+            if (responseInfo.statusCode === 200) {
+                $('#checkCouponMessage').attr('class', 'text-success');
 
-            $('.checkCouponButton').hide();
-            $('.continueCouponButton').show();
-        },
-        error: function (responseInfo) {
-            $('#checkCouponMessage').attr('class', 'text-danger');
+                $('.checkCouponButton').hide();
+                $('.continueCouponButton').show();
+            }
+            else if (responseInfo.statusCode === 404)
+                $('#checkCouponMessage').attr('class', 'text-danger');
+
             $('#checkCouponMessage').text(responseInfo.message);
+        },
+        error: function (e) {
+            console.log("ERROR: " + e);
         }
     });
 });

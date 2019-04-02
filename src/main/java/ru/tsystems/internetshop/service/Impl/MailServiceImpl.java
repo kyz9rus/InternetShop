@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.service.Impl;
 
+import com.sun.mail.smtp.SMTPSendFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,7 +15,7 @@ public class MailServiceImpl implements MailService {
     public JavaMailSender emailSender;
 
     @Override
-    public void sendLetter(String email, CouponDTO couponDTO) {
+    public void sendLetter(String email, CouponDTO couponDTO) throws SMTPSendFailedException {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("danukrus@mail.ru");
         message.setTo(email);

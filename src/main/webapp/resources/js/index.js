@@ -54,14 +54,16 @@ $('.couponWindow button').click(function () {
 $('.getCouponButton').click(function () {
     $.post({
         url: '/send-coupon',
-        dataType: 'json',
         success: function (responseInfo) {
-            $('.couponWindow p').attr('class', 'text-success');
+            if (responseInfo.statusCode === 200)
+                $('.couponWindow p').attr('class', 'text-success');
+            else if (responseInfo.statusCode === 404)
+                $('.couponWindow p').attr('class', 'text-danger');
+
             $('.couponWindow p').text(responseInfo.message);
         },
-        error: function (response) {
-            $('.couponWindow p').attr('class', 'text-danger');
-            $('.couponWindow p').text(responseInfo.message);
+        error: function (e) {
+            console.log("ERROR: " + e);
         }
     });
 });

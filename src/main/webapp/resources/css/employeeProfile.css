@@ -214,6 +214,22 @@ td {
     text-decoration: underline;
 }
 
+.productsWindow {
+    width: 80%;
+    display: none;
+    background: white;
+}
+
+.productsWindow > img {
+    width: 20px;
+    margin: 10px;
+}
+
+.productsWindow .orderProductList {
+    padding: 10px;
+}
+/*
+
 @media (max-width: 1060px) {
     .product {
         min-height: 310px !important;
@@ -236,7 +252,7 @@ td {
     }
 
 }
-
+ */
 @media (max-width: 576px) {
     .leftPanel {
         width: 87%;

@@ -96,9 +96,9 @@
 }
 
 
-@media (max-width: 879px) {
+@media (max-width: 1045px) {
     .product {
-        min-height: 310px;
+        min-height: 360px;
     }
 
     .productImage {

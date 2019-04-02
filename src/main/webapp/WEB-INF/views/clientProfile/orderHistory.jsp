@@ -15,6 +15,7 @@
   <link rel="stylesheet" href='<c:url value="/resources/css/submenu.css" />'>
 
   <link rel="stylesheet" href='<c:url value="/resources/css/clientProfile.css" />'>
+  <link rel="stylesheet" href='<c:url value="/resources/css/products.css" />'>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
@@ -41,6 +42,11 @@
                 </j:when>
                 <j:otherwise>
                   <div class="variant orderHistory">
+                    <div class="productsWindow">
+                      <img class="close" src="<j:url value="/resources/images/cross.png"/>" alt="X">
+                      <ul class="orderProductList">
+                      </ul>
+                    </div>
                     <table class="orderTable">
                       <tr align="center">
                         <td>ID</td>
@@ -49,7 +55,8 @@
                         <td>Payment method</td>
                         <td>Order status</td>
                         <td>Payment status</td>
-                        <td>price</td>
+                        <td>Price</td>
+                        <td>Products</td>
                         <td></td>
                       </tr>
                       <j:forEach items="${orders}" var="order" varStatus="tagStatus">
@@ -88,6 +95,9 @@
                           </j:choose>
                           <td>${order.price}</td>
                           <td>
+                            <button class="btn formButton showProducts showProducts-${order.id}">SHOW PRODUCTS</button>
+                          </td>
+                          <td>
                             <form action="repeat-order" method="post">
                               <input name="orderId" value="${order.id}" hidden/>
                               <button class="btn formButton">REPEAT</button>
@@ -111,6 +121,7 @@
   </div>
 
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/resources/js/showProductList.js"/>"></script>
   <script>
       // Маска для полей
       $('.editProfileBlock input[name="birthday"]').mask('99-99-9999');

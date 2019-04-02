@@ -13,7 +13,6 @@ import ru.tsystems.internetshop.facade.OrderProductClientFacade;
 import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.DTO.*;
-import ru.tsystems.internetshop.model.entity.Coupon;
 import ru.tsystems.internetshop.service.*;
 import ru.tsystems.internetshop.util.CategoryInfo;
 import ru.tsystems.internetshop.util.ResponseInfo;
@@ -207,6 +206,16 @@ public class ClientController {
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
+    @PostMapping(value = "/showOrderHistory/get-products", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody ResponseEntity<List<OrderProductDTO>> getProducts(@RequestParam("orderId") Long orderId){
+        OrderDTO orderDTO = orderService.getOrder(orderId);
+
+        List<OrderProductDTO> orderProducts = orderDTO.getOrderProducts();
+
+        return new ResponseEntity<>(orderProducts, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("issueOrder")
     public String issueOrderPage(Model model) {
         model.addAttribute("client", authenticationService.getClient());
@@ -216,24 +225,21 @@ public class ClientController {
 
     @PostMapping(value = "/issueOrder/check-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
-    ResponseEntity<ResponseInfo> checkCoupon(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("couponValue") String couponValue, Model model) {
-        ResponseEntity<ResponseInfo> responseEntity;
+    ResponseInfo checkCoupon(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("couponValue") String couponValue, Model model) {
+        ResponseInfo responseInfo;
 
         CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
         if (couponDTO == null)
-            responseEntity = new ResponseEntity<>(new ResponseInfo("Incorrect coupon"), HttpStatus.NOT_FOUND);
+            responseInfo = new ResponseInfo("Incorrect coupon", 404);
         else
             if (clientDTO.getCoupons().contains(couponDTO))
-                responseEntity = new ResponseEntity<>(new ResponseInfo("You have already use this coupon"), HttpStatus.NOT_FOUND);
+                responseInfo = new ResponseInfo("You have already use this coupon", 404);
             else
-                responseEntity = new ResponseEntity<>(new ResponseInfo("Correct coupon"), HttpStatus.OK);
+                responseInfo = new ResponseInfo("Correct coupon", 200);
 
         model.addAttribute("basket", basket);
-        model.addAttribute("categories", categoryInfo.getCategories());
-        model.addAttribute("coupon", couponDTO);
-        return responseEntity;
+        return responseInfo;
     }
-
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("issueOrder2")

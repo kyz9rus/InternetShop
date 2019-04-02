@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.model.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import ru.tsystems.internetshop.model.DeliveryMethod;
 import ru.tsystems.internetshop.model.OrderStatus;
@@ -18,9 +19,11 @@ import java.util.Objects;
 public class OrderDTO {
     private Long id;
 
+    @JsonIgnore
     @NotNull
     private Client client;
 
+    @JsonIgnore
     @NotNull
     private ClientAddress clientAddress;
 

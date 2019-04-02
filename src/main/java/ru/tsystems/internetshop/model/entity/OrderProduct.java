@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,10 +10,12 @@ import javax.persistence.*;
 @Data
 public class OrderProduct {
 
+    @JsonIgnore
     @Id
     @GeneratedValue
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private Order order;

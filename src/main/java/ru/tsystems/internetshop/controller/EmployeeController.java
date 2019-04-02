@@ -1,15 +1,15 @@
 package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.tsystems.internetshop.model.DTO.CategoryDTO;
-import ru.tsystems.internetshop.model.DTO.ClientDTO;
-import ru.tsystems.internetshop.model.DTO.OrderDTO;
-import ru.tsystems.internetshop.model.DTO.ProductDTO;
+import ru.tsystems.internetshop.model.DTO.*;
 import ru.tsystems.internetshop.model.OrderStatus;
 import ru.tsystems.internetshop.model.PaymentMethod;
 import ru.tsystems.internetshop.model.PaymentStatus;
@@ -152,6 +152,7 @@ public class EmployeeController {
         return "employeeProfile/addProduct";
     }
 
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("create-category")
     public String createCategory(@ModelAttribute("category") CategoryDTO categoryDTO, Model model) {
         categoryDTO.setName(categoryDTO.getName().toLowerCase());
@@ -175,6 +176,7 @@ public class EmployeeController {
         return "employeeProfile/manageCategories";
     }
 
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("update-category")
     public String updateCategory(@ModelAttribute("category") CategoryDTO categoryDTO, @RequestParam("oldName") String oldName, Model model) {
         categoryDTO.setName(categoryDTO.getName().toLowerCase());
@@ -195,6 +197,7 @@ public class EmployeeController {
         return "employeeProfile/manageCategories";
     }
 
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("remove-category")
     public String removeCategory(@RequestParam("oldName") String categoryName, Model model) {
         CategoryDTO categoryDTO = categoryService.getCategoryByName(categoryName);
@@ -218,5 +221,14 @@ public class EmployeeController {
 
         model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/manageCategories";
+    }
+
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
+    @PostMapping(value = "/showOrderHistory/get-products", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody
+    List<OrderProductDTO> getProducts(@RequestParam("orderId") Long orderId){
+        OrderDTO orderDTO = orderService.getOrder(orderId);
+
+        return orderDTO.getOrderProducts();
     }
 }

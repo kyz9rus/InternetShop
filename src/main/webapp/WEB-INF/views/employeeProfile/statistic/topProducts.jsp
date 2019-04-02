@@ -41,31 +41,29 @@
                         </j:when>
                         <j:otherwise>
                             <p>Top-10 products:</p>
-                            <ul class="topClientsList">
-                                <j:forEach items="${products}" var="product" varStatus="tagStatus">
-                                    <li>
-                                        <div class="productBlock">
-                                            <div class="product">
-                                                <p class="position">${tagStatus.count}.</p>
-                                                <div class="productImage" align="center">
-                                                    <img src="${product.imgSrc}" alt="NO IMAGE"/>
+                            <ul class="topProductsList">
+                                <li>
+                                    <div class="productBlock">
+                                        <div class="product">
+                                            <p class="position">${tagStatus.count}.</p>
+                                            <div class="productImage" align="center">
+                                                <img src="${product.imgSrc}" alt="NO IMAGE"/>
+                                            </div>
+                                            <div class="productInfo">
+                                                <div class="productInfo1">
+                                                    <p class="productName">${product.name}</p>
+                                                    <p class="productWeight">Weight: ${product.weight}г.</p>
+                                                    <p class="productSize">Volume: ${product.volume}</p>
                                                 </div>
-                                                <div class="productInfo">
-                                                    <div class="productInfo1">
-                                                        <p class="productName">${product.name}</p>
-                                                        <p class="productWeight">Weight: ${product.weight}г.</p>
-                                                        <p class="productSize">Volume: ${product.volume}</p>
-                                                    </div>
-                                                    <div class="productInfo2">
-                                                        <p class="productPrice">Price: ${product.price} руб.</p>
-                                                        <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
-                                                        <p class="numberOfSales">Number of sales: ${product.numberOfSales}</p>
-                                                    </div>
+                                                <div class="productInfo2">
+                                                    <p class="productPrice">Price: ${product.price} rubles.</p>
+                                                    <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
+                                                    <p class="numberOfSales">Number of sales: ${product.numberOfSales}</p>
                                                 </div>
                                             </div>
                                         </div>
-                                    </li>
-                                </j:forEach>
+                                    </div>
+                                </li>
                             </ul>
                         </j:otherwise>
                     </j:choose>
