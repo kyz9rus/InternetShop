@@ -228,6 +228,14 @@ td {
 .productsWindow .orderProductList {
     padding: 10px;
 }
+
+#cropImage {
+    border: 1px solid black;
+    width: 150px;
+    height: 151px;
+    margin-bottom: 5px;
+}
+
 /*
 
 @media (max-width: 1060px) {

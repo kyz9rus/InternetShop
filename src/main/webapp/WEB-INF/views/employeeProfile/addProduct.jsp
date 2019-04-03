@@ -20,6 +20,7 @@
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+  <script src="<j:url value="/resources/js/jquery.cropbox.js" />"></script>
 </head>
 
 <body>
@@ -78,6 +79,9 @@
                           <label>Link to the image:</label>
                           <input name="imgSrc" placeholder="https://site.ru/images/image.png">
                       </div>
+                      <div id="cropImage">
+
+                      </div>
                       <button class="btn formButton">Add product</button>
                   </form>
               </div>
@@ -94,6 +98,7 @@
   </div>
 
   <script type="text/javascript" src="<c:url value="/resources/js/checkForms.js"/>"></script>
+  <script src="<j:url value="/resources/js/addProduct.js" />"></script>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
   <script>
       // Маска для полей
