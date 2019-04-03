@@ -94,9 +94,9 @@ public class ClientController {
             int numberOfProducts = 0, summaryPrice = 0;
             for (OrderProductDTO orderProductDTO : orderProductsFromDb) {
                 products.put(orderProductDTO.getProduct(), orderProductDTO.getAmount());
-                numberOfProducts++;
+                numberOfProducts += orderProductDTO.getAmount();
 
-                summaryPrice += orderProductDTO.getProduct().getPrice();
+                summaryPrice += orderProductDTO.getProduct().getPrice() * orderProductDTO.getAmount();
             }
 
             basket = new Basket(products, numberOfProducts, summaryPrice);

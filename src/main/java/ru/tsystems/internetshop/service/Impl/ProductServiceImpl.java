@@ -38,7 +38,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductByName(String name) {
-        return mapper.convertToDto(productDAO.findProductByName(name));
+        try {
+            return mapper.convertToDto(productDAO.findProductByName(name));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     @Override

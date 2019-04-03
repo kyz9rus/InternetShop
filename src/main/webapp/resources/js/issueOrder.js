@@ -111,6 +111,7 @@ $('.productOperations .remove').click(function(){
                 $('.headerText').hide();
                 $('.productsBlock').hide();
                 $('.orderPageButton').hide();
+                $('.priceBlock').hide();
             } else {
                 $('.emptyBasket').hide();
                 $('.numberOfProductsText').show();
@@ -121,6 +122,7 @@ $('.productOperations .remove').click(function(){
                 $('.headerText').show();
                 $('.productsBlock').show();
                 $('.orderPageButton').show();
+                $('.priceBlock').show();
             }
 
             $('.basketInfo .numberOfProductsText').text('Number of products: ' + basketInfo.basket.numberOfProducts);

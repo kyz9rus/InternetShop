@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%request.setCharacterEncoding("UTF-8");%>
 
@@ -56,7 +57,7 @@
                           <select name="category" required>
                               <j:forEach items="${categories}" var="category" varStatus="tagStatus">
                                   <option value="${category.name}">
-                                          ${category.name}
+                                          ${fn:toUpperCase(category.name)}
                                   </option>
                               </j:forEach>
                           </select>
@@ -72,6 +73,10 @@
                       <div class="form-group">
                           <label>Quantity in stock:</label>
                           <input name="quantityInStock" required/>
+                      </div>
+                      <div class="form-group">
+                          <label>Link to the image:</label>
+                          <input name="imgSrc" placeholder="https://site.ru/images/image.png">
                       </div>
                       <button class="btn formButton">Add product</button>
                   </form>

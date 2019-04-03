@@ -21,7 +21,8 @@ public class Product {
 
     private int price;
 
-    @ManyToOne(cascade = {CascadeType.DETACH})
+//    @ManyToOne(cascade = {CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "category_id", columnDefinition = "bigint references category(id) on delete set null")
     private Category category;
 

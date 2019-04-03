@@ -420,6 +420,10 @@ td {
     padding: 10px;
 }
 
+.showProducts {
+    margin-top: -14px;
+}
+
 @media (max-width: 1060px) {
     .product {
         min-height: 310px;
