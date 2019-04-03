@@ -7,25 +7,27 @@ import ru.tsystems.internetshop.service.CategoryService;
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CategoryInfo implements Serializable {
 
     @Autowired
     private CategoryService categoryService;
 
-    private List<CategoryDTO> categories;
+    private Set<CategoryDTO> categories;
 
     public CategoryInfo() {
-        categories = new ArrayList<>();
+        categories = new HashSet<>();
     }
 
-    public List<CategoryDTO> getCategories() {
+    public Set<CategoryDTO> getCategories() {
         return categories;
     }
 
     @PostConstruct
     public void init() {
-        categories = categoryService.getAllCategories();
+        categories = new HashSet<>(categoryService.getAllCategories());
     }
 }

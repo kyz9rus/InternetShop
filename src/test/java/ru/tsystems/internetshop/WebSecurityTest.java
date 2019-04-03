@@ -53,14 +53,6 @@ public class WebSecurityTest {
     }
 
     @Test
-    public void getClientProfilePageTest() throws Exception {
-        this.mockMvc
-                .perform(get("/clientProfile")
-                        .with(user("danukrus@yandex.ru").password("admin").roles("CLIENT")))
-                .andExpect(view().name("clientProfile"));
-    }
-
-    @Test
     public void getEmployeeProfilePageTest() throws Exception {
         this.mockMvc
                 .perform(get("/employeeProfile")

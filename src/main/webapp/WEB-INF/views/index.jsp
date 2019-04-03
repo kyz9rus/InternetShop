@@ -75,7 +75,7 @@
                               <p class="productSize">Volume: ${product.volume}</p>
                             </div>
                             <div class="productInfo2">
-                              <p class="productPrice">Price: ${product.price} руб.</p>
+                              <p class="productPrice">Price: ${product.price} rubles.</p>
                               <j:choose>
                                 <j:when test="${product.quantityInStock != 0}">
                                   <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>

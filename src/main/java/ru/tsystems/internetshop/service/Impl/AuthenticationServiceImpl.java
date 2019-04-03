@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
+import ru.tsystems.internetshop.model.DTO.UserDTO;
 import ru.tsystems.internetshop.service.AuthenticationService;
 import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.util.Mapper;
@@ -37,9 +38,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (!authorities.isEmpty())
             for (GrantedAuthority grantedAuthority : authorities)
                 if (grantedAuthority.getAuthority().equals("ROLE_CLIENT")) {
-                    User user = (User) authentication.getPrincipal();
+                    UserDTO user = (UserDTO) authentication.getPrincipal();
 
-                    clientDTO = clientService.getClientByEmail(user.getUsername());
+                    clientDTO = clientService.getClientByEmail(user.getEmail());
                 }
 
         return clientDTO;

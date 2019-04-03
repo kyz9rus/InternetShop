@@ -1,3 +1,5 @@
+package ru.tsystems.internetshop;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
