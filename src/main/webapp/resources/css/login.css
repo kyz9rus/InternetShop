@@ -50,3 +50,10 @@ body {
 .formButton:active {
     background: red;
 }
+.buttons {
+    width: 100%;
+    margin-top: 10px;
+}
+.buttons button {
+    width: 49%;
+}

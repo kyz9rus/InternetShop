@@ -39,7 +39,6 @@ public class OrderServiceImpl implements OrderService {
     }};
 
     private Map<String, OrderStatus> orderStatusMap = new HashMap<String, OrderStatus>() {{
-        put("waiting for payment", OrderStatus.WAITING_FOR_PAYMENT);
         put("waiting for shipment", OrderStatus.WAITING_FOR_SHIPMENT);
         put("shipped", OrderStatus.SHIPPED);
         put("delivered", OrderStatus.DELIVERED);

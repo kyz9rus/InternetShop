@@ -15,6 +15,7 @@ public class Basket {
     private int numberOfProducts;
     private int summaryPrice;
     private CouponDTO couponDTO;
+    private boolean isChangedAfterCoupon;
 
     public Basket() {
         products = new HashMap<>();

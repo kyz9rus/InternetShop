@@ -50,9 +50,12 @@ public class PublicController {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private BasketService basketService;
+
     @GetMapping("exception")
     public String toExceptionPage() {
-        return "exception";
+        return "§";
     }
 
     @GetMapping(value = "/")
@@ -115,6 +118,13 @@ public class PublicController {
         ProductDTO productDTO = productService.getProduct(productId);
         basket.addProduct(productDTO);
 
+        if (basket.getCouponDTO() != null) {
+            basket.setChangedAfterCoupon(true);
+
+            if (basket.getCouponDTO().getName().equals("FIRST_ORDER"))
+                basket.setSummaryPrice(Math.round(basketService.calcPrice(basket)));
+        }
+
         model.addAttribute("basket", basket);
 
         return new ResponseEntity<>(new BasketInfo(basket, basket.getProducts().get(productDTO)), HttpStatus.OK);
@@ -167,15 +177,19 @@ public class PublicController {
 
         CouponDTO couponDTO = couponService.getCouponByValue("HAPPY_ORDER");
 
-        if (clientDTO.getCoupons().contains(couponDTO))
-            responseInfo = new ResponseInfo("You have already used this coupon.", 404);
-        else {
-            try {
-                mailService.sendLetter(email, couponDTO);
-                responseInfo = new ResponseInfo("Сoupon successfully sent.\nCheck your email.", 200);
-            } catch (SMTPSendFailedException e) {
-                responseInfo = new ResponseInfo("Incorrect email. Change it in your profile!", 404);
+        if (couponDTO != null) {
+            if (clientDTO.getCoupons().contains(couponDTO))
+                responseInfo = new ResponseInfo("You have already used this coupon.", 404);
+            else {
+                try {
+                    mailService.sendLetter(email, couponDTO);
+                    responseInfo = new ResponseInfo("Сoupon successfully sent.\nCheck your email.", 200);
+                } catch (SMTPSendFailedException e) {
+                    responseInfo = new ResponseInfo("Incorrect email. Change it in your profile!", 404);
+                }
             }
+        } else {
+            responseInfo = new ResponseInfo("Coupon is not available.", 404);
         }
 
         return responseInfo;

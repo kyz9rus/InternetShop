@@ -246,9 +246,12 @@ public class ClientController {
     public String issueOrderPage2(@RequestParam("couponValue") String couponValue, @ModelAttribute("basket") Basket basket, Model model) {
         CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
 
-        if (couponDTO != null && basket.getCouponDTO() == null)
+        if (couponDTO != null && basket.getCouponDTO() == null || basket.isChangedAfterCoupon()) {
             if (couponDTO.getName().equals("FIRST_ORDER"))
                 basket.setSummaryPrice((int) Math.round(basketService.calcPrice(basket) * 0.7));
+
+            basket.setChangedAfterCoupon(false);
+        }
 
         basket.setCouponDTO(couponDTO);
 
@@ -259,7 +262,7 @@ public class ClientController {
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping("issue-order")
-    public String createOrder(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("deliveryMethod") String deliveryMethodString, @RequestParam("paymentMethod") String paymentMethodString, @RequestParam("addressId") Long addressId, Model model) {
+    public String createOrder(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("deliveryMethod") String deliveryMethodString, @RequestParam("paymentMethod") String paymentMethodString, @RequestParam("addressId") Long addressId, Model model) throws Exception {
         ClientAddressDTO clientAddressDTO = clientAddressService.getClientAddressById(addressId);
 
         orderProductClientFacade.issueOrder(clientDTO, clientAddressDTO, basket, orderService.getDeliveryMethod(deliveryMethodString), orderService.getPaymentMethod(paymentMethodString));

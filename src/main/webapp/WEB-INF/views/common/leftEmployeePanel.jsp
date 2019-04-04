@@ -16,7 +16,7 @@
     </li>
     <li class="employeeOperation">
         <a href="<c:url value="/employeeProfile/manageCategories"/>">
-            <label>Creating and managing categories of the directory</label>
+            <label>Categories</label>
         </a>
     </li>
     <li class="employeeOperation">

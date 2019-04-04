@@ -39,8 +39,10 @@ function hideCouponWindow() {
     $('body').css({'background-color': 'rgba(0,0,0,0)'});
 }
 
-$('.becomeRepresentativeBlock button').click(function() {
-    showCouponWindow();
+$('.becomeRepresentativeBlock button').click(function(e) {
+    var imgClass = $(this).attr('class');
+    if (!imgClass.includes('ignoreScripts'))
+        showCouponWindow();
 });
 
 $('.couponWindow img').click(function () {

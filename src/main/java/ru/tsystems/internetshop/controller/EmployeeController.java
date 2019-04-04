@@ -19,6 +19,7 @@ import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.service.ProductService;
 import ru.tsystems.internetshop.util.CategoryInfo;
+import ru.tsystems.internetshop.util.ResponseInfo;
 
 import java.util.List;
 
@@ -104,36 +105,29 @@ public class EmployeeController {
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("change-order-status")
-    public String changeOrderStatus(@RequestParam("id") Long id, @RequestParam("orderStatus") String orderStatusString, Model model) {
+    public @ResponseBody ResponseInfo changeOrderStatus(@RequestParam("id") Long id, @RequestParam("orderStatus") String orderStatusString) {
         OrderDTO orderDTO = orderService.getOrder(id);
         if (orderDTO != null) {
             orderDTO.setOrderStatus(orderService.getOrderStatus(orderStatusString));
             orderService.updateOrder(orderDTO);
 
-            model.addAttribute("successMessage", "Order status for order with id " + orderDTO.getId() + " successfully changed!");
+            return new ResponseInfo("Payment status for order with id " + orderDTO.getId() + " successfully changed!", 200);
         } else
-            model.addAttribute("errorMessage", "Order with id " + id + " doesn't exist. Inform the administrator!");
+            return new ResponseInfo("Order with id " + id + " doesn't exist. Inform the administrator!", 404);
 
-        model.addAttribute("orders", orderService.getOrders());
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return "employeeProfile/orders";
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("change-payment-status")
-    public String changePaymentStatus(@RequestParam("id") Long id, @RequestParam("paymentStatus") String paymentStatusString, Model model) {
+    public @ResponseBody ResponseInfo changePaymentStatus(@RequestParam("id") Long id, @RequestParam("paymentStatus") String paymentStatusString) {
         OrderDTO orderDTO = orderService.getOrder(id);
         if (orderDTO != null) {
             orderDTO.setPaymentStatus(orderService.getPaymentStatus(paymentStatusString));
             orderService.updateOrder(orderDTO);
 
-            model.addAttribute("successMessage", "Payment status for order with id " + orderDTO.getId() + " successfully changed!");
+            return new ResponseInfo("Payment status for order with id " + orderDTO.getId() + " successfully changed!", 200);
         } else
-            model.addAttribute("errorMessage", "Order with id " + id + " doesn't exist. Inform the administrator!");
-
-        model.addAttribute("orders", orderService.getOrders());
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return "employeeProfile/orders";
+            return new ResponseInfo("Order with id " + id + " doesn't exist. Inform the administrator!", 404);
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")

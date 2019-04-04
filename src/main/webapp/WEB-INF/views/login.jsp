@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
@@ -20,6 +21,14 @@
             <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
         </p>
         <button class="btn btn-lg formButton btn-block" type="submit">Sign in</button>
+        <div class="buttons">
+            <a href="<j:url value="/" />">
+                <button class="btn formButton">BACK</button>
+            </a>
+            <a href="<j:url value="/registration"/>">
+                <button class="btn formButton">REGISTER</button>
+            </a>
+        </div>
     </form>
 </div>
 </body>

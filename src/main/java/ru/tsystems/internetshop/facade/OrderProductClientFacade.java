@@ -7,5 +7,5 @@ import ru.tsystems.internetshop.model.DeliveryMethod;
 import ru.tsystems.internetshop.model.PaymentMethod;
 
 public interface OrderProductClientFacade {
-    void issueOrder(ClientDTO clientDTO, ClientAddressDTO clientAddressDTO, Basket basket, DeliveryMethod deliveryMethod, PaymentMethod paymentMethod);
+    void issueOrder(ClientDTO clientDTO, ClientAddressDTO clientAddressDTO, Basket basket, DeliveryMethod deliveryMethod, PaymentMethod paymentMethod) throws Exception;
 }

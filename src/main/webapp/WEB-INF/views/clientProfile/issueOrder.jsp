@@ -81,7 +81,7 @@
                                             </div>
                                             <div class="productInfo2">
                                                 <p class="productPrice">Price: ${product.key.price} rubles.</p>
-                                                <p class="quantityInStock">Quantity in stock: ${product.key.quantityInStock}</p>
+                                                <p class="quantityInStock quantityInStock-${tagStatus.count}">Quantity in stock: ${product.key.quantityInStock}</p>
                                                 <input name="id" value="${product.key.id}" hidden/>
                                             </div>
                                         </div>

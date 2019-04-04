@@ -31,7 +31,7 @@ public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
     private ClientDAO clientDAO;
 
     @Override
-    public void issueOrder(ClientDTO clientDTO, ClientAddressDTO clientAddressDTO, Basket basket, DeliveryMethod deliveryMethod, PaymentMethod paymentMethod) {
+    public void issueOrder(ClientDTO clientDTO, ClientAddressDTO clientAddressDTO, Basket basket, DeliveryMethod deliveryMethod, PaymentMethod paymentMethod) throws Exception {
         OrderDTO orderDTO = new OrderDTO();
 
         if (basket.getCouponDTO() != null)
@@ -41,15 +41,17 @@ public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
         orderDTO.setClientAddress(mapper.convertToEntity(clientAddressDTO));
         orderDTO.setDeliveryMethod(deliveryMethod);
         orderDTO.setPaymentMethod(paymentMethod);
-        orderDTO.setPaymentStatus(PaymentStatus.WAITING_FOR_PAYMENT);
-        orderDTO.setOrderStatus(OrderStatus.WAITING_FOR_PAYMENT);
+        orderDTO.setOrderStatus(OrderStatus.WAITING_FOR_SHIPMENT);
+        if (paymentMethod == PaymentMethod.CARD)
+            orderDTO.setPaymentStatus(PaymentStatus.PAID);
+        else
+            orderDTO.setPaymentStatus(PaymentStatus.WAITING_FOR_PAYMENT);
 
         Map<ProductDTO, Integer> products = basket.getProducts();
 
         for (ProductDTO productDTO : products.keySet()) {
             int numberProduct = products.get(productDTO);
-            for (int i = 0; i < numberProduct; i++)
-                productDTO.setNumberOfSales(productDTO.getNumberOfSales() + 1);
+            productDTO.setNumberOfSales(productDTO.getNumberOfSales() + numberProduct);
 
             OrderProductDTO orderProductDTO = new OrderProductDTO();
             orderProductDTO.setOrder(orderDTO);
@@ -57,6 +59,11 @@ public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
             orderProductDTO.setAmount(products.get(productDTO));
 
             orderDTO.getOrderProducts().add(orderProductDTO);
+
+            if (productDTO.getQuantityInStock() - numberProduct < 0)
+                throw new Exception("Number of product is more than quantity in stock!");
+
+            productDTO.setQuantityInStock(productDTO.getQuantityInStock()-numberProduct);
 
             productService.updateProduct(productDTO);
         }

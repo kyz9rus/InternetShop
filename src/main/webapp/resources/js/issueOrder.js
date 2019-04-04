@@ -150,8 +150,30 @@ function showCouponBlock() {
 }
 
 $('.orderPageButton button').click(function(e) {
-    showCouponBlock();
-    e.preventDefault();
+    var products = $('.productBlock');
+
+    var valid = true;
+    $.each(products, function (index, product) {
+        var imgClass = $(product).attr('class');
+        var productIndex = imgClass.split(' ')[1].substr(13, imgClass.length);
+
+        var numberOfProduct = $(product).find('.numberOfProduct-' + productIndex);
+        numberOfProduct.removeClass('text-danger');
+
+        var numberOfProductValue = numberOfProduct.text();
+        var quantityInStockValue = $(product).find('.quantityInStock-' + productIndex).text().split(' ')[3];
+
+        if (numberOfProductValue > quantityInStockValue) {
+            numberOfProduct.addClass('text-danger');
+            e.preventDefault();
+            return valid = false;
+        }
+    });
+
+    if (valid) {
+        showCouponBlock();
+        e.preventDefault();
+    }
 });
 
 $('.checkCouponButton').click(function(e) {

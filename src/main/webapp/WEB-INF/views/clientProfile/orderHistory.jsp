@@ -66,9 +66,6 @@
                           <td>${order.deliveryMethod}</td>
                           <td>${order.paymentMethod}</td>
                           <j:choose>
-                            <j:when test="${order.orderStatus == 'WAITING_FOR_PAYMENT'}">
-                              <td class="text-danger">waiting for payment</td>
-                            </j:when>
                             <j:when test="${order.orderStatus == 'WAITING_FOR_SHIPMENT'}">
                               <td class="text-warning">waiting for shipment</td>
                             </j:when>

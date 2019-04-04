@@ -47,7 +47,9 @@
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 buttonBlock">
               <auth:authorize access="hasRole('EMPLOYEE') || isAnonymous()">
-                <button class="btn formButton">GET IT</button>
+                <a href="<j:url value="/login" />">
+                  <button class="btn formButton ignoreScripts">GET IT</button>
+                </a>
               </auth:authorize>
               <auth:authorize access="hasRole('CLIENT')">
                 <button class="btn formButton getCouponButton">GET IT</button>

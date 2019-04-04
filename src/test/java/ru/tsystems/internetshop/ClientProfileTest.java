@@ -13,6 +13,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ru.tsystems.internetshop.config.*;
+import ru.tsystems.internetshop.model.DTO.ClientDTO;
+import ru.tsystems.internetshop.model.entity.Client;
+
+import java.util.HashMap;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -64,9 +68,13 @@ public class ClientProfileTest {
 
     @Test
     public void toViewOrderHistoryProfileTest() throws Exception {
+        HashMap<String, Object> sessionattr = new HashMap<>();
+        sessionattr.put("client", new ClientDTO());
+
         this.mockMvc
-                .perform(get("/clientProfile/viewOrderHistory")
-                        .with(user("danukrus@yandex.ru").password("admin").roles("CLIENT")))
-                .andExpect(view().name("clientProfile/viewOrderHistory"));
+                .perform(get("/clientProfile/showOrderHistory")
+                        .with(user("danukrus@yandex.ru").password("admin").roles("CLIENT"))
+                        .sessionAttrs(sessionattr))
+                .andExpect(view().name("clientProfile/orderHistory"));
     }
 }

@@ -38,9 +38,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (!authorities.isEmpty())
             for (GrantedAuthority grantedAuthority : authorities)
                 if (grantedAuthority.getAuthority().equals("ROLE_CLIENT")) {
-                    UserDTO user = (UserDTO) authentication.getPrincipal();
-
-                    clientDTO = clientService.getClientByEmail(user.getEmail());
+                    UserDTO userDTO;
+                    User user;
+                    try {
+                        userDTO = (UserDTO) authentication.getPrincipal();
+                        clientDTO = clientService.getClientByEmail(userDTO.getEmail());
+                    } catch (ClassCastException e) {
+                        user = (User) authentication.getPrincipal();
+                        clientDTO = clientService.getClientByEmail(user.getUsername());
+                    }
                 }
 
         return clientDTO;
