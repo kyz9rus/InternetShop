@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ru.tsystems.internetshop.config.*;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
-import ru.tsystems.internetshop.model.entity.Client;
 
 import java.util.HashMap;
 
@@ -27,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class, HibernateConfig.class, MyWebAppInitializer.class, SecurityWebApplicationInitializer.class, ServletInitializer.class, WebConfig.class, WebSecurityConfig.class})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-public class ClientProfileTest {
+public class ClientRountingTest {
 
     @Autowired
     private WebApplicationContext wac;

@@ -40,7 +40,7 @@ public class ProductDAOImpl extends AbstractDAO<Product, Long> implements Produc
     }
 
     @Override
-    public List<Product> getTop10Products() {
+    public List<Product> findTop10Products() {
         String queryString = "SELECT p FROM product p ORDER BY p.numberOfSales DESC";
 
         TypedQuery<Product> query = sessionFactory.getCurrentSession().createQuery(queryString, Product.class);

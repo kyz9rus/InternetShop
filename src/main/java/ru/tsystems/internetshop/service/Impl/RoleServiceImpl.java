@@ -17,12 +17,6 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDAO roleDAO;
 
-
-    @Override
-    public void saveRole(Role role) {
-        roleDAO.create(role);
-    }
-
     @Override
     public Role getRoleByName(String name) {
         return roleDAO.findByName(name);

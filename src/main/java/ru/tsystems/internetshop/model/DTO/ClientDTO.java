@@ -1,16 +1,14 @@
 package ru.tsystems.internetshop.model.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.tsystems.internetshop.model.entity.ClientAddress;
-import ru.tsystems.internetshop.model.entity.Coupon;
-import ru.tsystems.internetshop.model.entity.Order;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Data
 public class ClientDTO {
@@ -36,6 +34,14 @@ public class ClientDTO {
     private List<CouponDTO> coupons = new ArrayList<>();
 
     public ClientDTO() {
+    }
+
+    public ClientDTO(Long id) {
+        this.id = id;
+    }
+
+    public ClientDTO(@Email(message = "Email should be valid") String email) {
+        this.email = email;
     }
 
     public ClientDTO(@NotNull(message = "Please enter first name") String firstName, @NotNull(message = "Please enter last name") String lastName, LocalDate birthday, @Email(message = "Email should be valid") String email) {

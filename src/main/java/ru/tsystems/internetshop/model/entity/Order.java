@@ -62,6 +62,10 @@ public class Order {
     public Order() {
     }
 
+    public Order(long id) {
+        this.id = id;
+    }
+
     public Order(Client client, ClientAddress clientAddress, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, PaymentStatus paymentStatus, OrderStatus orderStatus) {
         this.client = client;
         this.clientAddress = clientAddress;

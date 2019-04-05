@@ -10,5 +10,5 @@ public interface ProductDAO extends DAO<Product, Long> {
 
     Product findProductByName(String name);
 
-    List<Product> getTop10Products();
+    List<Product> findTop10Products();
 }

@@ -39,6 +39,10 @@ public class ClientAddress {
     public ClientAddress() {
     }
 
+    public ClientAddress(long id) {
+        this.id = id;
+    }
+
     public ClientAddress(Client client, String country, String city, int postalCode, String street, String house, int room, List<Order> orders) {
         this.client = client;
         this.country = country;

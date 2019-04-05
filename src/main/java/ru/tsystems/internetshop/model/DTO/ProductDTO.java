@@ -31,6 +31,14 @@ public class ProductDTO {
 
     private long numberOfSales;
 
+    public ProductDTO() {
+    }
+
+    public ProductDTO(long id, int price) {
+        this.id = id;
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

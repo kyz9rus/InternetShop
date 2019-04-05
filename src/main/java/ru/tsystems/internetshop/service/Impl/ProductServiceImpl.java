@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.ProductDAO;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
-import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.ProductDTO;
-import ru.tsystems.internetshop.model.entity.Category;
-import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.model.entity.Product;
 import ru.tsystems.internetshop.service.ProductService;
 import ru.tsystems.internetshop.util.Mapper;
@@ -63,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> getTop10Products() {
-        List<Product> products = productDAO.getTop10Products();
+        List<Product> products = productDAO.findTop10Products();
         List<ProductDTO> productDTOS = new ArrayList<>();
 
         for (Product product: products)
