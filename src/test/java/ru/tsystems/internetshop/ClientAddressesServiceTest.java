@@ -1,6 +1,5 @@
 package ru.tsystems.internetshop;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,19 +11,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.tsystems.internetshop.dao.ClientAddressDAO;
-import ru.tsystems.internetshop.dao.ClientDAO;
 import ru.tsystems.internetshop.model.DTO.ClientAddressDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.model.entity.ClientAddress;
 import ru.tsystems.internetshop.service.ClientAddressService;
-import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.service.Impl.ClientAddressServiceImpl;
-import ru.tsystems.internetshop.service.Impl.ClientServiceImpl;
 import ru.tsystems.internetshop.util.Mapper;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,7 +68,7 @@ public class ClientAddressesServiceTest {
 
         client.setAddresses(addresses);
 
-        Mockito.when(clientAddressDAO.getAddressesByClient(client)).thenReturn(addresses);
+        Mockito.when(clientAddressDAO.findAddressesByClient(client)).thenReturn(addresses);
     }
 
     @Test

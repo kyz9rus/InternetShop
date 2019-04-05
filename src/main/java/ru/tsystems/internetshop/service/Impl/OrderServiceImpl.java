@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDTO> getOrdersByClient(ClientDTO clientDTO) {
-        List<Order> orders = orderDAO.getOrdersByClient(mapper.convertToEntity(clientDTO));
+        List<Order> orders = orderDAO.findOrdersByClient(mapper.convertToEntity(clientDTO));
         List<OrderDTO> orderDTOS = new ArrayList<>();
 
         for (Order order : orders)
@@ -72,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDTO> getUnfinishedOrdersByClient(ClientDTO clientDTO) {
-        List<Order> orders = orderDAO.getUnfinishedOrdersByClient(mapper.convertToEntity(clientDTO));
+        List<Order> orders = orderDAO.findUnfinishedOrdersByClient(mapper.convertToEntity(clientDTO));
         List<OrderDTO> orderDTOS = new ArrayList<>();
 
         for (Order order : orders)
@@ -113,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDTO> getOrdersByCategory(CategoryDTO categoryDTO) {
-        List<Order> orders = orderDAO.getOrdersByCategory(mapper.convertToEntity(categoryDTO));
+        List<Order> orders = orderDAO.findOrdersByCategory(mapper.convertToEntity(categoryDTO));
         List<OrderDTO> orderDTOS = new ArrayList<>();
 
         for (Order order : orders)
@@ -154,7 +154,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private List<OrderDTO> getPaidOrders() {
-        List<Order> orders = orderDAO.getPaidOrders();
+        List<Order> orders = orderDAO.findPaidOrders();
         List<OrderDTO> orderDTOS = new ArrayList<>();
 
         for (Order order : orders)

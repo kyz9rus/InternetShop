@@ -17,7 +17,7 @@ import java.util.List;
 public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
     @Override
-    public List<Order> getUnfinishedOrdersByClient(Client client) {
+    public List<Order> findUnfinishedOrdersByClient(Client client) {
         String queryString = "SELECT o FROM ord o WHERE o.client.id = :id AND o.orderStatus != :order_status";
 
         TypedQuery<Order> query = sessionFactory.getCurrentSession().createQuery(queryString, Order.class);
@@ -28,7 +28,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
     }
 
     @Override
-    public List<Order> getOrdersByClient(Client client) {
+    public List<Order> findOrdersByClient(Client client) {
         String queryString = "SELECT o FROM ord o WHERE o.client.id = :id";
 
         TypedQuery<Order> query = sessionFactory.getCurrentSession().createQuery(queryString, Order.class);
@@ -38,7 +38,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
     }
 
     @Override
-    public List<Order> getOrdersByCategory(Category category) {
+    public List<Order> findOrdersByCategory(Category category) {
         String queryString = "select o from ord o left join o.orderProducts p where p.id in (select p2 from product p2 where p2.category = :category) and o.orderStatus != 'DELIVERED'";
 
         TypedQuery<Order> query = sessionFactory.getCurrentSession().createQuery(queryString, Order.class);
@@ -49,7 +49,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
     }
 
     @Override
-    public List<Order> getPaidOrders() {
+    public List<Order> findPaidOrders() {
         String queryString = "SELECT o FROM ord o WHERE o.paymentStatus = :paymentStatus";
 
         TypedQuery<Order> query = sessionFactory.getCurrentSession().createQuery(queryString, Order.class);

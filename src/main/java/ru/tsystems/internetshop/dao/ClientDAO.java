@@ -7,5 +7,5 @@ import java.util.List;
 public interface ClientDAO extends DAO<Client, Long> {
     Client findByEmail(String email);
 
-    List<Client> getTop10Clients();
+    List<Client> findTop10Clients();
 }

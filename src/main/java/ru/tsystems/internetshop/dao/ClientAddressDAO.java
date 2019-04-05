@@ -6,5 +6,5 @@ import ru.tsystems.internetshop.model.entity.ClientAddress;
 import java.util.List;
 
 public interface ClientAddressDAO extends DAO<ClientAddress, Long> {
-    List<ClientAddress> getAddressesByClient(Client client);
+    List<ClientAddress> findAddressesByClient(Client client);
 }

@@ -13,7 +13,7 @@ import java.util.Set;
 @Repository
 public class ClientAddressDAOImpl extends AbstractDAO<ClientAddress, Long> implements ClientAddressDAO {
     @Override
-    public List<ClientAddress> getAddressesByClient(Client client) {
+    public List<ClientAddress> findAddressesByClient(Client client) {
         String queryString = "SELECT a FROM clientAddress a WHERE a.client = :client";
 
         TypedQuery<ClientAddress> query = sessionFactory.getCurrentSession().createQuery(queryString, ClientAddress.class);

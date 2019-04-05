@@ -67,7 +67,7 @@ public class ClientServiceTest {
 
         Mockito.when(clientDAO.findByEmail("example@example.ru")).thenReturn(client);
 
-        Mockito.when(clientDAO.getTop10Clients()).thenReturn(Arrays.asList(new Client(1L), new Client(2L), new Client(3L), new Client(4L), new Client(5L), new Client(6L), new Client(7L), new Client(8L), new Client(9L), new Client(10L)));
+        Mockito.when(clientDAO.findTop10Clients()).thenReturn(Arrays.asList(new Client(1L), new Client(2L), new Client(3L), new Client(4L), new Client(5L), new Client(6L), new Client(7L), new Client(8L), new Client(9L), new Client(10L)));
     }
 
     @Test

@@ -28,7 +28,7 @@ public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDA
     }
 
     @Override
-    public List<Client> getTop10Clients() {
+    public List<Client> findTop10Clients() {
         String queryString = "SELECT c FROM client c ORDER BY c.summaryOrdersPrice DESC";
 
         TypedQuery<Client> query = sessionFactory.getCurrentSession().createQuery(queryString, Client.class);

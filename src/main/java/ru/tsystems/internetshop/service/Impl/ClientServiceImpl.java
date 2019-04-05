@@ -40,7 +40,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<ClientDTO> getTop10Clients() {
-        List<Client> clients = clientDAO.getTop10Clients();
+        List<Client> clients = clientDAO.findTop10Clients();
         List<ClientDTO> clientDTOS = new ArrayList<>();
 
         for (Client client : clients)

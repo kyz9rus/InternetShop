@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.tsystems.internetshop.dao.ClientDAO;
 import ru.tsystems.internetshop.dao.OrderDAO;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
@@ -20,8 +19,6 @@ import ru.tsystems.internetshop.model.PaymentStatus;
 import ru.tsystems.internetshop.model.entity.Category;
 import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.model.entity.Order;
-import ru.tsystems.internetshop.service.ClientService;
-import ru.tsystems.internetshop.service.Impl.ClientServiceImpl;
 import ru.tsystems.internetshop.service.Impl.OrderServiceImpl;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.util.Mapper;
@@ -87,9 +84,9 @@ public class OrderServiceTest {
 
         List<Order> orders2 = new ArrayList<>(Arrays.asList(new Order(3L), new Order(4L)));
 
-        Mockito.when(orderDAO.getOrdersByClient(client)).thenReturn(orders);
-        Mockito.when(orderDAO.getOrdersByCategory(new Category("frangrancy"))).thenReturn(orders2);
-        Mockito.when(orderDAO.getUnfinishedOrdersByClient(client)).thenReturn(Arrays.asList(order2));
+        Mockito.when(orderDAO.findOrdersByClient(client)).thenReturn(orders);
+        Mockito.when(orderDAO.findOrdersByCategory(new Category("frangrancy"))).thenReturn(orders2);
+        Mockito.when(orderDAO.findUnfinishedOrdersByClient(client)).thenReturn(Arrays.asList(order2));
     }
 
     @Test
