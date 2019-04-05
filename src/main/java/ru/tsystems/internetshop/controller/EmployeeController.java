@@ -1,18 +1,16 @@
 package ru.tsystems.internetshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.tsystems.internetshop.model.DTO.*;
-import ru.tsystems.internetshop.model.OrderStatus;
-import ru.tsystems.internetshop.model.PaymentMethod;
-import ru.tsystems.internetshop.model.PaymentStatus;
+import ru.tsystems.internetshop.model.DTO.CategoryDTO;
+import ru.tsystems.internetshop.model.DTO.OrderDTO;
+import ru.tsystems.internetshop.model.DTO.OrderProductDTO;
+import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.model.RevenueInfo;
 import ru.tsystems.internetshop.service.CategoryService;
 import ru.tsystems.internetshop.service.ClientService;
@@ -22,6 +20,7 @@ import ru.tsystems.internetshop.util.CategoryInfo;
 import ru.tsystems.internetshop.util.ResponseInfo;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("employeeProfile")
@@ -42,9 +41,13 @@ public class EmployeeController {
     @Autowired
     private ClientService clientService;
 
+    private Logger logger = Logger.getLogger("logger");
+
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("get-orders")
     public String getOrders(Model model) {
+        logger.info("Get all orders...");
+
         List<OrderDTO> orders = orderService.getOrders();
 
         model.addAttribute("orders", orders);
@@ -106,6 +109,8 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("change-order-status")
     public @ResponseBody ResponseInfo changeOrderStatus(@RequestParam("id") Long id, @RequestParam("orderStatus") String orderStatusString) {
+        logger.info("Changing order status (-> " + orderStatusString + ") for order with id + " + id + "...");
+
         OrderDTO orderDTO = orderService.getOrder(id);
         if (orderDTO != null) {
             orderDTO.setOrderStatus(orderService.getOrderStatus(orderStatusString));
@@ -120,6 +125,8 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("change-payment-status")
     public @ResponseBody ResponseInfo changePaymentStatus(@RequestParam("id") Long id, @RequestParam("paymentStatus") String paymentStatusString) {
+        logger.info("Changing payment status for order with id + " + id + "...");
+
         OrderDTO orderDTO = orderService.getOrder(id);
         if (orderDTO != null) {
             orderDTO.setPaymentStatus(orderService.getPaymentStatus(paymentStatusString));
@@ -133,7 +140,7 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("create-product")
     public String createProduct(@Validated @ModelAttribute("product") ProductDTO productDTO, Model model) {
-        System.out.println(productDTO);
+        logger.info("Creating product " + productDTO + "...");
 
         if (productService.getProductByName(productDTO.getName()) == null) {
             productService.saveProduct(productDTO);
@@ -149,6 +156,8 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("create-category")
     public String createCategory(@ModelAttribute("category") CategoryDTO categoryDTO, Model model) {
+        logger.info("Creating category " + categoryDTO + "...");
+
         categoryDTO.setName(categoryDTO.getName().toLowerCase());
 
         if (categoryService.getCategoryByName(categoryDTO.getName()) == null) {
@@ -173,6 +182,8 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("update-category")
     public String updateCategory(@ModelAttribute("category") CategoryDTO categoryDTO, @RequestParam("oldName") String oldName, Model model) {
+        logger.info("Updating category " + categoryDTO + "...");
+
         categoryDTO.setName(categoryDTO.getName().toLowerCase());
         oldName = oldName.toLowerCase();
 
@@ -194,6 +205,8 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("remove-category")
     public String removeCategory(@RequestParam("oldName") String categoryName, Model model) {
+        logger.info("Removing category '" + categoryName + "'...");
+
         CategoryDTO categoryDTO = categoryService.getCategoryByName(categoryName);
         List<OrderDTO> orders = orderService.getOrdersByCategory(categoryDTO);
         if (orders.isEmpty()) {
@@ -221,6 +234,8 @@ public class EmployeeController {
     @PostMapping(value = "/showOrderHistory/get-products", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     List<OrderProductDTO> getProducts(@RequestParam("orderId") Long orderId){
+        logger.info("Getting products for order with id " + orderId + "...");
+
         OrderDTO orderDTO = orderService.getOrder(orderId);
 
         return orderDTO.getOrderProducts();

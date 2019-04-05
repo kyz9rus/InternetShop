@@ -32,7 +32,7 @@
       <div class="content" align="center">
         <div class="couponWindow">
           <img src="/resources/images/cross.png" alt="X">
-          <p class="text-danger">Log in first</p>
+          <p class="text-danger">Waiting...</p>
           <button class="btn formButton">OK</button>
         </div>
 

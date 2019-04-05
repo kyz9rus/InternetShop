@@ -24,6 +24,7 @@ import ru.tsystems.internetshop.util.CategoryInfo;
 import ru.tsystems.internetshop.util.ResponseInfo;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Controller
 @SessionAttributes(value = {"client", "basket"})
@@ -53,9 +54,11 @@ public class PublicController {
     @Autowired
     private BasketService basketService;
 
+    private Logger logger = Logger.getLogger("logger");
+
     @GetMapping("exception")
     public String toExceptionPage() {
-        return "§";
+        return "exception";
     }
 
     @GetMapping(value = "/")
@@ -79,6 +82,8 @@ public class PublicController {
 
     @PostMapping(value = "create-client")
     public String createClient(@Validated @ModelAttribute("client") ClientDTO client, @RequestParam("password") String password, @RequestParam("repeatPassword") String repeatPassword, Model model) {
+        logger.info("Register client: " + client + "...");
+
         if (clientService.getClientByEmail(client.getEmail()) != null)
             model.addAttribute("errorMessage", "A user with this email address already exists.");
         else {
@@ -115,6 +120,8 @@ public class PublicController {
 
     @PostMapping(value = "put-product", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ResponseEntity<BasketInfo> putProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
+        logger.info("Put product with id " + productId + " in basket + " + basket + "...");
+
         ProductDTO productDTO = productService.getProduct(productId);
         basket.addProduct(productDTO);
 
@@ -133,6 +140,8 @@ public class PublicController {
     @ResponseBody
     @PostMapping(value = "increase-product", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<BasketInfo> increaseProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
+        logger.info("Delete 1 product with id " + productId + " from basket " + basket + "...");
+
         ProductDTO productDTO = productService.getProduct(productId);
         basket.increaseProduct(productDTO);
 
@@ -144,6 +153,8 @@ public class PublicController {
     @ResponseBody
     @PostMapping(value = "remove-product", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<BasketInfo> addProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
+        logger.info("Remove products with id " + productId + " from basket " + basket + "...");
+
         ProductDTO productDTO = productService.getProduct(productId);
         basket.removeProduct(productDTO);
 
@@ -172,6 +183,8 @@ public class PublicController {
     @PostMapping(value = "send-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     ResponseInfo sendCoupon(@ModelAttribute("client") ClientDTO clientDTO) {
+        logger.info("Sending coupon to + " + clientDTO.getEmail() +  "...");
+
         String email = clientDTO.getEmail();
         ResponseInfo responseInfo;
 

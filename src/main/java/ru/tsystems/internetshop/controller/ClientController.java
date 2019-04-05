@@ -20,6 +20,7 @@ import ru.tsystems.internetshop.util.ResponseInfo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("clientProfile")
@@ -56,6 +57,8 @@ public class ClientController {
     @Autowired
     private BasketService basketService;
 
+    private Logger logger = Logger.getLogger("logger");
+
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("editProfile")
     public String editProfile(Model model) {
@@ -73,6 +76,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("showOrderHistory")
     public String showOrderHistoryPage(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
+        logger.info("Showing order history for client " + clientDTO + "...");
+
         List<OrderDTO> orders = orderService.getOrdersByClient(clientDTO);
 
         model.addAttribute("orders", orders);
@@ -83,6 +88,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping("repeat-order")
     public String repeatOrder(@ModelAttribute("basket") Basket basket, @RequestParam("orderId") Long orderId, Model model) {
+        logger.info("Combine basket for repeating order for order with id " + orderId + "...");
+
         OrderDTO orderDTO = orderService.getOrder(orderId);
 
         if (orderDTO == null)
@@ -111,6 +118,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "update-client")
     public String updateClient(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
+        logger.info("Updating client " + clientDTO + "...");
+
         if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
             model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
         else {
@@ -128,6 +137,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "change-password")
     public String changePassword(@ModelAttribute("client") ClientDTO clientDTO, @RequestParam("password") String password, @RequestParam("newPassword") String newPassword, @RequestParam("repeatNewPassword") String repeatNewPassword, Model model) {
+        logger.info("Changing password for client " + clientDTO + "...");
+
         UserDTO userDTO = userService.getUserByEmail(clientDTO.getEmail());
 
         if (new BCryptPasswordEncoder().matches(password, userDTO.getPassword()))
@@ -149,6 +160,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "create-address")
     public String createClientAddress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, Model model) {
+        logger.info("Creating address for client " + clientDTO + "...");
+
         clientAddressDTO.setClient(clientDTO);
         if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
             model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
@@ -168,6 +181,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "update-address")
     public String updateClientAdress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @RequestParam("addressId") Long addressId, Model model) {
+        logger.info("Updating address for client " + clientDTO + "...");
+
         clientAddressDTO.setId(addressId);
         clientAddressDTO.setClient(clientDTO);
         if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
@@ -188,6 +203,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "delete-address")
     public String deleteAddress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @RequestParam("addressId") Long addressId, Model model) {
+        logger.info("Deleting address for client " + clientDTO + "...");
+
         clientAddressDTO.setId(addressId);
         clientAddressDTO.setClient(clientDTO);
         if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
@@ -208,6 +225,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "/showOrderHistory/get-products", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ResponseEntity<List<OrderProductDTO>> getProducts(@RequestParam("orderId") Long orderId){
+        logger.info("Getting products for order with id " + orderId + "...");
+
         OrderDTO orderDTO = orderService.getOrder(orderId);
 
         List<OrderProductDTO> orderProducts = orderDTO.getOrderProducts();
@@ -226,6 +245,8 @@ public class ClientController {
     @PostMapping(value = "/issueOrder/check-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     ResponseInfo checkCoupon(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("couponValue") String couponValue, Model model) {
+        logger.info("Checking coupon " + couponValue + " for client " + clientDTO + "...");
+
         ResponseInfo responseInfo;
 
         CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
@@ -244,6 +265,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("issueOrder2")
     public String issueOrderPage2(@RequestParam("couponValue") String couponValue, @ModelAttribute("basket") Basket basket, Model model) {
+        logger.info("Calculating price for order with couponValue " + couponValue + " and basket " + basket + "...");
+
         CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
 
         if (couponDTO != null && basket.getCouponDTO() == null || basket.isChangedAfterCoupon()) {
@@ -263,6 +286,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping("issue-order")
     public String createOrder(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("deliveryMethod") String deliveryMethodString, @RequestParam("paymentMethod") String paymentMethodString, @RequestParam("addressId") Long addressId, Model model) throws Exception {
+        logger.info("Collecting order for client" + clientDTO + " with basket " + basket + " with delivery method " + deliveryMethodString + " with payment mathod " + paymentMethodString + " with address id " + addressId + "...");
+
         ClientAddressDTO clientAddressDTO = clientAddressService.getClientAddressById(addressId);
 
         orderProductClientFacade.issueOrder(clientDTO, clientAddressDTO, basket, orderService.getDeliveryMethod(deliveryMethodString), orderService.getPaymentMethod(paymentMethodString));

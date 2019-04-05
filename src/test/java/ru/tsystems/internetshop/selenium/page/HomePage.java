@@ -22,11 +22,12 @@ public class HomePage {
     private final By mainLogoImage = By.xpath("/html/body/div[1]/div/div[1]/div[2]/div[1]/a/img");
     private final By basket = By.xpath("/html/body/div[1]/div/div[1]/div[2]/div[2]/a/img");
 
-    private final By getItButton = By.xpath("/html/body/div[1]/div/div[2]/div[2]/div/div[3]/button");
-    private final By buyButton = By.xpath("/html/body/div[1]/div/div[2]/div[3]/ul/li[1]/div/div/div[2]/div[2]/button");
+    private final By getItButtonWithoutAuth = By.xpath("/html/body/div[1]/div/div[2]/div[2]/div/div[3]/a/button");
+    private final By getItButtonWithAuth = By.xpath("/html/body/div[1]/div/div[2]/div[2]/div/div[3]/button");
+    private final By buyButton = By.xpath("/html/body/div[1]/div/div[2]/div[3]/ul/li[9]/div/div/div[2]/div[2]/button");
 
     private final By numberOfProductsInBasket = By.xpath("/html/body/div[1]/div/div[1]/div[2]/div[2]/div/div[1]/p[2]");
-    private final By issueOrderButton = By.xpath("/html/body/div[1]/div/div[1]/div[2]/div[2]/div/div[2]/a/button");
+    private final By issueOrderButton = By.xpath("/html/body/div[1]/div/div[1]/div[2]/div[2]/a/img");
 
     private final By couponBlock = By.cssSelector(".couponWindow");
     private final By okButtonInCouponBlock = By.xpath("/html/body/div[1]/div/div[2]/div[1]/button");
@@ -79,8 +80,12 @@ public class HomePage {
         wait.until(visibilityOfElementLocated(basket)).click();
     }
 
-    public void clickGetItButton() {
-        wait.until(visibilityOfElementLocated(getItButton)).click();
+    public void clickGetItButtonWithAuth() {
+        wait.until(visibilityOfElementLocated(getItButtonWithAuth)).click();
+    }
+
+    public void clickGetItButtonWithoutAuth() {
+        wait.until(visibilityOfElementLocated(getItButtonWithoutAuth)).click();
     }
 
     public void clickBuyButton() {

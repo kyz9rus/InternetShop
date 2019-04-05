@@ -15,6 +15,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.web.WebAppConfiguration;
 import ru.tsystems.internetshop.config.*;
 import ru.tsystems.internetshop.selenium.page.HomePage;
+import ru.tsystems.internetshop.selenium.page.IssueOrder;
 import ru.tsystems.internetshop.selenium.page.LoginPage;
 import ru.tsystems.internetshop.selenium.page.RegistrationPage;
 
@@ -90,21 +91,28 @@ public class SeleniumTestClass {
 
         assertEquals(homePage.getNumberOfProductsInBasket().getText(), "Number of products: 2");
 
-        homePage.clickIssueOrderButton();
+        homePage.clickGetItButtonWithoutAuth();
 
-        wait.until(titleIs(new LoginPage().getTitle()));
+        LoginPage loginPage = new LoginPage(driver, wait);
 
-        homePage.openPage();
+        loginPage.fillLoginInput("danukrus@yandex.ru");
+        loginPage.fillPasswordInput("admin");
+        loginPage.clickSignInButton();
 
-        homePage.clickGetItButton();
+        homePage.clickGetItButtonWithAuth();
 
         homePage.getCouponBlock();
 
         homePage.clickOkButtonInCouponBlock();
 
-        homePage.clickGetItButton();
+        homePage.clickGetItButtonWithAuth();
 
         homePage.clickCrossButtonInCouponBlock();
+
+        homePage.clickIssueOrderButton();
+
+        wait.until(titleIs(new IssueOrder().getTitle()));
+
     }
 
     @After

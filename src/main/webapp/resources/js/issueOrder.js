@@ -163,7 +163,7 @@ $('.orderPageButton button').click(function(e) {
         var numberOfProductValue = numberOfProduct.text();
         var quantityInStockValue = $(product).find('.quantityInStock-' + productIndex).text().split(' ')[3];
 
-        if (numberOfProductValue > quantityInStockValue) {
+        if (parseInt(numberOfProductValue) > parseInt(quantityInStockValue)) {
             numberOfProduct.addClass('text-danger');
             e.preventDefault();
             return valid = false;

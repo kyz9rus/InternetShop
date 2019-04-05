@@ -27,7 +27,7 @@
             <a href="<j:url value="/"/> ">
                 <button class="btn formButton">BACK</button>
             </a>
-            <a href="<j:url value="/registration"/">
+            <a href="<j:url value="/registration"/>">
                 <button class="btn formButton">REGISTER</button>
             </a>
         </div>

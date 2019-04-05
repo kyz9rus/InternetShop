@@ -6,7 +6,7 @@
 <html>
 
 <head>
-  <title>Registration page</title>
+  <title>Registration</title>
   <link rel="icon" href='<c:url value="/resources/images/favicon.ico" />' type="image/x-icon">
 
   <link rel="stylesheet" href='<c:url value="/resources/css/bootstrap.min.css" />'>
