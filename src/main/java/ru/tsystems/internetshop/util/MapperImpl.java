@@ -6,11 +6,31 @@ import org.springframework.stereotype.Component;
 import ru.tsystems.internetshop.model.DTO.*;
 import ru.tsystems.internetshop.model.entity.*;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 @Component
-public class Mapper {
+public class Mapper<EntityClass, DTOCLass> {
 
     @Autowired
     private ModelMapper modelMapper = new ModelMapper();
+
+    private final Class entityClass;
+    private final Class dtoClass;
+
+    @SuppressWarnings("unchecked")
+    public Mapper() {
+        this.entityClass = (Class) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        this.dtoClass = (Class) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+    }
+
+    public DTOCLass convertToDTO (EntityClass entity) {
+        return modelMapper.map(entity, (Type) dtoClass.getClass());
+    }
+
+    public EntityClass convertToEntity (DTOCLass DTO) {
+        return modelMapper.map(DTO, (Type) entityClass.getClass());
+    }
 
     public ClientDTO convertToDto(Client client) {
         return modelMapper.map(client, ClientDTO.class);
@@ -48,9 +68,9 @@ public class Mapper {
         return modelMapper.map(userDTO, User.class);
     }
 
-    public Category convertToEntity(CategoryDTO categoryDTO) {
-        return modelMapper.map(categoryDTO, Category.class);
-    }
+//    public Category convertToEntity(CategoryDTO categoryDTO) {
+//        return modelMapper.map(categoryDTO, Category.class);
+//    }
 
     public Order convertToEntity(OrderDTO orderDTO) {
         return modelMapper.map(orderDTO, Order.class);
