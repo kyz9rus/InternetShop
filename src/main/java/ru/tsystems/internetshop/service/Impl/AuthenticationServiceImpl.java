@@ -10,7 +10,6 @@ import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
 import ru.tsystems.internetshop.service.AuthenticationService;
 import ru.tsystems.internetshop.service.ClientService;
-import ru.tsystems.internetshop.util.Mapper;
 
 import java.util.Collection;
 
@@ -19,9 +18,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
     private ClientService clientService;
-
-    @Autowired
-    private Mapper mapper;
 
     @Override
     public Authentication getAuthentication() {

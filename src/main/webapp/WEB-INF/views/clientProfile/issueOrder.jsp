@@ -41,7 +41,7 @@
               <div class="messageBlock">
                   <p class="successMessage">${successMessage}</p>
               </div>
-              <form action="/clientProfile/issueOrder2" method="get">
+              <form action="issueOrder2" method="get">
                 <div class="couponBlock">
                   <label>Do you have coupons?</label><br/>
                   <div class="form-group">

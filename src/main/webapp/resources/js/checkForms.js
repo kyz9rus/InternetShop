@@ -60,8 +60,20 @@ $('.changePasswordBlock .formButton').click(function (e) {
 
 $('.addProductBlock button').click(function (e) {
     var volume = $('.addProductBlock input[name="volume"]').val();
+
+    console.log($('#price').val() + ' | ' + /^[0-9]+$/.test($('#price').val()));
+
     if (volume.length !== 11) {
         $('.errorMessage').text('Enter volume following the pattern (999x999x999)');
+        e.preventDefault()
+    } else if (!/^[0-9]+$/.test($('#price').val())) {
+        $('.errorMessage').text('Price must consist of numbers only');
+        e.preventDefault()
+    } else if (!/^[0-9]+$/.test($('#weight').val())) {
+        $('.errorMessage').text('Weight must consist of numbers only');
+        e.preventDefault()
+    } else if (!/^[0-9]+$/.test($('#quantityInStock').val()) && parseInt($('#quantityInStock').val()) <= 0) {
+        $('.errorMessage').text('Quantity in stock must consist of numbers only and cannot be negative');
         e.preventDefault()
     }
 });

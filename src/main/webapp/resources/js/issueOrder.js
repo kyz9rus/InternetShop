@@ -5,8 +5,11 @@ $('.productOperations .plus').click(function(){
     var data = {};
     data["productId"] = $('.productBlock-' + index + ' input[name="id"]').val();
 
+    var urlParts = document.URL.split('/');
+    var url = urlParts[0] + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
+
     $.post({
-        url: '/put-product',
+        url: url + '/put-product',
         data: data,
         dataType: 'json',
         success: function (basketInfo) {
@@ -37,8 +40,11 @@ $('.productOperations .minus').click(function(){
     var data = {};
     data["productId"] = $('.productBlock-' + index + ' input[name="id"]').val();
 
+    var urlParts = document.URL.split('/');
+    var url = urlParts[0] + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
+
     $.post({
-        url: '/increase-product',
+        url: url + '/increase-product',
         data: data,
         dataType: 'json',
         success: function (basketInfo) {
@@ -94,8 +100,11 @@ $('.productOperations .remove').click(function(){
     var data = {};
     data["productId"] = $('.productBlock-' + index + ' input[name="id"]').val();
 
+    var urlParts = document.URL.split('/');
+    var url = urlParts[0] + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
+
     $.post({
-        url: '/remove-product',
+        url: url + '/remove-product',
         data: data,
         dataType: 'json',
         success: function (basketInfo) {
@@ -188,8 +197,11 @@ $('.checkCouponButton').click(function(e) {
         return;
     }
 
+    var urlParts = document.URL.split('/');
+    var url = urlParts[0] + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
+
     $.post({
-        url: '/clientProfile/issueOrder/check-coupon',
+        url: url + '/clientProfile/issueOrder/check-coupon',
         data: data,
         dataType: 'json',
         success: function (responseInfo) {

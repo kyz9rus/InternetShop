@@ -3,6 +3,7 @@ package ru.tsystems.internetshop.dao.impl;
 import org.springframework.stereotype.Repository;
 import ru.tsystems.internetshop.dao.AbstractDAO;
 import ru.tsystems.internetshop.dao.ProductDAO;
+import ru.tsystems.internetshop.exception.DAOException;
 import ru.tsystems.internetshop.model.entity.Category;
 import ru.tsystems.internetshop.model.entity.Client;
 import ru.tsystems.internetshop.model.entity.Product;
@@ -16,35 +17,50 @@ public class ProductDAOImpl extends AbstractDAO<Product, Long> implements Produc
 
     @Override
     public List<Product> findProductsByCategory(Category category) {
-        String queryString = "SELECT p FROM product p WHERE p.category.name = :category_name";
+        try {
+            String queryString = "SELECT p FROM product p WHERE p.category.name = :category_name";
 
-        TypedQuery<Product> query = sessionFactory.getCurrentSession().createQuery(queryString, Product.class);
-        query.setParameter("category_name", category.getName().toLowerCase());
+            TypedQuery<Product> query = sessionFactory.getCurrentSession().createQuery(queryString, Product.class);
+            query.setParameter("category_name", category.getName().toLowerCase());
 
-        return query.getResultList();
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DAOException();
+        }
     }
 
     @Override
     public Product findProductByName(String name) {
-        String queryString = "SELECT p FROM product p WHERE p.name = :name";
+        try {
+            String queryString = "SELECT p FROM product p WHERE p.name = :name";
 
-        TypedQuery<Product> query = sessionFactory.getCurrentSession().createQuery(queryString, Product.class);
-        query.setParameter("name", name);
+            TypedQuery<Product> query = sessionFactory.getCurrentSession().createQuery(queryString, Product.class);
+            query.setParameter("name", name);
 
-        List<Product> products = query.getResultList();
+            List<Product> products = query.getResultList();
 
-        if (!products.isEmpty())
-            return products.get(0);
-        else
-            return null;
+            if (!products.isEmpty())
+                return products.get(0);
+            else
+                return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DAOException();
+        }
     }
 
     @Override
     public List<Product> findTop10Products() {
-        String queryString = "SELECT p FROM product p ORDER BY p.numberOfSales DESC";
+        try {
+            String queryString = "SELECT p FROM product p ORDER BY p.numberOfSales DESC";
 
-        TypedQuery<Product> query = sessionFactory.getCurrentSession().createQuery(queryString, Product.class);
+            TypedQuery<Product> query = sessionFactory.getCurrentSession().createQuery(queryString, Product.class);
 
-        return query.getResultList().stream().limit(10).collect(Collectors.toList());
+            return query.getResultList().stream().limit(10).collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DAOException();
+        }
     }
 }

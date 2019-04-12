@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.tsystems.internetshop.exception.DAOException;
 import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.BasketInfo;

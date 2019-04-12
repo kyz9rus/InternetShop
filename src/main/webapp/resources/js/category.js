@@ -5,8 +5,11 @@ $('.buyButton').click(function () {
     var data = {};
     data["productId"] = $('.product-' + index + ' input[name="id"]').val();
 
+    var urlParts = document.URL.split('/');
+    var url = urlParts[0] + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
+
     $.post({
-        url: '/put-product',
+        url: url + '/put-product',
         data: data,
         dataType: 'json',
         success: function (basketInfo) {
@@ -23,8 +26,8 @@ $('.buyButton').click(function () {
                 .delay(2000)
                 .fadeOut();
         },
-        error: function (basketInfo) {
-            console.log('ERROR: ' + basketInfo);
+        error: function (e) {
+            console.log('ERROR: ' + e);
         }
     });
 });

@@ -142,12 +142,16 @@ public class EmployeeController {
     public String createProduct(@Validated @ModelAttribute("product") ProductDTO productDTO, Model model) {
         logger.info("Creating product " + productDTO + "...");
 
-        if (productService.getProductByName(productDTO.getName()) == null) {
-            productService.saveProduct(productDTO);
+        if (productDTO.getQuantityInStock() <= 0) {
+            model.addAttribute("errorMessage", "Quantity in stock cannot be negative");
+        } else {
+            if (productService.getProductByName(productDTO.getName()) == null) {
+                productService.saveProduct(productDTO);
 
-            model.addAttribute("successMessage", "Product saved successfully.");
-        } else
-            model.addAttribute("errorMessage", "Product with this name already exists.");
+                model.addAttribute("successMessage", "Product saved successfully.");
+            } else
+                model.addAttribute("errorMessage", "Product with this name already exists.");
+        }
 
         model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/addProduct";

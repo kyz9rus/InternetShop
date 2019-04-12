@@ -6,7 +6,7 @@ $('.buyButton').click(function () {
     data["productId"] = $('.product-' + index + ' input[name="id"]').val();
 
     $.post({
-        url: '/put-product',
+        url: document.URL + 'put-product',
         data: data,
         dataType: 'json',
         success: function (basketInfo) {
@@ -54,8 +54,11 @@ $('.couponWindow button').click(function () {
 });
 
 $('.getCouponButton').click(function () {
+    var urlParts = document.URL.split('/');
+    var url = urlParts[0] + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
+
     $.post({
-        url: '/send-coupon',
+        url: url + '/send-coupon',
         success: function (responseInfo) {
             if (responseInfo.statusCode === 200)
                 $('.couponWindow p').attr('class', 'text-success');

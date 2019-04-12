@@ -14,8 +14,11 @@ $('.editOrderStatus .formButton').click(function () {
     data["id"] = $('.editOrderStatus-' + index + ' input[name="id"]').val();
     data["orderStatus"] = $('.editOrderStatus-' + index + ' select[name="orderStatus"]').val();
 
+    var urlParts = document.URL.split('/');
+    var url = urlParts[0] + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
+
     $.post({
-        url: '/employeeProfile/change-order-status',
+        url: url + '/employeeProfile/change-order-status',
         data: data,
         dataType: 'json',
         success: function (responseInfo) {
@@ -51,8 +54,11 @@ $('.editPaymentStatus .formButton').click(function () {
     data["id"] = $('.editPaymentStatus-' + index + ' input[name="id"]').val();
     data["paymentStatus"] = $('.editPaymentStatus-' + index + ' select[name="paymentStatus"]').val();
 
+    var urlParts = document.URL.split('/');
+    var url = urlParts[0] + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
+
     $.post({
-        url: '/employeeProfile/change-payment-status',
+        url: url + '/employeeProfile/change-payment-status',
         data: data,
         dataType: 'json',
         success: function (responseInfo) {

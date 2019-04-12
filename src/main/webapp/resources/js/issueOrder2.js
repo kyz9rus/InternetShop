@@ -1,4 +1,4 @@
-x$('.orderInfo select[name="paymentMethod"]').click(function() {
+$('.orderInfo select[name="paymentMethod"]').click(function() {
     var paymentMethod = $('.orderInfo select[name="paymentMethod"]').val();
 
     if (paymentMethod === 'By card') {

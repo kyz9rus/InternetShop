@@ -216,12 +216,7 @@ input:focus{
 .errorInfoBlock {
     float: left;
     margin-top: 40px;
-    font-size: 35px;
-}
-
-.errorInfoBlock button{
-    margin-top: -40px;
-
+    font-size: 30px;
 }
 
 .image404Block {

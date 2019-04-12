@@ -3,6 +3,7 @@ package ru.tsystems.internetshop.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.tsystems.internetshop.exception.DAOException;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -20,33 +21,58 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
     @Autowired
     protected SessionFactory sessionFactory;
 
-    protected Session getSession() {
+    private Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 
     @Override
     public void create(T entity) {
-        getSession().persist(entity);
+        try {
+            getSession().persist(entity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DAOException();
+        }
     }
 
     @Override
     public void update(T entity) {
-        getSession().update(entity);
+        try {
+            getSession().update(entity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DAOException();
+        }
     }
 
     @Override
     public void delete(T entity) {
-        getSession().delete(entity);
+        try {
+            getSession().delete(entity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DAOException();
+        }
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public T findByKey(PK key) {
-        return (T) getSession().get(persistentClass, (Serializable) key);
+        try {
+            return (T) getSession().get(persistentClass, (Serializable) key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DAOException();
+        }
     }
 
     @Override
     public List<T> findAll() {
-        return getSession().createQuery("from " + persistentClass.getName()).list();
+        try {
+            return getSession().createQuery("from " + persistentClass.getName()).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DAOException();
+        }
     }
 }

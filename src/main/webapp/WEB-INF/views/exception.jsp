@@ -30,11 +30,18 @@
         <div class="errorBlock">
           <div class="errorInfoBlock">
             <div class="image404Block">
-              <img alt="404" src="<c:url value="/resources/images/404.png"/>">
+              <j:choose>
+                <j:when test="${responseInfo.statusCode == 404}">
+                  <img alt="404" src="<c:url value="/resources/images/404.png"/>">
+                </j:when>
+                <j:when test="${responseInfo.statusCode == 500}">
+                  <img alt="500" src="<c:url value="/resources/images/500.png"/>">
+                </j:when>
+              </j:choose>
             </div>
             <div>
-              <p>PAGE NOT FOUND</p>
-              <a href="/">
+              <p>${fn:toUpperCase(responseInfo.message)}</p>
+              <a href="<j:url value="/"/>">
                 <button class="btn formButton">MAIN PAGE</button>
               </a>
             </div>

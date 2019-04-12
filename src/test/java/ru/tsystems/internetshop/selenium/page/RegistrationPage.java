@@ -1,7 +1,7 @@
 package ru.tsystems.internetshop.selenium.page;
 
 public class RegistrationPage {
-    private final String title = "Registration page";
+    private final String title = "Registration";
 
     public String getTitle() {
         return title;

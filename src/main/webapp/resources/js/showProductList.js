@@ -7,12 +7,12 @@ $('.showProducts').click(function() {
    var formUrl;
 
    if (beginUrl[4] === 'employeeProfile' || beginUrl[3] === 'employeeProfile')
-       formUrl = '/employeeProfile/';
+       formUrl = 'employeeProfile/';
    else if (beginUrl[4] === 'clientProfile' || beginUrl[3] === 'clientProfile')
-       formUrl = '/clientProfile/';
+       formUrl = 'clientProfile/';
 
     $.post({
-        url: formUrl + 'showOrderHistory/get-products',
+        url: beginUrl[0] + '/' + beginUrl[1] + '/' + beginUrl[2] + '/' + beginUrl[3] + '/' + formUrl + 'showOrderHistory/get-products',
         data: data,
         success: function (orderProducts) {
             showProductsWindow();

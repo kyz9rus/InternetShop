@@ -50,10 +50,10 @@
                             <div class="categoryTextBlock categoryTextBlock-${tagStatus.count}">
                                 <h5 class="categoryText">${fn:replace(fn:toUpperCase(category.name), '_', ' ')}</h5>
                                 <div class="categoryOperations">
-                                    <img class="img-${tagStatus.count}" src="/resources/images/writingHand.png" alt="pen"/>
+                                    <img class="img-${tagStatus.count}" src="<j:url value="/resources/images/writingHand.png"/>" alt="pen"/>
                                     <form action="remove-category" method="post">
                                         <button>
-                                            <img src="/resources/images/cross.png" alt="cross"/>
+                                            <img src="<j:url value="/resources/images/cross.png"/>" alt="cross"/>
                                         </button>
                                         <input name="oldName" style="display: none" value="${category.name}"/>
                                     </form>

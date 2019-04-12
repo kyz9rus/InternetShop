@@ -51,7 +51,7 @@
                       </div>
                       <div class="form-group">
                           <label>Price:</label>
-                          <input name="price" required/>
+                          <input id="price" name="price" required/>
                       </div>
                       <div class="form-group">
                           <label>Category:</label>
@@ -65,7 +65,7 @@
                       </div>
                       <div class="form-group">
                           <label>Weight:</label>
-                          <input name="weight"/>
+                          <input id="weight" name="weight" placeholder="325"/>
                       </div>
                       <div class="form-group">
                           <label>Volume:</label>
@@ -73,7 +73,7 @@
                       </div>
                       <div class="form-group">
                           <label>Quantity in stock:</label>
-                          <input name="quantityInStock" required/>
+                          <input id="quantityInStock" name="quantityInStock" required/>
                       </div>
                       <div class="form-group">
                           <label>Link to the image:</label>
@@ -101,7 +101,7 @@
   <script src="<j:url value="/resources/js/addProduct.js" />"></script>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
   <script>
-      // Маска для полей
+      // Маски для полей
       $('.addProductBlock input[name="volume"]').mask('999x999x999');
   </script>
 </body>
