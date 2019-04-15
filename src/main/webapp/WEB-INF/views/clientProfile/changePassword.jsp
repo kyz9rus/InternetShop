@@ -41,7 +41,7 @@
             </div>
 
             <div class="variant changePasswordBlock">
-              <form action="change-password" method="post">
+              <form action="password" method="post">
                 <div class="form-group">
                   <label>Current password:</label>
                   <input name="password" type="password" required/>

@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.internetshop.exception.DAOException;
 import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.BasketInfo;
@@ -81,7 +80,7 @@ public class PublicController {
         return "login";
     }
 
-    @PostMapping(value = "create-client")
+    @PostMapping(value = "client")
     public String createClient(@Validated @ModelAttribute("client") ClientDTO client, @RequestParam("password") String password, @RequestParam("repeatPassword") String repeatPassword, Model model) {
         logger.info("Register client: " + client + "...");
 

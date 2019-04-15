@@ -74,7 +74,7 @@ public class ClientController {
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
-    @GetMapping("showOrderHistory")
+    @GetMapping("orderHistory")
     public String showOrderHistoryPage(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
         logger.info("Showing order history for client " + clientDTO + "...");
 

@@ -19,7 +19,7 @@
         </a>
     </li>
     <li class="clientOperation">
-        <a href="<c:url value="/clientProfile/showOrderHistory"/>">
+        <a href="<c:url value="/clientProfile/orderHistory"/>">
             <label>View order history</label>
         </a>
     </li>

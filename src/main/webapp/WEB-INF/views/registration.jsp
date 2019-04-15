@@ -28,7 +28,7 @@
 
       <div class="content" align="center">
         <div class="registrationBlock" align="left">
-          <spring:form method="post" action="create-client" modelAttribute="client">
+          <spring:form method="post" action="client" modelAttribute="client">
             <div class="form-group">
               <label>Last name</label>
               <input name="lastName" required />
