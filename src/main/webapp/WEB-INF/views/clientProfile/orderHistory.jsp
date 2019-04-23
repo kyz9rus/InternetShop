@@ -47,62 +47,64 @@
                       <ul class="orderProductList">
                       </ul>
                     </div>
-                    <table class="orderTable">
-                      <tr align="center">
-                        <td>ID</td>
-                        <td>Adress</td>
-                        <td>Delivery method</td>
-                        <td>Payment method</td>
-                        <td>Order status</td>
-                        <td>Payment status</td>
-                        <td>Price</td>
-                        <td>Products</td>
-                        <td></td>
-                      </tr>
-                      <j:forEach items="${orders}" var="order" varStatus="tagStatus">
+                    <div class="orderTableBlock">
+                      <table class="orderTable">
                         <tr align="center">
-                          <td>${order.id}</td>
-                          <td>ID: ${order.clientAddress.id}, ${order.clientAddress.postalCode}, ${order.clientAddress.country}, ${order.clientAddress.city}, ${order.clientAddress.street}, ${order.clientAddress.house}, ${order.clientAddress.room}</td>
-                          <td>${order.deliveryMethod}</td>
-                          <td>${order.paymentMethod}</td>
-                          <j:choose>
-                            <j:when test="${order.orderStatus == 'WAITING_FOR_SHIPMENT'}">
-                              <td class="text-warning">waiting for shipment</td>
-                            </j:when>
-                            <j:when test="${order.orderStatus == 'SHIPPED'}">
-                              <td class="text-primary">shipped</td>
-                            </j:when>
-                            <j:when test="${order.orderStatus == 'DELIVERED'}">
-                              <td class="text-success">delivered</td>
-                            </j:when>
-                            <j:otherwise>
-                              <td>${order.orderStatus}</td>
-                            </j:otherwise>
-                          </j:choose>
-                          <j:choose>
-                            <j:when test="${order.paymentStatus == 'WAITING_FOR_PAYMENT'}">
-                              <td class="text-warning">waiting for payment</td>
-                            </j:when>
-                            <j:when test="${order.paymentStatus == 'PAID'}">
-                              <td class="text-success">paid</td>
-                            </j:when>
-                            <j:otherwise>
-                              <td>${order.paymentStatus}</td>
-                            </j:otherwise>
-                          </j:choose>
-                          <td>${order.price}</td>
-                          <td>
-                            <button class="btn formButton showProducts showProducts-${order.id}">SHOW PRODUCTS</button>
-                          </td>
-                          <td>
-                            <form action="repeat-order" method="post">
-                              <input name="orderId" value="${order.id}" hidden/>
-                              <button class="btn formButton">REPEAT</button>
-                            </form>
-                          </td>
+                          <td>ID</td>
+                          <td>Adress</td>
+                          <td>Delivery method</td>
+                          <td>Payment method</td>
+                          <td>Order status</td>
+                          <td>Payment status</td>
+                          <td>Price</td>
+                          <td>Products</td>
+                          <td></td>
                         </tr>
-                      </j:forEach>
-                    </table>
+                        <j:forEach items="${orders}" var="order" varStatus="tagStatus">
+                          <tr align="center">
+                            <td>${order.id}</td>
+                            <td>ID: ${order.clientAddress.id}, ${order.clientAddress.postalCode}, ${order.clientAddress.country}, ${order.clientAddress.city}, ${order.clientAddress.street}, ${order.clientAddress.house}, ${order.clientAddress.room}</td>
+                            <td>${order.deliveryMethod}</td>
+                            <td>${order.paymentMethod}</td>
+                            <j:choose>
+                              <j:when test="${order.orderStatus == 'WAITING_FOR_SHIPMENT'}">
+                                <td class="text-warning">waiting for shipment</td>
+                              </j:when>
+                              <j:when test="${order.orderStatus == 'SHIPPED'}">
+                                <td class="text-primary">shipped</td>
+                              </j:when>
+                              <j:when test="${order.orderStatus == 'DELIVERED'}">
+                                <td class="text-success">delivered</td>
+                              </j:when>
+                              <j:otherwise>
+                                <td>${order.orderStatus}</td>
+                              </j:otherwise>
+                            </j:choose>
+                            <j:choose>
+                              <j:when test="${order.paymentStatus == 'WAITING_FOR_PAYMENT'}">
+                                <td class="text-warning">waiting for payment</td>
+                              </j:when>
+                              <j:when test="${order.paymentStatus == 'PAID'}">
+                                <td class="text-success">paid</td>
+                              </j:when>
+                              <j:otherwise>
+                                <td>${order.paymentStatus}</td>
+                              </j:otherwise>
+                            </j:choose>
+                            <td>${order.price}</td>
+                            <td>
+                              <button class="btn formButton showProducts showProducts-${order.id}">SHOW PRODUCTS</button>
+                            </td>
+                            <td>
+                              <form action="repeat-order" method="post">
+                                <input name="orderId" value="${order.id}" hidden/>
+                                <button class="btn formButton">REPEAT</button>
+                              </form>
+                            </td>
+                          </tr>
+                        </j:forEach>
+                      </table>
+                    </div>
                   </div>
                 </j:otherwise>
               </j:choose>

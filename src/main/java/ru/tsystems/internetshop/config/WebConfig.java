@@ -20,6 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import ru.tsystems.internetshop.util.CategoryInfo;
+import ru.tsystems.internetshop.util.NewsInfo;
 
 import java.util.List;
 import java.util.Properties;
@@ -28,6 +29,7 @@ import java.util.Properties;
 @EnableWebMvc
 @Configuration
 @ComponentScan({"ru.tsystems.internetshop"})
+@Import({MessagingConfiguration.class, MessagingListenerConfiguration.class})
 @PropertySource("classpath:spring-mail.properties")
 public class WebConfig implements WebMvcConfigurer {
 
@@ -82,6 +84,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Scope(value = WebApplicationContext.SCOPE_APPLICATION)
     public CategoryInfo createCategories() {
         return new CategoryInfo();
+    }
+
+    @Bean
+    @Scope(value = WebApplicationContext.SCOPE_APPLICATION)
+    public NewsInfo createNews() {
+        return new NewsInfo();
     }
 
     @Bean(name = "mailSender")

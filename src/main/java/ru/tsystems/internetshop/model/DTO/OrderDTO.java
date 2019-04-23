@@ -21,11 +21,11 @@ public class OrderDTO {
 
     @JsonIgnore
     @NotNull
-    private Client client;
+    private ClientDTO client;
 
     @JsonIgnore
     @NotNull
-    private ClientAddress clientAddress;
+    private ClientAddressDTO clientAddress;
 
     @NotNull
     private PaymentMethod paymentMethod;

@@ -113,7 +113,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDTO> getOrdersByCategory(CategoryDTO categoryDTO) {
-        List<Order> orders = orderDAO.findOrdersByCategory(mapper.convertToEntity(categoryDTO));
+        List<Order> orders;
+        try {
+            orders = orderDAO.findOrdersByCategory(mapper.convertToEntity(categoryDTO));
+        } catch (IllegalArgumentException e) {
+            return new ArrayList<>();
+        }
+
         List<OrderDTO> orderDTOS = new ArrayList<>();
 
         for (Order order : orders)

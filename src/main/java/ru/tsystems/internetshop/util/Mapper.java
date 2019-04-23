@@ -36,6 +36,10 @@ public class Mapper {
         return modelMapper.map(clientAddress, ClientAddressDTO.class);
     }
 
+    public NewsDTO convertToDto(News news) {
+        return modelMapper.map(news, NewsDTO.class);
+    }
+
     public Client convertToEntity(ClientDTO clientDTO) {
         return modelMapper.map(clientDTO, Client.class);
     }

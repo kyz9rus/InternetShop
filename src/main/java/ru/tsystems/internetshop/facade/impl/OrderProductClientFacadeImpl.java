@@ -5,8 +5,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.ClientDAO;
 import ru.tsystems.internetshop.facade.OrderProductClientFacade;
+import ru.tsystems.internetshop.messaging.MessageSender;
 import ru.tsystems.internetshop.model.*;
 import ru.tsystems.internetshop.model.DTO.*;
+import ru.tsystems.internetshop.service.MailService;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.service.ProductService;
 import ru.tsystems.internetshop.util.Mapper;
@@ -28,6 +30,9 @@ public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
     private ProductService productService;
 
     @Autowired
+    private MailService mailService;
+
+    @Autowired
     private ClientDAO clientDAO;
 
     @Override
@@ -37,8 +42,8 @@ public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
         if (basket.getCouponDTO() != null)
             clientDTO.getCoupons().add(basket.getCouponDTO());
 
-        orderDTO.setClient(mapper.convertToEntity(clientDTO));
-        orderDTO.setClientAddress(mapper.convertToEntity(clientAddressDTO));
+        orderDTO.setClient(clientDTO);
+        orderDTO.setClientAddress(clientAddressDTO);
         orderDTO.setDeliveryMethod(deliveryMethod);
         orderDTO.setPaymentMethod(paymentMethod);
         orderDTO.setOrderStatus(OrderStatus.WAITING_FOR_SHIPMENT);
@@ -74,5 +79,7 @@ public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
         orderService.saveOrder(orderDTO);
 
         clientDAO.update(mapper.convertToEntity(clientDTO));
+
+        mailService.sendLetter(clientDTO.getEmail(), orderDTO);
     }
 }

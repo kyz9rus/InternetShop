@@ -172,8 +172,7 @@ input:focus{
 }
 
 .becomeRepresentativeBlock {
-    border: 1px solid grey;
-    height: 130px;
+    border: 1px solid rgb(229, 229, 229);
     margin: 0px 10%;
     z-index: 0;
 }
@@ -271,15 +270,87 @@ input:focus{
     margin: 7px;
 }
 
+.mainContent {
+    margin: 0 10%;
+    margin-top: 50px;
+}
+
+.clientStatistic {
+    height: max-content;
+}
+
+.clientStatistic, .newsBlock {
+    border: 1px solid rgb(229, 229, 229);
+    padding: 10px;
+}
+
+.client {
+    float: left;
+    font-size: 17px;
+}
+
+.text{
+    overflow: auto;
+}
+
+.newsBlock {
+    /*     margin-top: 50px !important; */
+    /*     margin: 0px 20%; */
+    /*     z-index: 0; */
+}
+
+.theNewsBlock {
+    margin-top: 50px !important;
+    margin: 0px 16%;
+    z-index: 0;
+}
+
+.newsBlock > img {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.newsBlock a{
+    color: black;
+}
+
+.newsBlock a:hover{
+    color: rgb(215, 69, 144);
+}
+
+.postBlock {
+    padding: 0px 10px;
+    margin-bottom: 20px;
+    border-block-end: 1px solid rgb(229, 229, 229);
+}
+
+.postBlock:last-child {
+    border: none;
+}
+
+.writing_date{
+    font-size: 13px;
+    color: grey;
+}
+
+.postArticle {
+    font-size: 25px;
+    font-weight: bold;
+}
+
 @media (max-width: 822px) {
     .presentImage {
         display: none;
     }
 }
 
-@media (min-width: 576px) and (max-width: 645px){
+@media (max-width: 676px){
     .becomeRepresentativeHeaderBlock{
         font-size: 8.4px;
+    }
+
+    .becomeRepresentativeBlock p:not(.article) {
+        font-size: 17px;
     }
 }
 
@@ -289,18 +360,6 @@ input:focus{
     }
     .mobileHeader {
         display: none;
-    }
-
-    .becomeRepresentativeBlock {
-        height: 150px;
-    }
-
-    .becomeRepresentativeBlock .formButton {
-        margin-top: 10px;
-    }
-
-    .becomeRepresentativeBlock p:not(.article) {
-        font-size: 17px;
     }
 }
 
@@ -372,14 +431,6 @@ input:focus{
     }
     #pull {
         display: unset;
-    }
-
-    .becomeRepresentativeBlock {
-        height: 250px;
-    }
-
-    .becomeRepresentativeBlock .formButton {
-        margin-top: -60px;
     }
 
     .basketInfo {

@@ -31,7 +31,7 @@
 
       <div class="content" align="center">
         <div class="couponWindow">
-          <img src="/resources/images/cross.png" alt="X">
+          <img src="<j:url value="/resources/images/cross.png"/>" alt="X">
           <p class="text-danger">Waiting...</p>
           <button class="btn formButton">OK</button>
         </div>
@@ -59,43 +59,66 @@
           </div>
         </div>
 
-        <div class="topProductsBlock">
-              <j:if test="${products.size() != 0}">
-                <p>Top-10 products:</p>
-                <ul class="topClientsList">
-                  <j:forEach items="${products}" var="product" varStatus="tagStatus">
+        <div class="mainContent row">
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+          <div class="clientStatistic col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <p class="topClientsLabel">TOP clients</p>
+            <div class="topClientsBlock" align="left">
+              <j:choose>
+                <j:when test="${clients.size() == 0}">
+                  <p>Clients list is empty</p>
+                </j:when>
+                <j:otherwise>
+                  <ul class="topClientsList">
+                    <j:forEach items="${clients}" var="client" varStatus="tagStatus">
+                      <j:if test="${client.summaryOrdersPrice > 0}">
+                        <li><p class="client">${tagStatus.count}. ${client.lastName} ${client.firstName}: ${client.summaryOrdersPrice} rubles</p></li>
+                      </j:if>
+                    </j:forEach>
+                  </ul>
+                </j:otherwise>
+              </j:choose>
+            </div>
+          </div>
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+          <div class="newsBlock col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <a href="http://localhost:8080/news">
+              <p class="newsLabel">NEWS</p>
+            </a>
+            <j:choose>
+              <j:when test="${newsList.size() != 0}">
+                <ul class="newsList">
+                  <j:forEach items="${newsList}" var="news" varStatus="tagStatus">
                     <li>
-                      <div class="productBlock">
-                        <div class="product product-${tagStatus.count}">
-                          <div class="productImage" align="center">
-                            <img src="${product.imgSrc}" alt="NO IMAGE"/>
+                      <div class="postBlock" align="left">
+                        <a href="<j:url value="news/${news.id}"/> ">
+                          <div class="articleBlock">
+                            <label class="postArticle">${news.article}</label>
                           </div>
-                          <div class="productInfo">
-                            <div class="productInfo1">
-                              <p class="productName">${product.name}</p>
-                              <p class="productWeight">Weight: ${product.weight}г.</p>
-                              <p class="productSize">Volume: ${product.volume}</p>
-                            </div>
-                            <div class="productInfo2">
-                              <p class="productPrice">Price: ${product.price} rubles.</p>
-                              <j:choose>
-                                <j:when test="${product.quantityInStock != 0}">
-                                  <p class="quantityInStock">Quantity in stock: ${product.quantityInStock}</p>
-                                  <button class="btn buyButton buyButton-${tagStatus.count}">BUY</button>
-                                </j:when>
-                                <j:otherwise>
-                                  <p class="quantityInStock">Product is temporarily out of stock</p>
-                                </j:otherwise>
-                              </j:choose>
-                              <input name="id" value="${product.id}" hidden/>
-                            </div>
-                          </div>
+                        </a>
+                        <div class="textBlock">
+                          <j:choose>
+                            <j:when test="${news.text.length() > 150}">
+                              <p class="text">${fn:substring(news.text, 0, 150)}...</p>
+                            </j:when>
+                            <j:otherwise>
+                              <p class="text">${news.text}</p>
+                            </j:otherwise>
+                          </j:choose>
+                        </div>
+                        <div class="writingDateBlock">
+                          <label class="writing_date">${news.writingDate}</label>
                         </div>
                       </div>
                     </li>
                   </j:forEach>
                 </ul>
-              </j:if>
+              </j:when>
+              <j:otherwise>
+                <p>Here is no news yet</p>
+              </j:otherwise>
+            </j:choose>
+          </div>
         </div>
       </div>
 

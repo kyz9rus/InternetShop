@@ -269,7 +269,7 @@ public class ClientController {
 
         CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
 
-        if (couponDTO != null && basket.getCouponDTO() == null || basket.isChangedAfterCoupon()) {
+        if (couponDTO != null && (basket.getCouponDTO() == null || basket.isChangedAfterCoupon())) {
             if (couponDTO.getName().equals("FIRST_ORDER"))
                 basket.setSummaryPrice((int) Math.round(basketService.calcPrice(basket) * 0.7));
 

@@ -136,6 +136,11 @@ li > h5 {
     width: 100%;
 }
 
+.orderTableBlock{
+    width: 100%;
+    overflow: auto;
+}
+
 .orderTable {
     border: 1px solid grey;
 }

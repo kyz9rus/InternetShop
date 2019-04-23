@@ -12,19 +12,24 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.tsystems.internetshop.exception.NewsNotFoundException;
 import ru.tsystems.internetshop.facade.UserClientFacade;
+import ru.tsystems.internetshop.messaging.MessageSender;
 import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.BasketInfo;
-import ru.tsystems.internetshop.model.DTO.CategoryDTO;
-import ru.tsystems.internetshop.model.DTO.ClientDTO;
-import ru.tsystems.internetshop.model.DTO.CouponDTO;
-import ru.tsystems.internetshop.model.DTO.ProductDTO;
+import ru.tsystems.internetshop.model.DTO.*;
 import ru.tsystems.internetshop.service.*;
 import ru.tsystems.internetshop.util.CategoryInfo;
+import ru.tsystems.internetshop.util.NewsInfo;
 import ru.tsystems.internetshop.util.ResponseInfo;
 
+import javax.jms.MapMessage;
+import javax.jms.Message;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Controller
 @SessionAttributes(value = {"client", "basket"})
@@ -35,6 +40,9 @@ public class PublicController {
 
     @Autowired
     private CategoryInfo categoryInfo;
+
+    @Autowired
+    private NewsInfo newsInfo;
 
     @Autowired
     private UserClientFacade userClientFacade;
@@ -54,17 +62,26 @@ public class PublicController {
     @Autowired
     private BasketService basketService;
 
+    @Autowired
+    private MessageSender messageSender;
+
+    @Autowired
+    private NewsService newsService;
+
     private Logger logger = Logger.getLogger("logger");
 
     @GetMapping("exception")
-    public String toExceptionPage() {
+    public String toExceptionPage(Model model) {
+        model.addAttribute("categories", categoryInfo.getCategories());
         return "exception";
     }
 
     @GetMapping(value = "/")
     public String main(Model model) {
+        messageSender.sendMessage("Top products has changed");
         model.addAttribute("client", authenticationService.getClient());
-        model.addAttribute("products", productService.getTop10Products());
+        model.addAttribute("clients", clientService.getTop10Clients());
+        model.addAttribute("newsList", newsInfo.getNews().stream().limit(7).collect(Collectors.toList()));
         model.addAttribute("categories", categoryInfo.getCategories());
         return "index";
     }
@@ -116,6 +133,19 @@ public class PublicController {
         model.addAttribute("categories", categoryInfo.getCategories());
 
         return "category";
+    }
+
+    @GetMapping(value = "news/{id}")
+    public String getNewsWithId(@PathVariable("id") Long newsId, Model model) {
+        NewsDTO newsDTO = newsService.getNewsById(newsId);
+
+        if (newsDTO != null)
+            model.addAttribute("news", newsDTO);
+        else
+            throw new NewsNotFoundException();
+
+        model.addAttribute("categories", categoryInfo.getCategories());
+        return "news";
     }
 
     @PostMapping(value = "put-product", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -206,6 +236,20 @@ public class PublicController {
         }
 
         return responseInfo;
+    }
+
+    @GetMapping(value = "top10Products", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<ProductDTO> getTop10Products() {
+        System.out.println("GET");
+        return productService.getTop10Products();
+    }
+
+    @PostMapping(value = "top10Products", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<ProductDTO> getTop10ProductsPOST() {
+        System.out.println("POST");
+        return productService.getTop10Products();
     }
 
     @ModelAttribute("client")
