@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.internetshop.exception.NewsNotFoundException;
 import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.messaging.MessageSender;
 import ru.tsystems.internetshop.model.Basket;
@@ -62,9 +62,6 @@ public class PublicController {
 
     @Autowired
     private MessageSender messageSender;
-
-    @Autowired
-    private NewsService newsService;
 
     private Logger logger = Logger.getLogger("logger");
 
@@ -137,19 +134,6 @@ public class PublicController {
         return "category";
     }
 
-    @GetMapping(value = "news/{id}")
-    public String getNewsWithId(@PathVariable("id") Long newsId, Model model) {
-        NewsDTO newsDTO = newsService.getNewsById(newsId);
-
-        if (newsDTO != null)
-            model.addAttribute("news", newsDTO);
-        else
-            throw new NewsNotFoundException();
-
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return "news";
-    }
-
     @PostMapping(value = "put-product", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ResponseEntity<BasketInfo> putProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
         logger.info("Put product with id " + productId + " in basket + " + basket + "...");
@@ -213,7 +197,7 @@ public class PublicController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "send-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
-    ResponseInfo sendCoupon(@ModelAttribute("client") ClientDTO clientDTO, @RequestParam("couponName") String couponName) {
+    ResponseInfo sendCoupon(@ModelAttribute("client") ClientDTO clientDTO, @RequestParam("couponName") String couponName) throws MailException {
         logger.info("Sending coupon to + " + clientDTO.getEmail() +  "...");
 
         String email = clientDTO.getEmail();
@@ -226,7 +210,7 @@ public class PublicController {
                 responseInfo = new ResponseInfo("You have already used this coupon.", 404);
             else {
                 try {
-                    mailService.sendLetter(email, couponDTO);
+                    mailService.sendNewCouponLetter(email, couponDTO);
                     responseInfo = new ResponseInfo("Сoupon successfully sent.\nCheck your email.", 200);
                 } catch (SMTPSendFailedException e) {
                     responseInfo = new ResponseInfo("Incorrect email. Change it in your profile!", 404);

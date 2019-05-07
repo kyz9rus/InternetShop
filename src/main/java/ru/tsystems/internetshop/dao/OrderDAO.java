@@ -14,4 +14,6 @@ public interface OrderDAO extends DAO<Order, Long> {
     List<Order> findOrdersByCategory(Category category);
 
     List<Order> findPaidOrders();
+
+    Order createAndGet(Order entity);
 }

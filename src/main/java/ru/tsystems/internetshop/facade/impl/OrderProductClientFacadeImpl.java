@@ -1,6 +1,8 @@
 package ru.tsystems.internetshop.facade.impl;
 
+import com.sun.mail.smtp.SMTPSendFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.ClientDAO;
@@ -8,6 +10,7 @@ import ru.tsystems.internetshop.facade.OrderProductClientFacade;
 import ru.tsystems.internetshop.messaging.MessageSender;
 import ru.tsystems.internetshop.model.*;
 import ru.tsystems.internetshop.model.DTO.*;
+import ru.tsystems.internetshop.service.ClientService;
 import ru.tsystems.internetshop.service.MailService;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.service.ProductService;
@@ -21,9 +24,6 @@ import java.util.Map;
 public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
 
     @Autowired
-    private Mapper mapper;
-
-    @Autowired
     private OrderService orderService;
 
     @Autowired
@@ -33,7 +33,7 @@ public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
     private MailService mailService;
 
     @Autowired
-    private ClientDAO clientDAO;
+    private ClientService clientService;
 
     @Override
     public void issueOrder(ClientDTO clientDTO, ClientAddressDTO clientAddressDTO, Basket basket, DeliveryMethod deliveryMethod, PaymentMethod paymentMethod) throws Exception {
@@ -47,8 +47,10 @@ public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
         orderDTO.setDeliveryMethod(deliveryMethod);
         orderDTO.setPaymentMethod(paymentMethod);
         orderDTO.setOrderStatus(OrderStatus.WAITING_FOR_SHIPMENT);
-        if (paymentMethod == PaymentMethod.CARD)
+        if (paymentMethod == PaymentMethod.CARD) {
             orderDTO.setPaymentStatus(PaymentStatus.PAID);
+            clientDTO.setSummaryOrdersPrice(clientDTO.getSummaryOrdersPrice() + (long) basket.getSummaryPrice());
+        }
         else
             orderDTO.setPaymentStatus(PaymentStatus.WAITING_FOR_PAYMENT);
 
@@ -75,11 +77,16 @@ public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
 
         orderDTO.setPrice(basket.getSummaryPrice());
         orderDTO.setOrderDate(LocalDate.now());
-        clientDTO.setSummaryOrdersPrice((long) basket.getSummaryPrice());
-        orderService.saveOrder(orderDTO);
 
-        clientDAO.update(mapper.convertToEntity(clientDTO));
+        orderDTO = orderService.saveOrder(orderDTO);
 
-        mailService.sendLetter(clientDTO.getEmail(), orderDTO);
+        clientService.updateClient(clientDTO);
+
+        try {
+            mailService.sendNewOrderLetter(orderDTO);
+        } catch (SMTPSendFailedException | MailException e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

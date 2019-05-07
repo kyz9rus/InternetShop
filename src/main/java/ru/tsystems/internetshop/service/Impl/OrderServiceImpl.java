@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.OrderDAO;
-import ru.tsystems.internetshop.model.*;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
+import ru.tsystems.internetshop.model.*;
 import ru.tsystems.internetshop.model.entity.Order;
 import ru.tsystems.internetshop.service.OrderService;
 import ru.tsystems.internetshop.util.Mapper;
@@ -151,20 +151,25 @@ public class OrderServiceImpl implements OrderService {
             e.printStackTrace();
         }
 
+        System.out.println(revenueForMonth[0] + " " + revenueForWeek[0]);
+
         return new RevenueInfo(revenueForWeek[0], revenueForMonth[0]);
     }
 
     @Override
-    public void saveOrder(OrderDTO orderDTO) {
-        orderDAO.create(mapper.convertToEntity(orderDTO));
+    public OrderDTO saveOrder(OrderDTO orderDTO) {
+        return mapper.convertToDto(orderDAO.createAndGet(mapper.convertToEntity(orderDTO)));
     }
 
     private List<OrderDTO> getPaidOrders() {
         List<Order> orders = orderDAO.findPaidOrders();
         List<OrderDTO> orderDTOS = new ArrayList<>();
 
-        for (Order order : orders)
+        System.out.println("PAID ORDERS: ");
+        for (Order order : orders) {
             orderDTOS.add(mapper.convertToDto(order));
+            System.out.println(order);
+        }
 
         return orderDTOS;
     }

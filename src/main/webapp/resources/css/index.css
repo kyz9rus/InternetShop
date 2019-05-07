@@ -4,6 +4,11 @@
     height: 100%;
 }
 
+.navButtons {
+    width: 120px;
+    height: 50px;
+}
+
 .wrapperForFooter {
     height: 100%;
     flex: 1 0 auto;
@@ -172,6 +177,10 @@ input:focus{
     font-weight: bold;
 }
 
+.becomeRepresentativeHeaderBlock {
+    float: left;
+}
+
 .couponBlock {
     border: 1px solid rgb(229, 229, 229);
     margin: 0px 10%;
@@ -190,6 +199,10 @@ input:focus{
 
 .navButtons *{
     background: none !important;;
+}
+
+.navButtons img{
+    cursor: pointer;
 }
 
 .navButtons .next {
@@ -373,6 +386,9 @@ input:focus{
 }
 
 @media (max-width: 676px){
+    .becomeRepresentativeHeaderBlock{
+        font-size: 8.4px;
+    }
     .couponBlock p:not(.article) {
         font-size: 17px;
     }

@@ -1,22 +1,20 @@
 package ru.tsystems.internetshop.controller;
 
+import com.sun.mail.smtp.SMTPSendFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.tsystems.internetshop.exception.DAOException;
 import ru.tsystems.internetshop.messaging.MessageSender;
-import ru.tsystems.internetshop.model.DTO.CategoryDTO;
-import ru.tsystems.internetshop.model.DTO.OrderDTO;
-import ru.tsystems.internetshop.model.DTO.OrderProductDTO;
-import ru.tsystems.internetshop.model.DTO.ProductDTO;
+import ru.tsystems.internetshop.model.DTO.*;
+import ru.tsystems.internetshop.model.PaymentStatus;
 import ru.tsystems.internetshop.model.RevenueInfo;
-import ru.tsystems.internetshop.service.CategoryService;
-import ru.tsystems.internetshop.service.ClientService;
-import ru.tsystems.internetshop.service.OrderService;
-import ru.tsystems.internetshop.service.ProductService;
+import ru.tsystems.internetshop.service.*;
 import ru.tsystems.internetshop.util.CategoryInfo;
 import ru.tsystems.internetshop.util.ResponseInfo;
 
@@ -44,6 +42,9 @@ public class EmployeeController {
 
     @Autowired
     private MessageSender messageSender;
+
+    @Autowired
+    private MailService mailService;
 
     private Logger logger = Logger.getLogger("logger");
 
@@ -100,25 +101,30 @@ public class EmployeeController {
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
-    @GetMapping("import-products-from-file")
-    public String importFromFile(Model model) {
-//        ...
-
-
-        model.addAttribute("successMessage", "import of products successfully completed");
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return "employeeProfile/importProductsFromFile";
-    }
-
-    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("change-order-status")
-    public @ResponseBody ResponseInfo changeOrderStatus(@RequestParam("id") Long id, @RequestParam("orderStatus") String orderStatusString) {
+    public @ResponseBody
+    ResponseInfo changeOrderStatus(@RequestParam("id") Long id, @RequestParam("orderStatus") String orderStatusString) throws SMTPSendFailedException {
         logger.info("Changing order status (-> " + orderStatusString + ") for order with id + " + id + "...");
 
         OrderDTO orderDTO = orderService.getOrder(id);
         if (orderDTO != null) {
             orderDTO.setOrderStatus(orderService.getOrderStatus(orderStatusString));
+
+            for (OrderProductDTO orderProductDTO: orderDTO.getOrderProducts()) {
+                ProductDTO productDTO = orderProductDTO.getProduct();
+                productService.updateProduct(productDTO);
+            }
+
             orderService.updateOrder(orderDTO);
+
+            clientService.updateClient(orderDTO.getClient());
+
+            try {
+                mailService.sendChangeOrderStatusLetter(orderDTO);
+            } catch (MailException e) {
+                e.printStackTrace();
+                throw e;
+            }
 
             return new ResponseInfo("Payment status for order with id " + orderDTO.getId() + " successfully changed!", 200);
         } else
@@ -128,13 +134,35 @@ public class EmployeeController {
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("change-payment-status")
-    public @ResponseBody ResponseInfo changePaymentStatus(@RequestParam("id") Long id, @RequestParam("paymentStatus") String paymentStatusString) {
+    public @ResponseBody
+    ResponseInfo changePaymentStatus(@RequestParam("id") Long id, @RequestParam("paymentStatus") String paymentStatusString) throws SMTPSendFailedException {
         logger.info("Changing payment status for order with id + " + id + "...");
 
         OrderDTO orderDTO = orderService.getOrder(id);
         if (orderDTO != null) {
             orderDTO.setPaymentStatus(orderService.getPaymentStatus(paymentStatusString));
+
+            for (OrderProductDTO orderProductDTO: orderDTO.getOrderProducts()) {
+                ProductDTO productDTO = orderProductDTO.getProduct();
+                productService.updateProduct(productDTO);
+            }
+
             orderService.updateOrder(orderDTO);
+
+            ClientDTO clientDTO = orderDTO.getClient();
+            if (orderDTO.getPaymentStatus() == PaymentStatus.PAID)
+                clientDTO.setSummaryOrdersPrice(clientDTO.getSummaryOrdersPrice() + (long) orderDTO.getPrice());
+            else
+                clientDTO.setSummaryOrdersPrice(clientDTO.getSummaryOrdersPrice() - (long) orderDTO.getPrice());
+
+            clientService.updateClient(orderDTO.getClient());
+
+            try {
+                mailService.sendChangePaymentStatusLetter(orderDTO);
+            } catch (MailException e) {
+                e.printStackTrace();
+                throw e;
+            }
 
             return new ResponseInfo("Payment status for order with id " + orderDTO.getId() + " successfully changed!", 200);
         } else
@@ -153,7 +181,7 @@ public class EmployeeController {
                 productService.saveProduct(productDTO);
 
                 model.addAttribute("successMessage", "Product saved successfully.");
-                messageSender.sendMessage("Top products has changed");
+                messageSender.sendMessage("Top products could changed");
             } else
                 model.addAttribute("errorMessage", "Product with this name already exists.");
         }
@@ -242,7 +270,7 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping(value = "/showOrderHistory/get-products", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
-    List<OrderProductDTO> getProducts(@RequestParam("orderId") Long orderId){
+    List<OrderProductDTO> getProducts(@RequestParam("orderId") Long orderId) {
         logger.info("Getting products for order with id " + orderId + "...");
 
         OrderDTO orderDTO = orderService.getOrder(orderId);

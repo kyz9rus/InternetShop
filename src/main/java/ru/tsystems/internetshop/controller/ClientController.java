@@ -281,6 +281,8 @@ public class ClientController {
             basket.setChangedAfterCoupon(false);
         }
 
+        messageSender.sendMessage("Top products could changed");
+
         model.addAttribute("basket", basket);
         model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/issueOrder2";

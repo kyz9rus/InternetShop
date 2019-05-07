@@ -1,11 +1,12 @@
 package ru.tsystems.internetshop.controller;
 
+import com.sun.mail.smtp.SMTPSendFailedException;
+import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import ru.tsystems.internetshop.exception.DAOException;
-import ru.tsystems.internetshop.exception.NewsNotFoundException;
 import ru.tsystems.internetshop.util.ResponseInfo;
 
 @ControllerAdvice
@@ -27,11 +28,19 @@ public class CustomExceptionHandler {
         return modelAndView;
     }
 
-    @ExceptionHandler(NewsNotFoundException.class)
-    public ModelAndView newsException() {
+    @ExceptionHandler(SMTPSendFailedException.class)
+    public ModelAndView smtpException() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("exception");
-        modelAndView.addObject("responseInfo", new ResponseInfo("The news not found", 404));
+        modelAndView.addObject("responseInfo", new ResponseInfo("An error has occurred", 500));
+        return modelAndView;
+    }
+
+    @ExceptionHandler(MailException.class)
+    public ModelAndView mailException() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("exception");
+        modelAndView.addObject("responseInfo", new ResponseInfo("An error has occurred", 500));
         return modelAndView;
     }
 }

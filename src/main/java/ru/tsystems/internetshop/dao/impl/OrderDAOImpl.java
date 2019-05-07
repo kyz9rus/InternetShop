@@ -77,4 +77,19 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
             throw new DAOException();
         }
     }
+
+    @Override
+    public Order createAndGet(Order entity) {
+        try {
+            System.out.println("OLD ENTITY: " + entity);
+
+            getSession().persist(entity);
+
+            System.out.println("NEW ENTITY: " + entity);
+            return entity;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DAOException();
+        }
+    }
 }

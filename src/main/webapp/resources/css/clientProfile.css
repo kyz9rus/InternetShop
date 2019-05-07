@@ -391,12 +391,12 @@ td {
 
 .continueCouponButton, .checkCouponButton {
     float: right;
-    width: 40%;
+    width: 45%;
 }
 
 .noCouponButton {
     float: left;
-    width: 59%;
+    width: 54%;
     font-size: 80%;
 }
 
