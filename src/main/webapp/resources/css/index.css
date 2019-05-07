@@ -206,11 +206,11 @@ input:focus{
 }
 
 .navButtons .next {
-    float: left;
+    float: right;
 }
 
 .navButtons .prev {
-    float: right;
+    float: left;
 }
 
 .couponBlock p{
