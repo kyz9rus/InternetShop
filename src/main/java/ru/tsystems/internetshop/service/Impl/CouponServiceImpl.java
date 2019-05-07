@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.CouponDAO;
+import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.DTO.CouponDTO;
+import ru.tsystems.internetshop.service.BasketService;
 import ru.tsystems.internetshop.service.CouponService;
 import ru.tsystems.internetshop.util.Mapper;
 

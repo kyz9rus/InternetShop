@@ -45,8 +45,9 @@ input:focus{
     transition: 1;
 }
 
-.becomeRepresentativeHeaderBlock {
-    float: left;
+.next{
+    height: 100px;
+    background: red;
 }
 
 .signInBlock{
@@ -171,17 +172,43 @@ input:focus{
     font-weight: bold;
 }
 
-.becomeRepresentativeBlock {
+.couponBlock {
     border: 1px solid rgb(229, 229, 229);
     margin: 0px 10%;
     z-index: 0;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
-.becomeRepresentativeBlock p:not(.article) {
+.navButtons {
+    width: 120px;
+    height: 50px;
+}
+
+.navButtons *{
+    background: none !important;;
+}
+
+.navButtons .next {
+    float: left;
+}
+
+.navButtons .prev {
+    float: right;
+}
+
+.couponBlock p{
+    text-shadow: white 2px 1px 0px;
+}
+
+.couponBlock p:not(.article) {
     font-size: 19px;
 }
 
-.becomeRepresentativeBlock .row > div {
+.couponBlock .row > div {
     padding: 10px;
 }
 
@@ -282,6 +309,7 @@ input:focus{
 .clientStatistic, .newsBlock {
     border: 1px solid rgb(229, 229, 229);
     padding: 10px;
+    margin-top: 10px;
 }
 
 .client {
@@ -345,11 +373,7 @@ input:focus{
 }
 
 @media (max-width: 676px){
-    .becomeRepresentativeHeaderBlock{
-        font-size: 8.4px;
-    }
-
-    .becomeRepresentativeBlock p:not(.article) {
+    .couponBlock p:not(.article) {
         font-size: 17px;
     }
 }

@@ -39,7 +39,7 @@ function hideCouponWindow() {
     $('body').css({'background-color': 'rgba(0,0,0,0)'});
 }
 
-$('.becomeRepresentativeBlock button').click(function(e) {
+$('.couponBlock button').click(function (e) {
     var imgClass = $(this).attr('class');
     if (!imgClass.includes('ignoreScripts'))
         showCouponWindow();
@@ -54,11 +54,16 @@ $('.couponWindow button').click(function () {
 });
 
 $('.getCouponButton').click(function () {
-    var urlParts = document.URL.split('/');
-    var url = urlParts[0] + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
+    const urlParts = document.URL.split('/');
+    const url = urlParts[0] + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
+
+    var data = {};
+    data["couponName"] = $(this).parent().find("input[name='couponName']").val();
 
     $.post({
         url: url + '/send-coupon',
+        data: data,
+        dataType: 'json',
         success: function (responseInfo) {
             if (responseInfo.statusCode === 200)
                 $('.couponWindow p').attr('class', 'text-success');
@@ -71,4 +76,13 @@ $('.getCouponButton').click(function () {
             console.log("ERROR: " + e);
         }
     });
+});
+
+$('#couponsBlock ul').anoSlide({
+    items: 1,
+    speed: 500,
+    prev: 'a.prev',
+    next: 'a.next',
+    lazy: true,
+    auto: 4000
 });

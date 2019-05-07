@@ -15,8 +15,7 @@ public class MessagingConfiguration {
 
     @Bean
     public ConnectionFactory connectionFactory() throws NamingException {
-        ConnectionFactory connectionFactory = InitialContext.doLookup("java:jboss/DefaultJMSConnectionFactory");
-        return connectionFactory;
+        return InitialContext.doLookup("java:jboss/DefaultJMSConnectionFactory");
     }
 
     @Bean

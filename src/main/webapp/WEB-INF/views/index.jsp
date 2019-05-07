@@ -36,26 +36,60 @@
           <button class="btn formButton">OK</button>
         </div>
 
-        <div class="becomeRepresentativeBlock">
-          <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 presentImage">
-              <img src="<c:url value="/resources/images/present.png" />"/>
-            </div>
-            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-              <p class="article">Do you want a 30% discount on a first order?</p>
-              <p class=>Get a promo code right now!</p>
-            </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 buttonBlock">
-              <auth:authorize access="hasRole('EMPLOYEE') || isAnonymous()">
-                <a href="<j:url value="/login" />">
-                  <button class="btn formButton ignoreScripts">GET IT</button>
-                </a>
-              </auth:authorize>
-              <auth:authorize access="hasRole('CLIENT')">
-                <button class="btn formButton getCouponButton">GET IT</button>
-                <input name="email" value="${client.email}" hidden/>
-              </auth:authorize>
-            </div>
+        <div id="couponsBlock">
+          <ul>
+            <li>
+              <div class="couponBlock" style="background-image: url(http://novosti.led-advert.ru/uploads/images/Novosti/22.01.2019.jpg);">
+                <div class="row">
+                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <p class="article">Do you want a 30% discount on a first order?</p>
+                    <p class=>Get a promo code right now!</p>
+                  </div>
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 buttonBlock">
+                    <auth:authorize access="hasRole('EMPLOYEE') || isAnonymous()">
+                      <a href="<j:url value="/login" />">
+                        <button class="btn formButton ignoreScripts">GET IT</button>
+                      </a>
+                    </auth:authorize>
+                    <auth:authorize access="hasRole('CLIENT')">
+                      <button class="btn formButton getCouponButton">GET IT</button>
+                      <input name="email" value="${client.email}" hidden/>
+                    </auth:authorize>
+                    <input name="couponName" hidden value="HAPPY_ORDER"/>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="couponBlock" style="background-image: url(https://im0-tub-ru.yandex.net/i?id=dd1017fc486909f127f5e14488dd95e2&n=13);">
+                <div class="row">
+                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <p class="article">Discount on all fragrances!</p>
+                    <p class=>Get a promo code right now!</p>
+                  </div>
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 buttonBlock">
+                    <auth:authorize access="hasRole('EMPLOYEE') || isAnonymous()">
+                      <a href="<j:url value="/login" />">
+                        <button class="btn formButton ignoreScripts">GET IT</button>
+                      </a>
+                    </auth:authorize>
+                    <auth:authorize access="hasRole('CLIENT')">
+                      <button class="btn formButton getCouponButton">GET IT</button>
+                      <input name="email" value="${client.email}" hidden/>
+                    </auth:authorize>
+                    <input name="couponName" hidden value="HAPPY_FRAGRANCES"/>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div class="navButtons">
+            <a class="prev">
+              <img src="<j:url value="/resources/images/prev.png"/>"/>
+            </a>
+            <a class="next">
+              <img src="<j:url value="/resources/images/next.png"/>"/>
+            </a>
           </div>
         </div>
 
@@ -82,7 +116,7 @@
           </div>
           <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
           <div class="newsBlock col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <a href="http://localhost:8080/news">
+            <a href="http://localhost:8081/news" target="_blank">
               <p class="newsLabel">NEWS</p>
             </a>
             <j:choose>
@@ -91,11 +125,11 @@
                   <j:forEach items="${newsList}" var="news" varStatus="tagStatus">
                     <li>
                       <div class="postBlock" align="left">
-                        <a href="<j:url value="news/${news.id}"/> ">
+                        <%--<a href="<j:url value="http://localhost:8081/news/${news.id}"/> " target="_blank">--%>
                           <div class="articleBlock">
                             <label class="postArticle">${news.article}</label>
                           </div>
-                        </a>
+                        <%--</a>--%>
                         <div class="textBlock">
                           <j:choose>
                             <j:when test="${news.text.length() > 150}">
@@ -107,7 +141,7 @@
                           </j:choose>
                         </div>
                         <div class="writingDateBlock">
-                          <label class="writing_date">${news.writingDate}</label>
+                          <label class="writing_date">${fn:substring(news.writingDate.toString(), 0, news.writingDate.toString().length()-7)}</label>
                         </div>
                       </div>
                     </li>
@@ -128,6 +162,7 @@
     </div>
   </div>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
+  <script src="<c:url value="/resources/js/jquery.anoslide.js"/>"></script>
   <script src="<c:url value="/resources/js/index.js"/>"></script>
 </body>
 </html>

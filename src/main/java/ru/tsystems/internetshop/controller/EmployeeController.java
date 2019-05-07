@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.tsystems.internetshop.messaging.MessageSender;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.DTO.OrderProductDTO;
@@ -40,6 +41,9 @@ public class EmployeeController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private MessageSender messageSender;
 
     private Logger logger = Logger.getLogger("logger");
 
@@ -149,6 +153,7 @@ public class EmployeeController {
                 productService.saveProduct(productDTO);
 
                 model.addAttribute("successMessage", "Product saved successfully.");
+                messageSender.sendMessage("Top products has changed");
             } else
                 model.addAttribute("errorMessage", "Product with this name already exists.");
         }

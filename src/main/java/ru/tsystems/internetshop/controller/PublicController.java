@@ -23,11 +23,9 @@ import ru.tsystems.internetshop.util.CategoryInfo;
 import ru.tsystems.internetshop.util.NewsInfo;
 import ru.tsystems.internetshop.util.ResponseInfo;
 
-import javax.jms.MapMessage;
-import javax.jms.Message;
-import java.math.BigInteger;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -81,7 +79,11 @@ public class PublicController {
         messageSender.sendMessage("Top products has changed");
         model.addAttribute("client", authenticationService.getClient());
         model.addAttribute("clients", clientService.getTop10Clients());
-        model.addAttribute("newsList", newsInfo.getNews().stream().limit(7).collect(Collectors.toList()));
+        Set<NewsDTO> news = newsInfo.getNews();
+        for (NewsDTO newsDTO : news)
+            System.out.println(newsDTO);
+
+        model.addAttribute("newsList", newsInfo.getNews().stream().sorted(Comparator.comparing(NewsDTO::getWritingDate).reversed()).limit(7).collect(Collectors.toList()));
         model.addAttribute("categories", categoryInfo.getCategories());
         return "index";
     }
@@ -158,8 +160,7 @@ public class PublicController {
         if (basket.getCouponDTO() != null) {
             basket.setChangedAfterCoupon(true);
 
-            if (basket.getCouponDTO().getName().equals("FIRST_ORDER"))
-                basket.setSummaryPrice(Math.round(basketService.calcPrice(basket)));
+            basket.setSummaryPrice(basketService.calcPriceWithoutDiscount(basket));
         }
 
         model.addAttribute("basket", basket);
@@ -212,13 +213,13 @@ public class PublicController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "send-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
-    ResponseInfo sendCoupon(@ModelAttribute("client") ClientDTO clientDTO) {
+    ResponseInfo sendCoupon(@ModelAttribute("client") ClientDTO clientDTO, @RequestParam("couponName") String couponName) {
         logger.info("Sending coupon to + " + clientDTO.getEmail() +  "...");
 
         String email = clientDTO.getEmail();
         ResponseInfo responseInfo;
 
-        CouponDTO couponDTO = couponService.getCouponByValue("HAPPY_ORDER");
+        CouponDTO couponDTO = couponService.getCouponByValue(couponName);
 
         if (couponDTO != null) {
             if (clientDTO.getCoupons().contains(couponDTO))
@@ -241,14 +242,6 @@ public class PublicController {
     @GetMapping(value = "top10Products", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<ProductDTO> getTop10Products() {
-        System.out.println("GET");
-        return productService.getTop10Products();
-    }
-
-    @PostMapping(value = "top10Products", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public List<ProductDTO> getTop10ProductsPOST() {
-        System.out.println("POST");
         return productService.getTop10Products();
     }
 

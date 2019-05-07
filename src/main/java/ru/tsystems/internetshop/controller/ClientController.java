@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.tsystems.internetshop.facade.OrderProductClientFacade;
 import ru.tsystems.internetshop.facade.UserClientFacade;
+import ru.tsystems.internetshop.messaging.MessageSender;
 import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.DTO.*;
 import ru.tsystems.internetshop.service.*;
@@ -56,6 +57,9 @@ public class ClientController {
 
     @Autowired
     private BasketService basketService;
+
+    @Autowired
+    private MessageSender messageSender;
 
     private Logger logger = Logger.getLogger("logger");
 
@@ -236,7 +240,8 @@ public class ClientController {
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("issueOrder")
-    public String issueOrderPage(Model model) {
+    public String issueOrderPage(@ModelAttribute("basket") Basket basket, Model model) {
+        basketService.resetDiscount(basket);
         model.addAttribute("client", authenticationService.getClient());
         model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/issueOrder";
@@ -270,13 +275,11 @@ public class ClientController {
         CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
 
         if (couponDTO != null && (basket.getCouponDTO() == null || basket.isChangedAfterCoupon())) {
-            if (couponDTO.getName().equals("FIRST_ORDER"))
-                basket.setSummaryPrice((int) Math.round(basketService.calcPrice(basket) * 0.7));
+            basket.setCouponDTO(couponDTO);
+            basket.setSummaryPrice(basketService.calcPrice(basket));
 
             basket.setChangedAfterCoupon(false);
         }
-
-        basket.setCouponDTO(couponDTO);
 
         model.addAttribute("basket", basket);
         model.addAttribute("categories", categoryInfo.getCategories());
@@ -295,6 +298,7 @@ public class ClientController {
         model.addAttribute("categories", categoryInfo.getCategories());
         model.addAttribute("basket", new Basket());
         model.addAttribute("successMessage", "Order successfully issued");
+        messageSender.sendMessage("Top products has changed");
         return "clientProfile/issueOrder";
     }
 }

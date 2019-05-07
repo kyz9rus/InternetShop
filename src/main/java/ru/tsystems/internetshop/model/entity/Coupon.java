@@ -18,10 +18,6 @@ public class Coupon {
 
     @NotNull
     @Column(unique = true)
-    private String name;
-
-    @NotNull
-    @Column(unique = true)
     private String value;
 
     @NotNull

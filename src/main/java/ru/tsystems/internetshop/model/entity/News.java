@@ -4,13 +4,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity(name = "news")
 @Table(name = "news")
-public class News{
+public class News {
     @Id
     @GeneratedValue
     private Long id;
@@ -19,14 +18,14 @@ public class News{
     @NotNull
     private String text;
     @Column(name = "writing_date")
-    private LocalDate writingDate;
+    private LocalDateTime writingDate;
 
     private static final long serialVersionUID = 1;
 
     public News() {
     }
 
-    public News(String article, String text, LocalDate writingDate) {
+    public News(String article, String text, LocalDateTime writingDate) {
         this.article = article;
         this.text = text;
         this.writingDate = writingDate;
