@@ -34,13 +34,4 @@ public class NewsServiceImpl implements NewsService {
 
         return newsDTO;
     }
-
-    @Override
-    public NewsDTO getNewsById(Long newsId) {
-        try {
-            return mapper.convertToDto(newsDAO.findByKey(newsId));
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-    }
 }

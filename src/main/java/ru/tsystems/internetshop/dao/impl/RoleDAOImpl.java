@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.tsystems.internetshop.dao.AbstractDAO;
 import ru.tsystems.internetshop.dao.OrderDAO;
@@ -14,6 +15,9 @@ import java.util.List;
 
 @Repository
 public class RoleDAOImpl extends AbstractDAO<Role, Long> implements RoleDAO {
+
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
+
     @Override
     public Role findByName(String name) {
         try {
@@ -29,6 +33,7 @@ public class RoleDAOImpl extends AbstractDAO<Role, Long> implements RoleDAO {
             else
                 return null;
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }

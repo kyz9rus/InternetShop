@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +22,6 @@ import ru.tsystems.internetshop.util.ResponseInfo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("clientProfile")
@@ -61,7 +61,8 @@ public class ClientController {
     @Autowired
     private MessageSender messageSender;
 
-    private Logger logger = Logger.getLogger("logger");
+    private final Logger consoleLogger = Logger.getLogger("consoleLogger");
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
 
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("editProfile")
@@ -80,7 +81,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("orderHistory")
     public String showOrderHistoryPage(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
-        logger.info("Showing order history for client " + clientDTO + "...");
+        consoleLogger.info("Showing order history for client " + clientDTO + "...");
+        fileLogger.info("Showing order history for client " + clientDTO + "...");
 
         List<OrderDTO> orders = orderService.getOrdersByClient(clientDTO);
 
@@ -92,7 +94,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping("repeat-order")
     public String repeatOrder(@ModelAttribute("basket") Basket basket, @RequestParam("orderId") Long orderId, Model model) {
-        logger.info("Combine basket for repeating order for order with id " + orderId + "...");
+        consoleLogger.info("Combine basket for repeating order for order with id " + orderId + "...");
+        fileLogger.info("Combine basket for repeating order for order with id " + orderId + "...");
 
         OrderDTO orderDTO = orderService.getOrder(orderId);
 
@@ -122,7 +125,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "update-client")
     public String updateClient(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
-        logger.info("Updating client " + clientDTO + "...");
+        consoleLogger.info("Updating client " + clientDTO + "...");
+        fileLogger.info("Updating client " + clientDTO + "...");
 
         if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
             model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
@@ -141,7 +145,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "change-password")
     public String changePassword(@ModelAttribute("client") ClientDTO clientDTO, @RequestParam("password") String password, @RequestParam("newPassword") String newPassword, @RequestParam("repeatNewPassword") String repeatNewPassword, Model model) {
-        logger.info("Changing password for client " + clientDTO + "...");
+        consoleLogger.info("Changing password for client " + clientDTO + "...");
+        fileLogger.info("Changing password for client " + clientDTO + "...");
 
         UserDTO userDTO = userService.getUserByEmail(clientDTO.getEmail());
 
@@ -164,7 +169,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "create-address")
     public String createClientAddress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, Model model) {
-        logger.info("Creating address for client " + clientDTO + "...");
+        consoleLogger.info("Creating address for client " + clientDTO + "...");
+        fileLogger.info("Creating address for client " + clientDTO + "...");
 
         clientAddressDTO.setClient(clientDTO);
         if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
@@ -185,7 +191,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "update-address")
     public String updateClientAdress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @RequestParam("addressId") Long addressId, Model model) {
-        logger.info("Updating address for client " + clientDTO + "...");
+        consoleLogger.info("Updating address for client " + clientDTO + "...");
+        fileLogger.info("Updating address for client " + clientDTO + "...");
 
         clientAddressDTO.setId(addressId);
         clientAddressDTO.setClient(clientDTO);
@@ -207,7 +214,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "delete-address")
     public String deleteAddress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @RequestParam("addressId") Long addressId, Model model) {
-        logger.info("Deleting address for client " + clientDTO + "...");
+        consoleLogger.info("Deleting address for client " + clientDTO + "...");
+        fileLogger.info("Deleting address for client " + clientDTO + "...");
 
         clientAddressDTO.setId(addressId);
         clientAddressDTO.setClient(clientDTO);
@@ -229,7 +237,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "/showOrderHistory/get-products", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ResponseEntity<List<OrderProductDTO>> getProducts(@RequestParam("orderId") Long orderId){
-        logger.info("Getting products for order with id " + orderId + "...");
+        consoleLogger.info("Getting products for order with id " + orderId + "...");
+        fileLogger.info("Getting products for order with id " + orderId + "...");
 
         OrderDTO orderDTO = orderService.getOrder(orderId);
 
@@ -241,6 +250,9 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("issueOrder")
     public String issueOrderPage(@ModelAttribute("basket") Basket basket, Model model) {
+        consoleLogger.info("Reseting discount (if was)" + "...");
+        fileLogger.info("Reseting discount (if was)" + "...");
+
         basketService.resetDiscount(basket);
         model.addAttribute("client", authenticationService.getClient());
         model.addAttribute("categories", categoryInfo.getCategories());
@@ -250,7 +262,8 @@ public class ClientController {
     @PostMapping(value = "/issueOrder/check-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     ResponseInfo checkCoupon(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("couponValue") String couponValue, Model model) {
-        logger.info("Checking coupon " + couponValue + " for client " + clientDTO + "...");
+        consoleLogger.info("Checking coupon " + couponValue + " for client " + clientDTO + "...");
+        fileLogger.info("Checking coupon " + couponValue + " for client " + clientDTO + "...");
 
         ResponseInfo responseInfo;
 
@@ -270,7 +283,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("issueOrder2")
     public String issueOrderPage2(@RequestParam("couponValue") String couponValue, @ModelAttribute("basket") Basket basket, Model model) {
-        logger.info("Calculating price for order with couponValue " + couponValue + " and basket " + basket + "...");
+        consoleLogger.info("Calculating price for order with couponValue " + couponValue + " and basket " + basket + "...");
+        fileLogger.info("Calculating price for order with couponValue " + couponValue + " and basket " + basket + "...");
 
         CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
 
@@ -291,7 +305,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping("issue-order")
     public String createOrder(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("deliveryMethod") String deliveryMethodString, @RequestParam("paymentMethod") String paymentMethodString, @RequestParam("addressId") Long addressId, Model model) throws Exception {
-        logger.info("Collecting order for client" + clientDTO + " with basket " + basket + " with delivery method " + deliveryMethodString + " with payment mathod " + paymentMethodString + " with address id " + addressId + "...");
+        consoleLogger.info("Collecting order for client" + clientDTO + " with basket " + basket + " with delivery method " + deliveryMethodString + " with payment mathod " + paymentMethodString + " with address id " + addressId + "...");
+        fileLogger.info("Collecting order for client" + clientDTO + " with basket " + basket + " with delivery method " + deliveryMethodString + " with payment mathod " + paymentMethodString + " with address id " + addressId + "...");
 
         ClientAddressDTO clientAddressDTO = clientAddressService.getClientAddressById(addressId);
 

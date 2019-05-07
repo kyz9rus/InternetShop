@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.tsystems.internetshop.dao.AbstractDAO;
 import ru.tsystems.internetshop.dao.ProductDAO;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 @Repository
 public class ProductDAOImpl extends AbstractDAO<Product, Long> implements ProductDAO {
 
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
+
     @Override
     public List<Product> findProductsByCategory(Category category) {
         try {
@@ -25,6 +28,7 @@ public class ProductDAOImpl extends AbstractDAO<Product, Long> implements Produc
 
             return query.getResultList();
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -45,6 +49,7 @@ public class ProductDAOImpl extends AbstractDAO<Product, Long> implements Produc
             else
                 return null;
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -59,6 +64,7 @@ public class ProductDAOImpl extends AbstractDAO<Product, Long> implements Produc
 
             return query.getResultList().stream().limit(10).collect(Collectors.toList());
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }

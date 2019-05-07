@@ -1,6 +1,7 @@
 package ru.tsystems.internetshop.service.Impl;
 
 import com.sun.mail.smtp.SMTPSendFailedException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -21,6 +22,9 @@ public class MailServiceImpl implements MailService {
     @Autowired
     public JavaMailSender emailSender;
 
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
+
+
     @Override
     public void sendNewCouponLetter(String email, CouponDTO couponDTO) throws SMTPSendFailedException, MailException {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -34,6 +38,8 @@ public class MailServiceImpl implements MailService {
                         "Coupon description:\n"
                         + couponDTO.getDescription() + "\n\n" +
                         "Make orders with AVON!");
+
+        fileLogger.info("Sending message: " + message + "...");
         emailSender.send(message);
     }
 
@@ -60,6 +66,8 @@ public class MailServiceImpl implements MailService {
                 "Products:\n" +
                 productsMessage + "\n\n" +
                 "Make orders with AVON!");
+
+        fileLogger.info("Sending message: " + message + "...");
         emailSender.send(message);
     }
 
@@ -73,6 +81,8 @@ public class MailServiceImpl implements MailService {
         message.setText("Order status for order with id " + orderDTO.getId() + " has changed!\n" +
                 "New Order status: " + orderDTO.getOrderStatus() + "\n\n" +
                 "Make orders with AVON!");
+
+        fileLogger.info("Sending message: " + message + "...");
         emailSender.send(message);
     }
 
@@ -86,6 +96,8 @@ public class MailServiceImpl implements MailService {
         message.setText("Payment status for order with id " + orderDTO.getId() + " has changed!\n" +
                 "New Payment status: " + orderDTO.getPaymentStatus() + "\n\n" +
                 "Make orders with AVON!");
+
+        fileLogger.info("Sending message: " + message + "...");
         emailSender.send(message);
     }
 }

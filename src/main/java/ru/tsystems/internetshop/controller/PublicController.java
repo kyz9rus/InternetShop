@@ -1,6 +1,7 @@
 package ru.tsystems.internetshop.controller;
 
 import com.sun.mail.smtp.SMTPSendFailedException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.tsystems.internetshop.facade.UserClientFacade;
-import ru.tsystems.internetshop.messaging.MessageSender;
 import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.BasketInfo;
 import ru.tsystems.internetshop.model.DTO.*;
@@ -26,7 +26,6 @@ import ru.tsystems.internetshop.util.ResponseInfo;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Controller
@@ -60,10 +59,8 @@ public class PublicController {
     @Autowired
     private BasketService basketService;
 
-    @Autowired
-    private MessageSender messageSender;
-
-    private Logger logger = Logger.getLogger("logger");
+    private final Logger consoleLogger = Logger.getLogger("consoleLogger");
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
 
     @GetMapping("exception")
     public String toExceptionPage(Model model) {
@@ -73,13 +70,8 @@ public class PublicController {
 
     @GetMapping(value = "/")
     public String main(Model model) {
-        messageSender.sendMessage("Top products has changed");
         model.addAttribute("client", authenticationService.getClient());
         model.addAttribute("clients", clientService.getTop10Clients());
-        Set<NewsDTO> news = newsInfo.getNews();
-        for (NewsDTO newsDTO : news)
-            System.out.println(newsDTO);
-
         model.addAttribute("newsList", newsInfo.getNews().stream().sorted(Comparator.comparing(NewsDTO::getWritingDate).reversed()).limit(7).collect(Collectors.toList()));
         model.addAttribute("categories", categoryInfo.getCategories());
         return "index";
@@ -98,7 +90,8 @@ public class PublicController {
 
     @PostMapping(value = "client")
     public String createClient(@Validated @ModelAttribute("client") ClientDTO client, @RequestParam("password") String password, @RequestParam("repeatPassword") String repeatPassword, Model model) {
-        logger.info("Register client: " + client + "...");
+        consoleLogger.info("Register client: " + client + "...");
+        fileLogger.info("Register client: " + client + "...");
 
         if (clientService.getClientByEmail(client.getEmail()) != null)
             model.addAttribute("errorMessage", "A user with this email address already exists.");
@@ -136,7 +129,8 @@ public class PublicController {
 
     @PostMapping(value = "put-product", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ResponseEntity<BasketInfo> putProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
-        logger.info("Put product with id " + productId + " in basket + " + basket + "...");
+        consoleLogger.info("Put product with id " + productId + " in basket + " + basket + "...");
+        fileLogger.info("Put product with id " + productId + " in basket + " + basket + "...");
 
         ProductDTO productDTO = productService.getProduct(productId);
         basket.addProduct(productDTO);
@@ -155,7 +149,8 @@ public class PublicController {
     @ResponseBody
     @PostMapping(value = "increase-product", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<BasketInfo> increaseProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
-        logger.info("Delete 1 product with id " + productId + " from basket " + basket + "...");
+        consoleLogger.info("Delete 1 product with id " + productId + " from basket " + basket + "...");
+        fileLogger.info("Delete 1 product with id " + productId + " from basket " + basket + "...");
 
         ProductDTO productDTO = productService.getProduct(productId);
         basket.increaseProduct(productDTO);
@@ -168,7 +163,8 @@ public class PublicController {
     @ResponseBody
     @PostMapping(value = "remove-product", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<BasketInfo> addProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
-        logger.info("Remove products with id " + productId + " from basket " + basket + "...");
+        consoleLogger.info("Remove products with id " + productId + " from basket " + basket + "...");
+        fileLogger.info("Remove products with id " + productId + " from basket " + basket + "...");
 
         ProductDTO productDTO = productService.getProduct(productId);
         basket.removeProduct(productDTO);
@@ -198,7 +194,8 @@ public class PublicController {
     @PostMapping(value = "send-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     ResponseInfo sendCoupon(@ModelAttribute("client") ClientDTO clientDTO, @RequestParam("couponName") String couponName) throws MailException {
-        logger.info("Sending coupon to + " + clientDTO.getEmail() +  "...");
+        consoleLogger.info("Sending coupon to + " + clientDTO.getEmail() +  "...");
+        fileLogger.info("Sending coupon to + " + clientDTO.getEmail() +  "...");
 
         String email = clientDTO.getEmail();
         ResponseInfo responseInfo;

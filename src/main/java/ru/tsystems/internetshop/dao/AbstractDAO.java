@@ -1,8 +1,10 @@
 package ru.tsystems.internetshop.dao;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.tsystems.internetshop.dao.impl.RoleDAOImpl;
 import ru.tsystems.internetshop.exception.DAOException;
 
 import java.io.Serializable;
@@ -18,6 +20,8 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         this.persistentClass = (Class) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
+
     @Autowired
     protected SessionFactory sessionFactory;
 
@@ -30,6 +34,7 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         try {
             getSession().persist(entity);
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -40,6 +45,7 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         try {
             getSession().update(entity);
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -50,6 +56,7 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         try {
             getSession().delete(entity);
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -61,6 +68,7 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         try {
             return (T) getSession().get(persistentClass, (Serializable) key);
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -71,6 +79,7 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         try {
             return getSession().createQuery("from " + persistentClass.getName()).list();
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }

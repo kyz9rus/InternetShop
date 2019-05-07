@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.tsystems.internetshop.dao.AbstractDAO;
 import ru.tsystems.internetshop.dao.OrderDAO;
@@ -17,6 +18,8 @@ import java.util.List;
 @Repository
 public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
+
     @Override
     public List<Order> findUnfinishedOrdersByClient(Client client) {
         try {
@@ -28,6 +31,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
             return query.getResultList();
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -43,6 +47,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
             return query.getResultList();
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -58,6 +63,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
             return query.getResultList();
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -73,6 +79,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
             return query.getResultList();
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -88,6 +95,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
             System.out.println("NEW ENTITY: " + entity);
             return entity;
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }

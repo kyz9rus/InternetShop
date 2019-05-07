@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.tsystems.internetshop.dao.AbstractDAO;
 import ru.tsystems.internetshop.dao.ClientDAO;
@@ -12,6 +13,8 @@ import java.util.stream.Collectors;
 
 @Repository
 public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDAO {
+
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
 
     @Override
     public Client findByEmail(String email) {
@@ -28,6 +31,7 @@ public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDA
             else
                 return null;
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -42,6 +46,7 @@ public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDA
 
         return query.getResultList().stream().limit(10).collect(Collectors.toList());
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }

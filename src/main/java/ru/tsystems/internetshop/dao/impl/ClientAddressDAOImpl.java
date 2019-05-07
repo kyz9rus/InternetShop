@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.tsystems.internetshop.dao.AbstractDAO;
 import ru.tsystems.internetshop.dao.ClientAddressDAO;
@@ -9,10 +10,12 @@ import ru.tsystems.internetshop.model.entity.ClientAddress;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class ClientAddressDAOImpl extends AbstractDAO<ClientAddress, Long> implements ClientAddressDAO {
+
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
+
     @Override
     public List<ClientAddress> findAddressesByClient(Client client) {
         try {
@@ -24,6 +27,7 @@ public class ClientAddressDAOImpl extends AbstractDAO<ClientAddress, Long> imple
             return query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
+            fileLogger.error(e.getMessage());
             throw new DAOException();
         }
     }

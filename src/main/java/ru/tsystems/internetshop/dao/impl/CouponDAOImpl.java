@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.tsystems.internetshop.dao.AbstractDAO;
 import ru.tsystems.internetshop.dao.CouponDAO;
@@ -10,6 +11,8 @@ import javax.persistence.TypedQuery;
 
 @Repository
 public class CouponDAOImpl extends AbstractDAO<Coupon, Integer> implements CouponDAO {
+
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
 
     @Override
     public Coupon findCouponByValue(String value) {
@@ -24,6 +27,7 @@ public class CouponDAOImpl extends AbstractDAO<Coupon, Integer> implements Coupo
         else
             return null;
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }

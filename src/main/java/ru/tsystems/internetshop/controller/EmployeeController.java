@@ -1,6 +1,7 @@
 package ru.tsystems.internetshop.controller;
 
 import com.sun.mail.smtp.SMTPSendFailedException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mail.MailException;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.tsystems.internetshop.exception.DAOException;
 import ru.tsystems.internetshop.messaging.MessageSender;
 import ru.tsystems.internetshop.model.DTO.*;
 import ru.tsystems.internetshop.model.PaymentStatus;
@@ -19,7 +19,6 @@ import ru.tsystems.internetshop.util.CategoryInfo;
 import ru.tsystems.internetshop.util.ResponseInfo;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("employeeProfile")
@@ -46,12 +45,14 @@ public class EmployeeController {
     @Autowired
     private MailService mailService;
 
-    private Logger logger = Logger.getLogger("logger");
+    private final Logger consoleLogger = Logger.getLogger("consoleLogger");
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
 
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("get-orders")
     public String getOrders(Model model) {
-        logger.info("Get all orders...");
+        consoleLogger.info("Get all orders...");
+        fileLogger.info("Get all orders...");
 
         List<OrderDTO> orders = orderService.getOrders();
 
@@ -104,7 +105,8 @@ public class EmployeeController {
     @PostMapping("change-order-status")
     public @ResponseBody
     ResponseInfo changeOrderStatus(@RequestParam("id") Long id, @RequestParam("orderStatus") String orderStatusString) throws SMTPSendFailedException {
-        logger.info("Changing order status (-> " + orderStatusString + ") for order with id + " + id + "...");
+        consoleLogger.info("Changing order status (-> " + orderStatusString + ") for order with id + " + id + "...");
+        fileLogger.info("Changing order status (-> " + orderStatusString + ") for order with id + " + id + "...");
 
         OrderDTO orderDTO = orderService.getOrder(id);
         if (orderDTO != null) {
@@ -136,7 +138,8 @@ public class EmployeeController {
     @PostMapping("change-payment-status")
     public @ResponseBody
     ResponseInfo changePaymentStatus(@RequestParam("id") Long id, @RequestParam("paymentStatus") String paymentStatusString) throws SMTPSendFailedException {
-        logger.info("Changing payment status for order with id + " + id + "...");
+        consoleLogger.info("Changing payment status for order with id + " + id + "...");
+        fileLogger.info("Changing payment status for order with id + " + id + "...");
 
         OrderDTO orderDTO = orderService.getOrder(id);
         if (orderDTO != null) {
@@ -172,7 +175,8 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("create-product")
     public String createProduct(@Validated @ModelAttribute("product") ProductDTO productDTO, Model model) {
-        logger.info("Creating product " + productDTO + "...");
+        consoleLogger.info("Creating product " + productDTO + "...");
+        fileLogger.info("Creating product " + productDTO + "...");
 
         if (productDTO.getQuantityInStock() <= 0) {
             model.addAttribute("errorMessage", "Quantity in stock cannot be negative");
@@ -193,7 +197,8 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("create-category")
     public String createCategory(@ModelAttribute("category") CategoryDTO categoryDTO, Model model) {
-        logger.info("Creating category " + categoryDTO + "...");
+        consoleLogger.info("Creating category " + categoryDTO + "...");
+        fileLogger.info("Creating category " + categoryDTO + "...");
 
         categoryDTO.setName(categoryDTO.getName().toLowerCase());
 
@@ -219,7 +224,8 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("update-category")
     public String updateCategory(@ModelAttribute("category") CategoryDTO categoryDTO, @RequestParam("oldName") String oldName, Model model) {
-        logger.info("Updating category " + categoryDTO + "...");
+        consoleLogger.info("Updating category " + categoryDTO + "...");
+        fileLogger.info("Updating category " + categoryDTO + "...");
 
         categoryDTO.setName(categoryDTO.getName().toLowerCase());
         oldName = oldName.toLowerCase();
@@ -242,7 +248,8 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("remove-category")
     public String removeCategory(@RequestParam("oldName") String categoryName, Model model) {
-        logger.info("Removing category '" + categoryName + "'...");
+        consoleLogger.info("Removing category '" + categoryName + "'...");
+        fileLogger.info("Removing category '" + categoryName + "'...");
 
         CategoryDTO categoryDTO = categoryService.getCategoryByName(categoryName);
         List<OrderDTO> orders = orderService.getOrdersByCategory(categoryDTO);
@@ -271,7 +278,8 @@ public class EmployeeController {
     @PostMapping(value = "/showOrderHistory/get-products", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     List<OrderProductDTO> getProducts(@RequestParam("orderId") Long orderId) {
-        logger.info("Getting products for order with id " + orderId + "...");
+        consoleLogger.info("Getting products for order with id " + orderId + "...");
+        fileLogger.info("Getting products for order with id " + orderId + "...");
 
         OrderDTO orderDTO = orderService.getOrder(orderId);
 

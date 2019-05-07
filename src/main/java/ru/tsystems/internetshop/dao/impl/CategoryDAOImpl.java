@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.tsystems.internetshop.dao.AbstractDAO;
@@ -12,6 +13,8 @@ import javax.persistence.TypedQuery;
 @Repository
 public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements CategoryDAO {
 
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
+
     @Override
     public void updateCategory(String oldName, Category category) {
         try {
@@ -23,6 +26,7 @@ public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements Cate
 
             query.executeUpdate();
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -41,6 +45,7 @@ public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements Cate
             else
                 return null;
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -56,6 +61,7 @@ public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements Cate
 
             query.executeUpdate();
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }

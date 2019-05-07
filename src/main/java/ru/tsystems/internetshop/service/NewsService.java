@@ -6,6 +6,4 @@ import java.util.Set;
 
 public interface NewsService {
     Set<NewsDTO> getAllNews();
-
-    NewsDTO getNewsById(Long newsId);
 }

@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,8 @@ import java.util.List;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
+
     @Autowired
     protected SessionFactory sessionFactory;
 
@@ -24,6 +27,7 @@ public class UserDAOImpl implements UserDAO {
         try {
             sessionFactory.getCurrentSession().persist(user);
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -34,6 +38,7 @@ public class UserDAOImpl implements UserDAO {
         try {
             sessionFactory.getCurrentSession().update(user);
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -44,6 +49,7 @@ public class UserDAOImpl implements UserDAO {
         try {
             sessionFactory.getCurrentSession().delete(user);
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -54,6 +60,7 @@ public class UserDAOImpl implements UserDAO {
         try {
             return sessionFactory.getCurrentSession().get(User.class, id);
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -64,6 +71,7 @@ public class UserDAOImpl implements UserDAO {
         try {
             return sessionFactory.getCurrentSession().createQuery("from user").list();
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -91,6 +99,7 @@ public class UserDAOImpl implements UserDAO {
             } else
                 return null;
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
@@ -101,6 +110,7 @@ public class UserDAOImpl implements UserDAO {
         try {
             sessionFactory.getCurrentSession().saveOrUpdate(user);
         } catch (Exception e) {
+            fileLogger.error(e.getMessage());
             e.printStackTrace();
             throw new DAOException();
         }
