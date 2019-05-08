@@ -1,14 +1,11 @@
 package ru.tsystems.internetshop.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.ProductDAO;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.ProductDTO;
-import ru.tsystems.internetshop.model.DTO.ProductPageDTO;
 import ru.tsystems.internetshop.model.entity.Product;
 import ru.tsystems.internetshop.service.ProductService;
 import ru.tsystems.internetshop.util.Mapper;
@@ -45,18 +42,6 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-//    @Override
-//    public ProductPageDTO getProductsByCategory2(Pageable pageable, CategoryDTO categoryDTO) {
-//        List<Product> products = productDAO.findProductsByCategory(mapper.convertToEntity(categoryDTO));
-//        List<ProductDTO> productDTOS = new ArrayList<>();
-//
-//        for (Product product : products)
-//            productDTOS.add(mapper.convertToDto(product));
-//
-//        Page<ProductDTO> page = productDAO.findProductsByCategory();
-//        return null;
-//    }
-
     @Override
     public List<ProductDTO> getProductsByCategory(CategoryDTO categoryDTO) {
         List<Product> products = productDAO.findProductsByCategory(mapper.convertToEntity(categoryDTO));
@@ -78,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productDAO.findTop10Products();
         List<ProductDTO> productDTOS = new ArrayList<>();
 
-        for (Product product: products)
+        for (Product product : products)
             productDTOS.add(mapper.convertToDto(product));
 
         return productDTOS;

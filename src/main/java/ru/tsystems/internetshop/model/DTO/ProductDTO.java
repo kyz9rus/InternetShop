@@ -40,6 +40,10 @@ public class ProductDTO implements Serializable {
         this.price = price;
     }
 
+    public void setDefaultImgSrce() {
+        this.imgSrc = "http://promusicayouthchorus.org/wp-content/uploads/2018/07/no-image.jpg";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

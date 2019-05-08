@@ -182,6 +182,10 @@ public class EmployeeController {
             model.addAttribute("errorMessage", "Quantity in stock cannot be negative");
         } else {
             if (productService.getProductByName(productDTO.getName()) == null) {
+
+                if (productDTO.getImgSrc().length() == 0)
+                    productDTO.setDefaultImgSrce();
+
                 productService.saveProduct(productDTO);
 
                 model.addAttribute("successMessage", "Product saved successfully.");

@@ -40,7 +40,7 @@ public class Product {
     private long quantityInStock;
 
     @Column(columnDefinition = "text default 'http://promusicayouthchorus.org/wp-content/uploads/2018/07/no-image.jpg'")
-    private String imgSrc;
+    private String imgSrc = "http://promusicayouthchorus.org/wp-content/uploads/2018/07/no-image.jpg";
 
     @Column(name = "number_of_sales", columnDefinition = "bigint default 0")
     private long numberOfSales;
