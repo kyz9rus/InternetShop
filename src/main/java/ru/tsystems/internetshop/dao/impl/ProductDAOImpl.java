@@ -1,6 +1,8 @@
 package ru.tsystems.internetshop.dao.impl;
 
 import org.apache.log4j.Logger;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import ru.tsystems.internetshop.dao.AbstractDAO;
 import ru.tsystems.internetshop.dao.ProductDAO;
@@ -69,4 +71,20 @@ public class ProductDAOImpl extends AbstractDAO<Product, Long> implements Produc
             throw new DAOException();
         }
     }
+
+//    @Override
+//    public Page<Product> findProductsByCategory2(Pageable pageable) {
+//        try {
+//            String queryString = "";
+//
+//            Specification<Todo> searchSpec = titleOrDescriptionContainsIgnoreCase(searchTerm);
+//            Page<Todo> searchResultPage = repository.findAll(searchSpec, pageRequest);
+//
+//            return
+//        } catch (Exception e) {
+//            fileLogger.error(e.getMessage());
+//            e.printStackTrace();
+//            throw new DAOException();
+//        }
+//    }
 }

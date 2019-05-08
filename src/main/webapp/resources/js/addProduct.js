@@ -1,7 +1,7 @@
 $('.addProductBlock input[name="imgSrc"]').on('input', function () {
     var imgSrc = $('.addProductBlock input[name="imgSrc"]');
 
-    $('#cropImage').html('<img src="' + imgSrc.val() + '" />')
+    $('#cropImage').html('<img src="' + imgSrc.val() + '" />');
 
     $('#cropImage img').cropbox({
         width: 148,

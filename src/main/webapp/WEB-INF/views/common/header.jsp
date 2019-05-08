@@ -9,7 +9,7 @@
         <div class="becomeRepresentativeHeaderBlock">
             <a href="http://smartavon.ru/Registration.html">BECOME A REPRESENTATIVE</a>
             <br>
-            <a href="http://localhost:8081/news">NEWS</a>
+            <a href="http://localhost:8081/news" target="_blank">NEWS</a>
         </div>
 
         <div class="signInBlock">
@@ -68,7 +68,7 @@
                         <li><a class="register" href="<c:url value="/registration"/>">REGISTER</a></li>
                     </auth:authorize>
                     <li><a href="http://smartavon.ru/Registration.html">BECOME A REPRESENTATIVE</a></li>
-                    <li><a href="http://localhost:8081/news">NEWS</a></li>
+                    <li><a href="http://localhost:8081/news" target="_blank">NEWS</a></li>
                 </ul>
             </nav>
         </div>

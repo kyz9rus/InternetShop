@@ -3,6 +3,10 @@ package ru.tsystems.internetshop.controller;
 import com.sun.mail.smtp.SMTPSendFailedException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +29,6 @@ import ru.tsystems.internetshop.util.ResponseInfo;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -112,8 +115,10 @@ public class PublicController {
     }
 
     @GetMapping(value = "category/{categoryName}")
+//    public String getCategory(@PageableDefault(size = 3, sort = {"numberOfSales"}, direction = Sort.Direction.DESC) Pageable pageable, @PathVariable("categoryName") String categoryName, Model model) {
     public String getCategory(@PathVariable("categoryName") String categoryName, Model model) {
         List<ProductDTO> products = productService.getProductsByCategory(new CategoryDTO(categoryName));
+//        Page<ProductDTO> products = productService.getProductsByCategory2(pageable, new CategoryDTO(categoryName));
 
         if (!products.isEmpty())
             model.addAttribute("products", products);
