@@ -1,6 +1,5 @@
 package ru.tsystems.internetshop.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.sun.mail.smtp.SMTPSendFailedException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.DataBinder;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -106,8 +107,8 @@ public class PublicController {
             }
         }
 
+        model.addAttribute("client", client);
         model.addAttribute("categories", categoryInfo.getCategories());
-
         return "registration";
     }
 

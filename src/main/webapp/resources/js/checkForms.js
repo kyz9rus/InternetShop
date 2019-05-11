@@ -2,11 +2,11 @@ $('.registrationBlock button').click(function (e) {
     var formMessage = $('.formMessage');
     formMessage.text('');
 
-    if ($('.registrationBlock input[name="lastName"]').val().length === 0) {
+    if ($('.registrationBlock input[name="lastName"]').val().replace(/\s+/g,'').length === 0) {
         formMessage.text('Enter your last name');
         formMessage.addClass('text-danger');
         e.preventDefault()
-    } else if ($('.registrationBlock input[name="firstName"]').val().length === 0) {
+    } else if ($('.registrationBlock input[name="firstName"]').replace(/\s+/g,'').length === 0) {
         formMessage.text('Enter your first name');
         formMessage.addClass('text-danger');
         e.preventDefault()

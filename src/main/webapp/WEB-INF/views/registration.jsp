@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 
 <html>
@@ -31,19 +32,19 @@
           <spring:form method="post" action="client" modelAttribute="client">
             <div class="form-group">
               <label>Last name</label>
-              <input name="lastName" required />
+              <spring:input path="lastName" />
             </div>
             <div class="form-group">
               <label>First name</label>
-              <input name="firstName" required/>
+              <spring:input path="firstName" />
             </div>
             <div class="form-group">
               <label>Birthday</label>
-              <input name="birthday"/>
+              <spring:input path="birthday" />
             </div>
             <div class="form-group">
               <label>Email</label>
-              <input name="email" type="email" required/>
+              <spring:input path="email" />
             </div>
             <div class="form-group">
               <label>Password</label>
@@ -66,7 +67,7 @@
         <j:import url="common/footer.jsp"/>
       </div>
 
-      <script src="/resources/js/checkForms.js"></script>
+      <script src="<j:url value="/resources/js/checkForms.js"/>"></script>
       <script>
           // Маска для полей
           $('.registrationBlock input[name="birthday"]').mask('99-99-9999');
@@ -74,7 +75,6 @@
     </div>
   </div>
   <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
-  <script type="text/javascript" src="<c:url value="resources/js/displayBlocks.js"/>"></script>
 </body>
 
 </html>

@@ -246,6 +246,10 @@ td {
     margin-bottom: 5px;
 }
 
+#cropImage img{
+    max-width: 100%;
+}
+
 .addProductBlock .formButton {
     margin-top: 50px;
 }

@@ -15,6 +15,7 @@
   <link rel="stylesheet" href='<c:url value="/resources/css/bootstrap.min.css" />'>
   <link rel="stylesheet" href='<c:url value="/resources/css/index.css" />'>
   <link rel="stylesheet" href='<c:url value="/resources/css/submenu.css" />'>
+  <link rel="stylesheet" href="<c:url value="/resources/js/cropper2/cropper.css"/>"/>
 
   <link rel="stylesheet" href='<c:url value="/resources/css/employeeProfile.css" />'>
 
@@ -80,6 +81,10 @@
                           <input name="imgSrc" placeholder="https://site.ru/images/image.png">
                       </div>
                       <div id="cropImage">
+
+                      </div>
+
+                      <div id="cropImage2">
 
                       </div>
                       <button class="btn formButton">Add product</button>
