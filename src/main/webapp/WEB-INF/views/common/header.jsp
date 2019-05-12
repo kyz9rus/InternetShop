@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="J" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="auth" uri="http://www.springframework.org/security/tags" %>
@@ -25,9 +25,9 @@
                     </a>
                 </auth:authorize>
                 <auth:authorize access="isAnonymous()">
-                <a href="<c:url value="/registration"/>">
-                    <img src="<c:url value="/resources/images/register.png" />">
-                </a>
+                    <a href="<c:url value="/registration"/>">
+                        <img src="<c:url value="/resources/images/register.png" />">
+                    </a>
                 </auth:authorize>
             </div>
             <div class="loginHeaderBlock">
@@ -54,7 +54,9 @@
             <nav class="mobileMenu">
                 <ul>
                     <j:forEach items="${categories}" var="category" varStatus="tagStatus">
-                        <li><a href="<c:url value="/category/${fn:replace(fn:toUpperCase(category.name), '_', ' ')}"/>">${fn:replace(fn:toUpperCase(category.name), '_', ' ')}</a></li>
+                        <li>
+                            <a href="<c:url value="/category/${fn:replace(fn:toUpperCase(category.name), '_', ' ')}"/>">${fn:replace(fn:toUpperCase(category.name), '_', ' ')}</a>
+                        </li>
                     </j:forEach>
                     <li class="divider"></li>
                     <hr>
@@ -80,36 +82,38 @@
         <div class="lastBlock">
             <div class="basketDiv">
                 <img class="basket" alt="BASKET" src="<c:url value="/resources/images/basket.png" />"><br/>
-                    <J:choose>
-                        <j:when test="${basket.products.size() == 0}">
-                            <div class="basketInfo">
-                                <div class="basketInfoBlock">
-                                    <p class="emptyBasket">Your bag is empty</p>
-                                    <p class="numberOfProductsText" style="display:none">Number of products: ${basket.numberOfProducts}</p>
-                                    <p class="summaryPrice" style="display:none">Summary price: ${basket.summaryPrice} rub.</p>
-                                </div>
-                                <div class="issue" style="display:none">
-                                    <a href="<c:url value="/clientProfile/issueOrder"/>">
-                                        <button class="btn formButton">ISSUE ORDER</button>
-                                    </a>
-                                </div>
+                <J:choose>
+                    <j:when test="${basket.products.size() == 0}">
+                        <div class="basketInfo">
+                            <div class="basketInfoBlock">
+                                <p class="emptyBasket">Your bag is empty</p>
+                                <p class="numberOfProductsText" style="display:none">Number of
+                                    products: ${basket.numberOfProducts}</p>
+                                <p class="summaryPrice" style="display:none">Summary price: ${basket.summaryPrice}
+                                    rub.</p>
                             </div>
-                        </j:when>
-                        <j:otherwise>
-                            <div class="basketInfo">
-                                <div class="basketInfoBlock">
-                                    <p class="emptyBasket" style="display:none">Your bag is empty</p>
-                                    <p class="numberOfProductsText">Number of products: ${basket.numberOfProducts}</p>
-                                    <p class="summaryPrice">Summary price: ${basket.summaryPrice} rub.</p>
-                                </div>
-                                <div class="issue">
-                                    <a href="<c:url value="/clientProfile/issueOrder"/>">
-                                        <button class="btn formButton">ISSUE ORDER</button>
-                                    </a>
-                                </div>
+                            <div class="issue" style="display:none">
+                                <a href="<c:url value="/clientProfile/issueOrder"/>">
+                                    <button class="btn formButton">ISSUE ORDER</button>
+                                </a>
                             </div>
-                        </j:otherwise>
-                    </J:choose>
+                        </div>
+                    </j:when>
+                    <j:otherwise>
+                        <div class="basketInfo">
+                            <div class="basketInfoBlock">
+                                <p class="emptyBasket" style="display:none">Your bag is empty</p>
+                                <p class="numberOfProductsText">Number of products: ${basket.numberOfProducts}</p>
+                                <p class="summaryPrice">Summary price: ${basket.summaryPrice} rub.</p>
+                            </div>
+                            <div class="issue">
+                                <a href="<c:url value="/clientProfile/issueOrder"/>">
+                                    <button class="btn formButton">ISSUE ORDER</button>
+                                </a>
+                            </div>
+                        </div>
+                    </j:otherwise>
+                </J:choose>
             </div>
             <div>
                 <auth:authorize access="!isAuthenticated()">
@@ -143,7 +147,8 @@
                 <div class="basketInfo">
                     <div class="basketInfoBlock">
                         <p class="emptyBasket">Your bag is empty</p>
-                        <p class="numberOfProductsText" style="display:none">Number of products: ${basket.numberOfProducts}</p>
+                        <p class="numberOfProductsText" style="display:none">Number of
+                            products: ${basket.numberOfProducts}</p>
                         <p class="summaryPrice" style="display:none">Summary price: ${basket.summaryPrice} rub.</p>
                     </div>
                     <div class="issue" style="display:none">
@@ -175,7 +180,9 @@
 <div id="thirdHeader">
     <ul class="menu">
         <j:forEach items="${categories}" var="category" varStatus="tagStatus">
-            <li><a href="<c:url value="/category/${fn:replace(fn:toUpperCase(category.name), '_', ' ')}"/>">${fn:replace(fn:toUpperCase(category.name), '_', ' ')}</a></li>
+            <li>
+                <a href="<c:url value="/category/${fn:replace(fn:toUpperCase(category.name), '_', ' ')}"/>">${fn:replace(fn:toUpperCase(category.name), '_', ' ')}</a>
+            </li>
         </j:forEach>
         </li>
     </ul>

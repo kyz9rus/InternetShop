@@ -9,11 +9,19 @@ import ru.tsystems.internetshop.model.entity.Coupon;
 
 import javax.persistence.TypedQuery;
 
+/**
+ * This class implements CouponDAO and override its methods
+ */
 @Repository
 public class CouponDAOImpl extends AbstractDAO<Coupon, Integer> implements CouponDAO {
 
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
+    /**
+     * This method get top 10 clients from database using HQL
+     * @param value string value, which unique identifies coupon
+     * @return founded coupon
+     */
     @Override
     public Coupon findCouponByValue(String value) {
         try{

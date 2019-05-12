@@ -4,6 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * This class is role entity
+ */
 @Data
 @Entity(name = "role")
 @Table(name = "role")

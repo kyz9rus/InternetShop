@@ -45,17 +45,17 @@ input {
     width: 100%;
 }
 
-input:focus{
+input:focus {
     border: 3px solid pink;
     transition: 1;
 }
 
-.next{
+.next {
     height: 100px;
     background: red;
 }
 
-.signInBlock{
+.signInBlock {
     float: right;
 }
 
@@ -136,11 +136,11 @@ input:focus{
     z-index: 1;
 }
 
-.basketInfo .basketInfoBlock p{
+.basketInfo .basketInfoBlock p {
     float: left;
 }
 
-.basketDiv:hover > .basketInfo{
+.basketDiv:hover > .basketInfo {
     display: block !important;
 }
 
@@ -197,11 +197,11 @@ input:focus{
     height: 50px;
 }
 
-.navButtons *{
+.navButtons * {
     background: none !important;;
 }
 
-.navButtons img{
+.navButtons img {
     cursor: pointer;
 }
 
@@ -213,7 +213,7 @@ input:focus{
     float: left;
 }
 
-.couponBlock p{
+.couponBlock p {
     text-shadow: white 2px 1px 0px;
 }
 
@@ -248,7 +248,7 @@ input:focus{
     float: right;
 }
 
-.errorImageBlock img{
+.errorImageBlock img {
     width: 70%;
 }
 
@@ -262,7 +262,7 @@ input:focus{
     margin-bottom: 30px;
 }
 
-.basketInfoBlock p{
+.basketInfoBlock p {
     float: left;
 }
 
@@ -270,13 +270,12 @@ input:focus{
     display: none;
 }
 
-
 .topProductsBlock {
     padding: 10px 17%;
     margin-top: 20px;
 }
 
-.topProductsBlock > p{
+.topProductsBlock > p {
     font-size: 20px;
 }
 
@@ -292,7 +291,7 @@ input:focus{
     display: none;
 }
 
-.couponWindow img{
+.couponWindow img {
     width: 15px;
     float: right;
     margin: 7px;
@@ -330,7 +329,7 @@ input:focus{
     font-size: 17px;
 }
 
-.text{
+.text {
     overflow: auto;
 }
 
@@ -351,11 +350,11 @@ input:focus{
     margin-bottom: 20px;
 }
 
-.newsBlock a{
+.newsBlock a {
     color: black;
 }
 
-.newsBlock a:hover{
+.newsBlock a:hover {
     color: rgb(215, 69, 144);
 }
 
@@ -369,7 +368,7 @@ input:focus{
     border: none;
 }
 
-.writing_date{
+.writing_date {
     font-size: 13px;
     color: grey;
 }
@@ -385,19 +384,21 @@ input:focus{
     }
 }
 
-@media (max-width: 676px){
-    .becomeRepresentativeHeaderBlock{
+@media (max-width: 676px) {
+    .becomeRepresentativeHeaderBlock {
         font-size: 8.4px;
     }
+
     .couponBlock p:not(.article) {
         font-size: 17px;
     }
 }
 
 @media (min-width: 577px) {
-    hr{
+    hr {
         margin: 0px 0px;
     }
+
     .mobileHeader {
         display: none;
     }
@@ -418,57 +419,72 @@ input:focus{
         transform: translateX(-100%);
         border: 1px solid black;
     }
+
     .menu_active {
         transform: translateX(0%);
     }
+
     .mobileMenu ul {
         padding: 10px;
     }
+
     .mobileMenu li {
         font-size: 18px;
     }
+
     .menuButtonBlock {
         float: left;
     }
+
     .menuButton {
         background: white;
         border: none;
         cursor: pointer;
     }
+
     .menuButton ion-icon {
         font-size: 30px;
     }
+
     .logoBlock {
         float: left;
         margin-left: 20%;
         margin-top: 6px;
     }
+
     .lastBlock {
         margin-top: 5px;
         float: right;
         display: inline-block;
     }
+
     #largeHeader, #secondHeader, #thirdHeader {
         display: none;
     }
+
     .logo {
         width: 150px;
     }
-    #header{
+
+    #header {
         padding: 0 0;
         margin: 10px 20px;
     }
-    .basket{
+
+    .basket {
         width: 50px !important;;
         margin-top: -10px;
     }
+
     .basketInfo {
         top: 80px;
         right: 0px;
     }
-    .login, .logout{
+
+    .login, .logout {
         width: 70px !important;;
     }
+
     #pull {
         display: unset;
     }
@@ -479,10 +495,11 @@ input:focus{
     }
 }
 
-@media(max-width: 420px) {
+@media (max-width: 420px) {
     .logoBlock {
         margin-left: 13%;
     }
+
     .logo {
         width: 120px;
     }

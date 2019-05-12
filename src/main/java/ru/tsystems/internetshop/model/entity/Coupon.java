@@ -7,6 +7,9 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is coupon entity
+ */
 @Data
 @Entity(name = "coupon")
 @Table(name = "coupon")

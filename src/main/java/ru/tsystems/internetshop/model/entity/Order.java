@@ -15,6 +15,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class is order entity
+ */
 @Data
 @Entity(name = "ord")
 @Table(name = "ord")

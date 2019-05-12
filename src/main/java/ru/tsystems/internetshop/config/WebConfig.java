@@ -25,7 +25,9 @@ import ru.tsystems.internetshop.util.NewsInfo;
 import java.util.List;
 import java.util.Properties;
 
-
+/**
+ * This class configures web application implementing WebMvcConfigurer
+ */
 @EnableWebMvc
 @Configuration
 @ComponentScan({"ru.tsystems.internetshop"})
@@ -36,6 +38,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private Environment env;
 
+    /**
+     * This is method which configures resource view resolver
+     *
+     * @return InternalResourceViewResolver bean
+     */
     @Bean
     public InternalResourceViewResolver resolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -45,6 +52,11 @@ public class WebConfig implements WebMvcConfigurer {
         return resolver;
     }
 
+    /**
+     * This is method which configures message source
+     *
+     * @return MessageSource bean
+     */
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource source = new ResourceBundleMessageSource();
@@ -52,6 +64,11 @@ public class WebConfig implements WebMvcConfigurer {
         return source;
     }
 
+    /**
+     * This is method which configures validator and set message source using {@link #messageSource()}
+     *
+     * @return InternalResourceViewResolver bean
+     */
     @Override
     public Validator getValidator() {
         LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
@@ -59,39 +76,68 @@ public class WebConfig implements WebMvcConfigurer {
         return validator;
     }
 
+    /**
+     * This is method which add resource handler for folder /resources/
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
+    /**
+     * This is method which add view controller for urlPath: "/login"
+     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
     }
 
+    /**
+     * This is method which add StringHttpMessageConverter and MappingJackson2HttpMessageConverter converter
+     */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(new StringHttpMessageConverter());
         converters.add(new MappingJackson2HttpMessageConverter());
     }
 
+    /**
+     * This method creates new ModelMapper object
+     *
+     * @return ModelMapper bean
+     */
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
 
+    /**
+     * This method creates new CategoryInfo object
+     *
+     * @return CategoryInfo bean
+     */
     @Bean
     @Scope(value = WebApplicationContext.SCOPE_APPLICATION)
     public CategoryInfo createCategories() {
         return new CategoryInfo();
     }
 
+    /**
+     * This method creates new NewsInfo object
+     *
+     * @return NewsInfo bean
+     */
     @Bean
     @Scope(value = WebApplicationContext.SCOPE_APPLICATION)
     public NewsInfo createNews() {
         return new NewsInfo();
     }
 
+    /**
+     * This method configures java mail sender onject, sets necessary properties
+     *
+     * @return turned in JavaMailSenderImpl bean
+     */
     @Bean(name = "mailSender")
     public JavaMailSenderImpl getJavaMailSender() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();

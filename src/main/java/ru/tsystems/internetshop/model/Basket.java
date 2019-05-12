@@ -8,6 +8,9 @@ import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class describes basket and models basket in a real shop
+ */
 @Data
 @Component
 public class Basket {
@@ -31,6 +34,11 @@ public class Basket {
         return products;
     }
 
+    /**
+     * This method adds product to basket
+     *
+     * @param productDTO product
+     */
     public void addProduct(ProductDTO productDTO) {
         if (products.containsKey(productDTO))
             products.put(productDTO, products.get(productDTO) + 1);
@@ -41,7 +49,12 @@ public class Basket {
         summaryPrice += productDTO.getPrice();
     }
 
-    public void increaseProduct(ProductDTO productDTO) {
+    /**
+     * This method decrease the product in basket
+     *
+     * @param productDTO product
+     */
+    public void decreaseProduct(ProductDTO productDTO) {
         int numberOfProduct = products.get(productDTO);
         if (numberOfProduct > 1)
             products.put(productDTO, --numberOfProduct);
@@ -52,6 +65,11 @@ public class Basket {
         summaryPrice -= productDTO.getPrice();
     }
 
+    /**
+     * This method deletes all positions of the product
+     *
+     * @param productDTO product which one we want to remove from basket
+     */
     public void removeProduct(ProductDTO productDTO) {
         int numberOfProducts = products.get(productDTO);
 

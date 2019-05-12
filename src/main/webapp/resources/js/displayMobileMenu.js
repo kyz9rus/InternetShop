@@ -1,6 +1,6 @@
 var isActive = false;
 
-$('.menuButton').click(function(e) {
+$('.menuButton').click(function (e) {
     isActive = !isActive;
 
     e.preventDefault();

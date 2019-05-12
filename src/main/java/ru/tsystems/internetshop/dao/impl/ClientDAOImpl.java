@@ -16,6 +16,11 @@ public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDA
 
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
+    /**
+     * This method gets Client entity in database using HQL
+     * @param email client email (unique)
+     * @return client
+     */
     @Override
     public Client findByEmail(String email) {
         try {
@@ -37,6 +42,10 @@ public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDA
         }
     }
 
+    /**
+     * This method get top 10 clients from database using HQL
+     * @return list of clients
+     */
     @Override
     public List<Client> findTop10Clients() {
         try{

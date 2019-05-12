@@ -1,4 +1,4 @@
-$('.editAddress').click(function (e){
+$('.editAddress').click(function (e) {
     var imgClass = $(this).attr('class');
     var index = imgClass.substr(45, imgClass.length);
 
@@ -8,7 +8,7 @@ $('.editAddress').click(function (e){
     e.preventDefault();
 });
 
-$('.addAddressButton').click(function() {
+$('.addAddressButton').click(function () {
     $('.addAddressBlock').show();
     $(this).hide();
 });

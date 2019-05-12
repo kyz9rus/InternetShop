@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is spring controller, which contains all routes, which needs authorize with role 'CLIENT'
+ */
 @Controller
 @RequestMapping("clientProfile")
 @SessionAttributes(value = {"client", "basket"})
@@ -143,7 +146,7 @@ public class ClientController {
     }
 
     @PreAuthorize("hasAnyRole('CLIENT')")
-    @PostMapping(value = "change-password")
+    @PostMapping(value = "password")
     public String changePassword(@ModelAttribute("client") ClientDTO clientDTO, @RequestParam("password") String password, @RequestParam("newPassword") String newPassword, @RequestParam("repeatNewPassword") String repeatNewPassword, Model model) {
         consoleLogger.info("Changing password for client " + clientDTO + "...");
         fileLogger.info("Changing password for client " + clientDTO + "...");

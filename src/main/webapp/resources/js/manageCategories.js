@@ -1,4 +1,4 @@
-$('.categoryTextBlock img').click(function (){
+$('.categoryTextBlock img').click(function () {
     var imgClass = $(this).attr('class');
     var index = imgClass.substr(4, imgClass.length);
 
@@ -6,7 +6,7 @@ $('.categoryTextBlock img').click(function (){
     $('.categoryFormBlock-' + index).show();
 });
 
-$('.addCategoryButton').click(function() {
+$('.addCategoryButton').click(function () {
     $('.addCategoryBlock').show();
     $(this).hide();
 });

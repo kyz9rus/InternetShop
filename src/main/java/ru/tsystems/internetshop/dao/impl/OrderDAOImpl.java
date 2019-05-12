@@ -14,12 +14,20 @@ import ru.tsystems.internetshop.model.entity.Order;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-
+/**
+ * This class extends AbstractDAO, implements OrderDAO and override its methods
+ */
 @Repository
 public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
+    /**
+     * This method gets all unfinished orders by client from database using HQL
+     *
+     * @param client client
+     * @return list of orders
+     */
     @Override
     public List<Order> findUnfinishedOrdersByClient(Client client) {
         try {
@@ -37,6 +45,12 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
         }
     }
 
+    /**
+     * This method gets all orders by client from database using HQL
+     *
+     * @param client client
+     * @return list of orders
+     */
     @Override
     public List<Order> findOrdersByClient(Client client) {
         try {
@@ -53,6 +67,12 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
         }
     }
 
+    /**
+     * This method gets all orders by category from database using HQL
+     *
+     * @param category category
+     * @return list of orders
+     */
     @Override
     public List<Order> findOrdersByCategory(Category category) {
         try {
@@ -69,6 +89,11 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
         }
     }
 
+    /**
+     * This method gets all paid orders from database using HQL
+     *
+     * @return list of orders
+     */
     @Override
     public List<Order> findPaidOrders() {
         try {
@@ -85,14 +110,17 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
         }
     }
 
+    /**
+     * This method persist entity to database and gets this order
+     *
+     * @param entity order
+     * @return order with id, which got after persisting to database
+     */
     @Override
     public Order createAndGet(Order entity) {
         try {
-            System.out.println("OLD ENTITY: " + entity);
-
             getSession().persist(entity);
 
-            System.out.println("NEW ENTITY: " + entity);
             return entity;
         } catch (Exception e) {
             fileLogger.error(e.getMessage());

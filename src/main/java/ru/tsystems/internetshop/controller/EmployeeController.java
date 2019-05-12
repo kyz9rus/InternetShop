@@ -20,6 +20,9 @@ import ru.tsystems.internetshop.util.ResponseInfo;
 
 import java.util.List;
 
+/**
+ * This class is spring controller, which contains all routes, which needs authorize with role 'EMPLOYEE'
+ */
 @Controller
 @RequestMapping("employeeProfile")
 public class EmployeeController {
@@ -112,7 +115,7 @@ public class EmployeeController {
         if (orderDTO != null) {
             orderDTO.setOrderStatus(orderService.getOrderStatus(orderStatusString));
 
-            for (OrderProductDTO orderProductDTO: orderDTO.getOrderProducts()) {
+            for (OrderProductDTO orderProductDTO : orderDTO.getOrderProducts()) {
                 ProductDTO productDTO = orderProductDTO.getProduct();
                 productService.updateProduct(productDTO);
             }
@@ -145,7 +148,7 @@ public class EmployeeController {
         if (orderDTO != null) {
             orderDTO.setPaymentStatus(orderService.getPaymentStatus(paymentStatusString));
 
-            for (OrderProductDTO orderProductDTO: orderDTO.getOrderProducts()) {
+            for (OrderProductDTO orderProductDTO : orderDTO.getOrderProducts()) {
                 ProductDTO productDTO = orderProductDTO.getProduct();
                 productService.updateProduct(productDTO);
             }

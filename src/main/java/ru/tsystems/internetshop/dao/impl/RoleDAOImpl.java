@@ -13,11 +13,20 @@ import ru.tsystems.internetshop.model.entity.Role;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * This class extends AbstractDAO, implements RoletDAO and override its methods
+ */
 @Repository
 public class RoleDAOImpl extends AbstractDAO<Role, Long> implements RoleDAO {
 
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
+    /**
+     * This method gets role by name
+     *
+     * @param name name (unique)
+     * @return role or null if it doesn't exist
+     */
     @Override
     public Role findByName(String name) {
         try {

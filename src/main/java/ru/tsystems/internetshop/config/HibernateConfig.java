@@ -13,7 +13,9 @@ import ru.tsystems.internetshop.model.entity.Role;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-
+/**
+ * This is class, which contains configuration database connections
+ */
 @Configuration
 @EnableTransactionManagement
 @ComponentScans(value = {@ComponentScan("ru.tsystems.internetshop")})
@@ -23,15 +25,25 @@ public class HibernateConfig {
     @Autowired
     private Environment env;
 
+    /**
+     * This is method configure session factory
+     *
+     * @return turned in session factory bean
+     */
     @Bean
-    public LocalSessionFactoryBean getSessionFactory(){
+    public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setDataSource(dataSource());
         factoryBean.setHibernateProperties(hibernateProperties());
-        factoryBean.setAnnotatedClasses(Client.class, Order.class, ClientAddress.class, Color.class, Product.class, Category.class, User.class, Role.class, OrderProduct.class, Coupon.class, News.class);
+        factoryBean.setAnnotatedClasses(Client.class, Order.class, ClientAddress.class, Product.class, Category.class, User.class, Role.class, OrderProduct.class, Coupon.class, News.class);
         return factoryBean;
     }
 
+    /**
+     * This is method configure data source
+     *
+     * @return turned in data source bean
+     */
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -42,6 +54,11 @@ public class HibernateConfig {
         return dataSource;
     }
 
+    /**
+     * This is method configure transaction manager
+     *
+     * @return turned in transaction manager bean
+     */
     @Bean
     public HibernateTransactionManager getTransactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();

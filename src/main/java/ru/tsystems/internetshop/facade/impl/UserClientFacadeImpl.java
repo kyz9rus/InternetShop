@@ -13,6 +13,9 @@ import ru.tsystems.internetshop.service.RoleService;
 import ru.tsystems.internetshop.service.UserService;
 import ru.tsystems.internetshop.util.Mapper;
 
+/**
+ * This class override methods from UserClientFacade interface
+ */
 @Transactional
 @Component
 public class UserClientFacadeImpl implements UserClientFacade {
@@ -29,6 +32,11 @@ public class UserClientFacadeImpl implements UserClientFacade {
     @Autowired
     private Mapper mapper;
 
+    /**
+     * This method create an user, create a role and binds its
+     * @param clientDTO client
+     * @param password password
+     */
     @Override
     public void registerUser(ClientDTO clientDTO, String password) {
         clientService.saveClient(clientDTO);
@@ -42,6 +50,11 @@ public class UserClientFacadeImpl implements UserClientFacade {
         userService.saveUser(user);
     }
 
+    /**
+     * This method update client entity and user entity in database
+     * @param clientDTO client
+     * @param userDTO user
+     */
     @Override
     public void updateUser(ClientDTO clientDTO, UserDTO userDTO) {
         clientService.updateClient(clientDTO);

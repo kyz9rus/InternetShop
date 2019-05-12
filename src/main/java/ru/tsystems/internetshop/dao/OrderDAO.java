@@ -6,6 +6,9 @@ import ru.tsystems.internetshop.model.entity.Order;
 
 import java.util.List;
 
+/**
+ * This interface extends DAO interface and declares special methods for Order class
+ */
 public interface OrderDAO extends DAO<Order, Long> {
     List<Order> findUnfinishedOrdersByClient(Client client);
 

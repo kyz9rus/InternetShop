@@ -11,8 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.DataBinder;
-import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,6 +27,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class is spring controller, which contains all routes, which doesn't need some authorization
+ */
 @Controller
 @SessionAttributes(value = {"client", "basket"})
 public class PublicController {
@@ -127,7 +128,8 @@ public class PublicController {
     }
 
     @PostMapping(value = "put-product", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public @ResponseBody ResponseEntity<BasketInfo> putProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
+    public @ResponseBody
+    ResponseEntity<BasketInfo> putProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
         consoleLogger.info("Put product with id " + productId + " in basket + " + basket + "...");
         fileLogger.info("Put product with id " + productId + " in basket + " + basket + "...");
 
@@ -152,7 +154,7 @@ public class PublicController {
         fileLogger.info("Delete 1 product with id " + productId + " from basket " + basket + "...");
 
         ProductDTO productDTO = productService.getProduct(productId);
-        basket.increaseProduct(productDTO);
+        basket.decreaseProduct(productDTO);
 
         model.addAttribute("basket", basket);
 
@@ -193,8 +195,8 @@ public class PublicController {
     @PostMapping(value = "send-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     ResponseInfo sendCoupon(@ModelAttribute("client") ClientDTO clientDTO, @RequestParam("couponName") String couponName) throws MailException {
-        consoleLogger.info("Sending coupon to + " + clientDTO.getEmail() +  "...");
-        fileLogger.info("Sending coupon to + " + clientDTO.getEmail() +  "...");
+        consoleLogger.info("Sending coupon to + " + clientDTO.getEmail() + "...");
+        fileLogger.info("Sending coupon to + " + clientDTO.getEmail() + "...");
 
         String email = clientDTO.getEmail();
         ResponseInfo responseInfo;

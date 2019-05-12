@@ -13,6 +13,9 @@ import ru.tsystems.internetshop.model.entity.User;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * This class implements UserDAO and override its methods
+ */
 @Transactional
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -22,6 +25,11 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     protected SessionFactory sessionFactory;
 
+    /**
+     * This method persist user entity to database
+     *
+     * @param user user
+     */
     @Override
     public void create(User user) {
         try {
@@ -33,6 +41,11 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * This method updates user entity in database
+     *
+     * @param user user
+     */
     @Override
     public void update(User user) {
         try {
@@ -44,6 +57,11 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * This method deletes user entity from database
+     *
+     * @param user user
+     */
     @Override
     public void delete(User user) {
         try {
@@ -55,6 +73,11 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * This method gets user entity by primary key from database
+     *
+     * @param id user primary key
+     */
     @Override
     public User findByKey(Long id) {
         try {
@@ -66,6 +89,11 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * This method gets all users from database using HQL
+     *
+     * @return list of users
+     */
     @Override
     public List<User> findAll() {
         try {
@@ -77,6 +105,12 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * This method gets user entity by email from database using HQL
+     *
+     * @param email user email (unique)
+     * @return user
+     */
     @Override
     public UserDTO findByEmail(String email) {
         try {
@@ -105,6 +139,11 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * This method persist user entity or updates if it is already exist
+     *
+     * @param user user
+     */
     @Override
     public void SaveOrUpdateUser(User user) {
         try {

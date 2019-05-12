@@ -3,9 +3,10 @@ package ru.tsystems.internetshop.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * This class is product entity
+ */
 @Data
 @Entity(name = "product")
 @Table(name = "product")
@@ -21,17 +22,8 @@ public class Product {
     private int price;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST})
-//    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "category_id", columnDefinition = "bigint references category(id) on delete set null")
     private Category category;
-
-    @ManyToMany(cascade = {CascadeType.DETACH})
-    @JoinTable(
-            name = "product_color",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "color", referencedColumnName = "name")
-    )
-    private List<Color> colors = new ArrayList<>();
 
     private double weight;
 
@@ -52,7 +44,7 @@ public class Product {
         this.id = id;
     }
 
-    public Product (String name, int price, double weight, String volume, long quantityInStock) {
+    public Product(String name, int price, double weight, String volume, long quantityInStock) {
         this.name = name;
         this.price = price;
         this.weight = weight;

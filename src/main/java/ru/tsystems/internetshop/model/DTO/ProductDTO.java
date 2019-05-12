@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class is DTO for product entity
+ */
 @Data
 public class ProductDTO implements Serializable {
     private Long id;
@@ -19,7 +22,6 @@ public class ProductDTO implements Serializable {
     @NotNull
     private int price;
     private CategoryDTO category;
-    private List<ColorDTO> colors = new ArrayList<>();
     private double weight;
 
     @Size(min = 11, max = 11)
@@ -64,7 +66,6 @@ public class ProductDTO implements Serializable {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", category=" + category.getName() +
-                ", colors=" + colors.size() +
                 ", weight=" + weight +
                 ", volume='" + volume + '\'' +
                 ", orders=" + orders.size() +

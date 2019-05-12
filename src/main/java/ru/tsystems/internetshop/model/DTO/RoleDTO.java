@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * This class is DTO for role entity
+ */
 @Data
 public class RoleDTO {
     private Long id;

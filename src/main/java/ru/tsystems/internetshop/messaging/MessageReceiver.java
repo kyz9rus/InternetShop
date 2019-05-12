@@ -10,6 +10,9 @@ import ru.tsystems.avonshopnews.model.NewsInfo;
 import javax.jms.JMSException;
 import java.util.logging.Logger;
 
+/**
+ * This class is jms receiver for avonShopNews application
+ */
 @Component
 public class MessageReceiver {
 
@@ -19,15 +22,19 @@ public class MessageReceiver {
     static final Logger LOG = Logger.getLogger("logger");
     private static final String NEWS_QUEUE = "news";
 
+    /**
+     * This method receives message with NewsInfo object from AvonShopNews application
+     *
+     * @param message object jms message, which contains NewsInfo object
+     */
     @JmsListener(destination = NEWS_QUEUE)
     public void receiveMessage(final Message<NewsInfo> message) throws JMSException {
         System.out.println("RECEIVE: " + message.getPayload() + " | " + message.getHeaders());
-        MessageHeaders headers =  message.getHeaders();
+        MessageHeaders headers = message.getHeaders();
         LOG.info("Application : headers received : {}" + headers);
 
         NewsInfo newsInfo = message.getPayload();
         LOG.info("Application : response received : {}" + newsInfo);
-
 
         this.newsInfo.addNews(newsInfo);
     }

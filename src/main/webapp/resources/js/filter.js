@@ -76,9 +76,9 @@ function filterProductsByPrice() {
         filterValue.text(input.value);
 
         productListAfterPriceFilter =
-        productList.filter(function () {
-            return $(this).find('.productPriceValue').val() >= parseInt(filterValue.text(), 10);
-        });
+            productList.filter(function () {
+                return $(this).find('.productPriceValue').val() >= parseInt(filterValue.text(), 10);
+            });
     }
 
     checkFilteringByPrice = true;

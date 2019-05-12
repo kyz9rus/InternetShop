@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * This class is category entity
+ */
 @Data
 @Entity(name = "category")
 @Table(name = "category")
@@ -23,9 +26,6 @@ public class Category {
     public Category(String name) {
         this.name = name;
     }
-
-//    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-//    private List<Product> productList = new ArrayList<>();
 
     @Override
     public String toString() {

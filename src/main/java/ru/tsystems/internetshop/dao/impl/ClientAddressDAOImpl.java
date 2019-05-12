@@ -11,11 +11,19 @@ import ru.tsystems.internetshop.model.entity.ClientAddress;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * This class extends AbstractDAO, implements ClientAddressDAO and override its methods
+ */
 @Repository
 public class ClientAddressDAOImpl extends AbstractDAO<ClientAddress, Long> implements ClientAddressDAO {
 
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
+    /**
+     * This method gets list of client addresses from database using HQL
+     * @param client client, whose address we want to get
+     * @return list of client addresses
+     */
     @Override
     public List<ClientAddress> findAddressesByClient(Client client) {
         try {

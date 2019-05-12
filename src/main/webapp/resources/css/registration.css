@@ -16,8 +16,8 @@ input {
     display: none;
 }
 
-@media(max-width: 577px) {
+@media (max-width: 577px) {
     .registrationBlock {
         width: 90%;
     }
-}
+}ø

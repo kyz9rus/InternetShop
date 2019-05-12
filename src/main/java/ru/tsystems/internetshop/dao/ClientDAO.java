@@ -4,6 +4,9 @@ import ru.tsystems.internetshop.model.entity.Client;
 
 import java.util.List;
 
+/**
+ * This interface extends DAO interface and declares special methods for ClientAddress class
+ */
 public interface ClientDAO extends DAO<Client, Long> {
     Client findByEmail(String email);
 

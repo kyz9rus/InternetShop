@@ -11,6 +11,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This class contains set of categories, which is showed in pages
+ */
 public class CategoryInfo implements Serializable {
 
     @Autowired

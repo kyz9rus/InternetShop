@@ -6,6 +6,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * This class is news entity
+ */
 @Data
 @Entity(name = "news")
 @Table(name = "news")

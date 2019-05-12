@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class is DTO for order entity
+ */
 @Data
 public class OrderDTO {
     private Long id;

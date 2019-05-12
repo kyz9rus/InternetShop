@@ -4,13 +4,16 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.tsystems.internetshop.dao.impl.RoleDAOImpl;
 import ru.tsystems.internetshop.exception.DAOException;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+/**
+ * This abstract class contains common methods (CRUD and find (by PK, all)) for all entities
+ * and implements DAO
+ */
 public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
 
     private final Class persistentClass;
@@ -29,6 +32,11 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         return sessionFactory.getCurrentSession();
     }
 
+    /**
+     * This method persists entity to database
+     *
+     * @param entity necessary entity object
+     */
     @Override
     public void create(T entity) {
         try {
@@ -40,6 +48,11 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         }
     }
 
+    /**
+     * This method updates entity in database
+     *
+     * @param entity necessary entity object
+     */
     @Override
     public void update(T entity) {
         try {
@@ -51,6 +64,11 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         }
     }
 
+    /**
+     * This method deletes entity from database
+     *
+     * @param entity necessary entity object
+     */
     @Override
     public void delete(T entity) {
         try {
@@ -62,6 +80,12 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         }
     }
 
+    /**
+     * This method gets entity from database
+     *
+     * @param key primary key for necessary entity
+     * @return entity
+     */
     @Override
     @SuppressWarnings("unchecked")
     public T findByKey(PK key) {
@@ -74,6 +98,11 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         }
     }
 
+    /**
+     * This method gets list of entities from database using HQL
+     *
+     * @return list of entities
+     */
     @Override
     public List<T> findAll() {
         try {

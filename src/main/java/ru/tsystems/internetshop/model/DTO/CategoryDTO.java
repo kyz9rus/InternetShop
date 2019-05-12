@@ -6,6 +6,9 @@ import ru.tsystems.internetshop.model.entity.Category;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+/**
+ * This class is DTO for category entity
+ */
 @Data
 public class CategoryDTO {
 

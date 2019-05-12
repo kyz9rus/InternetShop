@@ -5,8 +5,12 @@ import lombok.Data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * This class contains information about news and the class is coming from avonshopnews project by JMS
+ * */
 @Data
 public class NewsInfo implements Serializable {
+    public int a;
     private Long id;
     private String article;
     private String text;

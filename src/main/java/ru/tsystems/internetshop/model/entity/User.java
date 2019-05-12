@@ -9,6 +9,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class is user entity
+ */
 @Data
 @Entity(name = "user")
 @Table(name = "application_user")

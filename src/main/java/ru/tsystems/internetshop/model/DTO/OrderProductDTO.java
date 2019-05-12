@@ -3,6 +3,9 @@ package ru.tsystems.internetshop.model.DTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
+/**
+ * This class is DTO for OrderProduct entity
+ */
 @Data
 public class OrderProductDTO {
     @JsonIgnore

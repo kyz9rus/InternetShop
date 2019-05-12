@@ -76,7 +76,6 @@
     padding: 3px;
 }
 
-
 .buyButton {
     width: 100px;
     height: 30px;
@@ -94,7 +93,6 @@
 .buyButton:active {
     background: red !important;
 }
-
 
 @media (max-width: 1045px) {
     .product {
@@ -119,7 +117,7 @@
 
 }
 
-@media(max-width: 577px) {
+@media (max-width: 577px) {
     .product {
         min-height: 470px;
     }

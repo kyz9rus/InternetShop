@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class is client address entity
+ */
 @Data
 @Entity(name = "clientAddress")
 @Table(name = "clientaddress")

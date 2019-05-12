@@ -5,6 +5,10 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * This class is order product entity.
+ * It needs to set number of positions of the chosen product
+ */
 @Entity(name = "order_product")
 @Table(name = "order_product")
 @Data

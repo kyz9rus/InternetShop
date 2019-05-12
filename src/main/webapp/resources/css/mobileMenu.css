@@ -12,9 +12,11 @@
     transition: 0.5s;
     transform: translateX(-100%);
 }
+
 .menu_active {
     transform: translateX(0%);
 }
+
 .mobileMenu {
     display: flex;
     justify-content: space-around;
@@ -22,6 +24,7 @@
     height: 50%;
     flex-direction: column;
 }
+
 .mobileMenu li {
     text-decoration: none;
     text-transform: uppercase;

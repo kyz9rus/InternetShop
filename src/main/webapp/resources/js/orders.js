@@ -24,7 +24,7 @@ $('.editOrderStatus .formButton').click(function () {
         success: function (responseInfo) {
             if (responseInfo.statusCode === 200) {
                 $('.successMessage').text(responseInfo.message);
-                $('.orderStatus-'+index+'').text(data["orderStatus"]);
+                $('.orderStatus-' + index + '').text(data["orderStatus"]);
             }
             else if (responseInfo.statusCode === 404)
                 $('.errorMessage').text(responseInfo.message);
@@ -64,7 +64,7 @@ $('.editPaymentStatus .formButton').click(function () {
         success: function (responseInfo) {
             if (responseInfo.statusCode === 200) {
                 $('.successMessage').text(responseInfo.message);
-                $('.paymentStatus-'+index+'').text(data["paymentStatus"]);
+                $('.paymentStatus-' + index + '').text(data["paymentStatus"]);
             }
             else if (responseInfo.statusCode === 404)
                 $('.errorMessage').text(responseInfo.message);

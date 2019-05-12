@@ -1,6 +1,6 @@
 var displayBasket = false;
 
-$('.basket').click(function (){
+$('.basket').click(function () {
     displayBasket = !displayBasket;
 
     if (displayBasket)

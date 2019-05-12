@@ -7,6 +7,9 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import javax.servlet.ServletRegistration;
 
+/**
+ * This class configures servlet initializer (dispatcher servlet, include config classes and others...)
+ */
 public class ServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override

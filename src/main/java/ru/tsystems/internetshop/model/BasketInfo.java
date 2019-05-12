@@ -3,6 +3,9 @@ package ru.tsystems.internetshop.model;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+/**
+ * This class contains information about basket for current client or guest
+ */
 @Data
 @Component
 public class BasketInfo {

@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class is client entity
+ */
 @Data
 @Entity(name = "client")
 @Table(name = "client")

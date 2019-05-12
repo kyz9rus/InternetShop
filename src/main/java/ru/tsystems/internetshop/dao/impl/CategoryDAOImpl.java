@@ -10,11 +10,19 @@ import ru.tsystems.internetshop.model.entity.Category;
 
 import javax.persistence.TypedQuery;
 
+/**
+ * This class extends AbstractDAO, implements CategoryDAO and override its methods
+ */
 @Repository
 public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements CategoryDAO {
 
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
+    /**
+     * This method updates Category entity in database using HQL
+     * @param oldName old category name
+     * @param category new category
+     */
     @Override
     public void updateCategory(String oldName, Category category) {
         try {
@@ -32,6 +40,11 @@ public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements Cate
         }
     }
 
+    /**
+     * This method get category by name
+     * @param name name of category (unique)
+     * @return category
+     */
     @Override
     public Category findByName(String name) {
         try {
@@ -51,6 +64,10 @@ public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements Cate
         }
     }
 
+    /**
+     * This method delete category by name
+     * @param categoryName name of category
+     */
     @Override
     public void deleteByName(String categoryName) {
         try {

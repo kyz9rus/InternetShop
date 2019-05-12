@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * This class is DTO for news entity
+ */
 @Data
 public class NewsDTO {
     private long id;

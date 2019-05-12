@@ -1,4 +1,4 @@
-$('.orderInfo select[name="paymentMethod"]').click(function() {
+$('.orderInfo select[name="paymentMethod"]').click(function () {
     var paymentMethod = $('.orderInfo select[name="paymentMethod"]').val();
 
     if (paymentMethod === 'By card') {
@@ -10,7 +10,7 @@ $('.orderInfo select[name="paymentMethod"]').click(function() {
     }
 });
 
-$('.confirmPaymentBlock button').click(function(e){
+$('.confirmPaymentBlock button').click(function (e) {
     e.preventDefault();
 
     if ($('.orderInfo select[name="paymentMethod"]').val() === 'By card') {

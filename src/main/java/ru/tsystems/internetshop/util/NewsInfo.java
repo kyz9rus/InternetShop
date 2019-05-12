@@ -9,6 +9,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class contains set of news, which is showed in the main page
+ */
 public class NewsInfo implements Serializable {
 
     @Autowired

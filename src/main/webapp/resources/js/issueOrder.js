@@ -1,4 +1,4 @@
-$('.productOperations .plus').click(function(){
+$('.productOperations .plus').click(function () {
     var imgClass = $(this).attr('class');
     var index = imgClass.substr(10, imgClass.length);
 
@@ -33,7 +33,7 @@ $('.productOperations .plus').click(function(){
     });
 });
 
-$('.productOperations .minus').click(function(){
+$('.productOperations .minus').click(function () {
     var imgClass = $(this).attr('class');
     var index = imgClass.substr(12, imgClass.length);
 
@@ -93,7 +93,7 @@ $('.productOperations .minus').click(function(){
     });
 });
 
-$('.productOperations .remove').click(function(){
+$('.productOperations .remove').click(function () {
     var imgClass = $(this).attr('class');
     var index = imgClass.substr(14, imgClass.length);
 
@@ -158,7 +158,7 @@ function showCouponBlock() {
     $('body').css({'background-color': 'rgba(0,0,0,0.4)'});
 }
 
-$('.orderPageButton button').click(function(e) {
+$('.orderPageButton button').click(function (e) {
     var products = $('.productBlock');
 
     var valid = true;
@@ -185,7 +185,7 @@ $('.orderPageButton button').click(function(e) {
     }
 });
 
-$('.checkCouponButton').click(function(e) {
+$('.checkCouponButton').click(function (e) {
     e.preventDefault();
     var data = {};
     var couponName = $('.couponBlock input[name="couponValue"]').val();

@@ -9,6 +9,9 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import ru.tsystems.internetshop.exception.DAOException;
 import ru.tsystems.internetshop.util.ResponseInfo;
 
+/**
+ * This class is exception handler, which handles some runtime exception
+ */
 @ControllerAdvice
 public class CustomExceptionHandler {
 

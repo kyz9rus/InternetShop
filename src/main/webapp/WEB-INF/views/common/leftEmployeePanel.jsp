@@ -19,11 +19,6 @@
             <label>Categories</label>
         </a>
     </li>
-    <li class="employeeOperation">
-        <form method="post" action="/employeeProfile/import-products-from-file">
-            <label>Import from file</label>
-        </form>
-    </li>
 
     <li class="divider"></li>
     <li><h5>Statistics</h5></li>

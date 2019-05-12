@@ -12,7 +12,8 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define(factory) :
             (global = global || self, global.Cropper = factory());
-}(this, function () { 'use strict';
+}(this, function () {
+    'use strict';
 
     function _typeof(obj) {
         if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -210,6 +211,7 @@
      */
 
     var isNaN = Number.isNaN || WINDOW.isNaN;
+
     /**
      * Check if the given value is a number.
      * @param {*} value - The value to check.
@@ -219,6 +221,7 @@
     function isNumber(value) {
         return typeof value === 'number' && !isNaN(value);
     }
+
     /**
      * Check if the given value is a positive number.
      * @param {*} value - The value to check.
@@ -228,6 +231,7 @@
     var isPositiveNumber = function isPositiveNumber(value) {
         return value > 0 && value < Infinity;
     };
+
     /**
      * Check if the given value is undefined.
      * @param {*} value - The value to check.
@@ -237,6 +241,7 @@
     function isUndefined(value) {
         return typeof value === 'undefined';
     }
+
     /**
      * Check if the given value is an object.
      * @param {*} value - The value to check.
@@ -246,7 +251,9 @@
     function isObject(value) {
         return _typeof(value) === 'object' && value !== null;
     }
+
     var hasOwnProperty = Object.prototype.hasOwnProperty;
+
     /**
      * Check if the given value is a plain object.
      * @param {*} value - The value to check.
@@ -266,6 +273,7 @@
             return false;
         }
     }
+
     /**
      * Check if the given value is a function.
      * @param {*} value - The value to check.
@@ -275,7 +283,9 @@
     function isFunction(value) {
         return typeof value === 'function';
     }
+
     var slice = Array.prototype.slice;
+
     /**
      * Convert array-like or iterable object to an array.
      * @param {*} value - The value to convert.
@@ -285,6 +295,7 @@
     function toArray(value) {
         return Array.from ? Array.from(value) : slice.call(value);
     }
+
     /**
      * Iterate the given data.
      * @param {*} data - The data to iterate.
@@ -309,6 +320,7 @@
 
         return data;
     }
+
     /**
      * Extend the given object.
      * @param {*} target - The target object to extend.
@@ -334,6 +346,7 @@
         return target;
     };
     var REGEXP_DECIMALS = /\.\d*(?:0|9){12}\d*$/;
+
     /**
      * Normalize decimal number.
      * Check out {@link http://0.30000000000000004.com/}
@@ -346,7 +359,9 @@
         var times = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100000000000;
         return REGEXP_DECIMALS.test(value) ? Math.round(value * times) / times : value;
     }
+
     var REGEXP_SUFFIX = /^width|height|left|top|marginLeft|marginTop$/;
+
     /**
      * Apply styles to the given element.
      * @param {Element} element - The target element.
@@ -363,6 +378,7 @@
             style[property] = value;
         });
     }
+
     /**
      * Check if the given element has a special class.
      * @param {Element} element - The element to check.
@@ -373,6 +389,7 @@
     function hasClass(element, value) {
         return element.classList ? element.classList.contains(value) : element.className.indexOf(value) > -1;
     }
+
     /**
      * Add classes to the given element.
      * @param {Element} element - The target element.
@@ -404,6 +421,7 @@
             element.className = "".concat(className, " ").concat(value);
         }
     }
+
     /**
      * Remove classes from the given element.
      * @param {Element} element - The target element.
@@ -431,6 +449,7 @@
             element.className = element.className.replace(value, '');
         }
     }
+
     /**
      * Add or remove classes from the given element.
      * @param {Element} element - The target element.
@@ -457,7 +476,9 @@
             removeClass(element, value);
         }
     }
+
     var REGEXP_CAMEL_CASE = /([a-z\d])([A-Z])/g;
+
     /**
      * Transform the given string from camelCase to kebab-case
      * @param {string} value - The value to transform.
@@ -467,6 +488,7 @@
     function toParamCase(value) {
         return value.replace(REGEXP_CAMEL_CASE, '$1-$2').toLowerCase();
     }
+
     /**
      * Get data from the given element.
      * @param {Element} element - The target element.
@@ -485,6 +507,7 @@
 
         return element.getAttribute("data-".concat(toParamCase(name)));
     }
+
     /**
      * Set data to the given element.
      * @param {Element} element - The target element.
@@ -501,6 +524,7 @@
             element.setAttribute("data-".concat(toParamCase(name)), data);
         }
     }
+
     /**
      * Remove data from the given element.
      * @param {Element} element - The target element.
@@ -525,6 +549,7 @@
             element.removeAttribute("data-".concat(toParamCase(name)));
         }
     }
+
     var REGEXP_SPACES = /\s\s*/;
 
     var onceSupported = function () {
@@ -533,7 +558,8 @@
         if (IS_BROWSER) {
             var once = false;
 
-            var listener = function listener() {};
+            var listener = function listener() {
+            };
 
             var options = Object.defineProperty({}, 'once', {
                 get: function get() {
@@ -556,6 +582,7 @@
 
         return supported;
     }();
+
     /**
      * Remove event listener from the target element.
      * @param {Element} element - The event target.
@@ -589,6 +616,7 @@
             element.removeEventListener(event, handler, options);
         });
     }
+
     /**
      * Add event listener to the target element.
      * @param {Element} element - The event target.
@@ -631,6 +659,7 @@
             element.addEventListener(event, _handler, options);
         });
     }
+
     /**
      * Dispatch event on the target element.
      * @param {Element} element - The event target.
@@ -655,6 +684,7 @@
 
         return element.dispatchEvent(event);
     }
+
     /**
      * Get the offset base on the document.
      * @param {Element} element - The target element.
@@ -668,8 +698,10 @@
             top: box.top + (window.pageYOffset - document.documentElement.clientTop)
         };
     }
+
     var location = WINDOW.location;
     var REGEXP_ORIGINS = /^(\w+:)\/\/([^:/?#]*):?(\d*)/i;
+
     /**
      * Check if the given URL is a cross origin URL.
      * @param {string} url - The target URL.
@@ -680,6 +712,7 @@
         var parts = url.match(REGEXP_ORIGINS);
         return parts !== null && (parts[1] !== location.protocol || parts[2] !== location.hostname || parts[3] !== location.port);
     }
+
     /**
      * Add timestamp to the given URL.
      * @param {string} url - The target URL.
@@ -690,6 +723,7 @@
         var timestamp = "timestamp=".concat(new Date().getTime());
         return url + (url.indexOf('?') === -1 ? '?' : '&') + timestamp;
     }
+
     /**
      * Get transforms base on the given object.
      * @param {Object} obj - The target object.
@@ -732,6 +766,7 @@
             transform: transform
         };
     }
+
     /**
      * Get the max ratio of a group of pointers.
      * @param {string} pointers - The target pointers.
@@ -759,6 +794,7 @@
         });
         return ratios[0];
     }
+
     /**
      * Get a pointer from an event object.
      * @param {Object} event - The target event object.
@@ -778,6 +814,7 @@
             startY: pageY
         }, end);
     }
+
     /**
      * Get the center point coordinate of a group of pointers.
      * @param {Object} pointers - The target pointers.
@@ -802,6 +839,7 @@
             pageY: pageY
         };
     }
+
     /**
      * Get the max sizes in a rectangle under the given aspect ratio.
      * @param {Object} data - The original sizes.
@@ -837,6 +875,7 @@
             height: height
         };
     }
+
     /**
      * Get the new sizes of a rectangle after rotated.
      * @param {Object} data - The original sizes.
@@ -869,6 +908,7 @@
             height: newHeight
         };
     }
+
     /**
      * Get a canvas which drew the given image.
      * @param {HTMLImageElement} image - The image for drawing.
@@ -950,7 +990,9 @@
         context.restore();
         return canvas;
     }
+
     var fromCharCode = String.fromCharCode;
+
     /**
      * Get string from char code in data view.
      * @param {DataView} dataView - The data view for read.
@@ -969,7 +1011,9 @@
 
         return str;
     }
+
     var REGEXP_DATA_URL_HEAD = /^data:.*,/;
+
     /**
      * Transform Data URL to array buffer.
      * @param {string} dataURL - The Data URL to transform.
@@ -986,6 +1030,7 @@
         });
         return arrayBuffer;
     }
+
     /**
      * Transform array buffer to Data URL.
      * @param {ArrayBuffer} arrayBuffer - The array buffer to transform.
@@ -1008,6 +1053,7 @@
 
         return "data:".concat(mimeType, ";base64,").concat(btoa(chunks.join('')));
     }
+
     /**
      * Get orientation value from given array buffer.
      * @param {ArrayBuffer} arrayBuffer - The array buffer to read.
@@ -1088,6 +1134,7 @@
 
         return orientation;
     }
+
     /**
      * Parse Exif Orientation value.
      * @param {number} orientation - The orientation to parse.
