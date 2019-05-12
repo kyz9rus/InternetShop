@@ -1,14 +1,11 @@
 package ru.tsystems.internetshop.model.entity;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.util.Objects;
 
 /**
  * This class is category entity
  */
-@Data
 @Entity(name = "category")
 @Table(name = "category")
 public class Category {
@@ -45,5 +42,21 @@ public class Category {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

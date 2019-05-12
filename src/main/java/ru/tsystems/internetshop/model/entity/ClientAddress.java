@@ -1,7 +1,5 @@
 package ru.tsystems.internetshop.model.entity;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +8,6 @@ import java.util.Objects;
 /**
  * This class is client address entity
  */
-@Data
 @Entity(name = "clientAddress")
 @Table(name = "clientaddress")
 public class ClientAddress {
@@ -75,17 +72,83 @@ public class ClientAddress {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ClientAddress that = (ClientAddress) o;
-        return postalCode == that.postalCode &&
-                room == that.room &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(country, that.country) &&
-                Objects.equals(city, that.city) &&
-                Objects.equals(street, that.street) &&
-                Objects.equals(house, that.house);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, country, city, postalCode, street, house, room);
+        return Objects.hash(id);
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public Client getClient() {
+        return this.client;
+    }
+
+    public String getCountry() {
+        return this.country;
+    }
+
+    public String getCity() {
+        return this.city;
+    }
+
+    public int getPostalCode() {
+        return this.postalCode;
+    }
+
+    public String getStreet() {
+        return this.street;
+    }
+
+    public String getHouse() {
+        return this.house;
+    }
+
+    public int getRoom() {
+        return this.room;
+    }
+
+    public List<Order> getOrders() {
+        return this.orders;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setPostalCode(int postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setHouse(String house) {
+        this.house = house;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

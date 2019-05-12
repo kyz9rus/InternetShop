@@ -1,15 +1,11 @@
 package ru.tsystems.internetshop.model.DTO;
 
-import lombok.Data;
-import ru.tsystems.internetshop.model.entity.Category;
-
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
  * This class is DTO for category entity
  */
-@Data
 public class CategoryDTO {
 
     private Long id;
@@ -41,6 +37,22 @@ public class CategoryDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(id);
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public @NotNull String getName() {
+        return this.name;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(@NotNull String name) {
+        this.name = name;
     }
 }

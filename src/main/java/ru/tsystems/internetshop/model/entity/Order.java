@@ -1,7 +1,6 @@
 package ru.tsystems.internetshop.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.tsystems.internetshop.model.DeliveryMethod;
 import ru.tsystems.internetshop.model.OrderStatus;
@@ -11,14 +10,12 @@ import ru.tsystems.internetshop.model.PaymentStatus;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * This class is order entity
  */
-@Data
 @Entity(name = "ord")
 @Table(name = "ord")
 public class Order {
@@ -95,15 +92,91 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) &&
-                paymentMethod == order.paymentMethod &&
-                deliveryMethod == order.deliveryMethod &&
-                paymentStatus == order.paymentStatus &&
-                orderStatus == order.orderStatus;
+        return Objects.equals(id, order.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, paymentMethod, deliveryMethod, paymentStatus, orderStatus);
+        return Objects.hash(id);
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public Client getClient() {
+        return this.client;
+    }
+
+    public ClientAddress getClientAddress() {
+        return this.clientAddress;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return this.paymentMethod;
+    }
+
+    public DeliveryMethod getDeliveryMethod() {
+        return this.deliveryMethod;
+    }
+
+    public List<OrderProduct> getOrderProducts() {
+        return this.orderProducts;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return this.paymentStatus;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return this.orderStatus;
+    }
+
+    public LocalDate getOrderDate() {
+        return this.orderDate;
+    }
+
+    public int getPrice() {
+        return this.price;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setClientAddress(ClientAddress clientAddress) {
+        this.clientAddress = clientAddress;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void setDeliveryMethod(DeliveryMethod deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
+    }
+
+    public void setOrderProducts(List<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }
