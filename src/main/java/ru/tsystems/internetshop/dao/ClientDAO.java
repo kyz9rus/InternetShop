@@ -11,4 +11,6 @@ public interface ClientDAO extends DAO<Client, Long> {
     Client findByEmail(String email);
 
     List<Client> findTop10Clients();
+
+    List<Client> findTop10ClientsWithAtLeast1Order();
 }

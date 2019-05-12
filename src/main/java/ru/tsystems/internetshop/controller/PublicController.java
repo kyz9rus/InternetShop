@@ -73,8 +73,8 @@ public class PublicController {
     @GetMapping(value = "/")
     public String main(Model model) {
         model.addAttribute("client", authenticationService.getClient());
-        model.addAttribute("clients", clientService.getTop10Clients());
-        model.addAttribute("newsList", newsInfo.getNews().stream().sorted(Comparator.comparing(NewsDTO::getWritingDate).reversed()).limit(7).collect(Collectors.toList()));
+        model.addAttribute("clients", clientService.getTop10ClientsWithAtLeast1Order());
+        model.addAttribute("newsList", newsInfo.getNews().stream().sorted(Comparator.comparing(NewsDTOWithFormat::getWritingDate).reversed()).limit(7).collect(Collectors.toList()));
         model.addAttribute("categories", categoryInfo.getCategories());
         return "index";
     }

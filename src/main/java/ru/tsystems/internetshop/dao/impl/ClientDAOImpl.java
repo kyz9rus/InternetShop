@@ -18,6 +18,7 @@ public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDA
 
     /**
      * This method gets Client entity in database using HQL
+     *
      * @param email client email (unique)
      * @return client
      */
@@ -44,16 +45,37 @@ public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDA
 
     /**
      * This method get top 10 clients from database using HQL
+     *
      * @return list of clients
      */
     @Override
     public List<Client> findTop10Clients() {
-        try{
-        String queryString = "SELECT c FROM client c ORDER BY c.summaryOrdersPrice DESC";
+        try {
+            String queryString = "SELECT c FROM client c ORDER BY c.summaryOrdersPrice DESC";
 
-        TypedQuery<Client> query = sessionFactory.getCurrentSession().createQuery(queryString, Client.class);
+            TypedQuery<Client> query = sessionFactory.getCurrentSession().createQuery(queryString, Client.class);
 
-        return query.getResultList().stream().limit(10).collect(Collectors.toList());
+            return query.getResultList().stream().limit(10).collect(Collectors.toList());
+        } catch (Exception e) {
+            fileLogger.error(e.getMessage());
+            e.printStackTrace();
+            throw new DAOException();
+        }
+    }
+
+    /**
+     * This method get top 10 clients with at least 1 order from database using HQL
+     *
+     * @return list of clients
+     */
+    @Override
+    public List<Client> findTop10ClientsWithAtLeast1Order() {
+        try {
+            String queryString = "SELECT c FROM client c WHERE c.summaryOrdersPrice > 0 ORDER BY c.summaryOrdersPrice DESC";
+
+            TypedQuery<Client> query = sessionFactory.getCurrentSession().createQuery(queryString, Client.class);
+
+            return query.getResultList().stream().limit(10).collect(Collectors.toList());
         } catch (Exception e) {
             fileLogger.error(e.getMessage());
             e.printStackTrace();

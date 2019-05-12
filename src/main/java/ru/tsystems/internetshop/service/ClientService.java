@@ -12,4 +12,6 @@ public interface ClientService {
     ClientDTO getClientByEmail(String email);
 
     List<ClientDTO> getTop10Clients();
+
+    List<ClientDTO> getTop10ClientsWithAtLeast1Order();
 }

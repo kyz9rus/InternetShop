@@ -187,7 +187,7 @@ public class EmployeeController {
             if (productService.getProductByName(productDTO.getName()) == null) {
 
                 if (productDTO.getImgSrc().length() == 0)
-                    productDTO.setDefaultImgSrce();
+                    productDTO.setDefaultImgSrc();
 
                 productService.saveProduct(productDTO);
 

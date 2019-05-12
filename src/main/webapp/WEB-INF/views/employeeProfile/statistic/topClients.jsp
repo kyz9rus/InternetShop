@@ -43,8 +43,7 @@
                             <p>Top-10 clients:</p>
                             <ul class="topClientsList">
                                 <j:forEach items="${clients}" var="client" varStatus="tagStatus">
-                                    <li><p class="client">${tagStatus.count}. ${client.lastName} ${client.firstName}
-                                        (${client.email}): ${client.summaryOrdersPrice} rubles</p></li>
+                                    <li><p class="client">${tagStatus.count}. ${client.lastName} ${client.firstName} (${client.email}): ${client.summaryOrdersPrice} rubles</p></li>
                                 </j:forEach>
                             </ul>
                         </j:otherwise>

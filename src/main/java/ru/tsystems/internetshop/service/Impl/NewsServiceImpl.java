@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.dao.NewsDAO;
 import ru.tsystems.internetshop.model.DTO.NewsDTO;
+import ru.tsystems.internetshop.model.DTO.NewsDTOWithFormat;
 import ru.tsystems.internetshop.model.entity.News;
 import ru.tsystems.internetshop.service.NewsService;
 import ru.tsystems.internetshop.util.Mapper;
 
+import java.text.DateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,14 +27,23 @@ public class NewsServiceImpl implements NewsService {
     private Mapper mapper;
 
     @Override
-    public Set<NewsDTO> getAllNews() {
-        Set<NewsDTO> newsDTO = new HashSet<>();
+    public Set<NewsDTOWithFormat> getAllNews() {
+        Set<NewsDTOWithFormat> newsDTOWithFormatList = new HashSet<>();
 
         List<News> news = newsDAO.findAll();
 
-        for (News news1 : news)
-            newsDTO.add(mapper.convertToDto(news1));
+        for (News news1 : news) {
+            NewsDTO newsDTO1 = mapper.convertToDto(news1);
 
-        return newsDTO;
+            NewsDTOWithFormat newsDTOWithFormat = new NewsDTOWithFormat();
+            newsDTOWithFormat.setId(newsDTO1.getId());
+            newsDTOWithFormat.setArticle(newsDTO1.getArticle());
+            newsDTOWithFormat.setText(newsDTO1.getText());
+            newsDTOWithFormat.setWritingDate(newsDTO1.getWritingDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+
+            newsDTOWithFormatList.add(newsDTOWithFormat);
+        }
+
+        return newsDTOWithFormatList;
     }
 }

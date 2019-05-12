@@ -14,7 +14,7 @@ import java.util.List;
 
 @Transactional
 @Service
-public class ClientServiceImpl implements ClientService{
+public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private ClientDAO clientDAO;
@@ -41,6 +41,17 @@ public class ClientServiceImpl implements ClientService{
     @Override
     public List<ClientDTO> getTop10Clients() {
         List<Client> clients = clientDAO.findTop10Clients();
+        List<ClientDTO> clientDTOS = new ArrayList<>();
+
+        for (Client client : clients)
+            clientDTOS.add(mapper.convertToDto(client));
+
+        return clientDTOS;
+    }
+
+    @Override
+    public List<ClientDTO> getTop10ClientsWithAtLeast1Order() {
+        List<Client> clients = clientDAO.findTop10ClientsWithAtLeast1Order();
         List<ClientDTO> clientDTOS = new ArrayList<>();
 
         for (Client client : clients)

@@ -5,7 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class ClientDTO {
     @Email(message = "Email should be valid")
     private String email;
 
-    private Long summaryOrdersPrice;
+    private Long summaryOrdersPrice = 0L;
 
     private List<OrderDTO> orders = new ArrayList<>();
     private List<ClientAddressDTO> addresses = new ArrayList<>();

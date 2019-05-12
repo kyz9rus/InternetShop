@@ -107,11 +107,11 @@
                             <j:otherwise>
                                 <ul class="topClientsList">
                                     <j:forEach items="${clients}" var="client" varStatus="tagStatus">
-                                        <j:if test="${client.summaryOrdersPrice > 0}">
-                                            <li>
-                                                <p class="client">${tagStatus.count}. ${client.lastName} ${client.firstName}: ${client.summaryOrdersPrice}
-                                                    rubles</p></li>
-                                        </j:if>
+                                        <li>
+                                            <p class="client">${tagStatus.count}. ${client.lastName} ${client.firstName}: ${client.summaryOrdersPrice}
+                                                rubles
+                                            </p>
+                                        </li>
                                     </j:forEach>
                                 </ul>
                             </j:otherwise>
@@ -129,11 +129,9 @@
                                 <j:forEach items="${newsList}" var="news" varStatus="tagStatus">
                                     <li>
                                         <div class="postBlock" align="left">
-                                                <%--<a href="<j:url value="http://localhost:8081/news/${news.id}"/> " target="_blank">--%>
                                             <div class="articleBlock">
                                                 <label class="postArticle">${news.article}</label>
                                             </div>
-                                                <%--</a>--%>
                                             <div class="textBlock">
                                                 <j:choose>
                                                     <j:when test="${news.text.length() > 150}">
@@ -145,7 +143,7 @@
                                                 </j:choose>
                                             </div>
                                             <div class="writingDateBlock">
-                                                <label class="writing_date">${fn:substring(news.writingDate.toString(), 0, news.writingDate.toString().length()-7)}</label>
+                                                <label class="writing_date">${news.writingDate}</label>
                                             </div>
                                         </div>
                                     </li>
