@@ -69,6 +69,7 @@
                                     <div class="form-group">
                                         <label>Email</label>
                                         <spring:input type="email" path="email"/>
+                                        <input name="clientEmail" hidden/>
                                     </div>
                                 </div>
                             </div>

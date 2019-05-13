@@ -7,9 +7,21 @@ public class ResponseInfo {
     private int statusCode;
     private String message;
 
+    private String descriptionErrorMessage;
+
     public ResponseInfo(String message, int statusCode) {
         this.message = message;
         this.statusCode = statusCode;
+    }
+
+    public ResponseInfo(int statusCode, String message, String descriptionErrorMessage) {
+        this.statusCode = statusCode;
+        this.message = message;
+        this.descriptionErrorMessage = descriptionErrorMessage;
+    }
+
+    public String getDescriptionErrorMessage() {
+        return descriptionErrorMessage;
     }
 
     public int getStatusCode() {
@@ -26,6 +38,10 @@ public class ResponseInfo {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public void setDescriptionErrorMessage(String descriptionErrorMessage) {
+        this.descriptionErrorMessage = descriptionErrorMessage;
     }
 
     public boolean equals(final Object o) {

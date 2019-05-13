@@ -27,8 +27,8 @@
         </div>
 
         <div class="content" align="center">
-            <div class="errorBlock">
-                <div class="errorInfoBlock">
+            <div class="errorBlock row">
+                <div class="errorInfoBlock col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <div class="image404Block">
                         <j:choose>
                             <j:when test="${responseInfo.statusCode == 404}">
@@ -41,12 +41,13 @@
                     </div>
                     <div>
                         <p>${fn:toUpperCase(responseInfo.message)}</p>
+                        <p class="descriptionError">${responseInfo.descriptionErrorMessage}</p>
                         <a href="<j:url value="/"/>">
                             <button class="btn formButton">MAIN PAGE</button>
                         </a>
                     </div>
                 </div>
-                <div class="errorImageBlock">
+                <div class="errorImageBlock col-xs-4 col-sm-4 col-md-4 col-lg-4">
                     <img src="<c:url value="/resources/images/errorImage.png"/>">
                 </div>
             </div>

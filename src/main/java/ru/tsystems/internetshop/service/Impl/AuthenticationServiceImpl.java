@@ -13,17 +13,30 @@ import ru.tsystems.internetshop.service.ClientService;
 
 import java.util.Collection;
 
+/**
+ * This is class, which implements methods from AuthenticationService
+ */
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
     private ClientService clientService;
 
+    /**
+     * This method returns current autetication
+     *
+     * @return authentication from application context
+     */
     @Override
     public Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
+    /**
+     * This method gets client from authentication object in application context
+     *
+     * @return client
+     */
     @Override
     public ClientDTO getClient() {
         ClientDTO clientDTO = new ClientDTO();

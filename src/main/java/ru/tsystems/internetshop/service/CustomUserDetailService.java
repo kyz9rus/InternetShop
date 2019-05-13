@@ -14,6 +14,9 @@ import ru.tsystems.internetshop.model.entity.User;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * This is class, which override method for loading user
+ */
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 

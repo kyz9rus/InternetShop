@@ -132,6 +132,10 @@
                                             <p>Total price <b class="text-success">${basket.summaryPrice}</b> rubles</p>
                                         </div>
 
+                                        <div align="left">
+                                            <p class="text-danger">${errorMessage}</p>
+                                        </div>
+
                                         <input class="btn formButton issueOrderButton" type="submit"
                                                value="ISSUE ORDER"/>
                                     </div>

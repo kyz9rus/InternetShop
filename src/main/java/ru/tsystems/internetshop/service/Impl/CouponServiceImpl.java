@@ -10,6 +10,9 @@ import ru.tsystems.internetshop.service.BasketService;
 import ru.tsystems.internetshop.service.CouponService;
 import ru.tsystems.internetshop.util.Mapper;
 
+/**
+ * This is class, which implements methods from CouponService
+ */
 @Transactional
 @Service
 public class CouponServiceImpl implements CouponService {
@@ -20,10 +23,15 @@ public class CouponServiceImpl implements CouponService {
     @Autowired
     private Mapper mapper;
 
+    /**
+     * This method gets coupon by value
+     * @param value coupon value
+     * @return coupon or null (if it doesn't exist)
+     */
     @Override
-    public CouponDTO getCouponByValue(String name) {
+    public CouponDTO getCouponByValue(String value) {
         try {
-            return mapper.convertToDto(couponDAO.findCouponByValue(name));
+            return mapper.convertToDto(couponDAO.findCouponByValue(value));
         } catch (IllegalArgumentException e) {
             return null;
         }

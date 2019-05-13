@@ -1,6 +1,5 @@
 package ru.tsystems.internetshop.controller;
 
-import com.sun.mail.smtp.SMTPSendFailedException;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,6 +14,9 @@ import ru.tsystems.internetshop.util.ResponseInfo;
 @ControllerAdvice
 public class CustomExceptionHandler {
 
+    /**
+     * This method handles "page not found"
+     */
     @ExceptionHandler(NoHandlerFoundException.class)
     public ModelAndView notFoundException() {
         ModelAndView modelAndView = new ModelAndView();
@@ -23,6 +25,9 @@ public class CustomExceptionHandler {
         return modelAndView;
     }
 
+    /**
+     * This method handles all dao exceptions
+     */
     @ExceptionHandler(DAOException.class)
     public ModelAndView daoException() {
         ModelAndView modelAndView = new ModelAndView();
@@ -31,19 +36,14 @@ public class CustomExceptionHandler {
         return modelAndView;
     }
 
-    @ExceptionHandler(SMTPSendFailedException.class)
-    public ModelAndView smtpException() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("exception");
-        modelAndView.addObject("responseInfo", new ResponseInfo("An error has occurred", 500));
-        return modelAndView;
-    }
-
+    /**
+     * This method handles all exceptions depends on sending mail
+     */
     @ExceptionHandler(MailException.class)
     public ModelAndView mailException() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("exception");
-        modelAndView.addObject("responseInfo", new ResponseInfo("An error has occurred", 500));
+        modelAndView.addObject("responseInfo", new ResponseInfo(500, "An error has occurred<br/>", "REASON:<br/> Check that your email is correct<br/>If it is, write to administrator:<br/> danukrus@yandex.ru"));
         return modelAndView;
     }
 }

@@ -4,6 +4,9 @@ import ru.tsystems.internetshop.model.DTO.ClientDTO;
 
 import java.util.List;
 
+/**
+ * This is interface, which declares methods for managing clients
+ */
 public interface ClientService {
     void saveClient(ClientDTO clientDTO);
 

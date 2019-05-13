@@ -1,6 +1,5 @@
 package ru.tsystems.internetshop.service.Impl;
 
-import com.sun.mail.smtp.SMTPSendFailedException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -16,6 +15,9 @@ import ru.tsystems.internetshop.service.MailService;
 
 import java.util.List;
 
+/**
+ * This is class, which implements methods from MailService
+ */
 @Service
 public class MailServiceImpl implements MailService {
 
@@ -24,27 +26,37 @@ public class MailServiceImpl implements MailService {
 
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
-
+    /**
+     * This method sends letter to email about getting a new coupon
+     * @param email client email ("to")
+     * @param couponDTO coupon
+     * @throws MailException
+     */
     @Override
-    public void sendNewCouponLetter(String email, CouponDTO couponDTO) throws SMTPSendFailedException, MailException {
+    public void sendNewCouponLetter(String email, CouponDTO couponDTO) throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("danukrus@mail.ru");
         message.setTo(email);
         message.setSubject("NEW COUPON!");
         message.setText("Congratulations!\n\n" +
-                        "" +
-                        "You got a coupon:\n"
-                        + couponDTO.getValue() + "\n\n" +
-                        "Coupon description:\n"
-                        + couponDTO.getDescription() + "\n\n" +
-                        "Make orders with AVON!");
+                "" +
+                "You got a coupon:\n"
+                + couponDTO.getValue() + "\n\n" +
+                "Coupon description:\n"
+                + couponDTO.getDescription() + "\n\n" +
+                "Make orders with AVON!");
 
         fileLogger.info("Sending message: " + message + "...");
         emailSender.send(message);
     }
 
+    /**
+     * This method sends letter to email about new order
+     * @param orderDTO order
+     * @throws MailException
+     */
     @Override
-    public void sendNewOrderLetter(OrderDTO orderDTO) throws SMTPSendFailedException, MailException {
+    public void sendNewOrderLetter(OrderDTO orderDTO) throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("danukrus@mail.ru");
         message.setTo(orderDTO.getClient().getEmail());
@@ -71,6 +83,11 @@ public class MailServiceImpl implements MailService {
         emailSender.send(message);
     }
 
+    /**
+     * This method sends letter to email about changing order status
+     * @param orderDTO order
+     * @throws MailException
+     */
     @Override
     public void sendChangeOrderStatusLetter(OrderDTO orderDTO) throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -86,6 +103,11 @@ public class MailServiceImpl implements MailService {
         emailSender.send(message);
     }
 
+    /**
+     * This method sends letter to email about changing payment status
+     * @param orderDTO order
+     * @throws MailException
+     */
     @Override
     public void sendChangePaymentStatusLetter(OrderDTO orderDTO) throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();

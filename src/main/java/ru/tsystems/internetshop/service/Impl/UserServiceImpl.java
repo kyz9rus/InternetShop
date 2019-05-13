@@ -14,6 +14,9 @@ import ru.tsystems.internetshop.service.UserService;
 
 import java.util.List;
 
+/**
+ * This is class, which implements methods from UserService
+ */
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,16 +24,33 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;
 
+    /**
+     * This method saves user
+     *
+     * @param user user
+     */
     @Override
     public void saveUser(User user) {
         userDAO.SaveOrUpdateUser(user);
     }
 
+    /**
+     * This method updates user
+     *
+     * @param user user
+     */
     @Override
     public void updateUser(User user) {
         userDAO.update(user);
     }
 
+
+    /**
+     * This method gets user by email
+     *
+     * @param email user email
+     * @return user
+     */
     @Override
     public UserDTO getUserByEmail(String email) {
         return userDAO.findByEmail(email);

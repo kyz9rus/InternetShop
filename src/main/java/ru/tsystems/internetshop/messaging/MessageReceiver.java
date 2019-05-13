@@ -19,7 +19,7 @@ public class MessageReceiver {
     @Autowired
     private ru.tsystems.internetshop.util.NewsInfo newsInfo;
 
-    static final Logger LOG = Logger.getLogger("logger");
+    static final Logger fileLogger = Logger.getLogger("fileLogger");
     private static final String NEWS_QUEUE = "news";
 
     /**
@@ -29,12 +29,13 @@ public class MessageReceiver {
      */
     @JmsListener(destination = NEWS_QUEUE)
     public void receiveMessage(final Message<NewsInfo> message) throws JMSException {
-        System.out.println("RECEIVE: " + message.getPayload() + " | " + message.getHeaders());
+        fileLogger.info("RECEIVE: " + message.getPayload() + " | " + message.getHeaders());
+
         MessageHeaders headers = message.getHeaders();
-        LOG.info("Application : headers received : {}" + headers);
+        fileLogger.info("Application : headers received : {}" + headers);
 
         NewsInfo newsInfo = message.getPayload();
-        LOG.info("Application : response received : {}" + newsInfo);
+        fileLogger.info("Application : response received : {}" + newsInfo);
 
         this.newsInfo.addNews(newsInfo);
     }

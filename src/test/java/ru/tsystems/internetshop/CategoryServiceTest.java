@@ -20,10 +20,7 @@ import ru.tsystems.internetshop.util.Mapper;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-
-
 @ContextConfiguration
-
 public class CategoryServiceTest {
 
     @Configuration

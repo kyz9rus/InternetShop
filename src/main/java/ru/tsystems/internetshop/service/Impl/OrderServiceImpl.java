@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This is class, which implements methods from OrderService
+ */
 @Transactional
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -50,6 +53,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private Mapper mapper;
 
+    /**
+     * This method gets all orders
+     *
+     * @return list of orders
+     */
+    @Override
     public List<OrderDTO> getOrders() {
         List<Order> orders = orderDAO.findAll();
         List<OrderDTO> orderDTOS = new ArrayList<>();
@@ -60,6 +69,12 @@ public class OrderServiceImpl implements OrderService {
         return orderDTOS;
     }
 
+    /**
+     * This method gets orders by client
+     *
+     * @param clientDTO client
+     * @return list of orders
+     */
     @Override
     public List<OrderDTO> getOrdersByClient(ClientDTO clientDTO) {
         List<Order> orders = orderDAO.findOrdersByClient(mapper.convertToEntity(clientDTO));
@@ -70,6 +85,12 @@ public class OrderServiceImpl implements OrderService {
         return orderDTOS;
     }
 
+    /**
+     * This method gets only unfinished orders by client
+     *
+     * @param clientDTO client
+     * @return list of orders
+     */
     @Override
     public List<OrderDTO> getUnfinishedOrdersByClient(ClientDTO clientDTO) {
         List<Order> orders = orderDAO.findUnfinishedOrdersByClient(mapper.convertToEntity(clientDTO));
@@ -81,11 +102,22 @@ public class OrderServiceImpl implements OrderService {
         return orderDTOS;
     }
 
+    /**
+     * This method updates order
+     *
+     * @param orderDTO order
+     */
     @Override
     public void updateOrder(OrderDTO orderDTO) {
         orderDAO.update(mapper.convertToEntity(orderDTO));
     }
 
+    /**
+     * This method gets order by id
+     *
+     * @param id order id
+     * @return order or null (if it doesn't exist)
+     */
     @Override
     public OrderDTO getOrder(Long id) {
         Order order = orderDAO.findByKey(id);
@@ -95,22 +127,52 @@ public class OrderServiceImpl implements OrderService {
             return null;
     }
 
+    /**
+     * This method gets enum value from string value
+     *
+     * @param deliveryMethodString delivery method (String)
+     * @return delivery method (enum)
+     */
     public DeliveryMethod getDeliveryMethod(String deliveryMethodString) {
         return deliveryMethodMap.get(deliveryMethodString);
     }
 
+    /**
+     * This method gets enum value from string value
+     *
+     * @param paymentMethodString payment method (String)
+     * @return payment method (enum)
+     */
     public PaymentMethod getPaymentMethod(String paymentMethodString) {
         return paymentMethodMap.get(paymentMethodString);
     }
 
+    /**
+     * This method gets enum value from string value
+     *
+     * @param paymentStatusString payment status (String)
+     * @return payment status (enum)
+     */
     public PaymentStatus getPaymentStatus(String paymentStatusString) {
         return paymentStatusMap.get(paymentStatusString);
     }
 
+    /**
+     * This method gets enum value from string value
+     *
+     * @param orderStatusString order status (String)
+     * @return order status (enum)
+     */
     public OrderStatus getOrderStatus(String orderStatusString) {
         return orderStatusMap.get(orderStatusString);
     }
 
+    /**
+     * This method gets orders by category
+     *
+     * @param categoryDTO category
+     * @return list of orders or empty list
+     */
     @Override
     public List<OrderDTO> getOrdersByCategory(CategoryDTO categoryDTO) {
         List<Order> orders;
@@ -128,6 +190,11 @@ public class OrderServiceImpl implements OrderService {
         return orderDTOS;
     }
 
+    /**
+     * This method gets revenue for a week and for a month
+     *
+     * @return revenue object
+     */
     @Override
     public RevenueInfo getRevenueInfo() {
         final long[] revenueForWeek = {0};
@@ -156,6 +223,11 @@ public class OrderServiceImpl implements OrderService {
         return new RevenueInfo(revenueForWeek[0], revenueForMonth[0]);
     }
 
+    /**
+     * This method saves order and gets order (with id)
+     * @param orderDTO order
+     * @return order (with id)
+     */
     @Override
     public OrderDTO saveOrder(OrderDTO orderDTO) {
         return mapper.convertToDto(orderDAO.createAndGet(mapper.convertToEntity(orderDTO)));

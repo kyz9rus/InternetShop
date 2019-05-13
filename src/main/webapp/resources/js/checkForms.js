@@ -78,6 +78,18 @@ $('.addProductBlock button').click(function (e) {
     }
 });
 
+var isEmailChanged = false;
+
+$(function () {
+    if ($('.editProfileBlock input[name="clientEmail"]').val() === $('.editProfileBlock input[name="email"]').val())
+        isEmailChanged = false;
+    else (!isEmailChanged)
+    {
+        $('.editProfileBlock input[name="clientEmail"]').val($('.editProfileBlock input[name="email"]').val());
+        isEmailChanged = true;
+    }
+});
+
 $('.editProfileBlock button').click(function (e) {
     var formMessage = $('.formMessage');
     formMessage.text('');

@@ -4,6 +4,9 @@ import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 
 import java.util.List;
 
+/**
+ * This is interface, which declares methods for managing categories
+ */
 public interface CategoryService {
     void saveCategory(CategoryDTO categoryDTO);
 

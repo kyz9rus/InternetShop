@@ -7,8 +7,10 @@ import ru.tsystems.internetshop.model.*;
 
 import java.util.List;
 
+/**
+ * This is interface, which declares methods for managing orders
+ */
 public interface OrderService {
-//    void saveOrder(OrderDTO orderDTO);
     OrderDTO saveOrder(OrderDTO orderDTO);
 
     void updateOrder(OrderDTO orderDTO);

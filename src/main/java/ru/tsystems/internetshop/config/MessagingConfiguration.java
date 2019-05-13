@@ -7,6 +7,7 @@ import org.springframework.jms.core.JmsTemplate;
 import javax.jms.ConnectionFactory;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.naming.NoInitialContextException;
 
 /**
  * This is class contains configuration for the queue in embedded wildfly queue

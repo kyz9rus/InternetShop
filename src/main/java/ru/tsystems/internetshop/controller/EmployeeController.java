@@ -51,6 +51,11 @@ public class EmployeeController {
     private final Logger consoleLogger = Logger.getLogger("consoleLogger");
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
+    /**
+     * This method gets all orders
+     *
+     * @return all orders
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("get-orders")
     public String getOrders(Model model) {
@@ -64,6 +69,11 @@ public class EmployeeController {
         return "employeeProfile/orders";
     }
 
+    /**
+     * This method gets client statistic (with all clients)
+     *
+     * @return topClients page
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("clientStatistic")
     public String clientStatisticPage(Model model) {
@@ -72,6 +82,11 @@ public class EmployeeController {
         return "employeeProfile/statistic/topClients";
     }
 
+    /**
+     * This method gets product statistic (with 10 products)
+     *
+     * @return topProducts page
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("productStatistic")
     public String productStatisticPage(Model model) {
@@ -80,6 +95,11 @@ public class EmployeeController {
         return "employeeProfile/statistic/topProducts";
     }
 
+    /**
+     * This method gets revenue for a week and month
+     *
+     * @return revenue page
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("revenue")
     public String revenuePage(Model model) {
@@ -90,6 +110,11 @@ public class EmployeeController {
         return "employeeProfile/statistic/revenue";
     }
 
+    /**
+     * This method opens addProduct page
+     *
+     * @return addProduct page
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("addProduct")
     public String addProductPage(Model model) {
@@ -97,6 +122,11 @@ public class EmployeeController {
         return "employeeProfile/addProduct";
     }
 
+    /**
+     * This method opens manageCategories page
+     *
+     * @return manageCategories page
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping("manageCategories")
     public String manageCategoriesPage(Model model) {
@@ -104,6 +134,13 @@ public class EmployeeController {
         return "employeeProfile/manageCategories";
     }
 
+    /**
+     * This method changes order status
+     *
+     * @param id                order id
+     * @param orderStatusString new order status
+     * @return success or error message
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("change-order-status")
     public @ResponseBody
@@ -137,6 +174,13 @@ public class EmployeeController {
 
     }
 
+    /**
+     * This method changes payment status
+     *
+     * @param id                  order id
+     * @param paymentStatusString new payment status
+     * @return success or error message
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("change-payment-status")
     public @ResponseBody
@@ -175,6 +219,11 @@ public class EmployeeController {
             return new ResponseInfo("Order with id " + id + " doesn't exist. Inform the administrator!", 404);
     }
 
+    /**
+     * This method creates new product
+     *
+     * @return addProduct page
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("create-product")
     public String createProduct(@Validated @ModelAttribute("product") ProductDTO productDTO, Model model) {
@@ -201,6 +250,11 @@ public class EmployeeController {
         return "employeeProfile/addProduct";
     }
 
+    /**
+     * This method creates new category
+     *
+     * @return manageCategories page
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("create-category")
     public String createCategory(@ModelAttribute("category") CategoryDTO categoryDTO, Model model) {
@@ -228,6 +282,11 @@ public class EmployeeController {
         return "employeeProfile/manageCategories";
     }
 
+    /**
+     * This method updates the category
+     *
+     * @return manageCategories page
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("update-category")
     public String updateCategory(@ModelAttribute("category") CategoryDTO categoryDTO, @RequestParam("oldName") String oldName, Model model) {
@@ -252,6 +311,11 @@ public class EmployeeController {
         return "employeeProfile/manageCategories";
     }
 
+    /**
+     * This method remove the category
+     *
+     * @return manageCategories page
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping("remove-category")
     public String removeCategory(@RequestParam("oldName") String categoryName, Model model) {
@@ -281,6 +345,12 @@ public class EmployeeController {
         return "employeeProfile/manageCategories";
     }
 
+    /**
+     * This method gets all products for order
+     *
+     * @param orderId order id
+     * @return list of products
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @PostMapping(value = "/showOrderHistory/get-products", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody

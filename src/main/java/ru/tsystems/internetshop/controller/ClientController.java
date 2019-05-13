@@ -67,6 +67,11 @@ public class ClientController {
     private final Logger consoleLogger = Logger.getLogger("consoleLogger");
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
+    /**
+     * This method opens editProfile page
+     *
+     * @return editProfile page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("editProfile")
     public String editProfile(Model model) {
@@ -74,6 +79,11 @@ public class ClientController {
         return "clientProfile/editProfile";
     }
 
+    /**
+     * This method opens changePassword page
+     *
+     * @return changePassword page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("changePassword")
     public String changePasswordPage(Model model) {
@@ -81,6 +91,11 @@ public class ClientController {
         return "clientProfile/changePassword";
     }
 
+    /**
+     * This method opens orderHistory page
+     *
+     * @return orderHistory page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("orderHistory")
     public String showOrderHistoryPage(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
@@ -94,6 +109,11 @@ public class ClientController {
         return "clientProfile/orderHistory";
     }
 
+    /**
+     * This method allows to repeat one of the previous orders and return
+     *
+     * @return issueOrder page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping("repeat-order")
     public String repeatOrder(@ModelAttribute("basket") Basket basket, @RequestParam("orderId") Long orderId, Model model) {
@@ -125,16 +145,27 @@ public class ClientController {
         return "clientProfile/issueOrder";
     }
 
+    /**
+     * This method allows to update client data
+     *
+     * @return editProfile page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "update-client")
-    public String updateClient(@ModelAttribute("client") ClientDTO clientDTO, Model model) {
-        consoleLogger.info("Updating client " + clientDTO + "...");
-        fileLogger.info("Updating client " + clientDTO + "...");
+    public String updateClient(@RequestParam("clientEmail") String email, @ModelAttribute("client") ClientDTO clientDTO, Model model) {
+        consoleLogger.info("Updating client " + clientDTO + " and old email: " + email + "...");
+        fileLogger.info("Updating client " + clientDTO + " and old email: " + email + "...");
+
+        if (!email.equals(clientDTO.getEmail())) {
+            if (clientService.getClientByEmail(clientDTO.getEmail()) != null) {
+                model.addAttribute("errorMessage", "Client with this email already exist. Choose another one.");
+                return "clientProfile/editProfile";
+            }
+        }
 
         if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
             model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
         else {
-
             clientService.updateClient(clientDTO);
 
             model.addAttribute("successMessage", "Your data successfully changed");
@@ -145,6 +176,11 @@ public class ClientController {
         return "clientProfile/editProfile";
     }
 
+    /**
+     * This method allows to update client password
+     *
+     * @return changePassword page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "password")
     public String changePassword(@ModelAttribute("client") ClientDTO clientDTO, @RequestParam("password") String password, @RequestParam("newPassword") String newPassword, @RequestParam("repeatNewPassword") String repeatNewPassword, Model model) {
@@ -169,6 +205,11 @@ public class ClientController {
         return "clientProfile/changePassword";
     }
 
+    /**
+     * This method allows to create new address for the client
+     *
+     * @return editProfile page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "create-address")
     public String createClientAddress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, Model model) {
@@ -191,6 +232,11 @@ public class ClientController {
         return "clientProfile/editProfile";
     }
 
+    /**
+     * This method allows to update the address for the client
+     *
+     * @return editProfile page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "update-address")
     public String updateClientAdress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @RequestParam("addressId") Long addressId, Model model) {
@@ -214,6 +260,11 @@ public class ClientController {
         return "clientProfile/editProfile";
     }
 
+    /**
+     * This method allows to delete the address for the client
+     *
+     * @return editProfile page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "delete-address")
     public String deleteAddress(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("clientAddress") ClientAddressDTO clientAddressDTO, @RequestParam("addressId") Long addressId, Model model) {
@@ -237,9 +288,15 @@ public class ClientController {
         return "clientProfile/editProfile";
     }
 
+    /**
+     * This method gets all products for the order
+     *
+     * @return ResponseEntity with products and status
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "/showOrderHistory/get-products", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public @ResponseBody ResponseEntity<List<OrderProductDTO>> getProducts(@RequestParam("orderId") Long orderId){
+    public @ResponseBody
+    ResponseEntity<List<OrderProductDTO>> getProducts(@RequestParam("orderId") Long orderId) {
         consoleLogger.info("Getting products for order with id " + orderId + "...");
         fileLogger.info("Getting products for order with id " + orderId + "...");
 
@@ -250,6 +307,11 @@ public class ClientController {
         return new ResponseEntity<>(orderProducts, HttpStatus.OK);
     }
 
+    /**
+     * This method resets discount if it has and to open first page for issuing order
+     *
+     * @return issueOrder page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("issueOrder")
     public String issueOrderPage(@ModelAttribute("basket") Basket basket, Model model) {
@@ -262,6 +324,11 @@ public class ClientController {
         return "clientProfile/issueOrder";
     }
 
+    /**
+     * This method checks coupon for the client
+     *
+     * @return ResponseInfo with message and status
+     */
     @PostMapping(value = "/issueOrder/check-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     ResponseInfo checkCoupon(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("couponValue") String couponValue, Model model) {
@@ -273,38 +340,49 @@ public class ClientController {
         CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
         if (couponDTO == null)
             responseInfo = new ResponseInfo("Incorrect coupon", 404);
+        else if (clientDTO.getCoupons().contains(couponDTO))
+            responseInfo = new ResponseInfo("You have already use this coupon", 404);
         else
-            if (clientDTO.getCoupons().contains(couponDTO))
-                responseInfo = new ResponseInfo("You have already use this coupon", 404);
-            else
-                responseInfo = new ResponseInfo("Correct coupon", 200);
+            responseInfo = new ResponseInfo("Correct coupon", 200);
 
         model.addAttribute("basket", basket);
         return responseInfo;
     }
 
+    /**
+     * This method allows to calc price with or without coupon and open next page for issuing order
+     *
+     * @return second issueOrder page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("issueOrder2")
-    public String issueOrderPage2(@RequestParam("couponValue") String couponValue, @ModelAttribute("basket") Basket basket, Model model) {
+    public String issueOrderPage2(@RequestParam("couponValue") String couponValue, @ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, Model model) {
         consoleLogger.info("Calculating price for order with couponValue " + couponValue + " and basket " + basket + "...");
         fileLogger.info("Calculating price for order with couponValue " + couponValue + " and basket " + basket + "...");
 
-        CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
+        if (clientDTO.getAddresses().isEmpty())
+            model.addAttribute("errorMessage", "Please add address in your profile");
+        else {
+            CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
 
-        if (couponDTO != null && (basket.getCouponDTO() == null || basket.isChangedAfterCoupon())) {
-            basket.setCouponDTO(couponDTO);
-            basket.setSummaryPrice(basketService.calcPrice(basket));
+            if (couponDTO != null && (basket.getCouponDTO() == null || basket.isChangedAfterCoupon())) {
+                basket.setCouponDTO(couponDTO);
+                basket.setSummaryPrice(basketService.calcPrice(basket));
 
-            basket.setChangedAfterCoupon(false);
+                basket.setChangedAfterCoupon(false);
+            }
         }
-
-        messageSender.sendMessage("Top products could changed");
 
         model.addAttribute("basket", basket);
         model.addAttribute("categories", categoryInfo.getCategories());
         return "clientProfile/issueOrder2";
     }
 
+    /**
+     * This method allows to issue order
+     *
+     * @return issueOrder page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping("issue-order")
     public String createOrder(@ModelAttribute("client") ClientDTO clientDTO, @ModelAttribute("basket") Basket basket, @RequestParam("deliveryMethod") String deliveryMethodString, @RequestParam("paymentMethod") String paymentMethodString, @RequestParam("addressId") Long addressId, Model model) throws Exception {
@@ -318,7 +396,7 @@ public class ClientController {
         model.addAttribute("categories", categoryInfo.getCategories());
         model.addAttribute("basket", new Basket());
         model.addAttribute("successMessage", "Order successfully issued");
-        messageSender.sendMessage("Top products has changed");
+        messageSender.sendMessage("Top products could changed");
         return "clientProfile/issueOrder";
     }
 }

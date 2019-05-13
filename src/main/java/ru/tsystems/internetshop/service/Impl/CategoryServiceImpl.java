@@ -12,6 +12,9 @@ import ru.tsystems.internetshop.util.Mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is class, which implements methods from CategoryService
+ */
 @Transactional
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -22,6 +25,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private Mapper mapper;
 
+    /**
+     * This methods gets all categories
+     * @return list of categories
+     */
     public List<CategoryDTO> getAllCategories() {
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
 
@@ -33,6 +40,11 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDTOS;
     }
 
+    /**
+     * This method gets category by name
+     * @param name name of category
+     * @return category or null (if it doesn't exist)
+     */
     @Override
     public CategoryDTO getCategoryByName(String name) {
         try {
@@ -42,16 +54,29 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
+    /**
+     * This method saves a new category
+     * @param categoryDTO category
+     */
     @Override
     public void saveCategory(CategoryDTO categoryDTO) {
         categoryDAO.create(mapper.convertToEntity(categoryDTO));
     }
 
+    /**
+     * This method updates category in database
+     * @param oldName name of category
+     * @param categoryDTO new category
+     */
     @Override
     public void updateCategory(String oldName, CategoryDTO categoryDTO) {
         categoryDAO.updateCategory(oldName, mapper.convertToEntity(categoryDTO));
     }
 
+    /**
+     * This method deletes category by name
+     * @param categoryName name of category
+     */
     @Override
     public void removeCategoryByName(String categoryName) {
         categoryDAO.deleteByName(categoryName);

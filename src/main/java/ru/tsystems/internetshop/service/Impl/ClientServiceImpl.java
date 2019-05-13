@@ -12,6 +12,9 @@ import ru.tsystems.internetshop.util.Mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is class, which implements methods from ClientService
+ */
 @Transactional
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -22,14 +25,29 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private Mapper mapper;
 
+    /**
+     * This method saves client
+     *
+     * @param clientDTO client
+     */
     public void saveClient(ClientDTO clientDTO) {
         clientDAO.create(mapper.convertToEntity(clientDTO));
     }
 
+    /**
+     * This method updates client
+     *
+     * @param clientDTO client
+     */
     public void updateClient(ClientDTO clientDTO) {
         clientDAO.update(mapper.convertToEntity(clientDTO));
     }
 
+    /**
+     * This method gets client by email
+     *
+     * @param email client email
+     */
     public ClientDTO getClientByEmail(String email) {
         try {
             return mapper.convertToDto(clientDAO.findByEmail(email));
@@ -38,6 +56,11 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+    /**
+     * This method gets top 10 clients
+     *
+     * @return top 10 clients
+     */
     @Override
     public List<ClientDTO> getTop10Clients() {
         List<Client> clients = clientDAO.findTop10Clients();
@@ -49,6 +72,11 @@ public class ClientServiceImpl implements ClientService {
         return clientDTOS;
     }
 
+    /**
+     * This method gets top 10 clients, who has at least 1 order
+     *
+     * @return list of clients
+     */
     @Override
     public List<ClientDTO> getTop10ClientsWithAtLeast1Order() {
         List<Client> clients = clientDAO.findTop10ClientsWithAtLeast1Order();

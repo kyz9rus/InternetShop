@@ -8,9 +8,17 @@ import ru.tsystems.internetshop.service.BasketService;
 
 import java.util.Map;
 
+/**
+ * This is class, which implements methods from BasketService
+ */
 @Service
 public class BasketServiceImpl implements BasketService {
 
+    /**
+     * This method calculates price for products in basket and using coupon (if it has)
+     * @param basket current basket with products and coupon
+     * @return summary price with dicount
+     */
     @Override
     public int calcPrice(Basket basket) {
         int price = 0;
@@ -42,6 +50,11 @@ public class BasketServiceImpl implements BasketService {
         return price;
     }
 
+    /**
+     * This method calculates price for products in basket and doesn't use coupon
+     * @param basket basket with products without coupon
+     * @return summary price
+     */
     @Override
     public int calcPriceWithoutDiscount(Basket basket) {
         Map<ProductDTO, Integer> products = basket.getProducts();
@@ -59,6 +72,10 @@ public class BasketServiceImpl implements BasketService {
         return price;
     }
 
+    /**
+     * This method resets discount for basket and remove coupon (if it has)
+     * @param basket basket
+     */
     @Override
     public void resetDiscount(Basket basket) {
         basket.setCouponDTO(null);

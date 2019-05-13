@@ -1,6 +1,5 @@
 package ru.tsystems.internetshop.controller;
 
-import com.sun.mail.smtp.SMTPSendFailedException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,12 +63,11 @@ public class PublicController {
     private final Logger consoleLogger = Logger.getLogger("consoleLogger");
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
-    @GetMapping("exception")
-    public String toExceptionPage(Model model) {
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return "exception";
-    }
-
+    /**
+     * This method open main page with client statistic and some news
+     *
+     * @return main page
+     */
     @GetMapping(value = "/")
     public String main(Model model) {
         model.addAttribute("client", authenticationService.getClient());
@@ -79,17 +77,32 @@ public class PublicController {
         return "index";
     }
 
+    /**
+     * This method opens registration page
+     *
+     * @return registration page
+     */
     @GetMapping(value = "registration")
     public String toRegistrationPage(Model model) {
         model.addAttribute("categories", categoryInfo.getCategories());
         return "registration";
     }
 
+    /**
+     * This method opens login page
+     *
+     * @return login page
+     */
     @GetMapping(value = "login")
     public String toLoginPage() {
         return "login";
     }
 
+    /**
+     * This method creates new client
+     *
+     * @return client page
+     */
     @PostMapping(value = "client")
     public String createClient(@Validated @ModelAttribute("client") ClientDTO client, @RequestParam("password") String password, @RequestParam("repeatPassword") String repeatPassword, Model model) {
         consoleLogger.info("Register client: " + client + "...");
@@ -113,6 +126,11 @@ public class PublicController {
         return "registration";
     }
 
+    /**
+     * This method opens page with products with choosed category
+     *
+     * @return category page
+     */
     @GetMapping(value = "category/{categoryName}")
     public String getCategory(@PathVariable("categoryName") String categoryName, Model model) {
         List<ProductDTO> products = productService.getProductsByCategory(new CategoryDTO(categoryName));
@@ -127,6 +145,11 @@ public class PublicController {
         return "category";
     }
 
+    /**
+     * This method adds new position of the product to basket
+     *
+     * @return new basket with new product
+     */
     @PostMapping(value = "put-product", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     ResponseEntity<BasketInfo> putProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
@@ -147,6 +170,11 @@ public class PublicController {
         return new ResponseEntity<>(new BasketInfo(basket, basket.getProducts().get(productDTO)), HttpStatus.OK);
     }
 
+    /**
+     * This method deletes 1 position of the product from basket
+     *
+     * @return new basket without removed product
+     */
     @ResponseBody
     @PostMapping(value = "increase-product", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<BasketInfo> increaseProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
@@ -161,6 +189,11 @@ public class PublicController {
         return new ResponseEntity<>(new BasketInfo(basket, basket.getProducts().get(productDTO)), HttpStatus.OK);
     }
 
+    /**
+     * This method removes all positions of the product from basket
+     *
+     * @return new basket without removed products
+     */
     @ResponseBody
     @PostMapping(value = "remove-product", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<BasketInfo> addProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
@@ -176,6 +209,11 @@ public class PublicController {
         return new ResponseEntity<>(new BasketInfo(basket, basket.getProducts().get(productDTO)), HttpStatus.OK);
     }
 
+    /**
+     * This method open clientProfile page
+     *
+     * @return clientProfile page
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping(value = "clientProfile")
     public String toClientProfile(Model model) {
@@ -184,6 +222,11 @@ public class PublicController {
         return "clientProfile";
     }
 
+    /**
+     * This method open employeeProfile page
+     *
+     * @return employeeProfile page
+     */
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping(value = "employeeProfile")
     public String toEmployeeProfile(Model model) {
@@ -191,6 +234,11 @@ public class PublicController {
         return "employeeProfile";
     }
 
+    /**
+     * This method sends coupon to client email
+     *
+     * @return message about sending and status
+     */
     @PreAuthorize("hasAnyRole('CLIENT')")
     @PostMapping(value = "send-coupon", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
@@ -210,7 +258,8 @@ public class PublicController {
                 try {
                     mailService.sendNewCouponLetter(email, couponDTO);
                     responseInfo = new ResponseInfo("Сoupon successfully sent.\nCheck your email.", 200);
-                } catch (SMTPSendFailedException e) {
+                } catch (MailException e) {
+                    consoleLogger.error(e.getMessage());
                     responseInfo = new ResponseInfo("Incorrect email. Change it in your profile!", 404);
                 }
             }
@@ -221,24 +270,53 @@ public class PublicController {
         return responseInfo;
     }
 
+    /**
+     * This method returns json value of top 10 products
+     *
+     * @return top 10 products
+     */
     @GetMapping(value = "top10Products", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<ProductDTO> getTop10Products() {
         return productService.getTop10Products();
     }
 
+    /**
+     * This method creates new client
+     *
+     * @return new empty client
+     */
     @ModelAttribute("client")
     public ClientDTO createClient() {
         return new ClientDTO();
     }
 
+    /**
+     * This method creates new basket
+     *
+     * @return new empty basket
+     */
     @ModelAttribute("basket")
     public Basket createBasket() {
         return new Basket();
     }
 
+    /**
+     * This method handle /logout request to show our view
+     */
     @GetMapping("logout")
     public ModelAndView logout() {
         return new ModelAndView("redirect:" + "/logout");
+    }
+
+    /**
+     * This method opens exception page
+     *
+     * @return exception page
+     */
+    @GetMapping("exception")
+    public String toExceptionPage(Model model) {
+        model.addAttribute("categories", categoryInfo.getCategories());
+        return "exception";
     }
 }

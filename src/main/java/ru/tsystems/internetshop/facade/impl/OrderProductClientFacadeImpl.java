@@ -93,7 +93,7 @@ public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
 
         try {
             mailService.sendNewOrderLetter(orderDTO);
-        } catch (SMTPSendFailedException | MailException e) {
+        } catch (MailException e) {
             e.printStackTrace();
             throw e;
         }

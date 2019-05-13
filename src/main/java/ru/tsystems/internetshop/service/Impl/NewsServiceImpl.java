@@ -16,6 +16,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This is class, which implements methods from NewsService
+ */
 @Transactional
 @Service
 public class NewsServiceImpl implements NewsService {
@@ -26,6 +29,10 @@ public class NewsServiceImpl implements NewsService {
     @Autowired
     private Mapper mapper;
 
+    /**
+     * This method gets all news
+     * @return list of news
+     */
     @Override
     public Set<NewsDTOWithFormat> getAllNews() {
         Set<NewsDTOWithFormat> newsDTOWithFormatList = new HashSet<>();

@@ -31,10 +31,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-
-
 @ContextConfiguration
-
 public class CouponServiceTest {
 
     @Configuration

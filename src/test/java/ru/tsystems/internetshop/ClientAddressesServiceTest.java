@@ -25,10 +25,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-
-
 @ContextConfiguration
-
 public class ClientAddressesServiceTest {
 
     @Configuration

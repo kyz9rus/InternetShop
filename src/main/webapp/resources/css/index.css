@@ -244,22 +244,32 @@ input:focus {
     padding: 0px 10%;
 }
 
+.descriptionError {
+    font-size: 15px;
+    font-weight: bold;
+}
+
 .errorImageBlock {
     float: right;
+    margin-top: 30px;
 }
 
 .errorImageBlock img {
-    width: 70%;
+    width: 110px;
 }
 
 .errorInfoBlock {
     float: left;
     margin-top: 40px;
-    font-size: 30px;
+    font-size: 100%;
 }
 
 .image404Block {
     margin-bottom: 30px;
+}
+
+.image404Block >img {
+    width: 100%;
 }
 
 .basketInfoBlock p {

@@ -5,6 +5,9 @@ import ru.tsystems.internetshop.model.DTO.ProductDTO;
 
 import java.util.List;
 
+/**
+ * This is interface, which declares methods for managing products
+ */
 public interface ProductService {
     void saveProduct(ProductDTO productDTO);
 

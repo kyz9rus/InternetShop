@@ -23,10 +23,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-
-
 @ContextConfiguration
-
 public class BasketServiceTest {
 
     @Configuration

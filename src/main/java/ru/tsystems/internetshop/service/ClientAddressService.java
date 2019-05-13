@@ -7,6 +7,9 @@ import ru.tsystems.internetshop.model.entity.ClientAddress;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This is interface, which declares methods for managing client addresses
+ */
 public interface ClientAddressService {
     void saveClientAddress(ClientAddressDTO clientAddressDTO);
 
