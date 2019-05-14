@@ -41,6 +41,7 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
     public void create(T entity) {
         try {
             getSession().persist(entity);
+//        } catch (Exception e) {
         } catch (Exception e) {
             fileLogger.error(e.getMessage());
             e.printStackTrace();

@@ -59,8 +59,8 @@ public class CategoryServiceImpl implements CategoryService {
      * @param categoryDTO category
      */
     @Override
-    public void saveCategory(CategoryDTO categoryDTO) {
-        categoryDAO.create(mapper.convertToEntity(categoryDTO));
+    public CategoryDTO saveCategory(CategoryDTO categoryDTO) {
+        return mapper.convertToDto(categoryDAO.createAndGet(mapper.convertToEntity(categoryDTO)));
     }
 
     /**

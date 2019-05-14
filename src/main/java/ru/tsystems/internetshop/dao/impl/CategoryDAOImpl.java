@@ -18,6 +18,19 @@ public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements Cate
 
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
+    @Override
+    public Category createAndGet(Category category) {
+        try {
+            getSession().persist(category);
+
+            return category;
+        } catch (Exception e) {
+            fileLogger.error(e.getMessage());
+            e.printStackTrace();
+            throw new DAOException();
+        }
+    }
+
     /**
      * This method updates Category entity in database using HQL
      * @param oldName old category name

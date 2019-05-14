@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.service.Impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +53,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private Mapper mapper;
+
+    private final Logger consoleLogger = Logger.getLogger("consoleLogger");
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
 
     /**
      * This method gets all orders
@@ -218,7 +222,8 @@ public class OrderServiceImpl implements OrderService {
             e.printStackTrace();
         }
 
-        System.out.println(revenueForMonth[0] + " " + revenueForWeek[0]);
+        consoleLogger.info("Revenue for month: " + revenueForMonth[0] + "\nRevenue for week: " + revenueForWeek[0]);
+        fileLogger.info("Revenue for month: " + revenueForMonth[0] + "\nRevenue for week: " + revenueForWeek[0]);
 
         return new RevenueInfo(revenueForWeek[0], revenueForMonth[0]);
     }
@@ -237,11 +242,8 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orders = orderDAO.findPaidOrders();
         List<OrderDTO> orderDTOS = new ArrayList<>();
 
-        System.out.println("PAID ORDERS: ");
-        for (Order order : orders) {
+        for (Order order : orders)
             orderDTOS.add(mapper.convertToDto(order));
-            System.out.println(order);
-        }
 
         return orderDTOS;
     }

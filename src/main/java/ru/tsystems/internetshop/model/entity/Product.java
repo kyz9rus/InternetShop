@@ -19,7 +19,8 @@ public class Product {
 
     private int price;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REMOVE, CascadeType.REMOVE})
+//    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST})
     @JoinColumn(name = "category_id", columnDefinition = "bigint references category(id) on delete set null")
     private Category category;
 
@@ -60,6 +61,7 @@ public class Product {
                 ", volume='" + volume + '\'' +
                 ", quantityInStock=" + quantityInStock +
                 ", imgSrc='" + imgSrc + '\'' +
+                ", category='" + category + '\'' +
                 '}';
     }
 

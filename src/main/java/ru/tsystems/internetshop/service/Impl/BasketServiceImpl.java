@@ -16,6 +16,7 @@ public class BasketServiceImpl implements BasketService {
 
     /**
      * This method calculates price for products in basket and using coupon (if it has)
+     *
      * @param basket current basket with products and coupon
      * @return summary price with dicount
      */
@@ -24,11 +25,8 @@ public class BasketServiceImpl implements BasketService {
         int price = 0;
 
         CouponDTO couponDTO = basket.getCouponDTO();
-        if (couponDTO.getValue().equals("HAPPY_ORDER")) {
-            System.out.println("WITHOUT: " + calcPriceWithoutDiscount(basket) + " | HAPPY: " + calcPriceWithoutDiscount(basket) * 0.7);
+        if (couponDTO.getValue().equals("HAPPY_ORDER"))
             price = (int) Math.round(calcPriceWithoutDiscount(basket) * 0.7);
-            System.out.println("PRICE: " + price);
-        }
         else if (couponDTO.getValue().equals("HAPPY_FRAGRANCES")) {
             Map<ProductDTO, Integer> products = basket.getProducts();
 
@@ -38,7 +36,7 @@ public class BasketServiceImpl implements BasketService {
                 for (int i = 0; i < numberProduct; i++) {
                     productDTO.setNumberOfSales(productDTO.getNumberOfSales() + 1);
                     if (productDTO.getCategory().getName().equals("fragrances"))
-                        price += productDTO.getPrice()*0.85;
+                        price += productDTO.getPrice() * 0.85;
                     else
                         price += productDTO.getPrice();
                 }
@@ -46,12 +44,12 @@ public class BasketServiceImpl implements BasketService {
         } else
             price = calcPriceWithoutDiscount(basket);
 
-
         return price;
     }
 
     /**
      * This method calculates price for products in basket and doesn't use coupon
+     *
      * @param basket basket with products without coupon
      * @return summary price
      */
@@ -74,6 +72,7 @@ public class BasketServiceImpl implements BasketService {
 
     /**
      * This method resets discount for basket and remove coupon (if it has)
+     *
      * @param basket basket
      */
     @Override

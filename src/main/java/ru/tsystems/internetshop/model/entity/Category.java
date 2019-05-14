@@ -14,7 +14,7 @@ public class Category {
     @GeneratedValue
     private Long id;
 
-    @Column(length = 70, name = "name")
+    @Column(length = 70, name = "name", unique = true)
     private String name;
 
     public Category() {

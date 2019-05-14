@@ -238,6 +238,9 @@ public class EmployeeController {
                 if (productDTO.getImgSrc().length() == 0)
                     productDTO.setDefaultImgSrc();
 
+                CategoryDTO categoryDTO = categoryService.getCategoryByName(productDTO.getCategory().getName().toLowerCase());
+                productDTO.setCategory(categoryDTO);
+
                 productService.saveProduct(productDTO);
 
                 model.addAttribute("successMessage", "Product saved successfully.");
@@ -265,11 +268,15 @@ public class EmployeeController {
 
         if (categoryService.getCategoryByName(categoryDTO.getName()) == null) {
 
-            categoryService.saveCategory(categoryDTO);
+            categoryDTO = categoryService.saveCategory(categoryDTO);
 
             categoryInfo.getCategories().clear();
 
             List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
+
+            for (CategoryDTO dto : categoryDTOS)
+                fileLogger.info(dto);
+
             categoryDTOS.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
 
             categoryInfo.getCategories().addAll(categoryDTOS);

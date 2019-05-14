@@ -6,6 +6,8 @@ import ru.tsystems.internetshop.model.entity.Category;
  * This interface extends DAO interface and declares special methods for Category class
  */
 public interface CategoryDAO extends DAO<Category, Long> {
+    Category createAndGet(Category category);
+
     void updateCategory(String oldName, Category category);
 
     Category findByName(String name);

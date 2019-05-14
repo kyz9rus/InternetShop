@@ -102,7 +102,7 @@
                     <div class="topClientsBlock" align="left">
                         <j:choose>
                             <j:when test="${clients.size() == 0}">
-                                <p>Clients list is empty</p>
+                                <p>Client list is empty</p>
                             </j:when>
                             <j:otherwise>
                                 <ul class="topClientsList">

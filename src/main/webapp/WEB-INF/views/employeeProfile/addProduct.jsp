@@ -48,7 +48,7 @@
                         <form action="create-product" method="post">
                             <div class="form-group">
                                 <label>Product name:</label>
-                                <input name="name" required/>
+                                <input id="name" name="name" required/>
                             </div>
                             <div class="form-group">
                                 <label>Price:</label>

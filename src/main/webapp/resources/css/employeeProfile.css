@@ -196,6 +196,7 @@ td {
 .editOrderStatus button, .editPaymentStatus button {
     width: 70%;
     padding: 1px;
+    font-size: 10px;
 }
 
 .productOperations {

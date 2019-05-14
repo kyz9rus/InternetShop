@@ -11,7 +11,7 @@ function createPriceFilter() {
         var init = new Powerange(elem, {
             min: 0,
             max: 500,
-            start: 250,
+            start: 0,
             decimal: true,
             klass: 'priceFilter',
             callback: function () {
@@ -22,7 +22,7 @@ function createPriceFilter() {
         var init = new Powerange(elem, {
             min: minPrice,
             max: maxPrice,
-            start: (maxPrice - minPrice) / 2,
+            start: minPrice,
             decimal: true,
             klass: 'priceFilter',
             callback: function () {

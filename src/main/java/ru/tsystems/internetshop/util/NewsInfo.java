@@ -1,7 +1,6 @@
 package ru.tsystems.internetshop.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.tsystems.internetshop.model.DTO.NewsDTO;
 import ru.tsystems.internetshop.model.DTO.NewsDTOWithFormat;
 import ru.tsystems.internetshop.service.NewsService;
 
@@ -46,8 +45,6 @@ public class NewsInfo implements Serializable {
         newsDTOWithFormat.setArticle(newsInfo.getArticle());
         newsDTOWithFormat.setWritingDate(newsInfo.getWritingDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
         newsDTOWithFormat.setText(newsInfo.getText());
-
-        System.out.println("Adding news: newsINFO: " + newsInfo + " | newsDTOWithFormat: " + newsDTOWithFormat);
 
         this.news.add(newsDTOWithFormat);
     }

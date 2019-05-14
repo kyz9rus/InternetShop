@@ -1,0 +1,58 @@
+insert into application_user (id, email, password) values (2, 'kyz9rus@yandex.ru', '$2a$10$7YDSJT6rsDN6Yc1CacLejetQCeFo8VH7sGMJfNE57gSUAbW5LmOwe');
+insert into role values (100, 'CLIENT');
+insert into role values (200, 'EMPLOYEE');
+insert into user_role values (2, 200);
+
+insert into application_user values (1, 'danukrus@yandex.ru', '$2a$10$7YDSJT6rsDN6Yc1CacLejetQCeFo8VH7sGMJfNE57gSUAbW5LmOwe');
+insert into user_role values (1, 100);
+
+insert into client (id, birthday, email, firstname, lastname)
+VALUES (3, '1998-04-23', 'danukrus@yandex.ru', 'Daniil', 'Kuzchutkomov');
+
+insert into clientaddress (id, city, country, house, postal_code, room, street, client_id)
+VALUES (5, 'Syktywkar', 'Russia', '77', 168241, 39, 'Ordhonikidze', 3);
+
+insert into clientaddress (id, city, country, house, postal_code, room, street, client_id)
+VALUES (6, 'Saint-Petersburg', 'Russia', '77', 162235, 21, 'Vyazemskiy', 3);
+
+insert into category values (14, 'fragrances');
+insert into category values (15, 'for face');
+insert into category values (16, 'for body');
+insert into category values (2, 'bijouterie');
+
+insert into coupon (id, value, description) VALUES (1, 'HAPPY_ORDER', 'This coupon offers a 30% discount on the first order.');
+insert into coupon (id, value, description) VALUES (2, 'HAPPY_FRAGRANCES', 'This coupon offers a 15% discount on all fragrances.');
+
+
+insert into product(id, name, price, category_id, weight, volume, quantityInStock, imgsrc) values (999992, 'Today Eau de Parfum, 10 ml', 250, 14, 120, '025x003x003', 85, 'https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1163290_1_613x613.jpg');
+insert into product(id, name, price, category_id, weight, volume, quantityInStock, imgsrc) values (999994, 'Celebrate Eau de Perfume (50ml)', 1089, 14, 120, '015x012x017', 67, 'https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1163290_1_613x613.jpg');
+
+insert into product(id, name, price, category_id, weight, volume, quantityInStock, imgsrc) values (999995, 'Chain with suspension "Tia"', 350, 2, 120, '071x009x003', 100, 'https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1163290_1_613x613.jpg');
+insert into product(id, name, price, category_id, weight, volume, quantityInStock, imgsrc) values (999996, 'Earrings "TIA", 10 ml', 350, 2, 120, '002x002x001', 200, 'https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1163290_1_613x613.jpg');
+insert into product(id, name, price, category_id, weight, volume, quantityInStock, imgsrc) values (999997, 'Ring "Tia"', 250, 2, 120, '005x003x002', 326, 'https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1163290_1_613x613.jpg');
+insert into product(id, name, price, category_id, weight, volume, quantityInStock, imgsrc) values (999998, 'Earrings "Joanna"', 400, 2, 120, '006x002x002', 93, 'https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1163290_1_613x613.jpg');
+insert into product(id, name, price, category_id, weight, volume, quantityInStock, imgsrc) values (999999, 'Ring "Naomi"', 500, 2, 120, '005x005x003', 120, 'https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1163290_1_613x613.jpg');
+insert into product(id, name, price, category_id, weight, volume, quantityInStock, imgsrc) values (99990, 'Chain with suspension "Naomi"', 1000, 2, 120, '080x001x001', 35, 'https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1163290_1_613x613.jpg');
+
+insert into product(id, name, price, category_id, weight, volume, quantityInStock, imgsrc) values (99990, 'Chain with suspension "Naomi"', 1000, 2, 120, '080x001x001', 35, 'https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1163290_1_613x613.jpg');
+
+
+999993	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1163290_1_613x613.jpg	Today Eau de Parfum, 10 ml	0	250	85	025x003x003	120	14
+999996	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_5403209_1_613x613.jpg	Earrings "TIA", 10 ml	0	350	200	002x002x001	120	2
+999999	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_5402584_1_613x613.jpg	Ring "Naomi"	0	500	120	005x005x003	120	2
+999998	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_5285551_1_613x613.jpg	Earrings "Joanna"	0	400	93	006x002x002	120	2
+999995	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_5403201_1_613x613.jpg	Chain with suspension "Tia"	0	350	100	071x009x003	120	2
+999997	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_5403207_1_613x613.jpg	Ring "Tia"	0	250	326	005x003x002	120	2
+999994	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1200458_1_613x613.jpg	Celebrate Eau de Perfume (50ml)	0	1089	67	015x012x017	120	14
+99990	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_5402576_1_613x613.jpg	Chain with suspension "Naomi"	0	1000	35	080x001x001	120	2
+3	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1199319_1_613x613.jpg	Avon Secret Attitude Toilet Water, 50 ml	0	490	78	030x025x010	321	14
+4	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1199320_1_613x613.jpg	Toilet water Avon Secret Attitude Star, 50 ml	0	490	78	020x020x015	344	14
+5	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1150561_1_613x613.jpg	Eau de toilette Summer White Sunset, 50 ml	0	390	120	005x005x015	267	14
+6	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1151939_1_613x613.jpg	Amour Perfumery, 30 ml	0	999	134	010x010x020	120	14
+7	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1147689_1_613x613.jpg	Cream for sensitive skin "Chamomile and poppy"	0	145	56	010x010x004	330	15
+8	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1202111_1_613x613.jpg	Sun moisturizing face lotion SPF 30. High degree of protection	0	295	56	010x005x015	250	15
+9	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1202112_1_613x613.jpg	Moisturizing sunscreen for the face SPF 30. High degree of protection	0	245	56	020x015x010	240	15
+11	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1202121_1_613x613.jpg	Sun Moisturizing Face & Body Lotion Spray SPF 15	0	340	56	010x005x015	240	15
+12	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1199756_1_613x613.jpg	Shampoo-shower gel for men "Cool Explosion"	0	109	65	010x007x020	420	16
+13	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1199760_1_613x613.jpg	Foot spray with basil and pink grapefruit scent	0	145	67	003x002x012	240	16
+15	https://a57ed064b59d6d24a0db-e6a144f900fc09b8b2fc3bba00c88f87.ssl.cf3.rackcdn.com/assets/ru-ru/images/product/prod_1199769_1_613x613.jpg	Pink Grapefruit Body Scrub "Mediterranean Adventure"	0	145	45	005x003x012	241	16

@@ -75,6 +75,9 @@ $('.addProductBlock button').click(function (e) {
     } else if (!/^[0-9]+$/.test($('#quantityInStock').val()) && parseInt($('#quantityInStock').val()) <= 0) {
         $('.errorMessage').text('Quantity in stock must consist of numbers only and cannot be negative');
         e.preventDefault()
+    } else if ($('#name').val().length > 70) {
+        $('.errorMessage').text('Length of product name must be less than 70 symbols');
+        e.preventDefault()
     }
 });
 

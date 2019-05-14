@@ -67,6 +67,7 @@ public class ProductDTO implements Serializable {
                 ", quantityInStock=" + quantityInStock +
                 ", imgSrc='" + imgSrc + '\'' +
                 ", numberOfSales=" + numberOfSales +
+                ", category=" + category +
                 '}';
     }
 

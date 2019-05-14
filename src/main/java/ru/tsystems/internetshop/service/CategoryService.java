@@ -8,7 +8,7 @@ import java.util.List;
  * This is interface, which declares methods for managing categories
  */
 public interface CategoryService {
-    void saveCategory(CategoryDTO categoryDTO);
+    CategoryDTO saveCategory(CategoryDTO categoryDTO);
 
     void updateCategory(String oldName, CategoryDTO categoryDTO);
 
