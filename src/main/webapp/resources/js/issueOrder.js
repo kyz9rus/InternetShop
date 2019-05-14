@@ -158,6 +158,10 @@ function showCouponBlock() {
     $('body').css({'background-color': 'rgba(0,0,0,0.4)'});
 }
 
+$('.noCouponButton').click(function () {
+   $('.couponBlock input[name="couponValue"]').val('');
+});
+
 $('.orderPageButton button').click(function (e) {
     var products = $('.productBlock');
 

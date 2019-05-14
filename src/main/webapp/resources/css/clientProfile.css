@@ -290,6 +290,10 @@ td {
     width: 74px;
 }
 
+#checkCouponMessage{
+    font-size: 15px;
+}
+
 .editProfileBlock li {
     margin-bottom: 120px;
 }
@@ -411,7 +415,7 @@ td {
 }
 
 .productsWindow {
-    width: 80%;
+    width: 100%;
     display: none;
     background: white;
 }
