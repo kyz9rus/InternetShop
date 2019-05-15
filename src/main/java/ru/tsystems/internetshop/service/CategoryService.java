@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.service;
 
+import org.springframework.ui.Model;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface CategoryService {
     List<CategoryDTO> getAllCategories();
 
     CategoryDTO getCategoryByName(String name);
+
+    Model removeCategory(String categoryName, Model model);
 }

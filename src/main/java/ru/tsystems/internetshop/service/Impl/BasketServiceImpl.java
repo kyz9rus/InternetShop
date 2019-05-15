@@ -2,10 +2,12 @@ package ru.tsystems.internetshop.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.DTO.CouponDTO;
 import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.service.BasketService;
+import ru.tsystems.internetshop.service.CouponService;
 import ru.tsystems.internetshop.service.ProductService;
 
 import java.util.Map;
@@ -18,6 +20,9 @@ public class BasketServiceImpl implements BasketService {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CouponService couponService;
 
     /**
      * This method calculates price for products in basket and using coupon (if it has)
@@ -134,5 +139,22 @@ public class BasketServiceImpl implements BasketService {
         basket.removeProduct(productDTO);
 
         return productDTO;
+    }
+
+    /**
+     * This method apllies coupon and calculates new price in basket
+     * @param couponValue coupon string value
+     * @param basket basket
+     */
+    @Override
+    public void applyCoupon(String couponValue, Basket basket) {
+        CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
+
+        if (couponDTO != null && (basket.getCouponDTO() == null || basket.isChangedAfterCoupon())) {
+            basket.setCouponDTO(couponDTO);
+            basket.setSummaryPrice(calcPrice(basket));
+
+            basket.setChangedAfterCoupon(false);
+        }
     }
 }

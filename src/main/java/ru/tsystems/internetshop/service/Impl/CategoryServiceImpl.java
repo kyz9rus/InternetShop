@@ -3,10 +3,14 @@ package ru.tsystems.internetshop.service.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import ru.tsystems.internetshop.dao.CategoryDAO;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
+import ru.tsystems.internetshop.model.DTO.OrderDTO;
 import ru.tsystems.internetshop.model.entity.Category;
 import ru.tsystems.internetshop.service.CategoryService;
+import ru.tsystems.internetshop.service.OrderService;
+import ru.tsystems.internetshop.util.CategoryInfo;
 import ru.tsystems.internetshop.util.Mapper;
 
 import java.util.ArrayList;
@@ -24,6 +28,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private Mapper mapper;
+
+    @Autowired
+    private CategoryInfo categoryInfo;
+
+    @Autowired
+    private OrderService orderService;
 
     /**
      * This methods gets all categories
@@ -52,6 +62,31 @@ public class CategoryServiceImpl implements CategoryService {
         } catch (IllegalArgumentException e) {
             return null;
         }
+    }
+
+    @Override
+    public Model removeCategory(String categoryName, Model model) {
+        CategoryDTO categoryDTO = getCategoryByName(categoryName);
+        List<OrderDTO> orders = orderService.getOrdersByCategory(categoryDTO);
+
+        if (orders.isEmpty()) {
+            categoryName = categoryName.toLowerCase();
+
+            removeCategoryByName(categoryName);
+
+            categoryInfo.getCategories().clear();
+
+            List<CategoryDTO> categoryDTOS = getAllCategories();
+            categoryDTOS.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
+
+            categoryInfo.getCategories().addAll(categoryDTOS);
+
+            model.addAttribute("successMessage", "Category successfully changed.");
+        } else {
+            model.addAttribute("errorMessage", "Category cannot be removed (There are incomplete orders)");
+        }
+
+        return model;
     }
 
     /**

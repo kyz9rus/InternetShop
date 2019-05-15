@@ -119,7 +119,7 @@
 
 @media (max-width: 577px) {
     .product {
-        min-height: 470px;
+        min-height: 500px;
     }
 
     .productInfo1, .productInfo2 {

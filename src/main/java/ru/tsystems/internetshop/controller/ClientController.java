@@ -296,16 +296,8 @@ public class ClientController {
 
         if (clientDTO.getAddresses().isEmpty())
             model.addAttribute(errorMessageAttribute, "Please add address in your profile");
-        else {
-            CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
-
-            if (couponDTO != null && (basket.getCouponDTO() == null || basket.isChangedAfterCoupon())) {
-                basket.setCouponDTO(couponDTO);
-                basket.setSummaryPrice(basketService.calcPrice(basket));
-
-                basket.setChangedAfterCoupon(false);
-            }
-        }
+        else
+            basketService.applyCoupon(couponValue, basket);
 
         model.addAttribute("basket", basket);
         model.addAttribute(categoriesAttribute, categoryInfo.getCategories());

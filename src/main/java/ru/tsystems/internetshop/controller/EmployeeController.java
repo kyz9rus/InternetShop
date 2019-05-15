@@ -1,6 +1,7 @@
 package ru.tsystems.internetshop.controller;
 
 import com.sun.mail.smtp.SMTPSendFailedException;
+import org.apache.log4j.Category;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -62,9 +63,7 @@ public class EmployeeController {
         consoleLogger.info("Get all orders...");
         fileLogger.info("Get all orders...");
 
-        List<OrderDTO> orders = orderService.getOrders();
-
-        model.addAttribute("orders", orders);
+        model.addAttribute("orders", orderService.getOrders());
         model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/orders";
     }
@@ -147,6 +146,8 @@ public class EmployeeController {
     ResponseInfo changeOrderStatus(@RequestParam("id") Long id, @RequestParam("orderStatus") String orderStatusString) throws SMTPSendFailedException {
         consoleLogger.info("Changing order status (-> " + orderStatusString + ") for order with id + " + id + "...");
         fileLogger.info("Changing order status (-> " + orderStatusString + ") for order with id + " + id + "...");
+
+
 
         OrderDTO orderDTO = orderService.getOrder(id);
         if (orderDTO != null) {
@@ -285,6 +286,7 @@ public class EmployeeController {
         } else
             model.addAttribute("errorMessage", "Category already exist.");
 
+
         model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/manageCategories";
     }
@@ -329,24 +331,7 @@ public class EmployeeController {
         consoleLogger.info("Removing category '" + categoryName + "'...");
         fileLogger.info("Removing category '" + categoryName + "'...");
 
-        CategoryDTO categoryDTO = categoryService.getCategoryByName(categoryName);
-        List<OrderDTO> orders = orderService.getOrdersByCategory(categoryDTO);
-        if (orders.isEmpty()) {
-            categoryName = categoryName.toLowerCase();
-
-            categoryService.removeCategoryByName(categoryName);
-
-            categoryInfo.getCategories().clear();
-
-            List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
-            categoryDTOS.forEach(category -> category.setName(category.getName().replaceAll("_", " ").toUpperCase()));
-
-            categoryInfo.getCategories().addAll(categoryDTOS);
-
-            model.addAttribute("successMessage", "Category successfully changed.");
-        } else {
-            model.addAttribute("errorMessage", "Category cannot be removed (There are incomplete orders)");
-        }
+        model = categoryService.removeCategory(categoryName, model);
 
         model.addAttribute("categories", categoryInfo.getCategories());
         return "employeeProfile/manageCategories";
@@ -365,9 +350,7 @@ public class EmployeeController {
         consoleLogger.info("Getting products for order with id " + orderId + "...");
         fileLogger.info("Getting products for order with id " + orderId + "...");
 
-        OrderDTO orderDTO = orderService.getOrder(orderId);
-
-        return orderDTO.getOrderProducts();
+        return orderService.getOrder(orderId).getOrderProducts();
     }
 
 

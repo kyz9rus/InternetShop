@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.service;
 
+import org.springframework.ui.Model;
 import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.DTO.ProductDTO;
 
@@ -17,4 +18,6 @@ public interface BasketService {
     ProductDTO decreaseProduct(Basket basket, Long productId);
 
     ProductDTO removeProduct(Basket basket, Long productId);
+
+    void applyCoupon(String couponValue, Basket basket);
 }
