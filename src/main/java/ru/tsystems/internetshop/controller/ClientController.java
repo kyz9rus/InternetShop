@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import ru.tsystems.internetshop.facade.OrderProductClientFacade;
 import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.messaging.MessageSender;
@@ -19,9 +19,9 @@ import ru.tsystems.internetshop.service.*;
 import ru.tsystems.internetshop.util.CategoryInfo;
 import ru.tsystems.internetshop.util.ResponseInfo;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * This class is spring controller, which contains all routes, which needs authorize with role 'CLIENT'
@@ -67,6 +67,16 @@ public class ClientController {
     private final Logger consoleLogger = Logger.getLogger("consoleLogger");
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
+    private final String editProfilePage = "clientProfile/editProfile";
+    private final String issueOrderPage = "clientProfile/issueOrder";
+
+    private static final String categoriesAttribute = "categories";
+    private static final String errorMessageAttribute = "errorMessage";
+    private static final String successMessageAttribute = "successMessage";
+
+    private static final String errorDataChangingMessage = "Data change is not possible: you have incomplete orders.";
+
+
     /**
      * This method opens editProfile page
      *
@@ -75,8 +85,8 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("editProfile")
     public String editProfile(Model model) {
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return "clientProfile/editProfile";
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
+        return editProfilePage;
     }
 
     /**
@@ -87,7 +97,7 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('CLIENT')")
     @GetMapping("changePassword")
     public String changePasswordPage(Model model) {
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
         return "clientProfile/changePassword";
     }
 
@@ -102,10 +112,8 @@ public class ClientController {
         consoleLogger.info("Showing order history for client " + clientDTO + "...");
         fileLogger.info("Showing order history for client " + clientDTO + "...");
 
-        List<OrderDTO> orders = orderService.getOrdersByClient(clientDTO);
-
-        model.addAttribute("orders", orders);
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute("orders", orderService.getOrdersByClient(clientDTO));
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
         return "clientProfile/orderHistory";
     }
 
@@ -124,25 +132,13 @@ public class ClientController {
 
         if (orderDTO == null)
             model.addAttribute("errorMessage", "Order with id: " + orderId + " doesn't exist");
-        else {
-            List<OrderProductDTO> orderProductsFromDb = orderDTO.getOrderProducts();
-            Map<ProductDTO, Integer> products = new HashMap<>();
-
-            int numberOfProducts = 0, summaryPrice = 0;
-            for (OrderProductDTO orderProductDTO : orderProductsFromDb) {
-                products.put(orderProductDTO.getProduct(), orderProductDTO.getAmount());
-                numberOfProducts += orderProductDTO.getAmount();
-
-                summaryPrice += orderProductDTO.getProduct().getPrice() * orderProductDTO.getAmount();
-            }
-
-            basket = new Basket(products, numberOfProducts, summaryPrice);
-        }
+        else
+            basket = orderService.repeatOrder(basket, orderDTO);
 
         model.addAttribute("orders", orderService.getOrders());
         model.addAttribute("basket", basket);
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return "clientProfile/issueOrder";
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
+        return issueOrderPage;
     }
 
     /**
@@ -156,24 +152,10 @@ public class ClientController {
         consoleLogger.info("Updating client " + clientDTO + " and old email: " + email + "...");
         fileLogger.info("Updating client " + clientDTO + " and old email: " + email + "...");
 
-        if (!email.equals(clientDTO.getEmail())) {
-            if (clientService.getClientByEmail(clientDTO.getEmail()) != null) {
-                model.addAttribute("errorMessage", "Client with this email already exist. Choose another one.");
-                return "clientProfile/editProfile";
-            }
-        }
+        model = clientService.updateClient(email, clientDTO, model);
 
-        if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
-            model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
-        else {
-            clientService.updateClient(clientDTO);
-
-            model.addAttribute("successMessage", "Your data successfully changed");
-            model.addAttribute("client", clientDTO);
-        }
-
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return "clientProfile/editProfile";
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
+        return editProfilePage;
     }
 
     /**
@@ -187,21 +169,9 @@ public class ClientController {
         consoleLogger.info("Changing password for client " + clientDTO + "...");
         fileLogger.info("Changing password for client " + clientDTO + "...");
 
-        UserDTO userDTO = userService.getUserByEmail(clientDTO.getEmail());
+        model = userService.changePassword(clientDTO, password, newPassword, repeatNewPassword, model);
 
-        if (new BCryptPasswordEncoder().matches(password, userDTO.getPassword()))
-            if (newPassword.equals(repeatNewPassword)) {
-                userDTO.setPassword(new BCryptPasswordEncoder().encode(newPassword));
-                userClientFacade.updateUser(clientDTO, userDTO);
-
-                model.addAttribute("successMessage", "Password successfully changed");
-            } else {
-                model.addAttribute("errorMessage", "Entered passwords do not match");
-            }
-        else
-            model.addAttribute("errorMessage", "You entered the wrong password.");
-
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
         return "clientProfile/changePassword";
     }
 
@@ -216,20 +186,10 @@ public class ClientController {
         consoleLogger.info("Creating address for client " + clientDTO + "...");
         fileLogger.info("Creating address for client " + clientDTO + "...");
 
-        clientAddressDTO.setClient(clientDTO);
-        if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
-            model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
-        else {
-            clientAddressService.saveClientAddress(clientAddressDTO);
+        model = clientAddressService.createAddress(clientDTO, clientAddressDTO, model);
 
-            clientDTO.setAddresses(clientAddressService.getAddressesByClient(clientDTO));
-
-            model.addAttribute("successMessage", "Your data successfully saved");
-            model.addAttribute("client", clientDTO);
-        }
-
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return "clientProfile/editProfile";
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
+        return editProfilePage;
     }
 
     /**
@@ -245,19 +205,11 @@ public class ClientController {
 
         clientAddressDTO.setId(addressId);
         clientAddressDTO.setClient(clientDTO);
-        if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
-            model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
-        else {
-            clientAddressService.updateClientAddress(clientAddressDTO);
 
-            clientDTO.setAddresses(clientAddressService.getAddressesByClient(clientDTO));
+        model = clientAddressService.updateClientAddress(clientAddressDTO, model);
 
-            model.addAttribute("successMessage", "Your data successfully changed");
-            model.addAttribute("client", clientDTO);
-        }
-
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return "clientProfile/editProfile";
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
+        return editProfilePage;
     }
 
     /**
@@ -273,19 +225,11 @@ public class ClientController {
 
         clientAddressDTO.setId(addressId);
         clientAddressDTO.setClient(clientDTO);
-        if (orderService.getUnfinishedOrdersByClient(clientDTO).size() != 0)
-            model.addAttribute("errorMessage", "Data change is not possible: you have incomplete orders.");
-        else {
-            clientAddressService.deleteAddress(clientAddressDTO);
 
-            clientDTO.setAddresses(clientAddressService.getAddressesByClient(clientDTO));
+        model = clientAddressService.deleteClientAddress(clientAddressDTO, model);
 
-            model.addAttribute("successMessage", "Your address successfully deleted");
-            model.addAttribute("client", clientDTO);
-        }
-
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return "clientProfile/editProfile";
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
+        return editProfilePage;
     }
 
     /**
@@ -300,9 +244,7 @@ public class ClientController {
         consoleLogger.info("Getting products for order with id " + orderId + "...");
         fileLogger.info("Getting products for order with id " + orderId + "...");
 
-        OrderDTO orderDTO = orderService.getOrder(orderId);
-
-        List<OrderProductDTO> orderProducts = orderDTO.getOrderProducts();
+        List<OrderProductDTO> orderProducts = orderService.getOrder(orderId).getOrderProducts();
 
         return new ResponseEntity<>(orderProducts, HttpStatus.OK);
     }
@@ -320,8 +262,8 @@ public class ClientController {
 
         basketService.resetDiscount(basket);
         model.addAttribute("client", authenticationService.getClient());
-        model.addAttribute("categories", categoryInfo.getCategories());
-        return "clientProfile/issueOrder";
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
+        return issueOrderPage;
     }
 
     /**
@@ -335,15 +277,7 @@ public class ClientController {
         consoleLogger.info("Checking coupon " + couponValue + " for client " + clientDTO + "...");
         fileLogger.info("Checking coupon " + couponValue + " for client " + clientDTO + "...");
 
-        ResponseInfo responseInfo;
-
-        CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
-        if (couponDTO == null)
-            responseInfo = new ResponseInfo("Incorrect coupon", 404);
-        else if (clientDTO.getCoupons().contains(couponDTO))
-            responseInfo = new ResponseInfo("You have already use this coupon", 404);
-        else
-            responseInfo = new ResponseInfo("Correct coupon", 200);
+        ResponseInfo responseInfo = couponService.checkCoupon(couponValue, clientDTO, model);
 
         model.addAttribute("basket", basket);
         return responseInfo;
@@ -361,7 +295,7 @@ public class ClientController {
         fileLogger.info("Calculating price for order with couponValue " + couponValue + " and basket " + basket + "...");
 
         if (clientDTO.getAddresses().isEmpty())
-            model.addAttribute("errorMessage", "Please add address in your profile");
+            model.addAttribute(errorMessageAttribute, "Please add address in your profile");
         else {
             CouponDTO couponDTO = couponService.getCouponByValue(couponValue);
 
@@ -374,7 +308,7 @@ public class ClientController {
         }
 
         model.addAttribute("basket", basket);
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
         return "clientProfile/issueOrder2";
     }
 
@@ -393,10 +327,16 @@ public class ClientController {
 
         orderProductClientFacade.issueOrder(clientDTO, clientAddressDTO, basket, orderService.getDeliveryMethod(deliveryMethodString), orderService.getPaymentMethod(paymentMethodString));
 
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
         model.addAttribute("basket", new Basket());
-        model.addAttribute("successMessage", "Order successfully issued");
+        model.addAttribute(successMessageAttribute, "Order successfully issued");
         messageSender.sendMessage("Top products could changed");
-        return "clientProfile/issueOrder";
+        return issueOrderPage;
+    }
+
+    @RequestMapping(value = "/goodbye", method = POST)
+    public String goodbye(SessionStatus status) {
+        status.setComplete();
+        return "index";
     }
 }

@@ -41,10 +41,8 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
     public void create(T entity) {
         try {
             getSession().persist(entity);
-//        } catch (Exception e) {
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -59,8 +57,7 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         try {
             getSession().update(entity);
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -75,8 +72,7 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         try {
             getSession().delete(entity);
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -93,8 +89,7 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         try {
             return (T) getSession().get(persistentClass, (Serializable) key);
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -109,8 +104,7 @@ public abstract class AbstractDAO<T, PK> implements DAO<T, PK> {
         try {
             return getSession().createQuery("from " + persistentClass.getName()).list();
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }

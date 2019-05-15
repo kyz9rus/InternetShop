@@ -1,6 +1,7 @@
 package ru.tsystems.internetshop.facade.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.internetshop.facade.UserClientFacade;
@@ -34,11 +35,13 @@ public class UserClientFacadeImpl implements UserClientFacade {
 
     /**
      * This method create an user, create a role and binds its
+     *
      * @param clientDTO client
-     * @param password password
+     * @param password  password
      */
     @Override
     public void registerUser(ClientDTO clientDTO, String password) {
+        password = (new BCryptPasswordEncoder().encode(password));
         clientService.saveClient(clientDTO);
 
         User user = new User(clientDTO.getEmail(), password);
@@ -52,8 +55,9 @@ public class UserClientFacadeImpl implements UserClientFacade {
 
     /**
      * This method update client entity and user entity in database
+     *
      * @param clientDTO client
-     * @param userDTO user
+     * @param userDTO   user
      */
     @Override
     public void updateUser(ClientDTO clientDTO, UserDTO userDTO) {

@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
+import static org.springframework.context.annotation.FilterType.ASSIGNABLE_TYPE;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -51,31 +53,23 @@ public class SeleniumTestClass {
     @Test
     public void headerTest() {
         HomePage homePage = new HomePage(driver, wait);
-
         wait.until(titleIs(homePage.getTitle()));
 
         homePage.clickBecomeRepresentativeLink();
-
         wait.until(titleIs("Регистрация в Avon"));
 
         homePage.openPage();
-
         homePage.clickRegisterButton();
-
         wait.until(titleIs(new RegistrationPage().getTitle()));
 
         homePage.clickMainLogoImage();
-
         wait.until(titleIs(homePage.getTitle()));
 
         homePage.clickLoginButton();
-
         wait.until(titleIs(new LoginPage().getTitle()));
 
         homePage.openPage();
-
         homePage.clickBasket();
-
         wait.until(titleIs(new LoginPage().getTitle()));
     }
 
@@ -84,11 +78,9 @@ public class SeleniumTestClass {
         HomePage homePage = new HomePage(driver, wait);
 
         homePage.clickBuyButton();
-
         assertEquals(homePage.getNumberOfProductsInBasket().getText(), "Number of products: 1");
 
         homePage.clickBuyButton();
-
         assertEquals(homePage.getNumberOfProductsInBasket().getText(), "Number of products: 2");
 
         homePage.clickGetItButtonWithoutAuth();
@@ -100,19 +92,15 @@ public class SeleniumTestClass {
         loginPage.clickSignInButton();
 
         homePage.clickGetItButtonWithAuth();
-
         homePage.getCouponBlock();
-
         homePage.clickOkButtonInCouponBlock();
 
         homePage.clickGetItButtonWithAuth();
-
         homePage.clickCrossButtonInCouponBlock();
 
         homePage.clickIssueOrderButton();
 
         wait.until(titleIs(new IssueOrder().getTitle()));
-
     }
 
     @After

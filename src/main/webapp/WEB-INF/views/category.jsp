@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="j" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
+<!DOCTYPE html>
 <html>
 
 <head>

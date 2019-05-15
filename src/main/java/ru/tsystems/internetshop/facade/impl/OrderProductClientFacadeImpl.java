@@ -1,6 +1,7 @@
 package ru.tsystems.internetshop.facade.impl;
 
 import com.sun.mail.smtp.SMTPSendFailedException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,8 @@ public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
 
     @Autowired
     private ClientService clientService;
+
+    private final Logger fileLogger = Logger.getLogger("fileLogger");
 
     /**
      * This important method issue order, check payment method, update product and client statistic and send email to client
@@ -94,7 +97,7 @@ public class OrderProductClientFacadeImpl implements OrderProductClientFacade {
         try {
             mailService.sendNewOrderLetter(orderDTO);
         } catch (MailException e) {
-            e.printStackTrace();
+            fileLogger.error(e);
             throw e;
         }
     }

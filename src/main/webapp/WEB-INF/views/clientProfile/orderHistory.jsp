@@ -3,6 +3,7 @@
 <%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -51,7 +52,7 @@
                                     <table class="orderTable">
                                         <tr align="center">
                                             <td>ID</td>
-                                            <td>Adress</td>
+                                            <td>Address</td>
                                             <td>Delivery method</td>
                                             <td>Payment method</td>
                                             <td>Order status</td>

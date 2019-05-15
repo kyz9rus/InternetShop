@@ -28,6 +28,7 @@ public class CustomUserDetailService implements UserDetailsService {
         Optional<UserDTO> userDTO = Optional.of(userDAO.findByEmail(email));
 
         userDTO.orElseThrow(() -> new UsernameNotFoundException("Email not found"));
+
         return userDTO.map(CustomUserDetail::new).get();
     }
 }

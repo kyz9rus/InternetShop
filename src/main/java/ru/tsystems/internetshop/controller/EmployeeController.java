@@ -164,7 +164,7 @@ public class EmployeeController {
             try {
                 mailService.sendChangeOrderStatusLetter(orderDTO);
             } catch (MailException e) {
-                e.printStackTrace();
+                fileLogger.error(e);
                 throw e;
             }
 
@@ -210,7 +210,7 @@ public class EmployeeController {
             try {
                 mailService.sendChangePaymentStatusLetter(orderDTO);
             } catch (MailException e) {
-                e.printStackTrace();
+                fileLogger.error(e);
                 throw e;
             }
 
@@ -369,4 +369,6 @@ public class EmployeeController {
 
         return orderDTO.getOrderProducts();
     }
+
+
 }

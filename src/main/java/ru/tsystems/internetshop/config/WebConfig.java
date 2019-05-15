@@ -30,7 +30,11 @@ import java.util.Properties;
  */
 @EnableWebMvc
 @Configuration
-@ComponentScan({"ru.tsystems.internetshop"})
+@ComponentScan(value = {"ru.tsystems.internetshop"}, excludeFilters={
+        @ComponentScan.Filter(type=FilterType.ASSIGNABLE_TYPE, value={
+                MessagingConfiguration.class,
+                MessagingListenerConfiguration.class,
+        })})
 @Import({MessagingConfiguration.class, MessagingListenerConfiguration.class})
 @PropertySource("classpath:spring-mail.properties")
 public class WebConfig implements WebMvcConfigurer {

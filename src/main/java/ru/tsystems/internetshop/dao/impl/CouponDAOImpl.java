@@ -36,8 +36,7 @@ public class CouponDAOImpl extends AbstractDAO<Coupon, Integer> implements Coupo
             else
                 return null;
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }

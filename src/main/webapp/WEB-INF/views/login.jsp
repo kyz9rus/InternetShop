@@ -2,6 +2,8 @@
 <%@ taglib prefix="j" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>Please Sign in</title>

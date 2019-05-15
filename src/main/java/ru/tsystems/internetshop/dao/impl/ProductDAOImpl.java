@@ -36,8 +36,7 @@ public class ProductDAOImpl extends AbstractDAO<Product, Long> implements Produc
 
             return query.getResultList();
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -63,8 +62,7 @@ public class ProductDAOImpl extends AbstractDAO<Product, Long> implements Produc
             else
                 return null;
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -83,8 +81,7 @@ public class ProductDAOImpl extends AbstractDAO<Product, Long> implements Produc
 
             return query.getResultList().stream().limit(10).collect(Collectors.toList());
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }

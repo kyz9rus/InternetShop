@@ -1,6 +1,7 @@
 package ru.tsystems.internetshop.service;
 
 import ru.tsystems.internetshop.model.Basket;
+import ru.tsystems.internetshop.model.DTO.ProductDTO;
 
 /**
  * This is interface, which declares methods for basket
@@ -10,4 +11,10 @@ public interface BasketService {
     int calcPriceWithoutDiscount(Basket basket);
 
     void resetDiscount(Basket basket);
+
+    ProductDTO putProduct(Basket basket, Long productId);
+
+    ProductDTO decreaseProduct(Basket basket, Long productId);
+
+    ProductDTO removeProduct(Basket basket, Long productId);
 }

@@ -39,8 +39,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
             return query.getResultList();
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -61,8 +60,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
             return query.getResultList();
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -83,8 +81,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
             return query.getResultList();
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -104,8 +101,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
             return query.getResultList();
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -123,8 +119,7 @@ public class OrderDAOImpl extends AbstractDAO<Order, Long> implements OrderDAO {
 
             return entity;
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }

@@ -92,7 +92,6 @@ $('.searchProduct').on('input', function () {
     else
         productListAfterSearchFilter =
             productList.filter(function () {
-                console.log($(this).find('.productName').text().toLowerCase() + " | " + $('.searchProduct').val().toLowerCase() + " | " + $(this).find('.productName').text().toLowerCase().includes($('.searchProduct').val().toLowerCase()) !== -1);
                 return $(this).find('.productName').text().toLowerCase().includes($('.searchProduct').val().toLowerCase());
             });
 

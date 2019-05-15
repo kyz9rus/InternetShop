@@ -37,8 +37,7 @@ public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDA
             else
                 return null;
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -57,8 +56,7 @@ public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDA
 
             return query.getResultList().stream().limit(10).collect(Collectors.toList());
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -77,8 +75,7 @@ public class ClientDAOImpl extends AbstractDAO<Client, Long> implements ClientDA
 
             return query.getResultList().stream().limit(10).collect(Collectors.toList());
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }

@@ -44,7 +44,7 @@ $('.productOperations .minus').click(function () {
     var url = urlParts[0] + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
 
     $.post({
-        url: url + '/increase-product',
+        url: url + '/decrease-product',
         data: data,
         dataType: 'json',
         success: function (basketInfo) {

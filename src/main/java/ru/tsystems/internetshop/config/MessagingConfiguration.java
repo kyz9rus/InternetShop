@@ -7,7 +7,6 @@ import org.springframework.jms.core.JmsTemplate;
 import javax.jms.ConnectionFactory;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.naming.NoInitialContextException;
 
 /**
  * This is class contains configuration for the queue in embedded wildfly queue
@@ -15,7 +14,7 @@ import javax.naming.NoInitialContextException;
 @Configuration
 public class MessagingConfiguration {
 
-    private static final String QUEUE_NAME = "top10Products";
+    private final String QUEUE_NAME = "top10Products";
 
     /**
      * This is method configure embedded activeMq connection factory

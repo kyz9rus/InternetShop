@@ -25,8 +25,7 @@ public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements Cate
 
             return category;
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -47,8 +46,7 @@ public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements Cate
 
             query.executeUpdate();
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -71,8 +69,7 @@ public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements Cate
             else
                 return null;
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
@@ -91,8 +88,7 @@ public class CategoryDAOImpl extends AbstractDAO<Category, Long> implements Cate
 
             query.executeUpdate();
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }

@@ -81,7 +81,9 @@
         </div>
         <div class="lastBlock">
             <div class="basketDiv">
-                <img class="basket" alt="BASKET" src="<c:url value="/resources/images/basket.png" />"><br/>
+                <a href="<c:url value="/clientProfile/issueOrder"/>">
+                    <img class="basket" alt="BASKET" src="<c:url value="/resources/images/basket.png" />"><br/>
+                </a>
                 <J:choose>
                     <j:when test="${basket.products.size() == 0}">
                         <div class="basketInfo">

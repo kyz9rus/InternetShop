@@ -1,5 +1,7 @@
 package ru.tsystems.internetshop.service;
 
+import org.springframework.ui.Model;
+import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.UserDTO;
 import ru.tsystems.internetshop.model.entity.User;
 
@@ -12,4 +14,6 @@ public interface UserService {
     void updateUser(User user);
 
     UserDTO getUserByEmail(String email);
+
+    Model changePassword(ClientDTO clientDTO, String password, String newPassword, String repeatNewPassword, Model model);
 }

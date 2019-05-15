@@ -3,6 +3,10 @@ package ru.tsystems.avonshopnews.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * This class dequeue from "news queue" (embedded wildfly queue)
+ * It has to match with class on another side (Avon Shop News)
+ */
 public class NewsInfo implements Serializable {
     private Long id;
     private String article;

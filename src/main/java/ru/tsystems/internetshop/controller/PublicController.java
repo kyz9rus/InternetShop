@@ -7,11 +7,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import ru.tsystems.internetshop.facade.UserClientFacade;
 import ru.tsystems.internetshop.model.Basket;
@@ -25,6 +25,8 @@ import ru.tsystems.internetshop.util.ResponseInfo;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * This class is spring controller, which contains all routes, which doesn't need some authorization
@@ -63,6 +65,10 @@ public class PublicController {
     private final Logger consoleLogger = Logger.getLogger("consoleLogger");
     private final Logger fileLogger = Logger.getLogger("fileLogger");
 
+    private static final String categoriesAttribute = "categories";
+
+    private static final String errorMessageAttribute = "errorMessage";
+
     /**
      * This method open main page with client statistic and some news
      *
@@ -73,7 +79,7 @@ public class PublicController {
         model.addAttribute("client", authenticationService.getClient());
         model.addAttribute("clients", clientService.getTop10ClientsWithAtLeast1Order());
         model.addAttribute("newsList", newsInfo.getNews().stream().sorted(Comparator.comparing(NewsDTOWithFormat::getWritingDate).reversed()).limit(7).collect(Collectors.toList()));
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
         return "index";
     }
 
@@ -84,7 +90,7 @@ public class PublicController {
      */
     @GetMapping(value = "registration")
     public String toRegistrationPage(Model model) {
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
         return "registration";
     }
 
@@ -109,20 +115,19 @@ public class PublicController {
         fileLogger.info("Register client: " + client + "...");
 
         if (clientService.getClientByEmail(client.getEmail()) != null)
-            model.addAttribute("errorMessage", "A user with this email address already exists.");
+            model.addAttribute(errorMessageAttribute, "A user with this email address already exists.");
         else {
             if (password.equals(repeatPassword)) {
-                password = (new BCryptPasswordEncoder().encode(password));
                 userClientFacade.registerUser(client, password);
 
                 model.addAttribute("successMessage", "You have been successfully registered. Sign in!");
             } else {
-                model.addAttribute("errorMessage", "Entered passwords do not match.");
+                model.addAttribute(errorMessageAttribute, "Entered passwords do not match.");
             }
         }
 
         model.addAttribute("client", client);
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
         return "registration";
     }
 
@@ -141,7 +146,7 @@ public class PublicController {
             model.addAttribute("emptyListMessage", "Product list is empty.");
 
         model.addAttribute("categoryName", categoryName.replaceAll("_", " ").toUpperCase());
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
         return "category";
     }
 
@@ -156,14 +161,7 @@ public class PublicController {
         consoleLogger.info("Put product with id " + productId + " in basket + " + basket + "...");
         fileLogger.info("Put product with id " + productId + " in basket + " + basket + "...");
 
-        ProductDTO productDTO = productService.getProduct(productId);
-        basket.addProduct(productDTO);
-
-        if (basket.getCouponDTO() != null) {
-            basket.setChangedAfterCoupon(true);
-
-            basket.setSummaryPrice(basketService.calcPriceWithoutDiscount(basket));
-        }
+        ProductDTO productDTO = basketService.putProduct(basket, productId);
 
         model.addAttribute("basket", basket);
 
@@ -176,13 +174,12 @@ public class PublicController {
      * @return new basket without removed product
      */
     @ResponseBody
-    @PostMapping(value = "increase-product", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "decrease-product", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<BasketInfo> increaseProduct(@RequestParam("productId") Long productId, @ModelAttribute("basket") Basket basket, Model model) {
         consoleLogger.info("Delete 1 product with id " + productId + " from basket " + basket + "...");
         fileLogger.info("Delete 1 product with id " + productId + " from basket " + basket + "...");
 
-        ProductDTO productDTO = productService.getProduct(productId);
-        basket.decreaseProduct(productDTO);
+        ProductDTO productDTO = basketService.decreaseProduct(basket, productId);
 
         model.addAttribute("basket", basket);
 
@@ -200,11 +197,10 @@ public class PublicController {
         consoleLogger.info("Remove products with id " + productId + " from basket " + basket + "...");
         fileLogger.info("Remove products with id " + productId + " from basket " + basket + "...");
 
-        ProductDTO productDTO = productService.getProduct(productId);
-        basket.removeProduct(productDTO);
+        ProductDTO productDTO = basketService.removeProduct(basket, productId);
 
         model.addAttribute("basket", basket);
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
 
         return new ResponseEntity<>(new BasketInfo(basket, basket.getProducts().get(productDTO)), HttpStatus.OK);
     }
@@ -218,7 +214,7 @@ public class PublicController {
     @GetMapping(value = "clientProfile")
     public String toClientProfile(Model model) {
         model.addAttribute("client", authenticationService.getClient());
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
         return "clientProfile";
     }
 
@@ -230,7 +226,7 @@ public class PublicController {
     @PreAuthorize("hasAnyRole('EMPLOYEE')")
     @GetMapping(value = "employeeProfile")
     public String toEmployeeProfile(Model model) {
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
         return "employeeProfile";
     }
 
@@ -246,26 +242,7 @@ public class PublicController {
         consoleLogger.info("Sending coupon to + " + clientDTO.getEmail() + "...");
         fileLogger.info("Sending coupon to + " + clientDTO.getEmail() + "...");
 
-        String email = clientDTO.getEmail();
-        ResponseInfo responseInfo;
-
-        CouponDTO couponDTO = couponService.getCouponByValue(couponName);
-
-        if (couponDTO != null) {
-            if (clientDTO.getCoupons().contains(couponDTO))
-                responseInfo = new ResponseInfo("You have already used this coupon.", 404);
-            else {
-                try {
-                    mailService.sendNewCouponLetter(email, couponDTO);
-                    responseInfo = new ResponseInfo("Сoupon successfully sent.\nCheck your email.", 200);
-                } catch (MailException e) {
-                    consoleLogger.error(e.getMessage());
-                    responseInfo = new ResponseInfo("Incorrect email. Change it in your profile!", 404);
-                }
-            }
-        } else {
-            responseInfo = new ResponseInfo("Coupon is not available.", 404);
-        }
+        ResponseInfo responseInfo = couponService.sendCoupon(clientDTO, couponName);
 
         return responseInfo;
     }
@@ -316,7 +293,18 @@ public class PublicController {
      */
     @GetMapping("exception")
     public String toExceptionPage(Model model) {
-        model.addAttribute("categories", categoryInfo.getCategories());
+        model.addAttribute(categoriesAttribute, categoryInfo.getCategories());
         return "exception";
+    }
+
+    /**
+     * For Sonar
+     * @param status session status
+     * @return main page
+     */
+    @RequestMapping(value = "/goodbye", method = POST)
+    public String goodbye(SessionStatus status) {
+        status.setComplete();
+        return "index";
     }
 }

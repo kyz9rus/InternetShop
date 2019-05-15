@@ -1,10 +1,12 @@
 package ru.tsystems.internetshop.service.Impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.tsystems.internetshop.model.Basket;
 import ru.tsystems.internetshop.model.DTO.CouponDTO;
 import ru.tsystems.internetshop.model.DTO.ProductDTO;
 import ru.tsystems.internetshop.service.BasketService;
+import ru.tsystems.internetshop.service.ProductService;
 
 import java.util.Map;
 
@@ -13,6 +15,9 @@ import java.util.Map;
  */
 @Service
 public class BasketServiceImpl implements BasketService {
+
+    @Autowired
+    private ProductService productService;
 
     /**
      * This method calculates price for products in basket and using coupon (if it has)
@@ -79,5 +84,55 @@ public class BasketServiceImpl implements BasketService {
     public void resetDiscount(Basket basket) {
         basket.setCouponDTO(null);
         basket.setSummaryPrice(calcPriceWithoutDiscount(basket));
+    }
+
+    /**
+     * This method puts product to the basket
+     *
+     * @param basket current basket
+     * @param productId product id
+     * @return product
+     */
+    @Override
+    public ProductDTO putProduct(Basket basket, Long productId) {
+        ProductDTO productDTO = productService.getProduct(productId);
+        basket.addProduct(productDTO);
+
+        if (basket.getCouponDTO() != null) {
+            basket.setChangedAfterCoupon(true);
+
+            basket.setSummaryPrice(calcPriceWithoutDiscount(basket));
+        }
+        return productDTO;
+    }
+
+    /**
+     * This method removes 1 position for the product
+     *
+     * @param basket current basket
+     * @param productId product id
+     * @return product
+     */
+    @Override
+    public ProductDTO decreaseProduct(Basket basket, Long productId) {
+        ProductDTO productDTO = productService.getProduct(productId);
+        basket.decreaseProduct(productDTO);
+
+        return productDTO;
+    }
+
+    /**
+     * This method removes all positions of the product from basket
+     *
+     * @param basket current basket
+     * @param productId product id
+     * @return product
+     */
+    @Override
+    public ProductDTO removeProduct(Basket basket, Long productId) {
+        ProductDTO productDTO = productService.getProduct(productId);
+        basket.removeProduct(productDTO);
+
+        return productDTO;
     }
 }

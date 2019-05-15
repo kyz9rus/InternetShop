@@ -1,5 +1,6 @@
 package ru.tsystems.internetshop.service;
 
+import org.springframework.ui.Model;
 import ru.tsystems.internetshop.model.DTO.CategoryDTO;
 import ru.tsystems.internetshop.model.DTO.ClientDTO;
 import ru.tsystems.internetshop.model.DTO.OrderDTO;
@@ -34,4 +35,6 @@ public interface OrderService {
     List<OrderDTO> getOrdersByCategory(CategoryDTO categoryDTO);
 
     RevenueInfo getRevenueInfo();
+
+    Basket repeatOrder(Basket basket, OrderDTO orderDTO);
 }

@@ -42,8 +42,7 @@ public class RoleDAOImpl extends AbstractDAO<Role, Long> implements RoleDAO {
             else
                 return null;
         } catch (Exception e) {
-            fileLogger.error(e.getMessage());
-            e.printStackTrace();
+            fileLogger.error(e);
             throw new DAOException();
         }
     }

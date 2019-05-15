@@ -4,10 +4,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import ru.tsystems.internetshop.controller.ClientController;
 import ru.tsystems.internetshop.dao.OrderDAO;
-import ru.tsystems.internetshop.model.DTO.CategoryDTO;
-import ru.tsystems.internetshop.model.DTO.ClientDTO;
-import ru.tsystems.internetshop.model.DTO.OrderDTO;
+import ru.tsystems.internetshop.model.DTO.*;
 import ru.tsystems.internetshop.model.*;
 import ru.tsystems.internetshop.model.entity.Order;
 import ru.tsystems.internetshop.service.OrderService;
@@ -219,13 +219,38 @@ public class OrderServiceImpl implements OrderService {
                             && orderDTO.getOrderDate().isAfter(localDate.minusMonths(1)) || orderDTO.getOrderDate().isEqual(localDate)
             ).forEach(orderDTO -> revenueForMonth[0] += orderDTO.getPrice());
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            fileLogger.error(e);
         }
 
         consoleLogger.info("Revenue for month: " + revenueForMonth[0] + "\nRevenue for week: " + revenueForWeek[0]);
         fileLogger.info("Revenue for month: " + revenueForMonth[0] + "\nRevenue for week: " + revenueForWeek[0]);
 
         return new RevenueInfo(revenueForWeek[0], revenueForMonth[0]);
+    }
+
+    /**
+     * This method repeats order
+     * @param basket basket for old order
+     * @param orderDTO order
+     * @return new turned in basket
+     */
+    @Override
+    public Basket repeatOrder(Basket basket, OrderDTO orderDTO) {
+        List<OrderProductDTO> orderProductsFromDb = orderDTO.getOrderProducts();
+        Map<ProductDTO, Integer> products = new HashMap<>();
+
+        int numberOfProducts = 0, summaryPrice = 0;
+        for (OrderProductDTO orderProductDTO : orderProductsFromDb) {
+            products.put(orderProductDTO.getProduct(), orderProductDTO.getAmount());
+            numberOfProducts += orderProductDTO.getAmount();
+
+            summaryPrice += orderProductDTO.getProduct().getPrice() * orderProductDTO.getAmount();
+        }
+
+        basket = new Basket(products, numberOfProducts, summaryPrice);
+
+
+        return basket;
     }
 
     /**

@@ -34,8 +34,7 @@ public class ClientAddressDAOImpl extends AbstractDAO<ClientAddress, Long> imple
 
             return query.getResultList();
         } catch (Exception e) {
-            e.printStackTrace();
-            fileLogger.error(e.getMessage());
+            fileLogger.error(e);
             throw new DAOException();
         }
     }
