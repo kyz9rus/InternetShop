@@ -27,7 +27,7 @@
         <c3p0.version>0.9.5.3</c3p0.version>
         <mysql.version>5.1.47</mysql.version>
         <postgres.version>42.2.5</postgres.version>
-        <h2.version>1.4.199</h2.version>
+        <h2.version>2.0.206</h2.version>
         <liquebase.version>3.6.3</liquebase.version>
         <servlets.version>4.0.1</servlets.version>
         <jstl.version>1.2</jstl.version>
